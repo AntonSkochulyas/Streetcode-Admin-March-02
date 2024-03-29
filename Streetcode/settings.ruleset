@@ -15,9 +15,9 @@
 		<!-- Prefix local call with this -->
 		<Rule Id="SA1633" Action="None" />
 		<!-- Code header -->
-		<Rule Id="SA1200" Action="Warning" />
+		<Rule Id="SA1200" Action="None" />
 		<!-- Using directive must appear within a namespace declaration -->
-		<Rule Id="SA1210" Action="Warning" />
+		<Rule Id="SA1210" Action="None" />
 		<!-- Using directive must be ordered alphabetically by namespaces -->
 		<Rule Id="SA1305" Action="None" />
 		<!-- The name of a field or variable in C# uses Hungarian notation. -->
