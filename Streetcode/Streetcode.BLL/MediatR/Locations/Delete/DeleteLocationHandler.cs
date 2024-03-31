@@ -24,7 +24,7 @@ namespace Streetcode.BLL.MediatR.Locations.Delete
 
             if (location == null)
             {
-                string errorMsg = $"No location found by entered Id - {id}";
+                string errorMsg = string.Format(LocationsErrors.DeleteLocationHandlerNotFoundByIdError, id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -39,7 +39,7 @@ namespace Streetcode.BLL.MediatR.Locations.Delete
             }
             else
             {
-                string errorMsg = "Failed to delete location";
+                string errorMsg = LocationsErrors.DeleteLocationHandlerCanNotDeleteLocationError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
