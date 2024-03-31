@@ -25,7 +25,7 @@ public class GetCoordinatesByStreetcodeIdHandler : IRequestHandler<GetCoordinate
         if ((await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.StreetcodeId)) is null)
         {
             return Result.Fail(
-                new Error($"Cannot find a coordinates by a streetcode id: {request.StreetcodeId}, because such streetcode doesn`t exist"));
+                new Error(string.Format(CoordinateErrors.GetCoordinatesByStreetcodeIdHandlerCanNotFindCoordinatesStreetcodeNotExist, request.StreetcodeId)));
         }
 
         var coordinates = await _repositoryWrapper.StreetcodeCoordinateRepository
@@ -33,7 +33,7 @@ public class GetCoordinatesByStreetcodeIdHandler : IRequestHandler<GetCoordinate
 
         if (coordinates is null)
         {
-            string errorMsg = $"Cannot find a coordinates by a streetcode id: {request.StreetcodeId}";
+            string errorMsg = CoordinateErrors.GetCoordinatesByStreetcodeIdHandlerCanNotFindCoordinatesByStreetcodeId;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

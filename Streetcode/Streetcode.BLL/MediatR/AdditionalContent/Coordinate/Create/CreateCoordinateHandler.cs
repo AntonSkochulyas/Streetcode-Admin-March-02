@@ -22,12 +22,12 @@ public class CreateCoordinateHandler : IRequestHandler<CreateCoordinateCommand, 
 
         if (streetcodeCoordinate is null)
         {
-            return Result.Fail(new Error("Cannot convert null to streetcodeCoordinate"));
+            return Result.Fail(new Error(CoordinateErrors.CreateCoordinateHandlerCanNotConvertFromNullError));
         }
 
         _repositoryWrapper.StreetcodeCoordinateRepository.Create(streetcodeCoordinate);
 
         var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
-        return resultIsSuccess ? Result.Ok(Unit.Value) : Result.Fail(new Error("Failed to create a streetcodeCoordinate"));
+        return resultIsSuccess ? Result.Ok(Unit.Value) : Result.Fail(new Error(CoordinateErrors.CreateCoordinateHandlerCreateFailedError));
     }
 }
