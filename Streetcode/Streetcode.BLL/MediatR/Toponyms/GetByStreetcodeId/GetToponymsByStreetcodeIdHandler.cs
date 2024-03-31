@@ -33,7 +33,7 @@ public class GetToponymsByStreetcodeIdHandler : IRequestHandler<GetToponymsByStr
 
         if (toponyms is null)
         {
-            string errorMsg = $"Cannot find any toponym by the streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(ToponymsErrors.GetToponymsByStreetcodeIdHandlerCanNotFindByStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

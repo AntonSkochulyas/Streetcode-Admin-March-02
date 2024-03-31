@@ -27,7 +27,7 @@ public class GetToponymByIdHandler : IRequestHandler<GetToponymByIdQuery, Result
 
         if (toponym is null)
         {
-            string errorMsg = $"Cannot find any toponym with corresponding id: {request.Id}";
+            string errorMsg = string.Format(ToponymsErrors.GetToponymByIdHandlerCanNotFindByIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
