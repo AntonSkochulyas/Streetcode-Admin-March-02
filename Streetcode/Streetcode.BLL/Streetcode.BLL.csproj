@@ -46,4 +46,19 @@
     <Folder Include="MediatR\Streetcode\Fact\Create\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="MediatR\Transactions\TransactionsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TransactionsErrors.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MediatR\Transactions\TransactionsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TransactionsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
