@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
+using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
@@ -7,7 +8,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
 {
-    public class CreateStreetcodeCategoryContentHandler
+    public class CreateStreetcodeCategoryContentHandler : IRequestHandler<CreateStreetcodeCategoryContentCommand, Result<CategoryContentCreateDto>>
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
@@ -19,7 +20,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
             _logger = logger;
         }
 
-        public async Task<Result<StreetcodeCategoryContentDto>> Handle(CreateStreetcodeCategoryContentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<CategoryContentCreateDto>> Handle(CreateStreetcodeCategoryContentCommand request, CancellationToken cancellationToken)
         {
             var newStreetcodeCategoryContent = _mapper.Map<DAL.Entities.Sources.StreetcodeCategoryContent>(request.StreetcodeCategoryContentDto);
             if (newStreetcodeCategoryContent is null)
@@ -34,7 +35,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
 
             if (resultIsSuccess)
             {
-                return Result.Ok(_mapper.Map<StreetcodeCategoryContentDto>(entity));
+                return Result.Ok(_mapper.Map<CategoryContentCreateDto>(entity));
             }
             else
             {
