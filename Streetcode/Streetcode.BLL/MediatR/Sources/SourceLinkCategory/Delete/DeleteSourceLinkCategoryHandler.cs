@@ -6,7 +6,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
 {
-    public class DeleteSourceLinkCategoryHandler
+    public class DeleteSourceLinkCategoryHandler : IRequestHandler<DeleteSourceLinkCategoryCommand, Result<Unit>>
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly ILoggerService _logger;

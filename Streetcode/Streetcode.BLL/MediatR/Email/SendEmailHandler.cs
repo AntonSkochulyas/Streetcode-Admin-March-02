@@ -23,13 +23,13 @@ namespace Streetcode.BLL.MediatR.Email
 
             bool isResultSuccess = await _emailService.SendEmailAsync(message);
 
-            if(isResultSuccess)
+            if (isResultSuccess)
             {
                 return Result.Ok(Unit.Value);
             }
             else
             {
-                const string errorMsg = $"Failed to send email message";
+                string errorMsg = EmailErrors.SendEmailHandlerFailedToSendEmailError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
