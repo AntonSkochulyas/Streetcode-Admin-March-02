@@ -27,7 +27,7 @@ public class GetAllTransactLinksHandler : IRequestHandler<GetAllTransactLinksQue
 
         if (transactLinks is null)
         {
-            const string errorMsg = $"Cannot find any transaction link";
+            string errorMsg = TransactionsErrors.GetAllTransactLinksHandlerCanNotFindAnyLinkError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
