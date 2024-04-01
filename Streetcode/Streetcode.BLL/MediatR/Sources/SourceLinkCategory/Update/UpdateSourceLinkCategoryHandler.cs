@@ -38,13 +38,6 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update
                 return Result.Fail(new Error(errorMsg));
             }
 
-            if (sourceLinkCategory.Image is null)
-            {
-                const string errorMsg = $"Cannot convert the image";
-                _logger.LogError(request, errorMsg);
-                return Result.Fail(new Error(errorMsg));
-            }
-
             _repositoryWrapper.SourceCategoryRepository.Update(sourceLinkCategory);
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
 

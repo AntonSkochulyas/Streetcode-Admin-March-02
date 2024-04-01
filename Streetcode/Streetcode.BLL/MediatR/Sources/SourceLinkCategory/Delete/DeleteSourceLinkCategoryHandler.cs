@@ -27,15 +27,6 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
                 return Result.Fail(errorMsg);
             }
 
-            var streetcodeContents = await _repositoryWrapper.StreetcodeCategoryContentRepository.GetAllAsync(sc => sc.SourceLinkCategoryId == id);
-            if (streetcodeContents is not null)
-            {
-                foreach (var item in streetcodeContents)
-                {
-                    _repositoryWrapper.StreetcodeCategoryContentRepository.Delete(item);
-                }
-            }
-
             _repositoryWrapper.SourceCategoryRepository.Delete(sourceLinkCategory);
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
 
