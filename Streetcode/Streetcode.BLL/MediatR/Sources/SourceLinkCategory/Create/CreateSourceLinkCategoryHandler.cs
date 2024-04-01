@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
+using MediatR;
 using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
@@ -10,7 +11,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
 {
-    public class CreateSourceLinkCategoryHandler
+    public class CreateSourceLinkCategoryHandler : IRequestHandler<CreateSourceLinkCategoryCommand, Result<SourceLinkCategoryDto>>
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
