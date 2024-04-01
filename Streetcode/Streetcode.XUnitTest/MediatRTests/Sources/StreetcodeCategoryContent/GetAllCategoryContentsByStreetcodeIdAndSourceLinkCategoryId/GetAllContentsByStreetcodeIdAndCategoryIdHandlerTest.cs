@@ -15,14 +15,14 @@ using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategoryId
 {
-    public class GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategoryIdHandlerTest
+    public class GetAllContentsByStreetcodeIdAndCategoryIdHandlerTest
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly IMapper _mapper;
         private readonly Mock<IBlobService> _mockBlob;
         private readonly Mock<ILoggerService> _mockLogger;
 
-        public GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategoryIdHandlerTest()
+        public GetAllContentsByStreetcodeIdAndCategoryIdHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetSourceRepositoryMock();
 
