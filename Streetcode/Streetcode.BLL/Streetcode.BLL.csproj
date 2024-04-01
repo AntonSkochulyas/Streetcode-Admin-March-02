@@ -61,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TagErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Email\EmailErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -80,6 +81,7 @@
     <EmbeddedResource Update="MediatR\AdditionalContent\Tag\TagErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TagErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Email\EmailErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>EmailErrors.Designer.cs</LastGenOutput>
