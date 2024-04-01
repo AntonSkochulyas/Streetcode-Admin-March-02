@@ -46,4 +46,19 @@
     <Folder Include="MediatR\Streetcode\Fact\Create\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="MediatR\Toponyms\ToponymsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ToponymsErrors.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MediatR\Toponyms\ToponymsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ToponymsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
