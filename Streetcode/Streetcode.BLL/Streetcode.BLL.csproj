@@ -52,12 +52,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TransactionsErrors.resx</DependentUpon>
     </Compile>
+    <Compile Update="MediatR\Email\EmailErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmailErrors.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="MediatR\Transactions\TransactionsErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TransactionsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Email\EmailErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmailErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
+using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
@@ -7,7 +8,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update
 {
-    public class UpdateStreetcodeCategoryContentHandler
+    public class UpdateStreetcodeCategoryContentHandler : IRequestHandler<UpdateStreetcodeCategoryContentCommand, Result<StreetcodeCategoryContentDto>>
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
