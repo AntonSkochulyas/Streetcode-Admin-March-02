@@ -26,7 +26,7 @@ public class GetAllSubtitlesHandler : IRequestHandler<GetAllSubtitlesQuery, Resu
 
         if (subtitles is null)
         {
-            const string errorMsg = $"Cannot find any subtitles";
+            string errorMsg = SubtitleErrors.GetAllSubtitlesHandlerCanNotFindAnySubtitlesError;
 
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));

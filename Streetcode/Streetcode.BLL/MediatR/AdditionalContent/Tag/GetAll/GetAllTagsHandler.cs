@@ -28,7 +28,7 @@ public class GetAllTagsHandler : IRequestHandler<GetAllTagsQuery, Result<IEnumer
 
         if (tags is null)
         {
-            const string errorMsg = $"Cannot find any tags";
+            string errorMsg = TagErrors.GetAllTagsHandlerCanNotFindAnyTagsError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
