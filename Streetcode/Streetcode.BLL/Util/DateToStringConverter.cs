@@ -18,22 +18,26 @@ namespace Streetcode.BLL.Util
 
         private static string GetSeason(DateTime dateTime)
         {
-            if (dateTime.Month < 3 || dateTime.Month == 12)
+            int month = dateTime.Month;
+
+            switch (month)
             {
-                return "зима";
-            }
-            else if (dateTime.Month >= 3 && dateTime.Month < 6)
-            {
-                return "весна";
-            }
-            else if(dateTime.Month >= 6 && dateTime.Month < 9)
-            {
-                return "літо";
-            }
-            else
-            {
-                return "осінь";
+                case 12:
+                case 1:
+                case 2:
+                    return "зима";
+                case 3:
+                case 4:
+                case 5:
+                    return "весна";
+                case 6:
+                case 7:
+                case 8:
+                    return "літо";
+                default:
+                    return "осінь";
             }
         }
+
     }
 }

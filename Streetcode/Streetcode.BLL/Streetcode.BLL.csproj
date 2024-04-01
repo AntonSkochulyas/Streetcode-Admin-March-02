@@ -5,7 +5,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<CodeAnalysisRuleSet>../settings.ruleset</CodeAnalysisRuleSet>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,6 +61,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TagErrors.resx</DependentUpon>
     </Compile>
+    <Compile Update="MediatR\Locations\LocationsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocationsErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Email\EmailErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -81,6 +85,10 @@
     <EmbeddedResource Update="MediatR\AdditionalContent\Tag\TagErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TagErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Locations\LocationsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocationsErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Email\EmailErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
