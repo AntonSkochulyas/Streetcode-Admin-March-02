@@ -39,6 +39,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetByStreetcodeId
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<SourceLinkCategoryProfile>();
+                c.AddProfile<SourceLinkSubCategoryProfile>();
+                c.AddProfile<StreetcodeCategoryContentProfile>();
                 c.CreateMap<Image, ImageDto>();
             });
 

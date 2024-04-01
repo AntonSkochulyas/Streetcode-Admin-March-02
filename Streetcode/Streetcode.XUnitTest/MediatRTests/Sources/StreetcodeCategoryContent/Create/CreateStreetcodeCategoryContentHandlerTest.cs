@@ -1,27 +1,26 @@
 ﻿using AutoMapper;
-using FluentAssertions;
 using Moq;
-using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.Mapping.Media.Images;
 using Streetcode.BLL.Mapping.Sources;
-using Streetcode.BLL.MediatR.Newss.Create;
-using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create;
+using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.MediatRTests.Mocks;
 using Xunit;
+using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create;
+using Streetcode.DAL.Entities.Sources;
+using FluentAssertions;
 
-namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
+namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.Create
 {
-    public class CreateSourceLinkCategoryHandlerTest
+    public class CreateStreetcodeCategoryContentHandlerTest
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
 
-        public CreateSourceLinkCategoryHandlerTest()
+        public CreateStreetcodeCategoryContentHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetSourceRepositoryMock();
 
@@ -30,7 +29,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
                 c.AddProfile<SourceLinkCategoryProfile>();
                 c.AddProfile<SourceLinkSubCategoryProfile>();
                 c.AddProfile<StreetcodeCategoryContentProfile>();
-                c.AddProfile<ImageProfile>();
             });
 
             _mapper = mapperConfig.CreateMapper();
@@ -39,12 +37,12 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         }
 
         [Fact]
-        public async Task Handle_SourceLinkDtoIsNull_IsFailedShouldBeTrue()
+        public async Task Handle_StreetcodeCategoryContentDtoIsNull_IsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            SourceLinkCategoryDto? sourceLinkDto = null;
-            var request = new CreateSourceLinkCategoryCommand(sourceLinkDto);
+            var handler = new CreateStreetcodeCategoryContentHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
+            StreetcodeCategoryContentDto? streetcodeCategoryContentDto = null;
+            var request = new CreateStreetcodeCategoryContentCommand(streetcodeCategoryContentDto);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
@@ -57,14 +55,14 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         public async Task Handle_SourceLinkCategoryValidDto_IsSuccessShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            SourceLinkCategoryDto? sourceLinkCategoryDto = new SourceLinkCategoryDto()
+            var handler = new CreateStreetcodeCategoryContentHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
+            StreetcodeCategoryContentDto? streetcodeCategoryContentDto = new StreetcodeCategoryContentDto()
             {
-                Id = 1,
-                ImageId = 1,
-                Title = "Test1"
+                SourceLinkCategoryId = 1,
+                StreetcodeId = 1,
+                Text = "Test1"
             };
-            var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryDto);
+            var request = new CreateStreetcodeCategoryContentCommand(streetcodeCategoryContentDto);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
