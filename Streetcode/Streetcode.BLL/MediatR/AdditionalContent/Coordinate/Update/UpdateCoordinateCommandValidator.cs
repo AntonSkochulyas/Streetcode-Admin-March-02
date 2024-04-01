@@ -6,8 +6,8 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Update
     {
         public UpdateCoordinateCommandValidator()
         {
-            RuleFor(command => command.StreetcodeCoordinate.Latitude).NotEmpty().WithMessage("Latitude is required field.");
-            RuleFor(command => command.StreetcodeCoordinate.Longtitude).NotEmpty().WithMessage("Longtitude is required field.");
+            RuleFor(command => command.StreetcodeCoordinate.Latitude).NotEmpty().WithMessage(CoordinateErrors.UpdateCoordinateHandlerLatitudeIsRequiredError);
+            RuleFor(command => command.StreetcodeCoordinate.Longtitude).NotEmpty().WithMessage(CoordinateErrors.UpdateCoordinateHandlerLongtitudeIsRequiredError);
         }
     }
 }

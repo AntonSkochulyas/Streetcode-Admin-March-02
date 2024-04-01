@@ -8,11 +8,11 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create
         {
             RuleFor(command => command.StreetcodeCoordinate.Latitude)
                 .NotEmpty()
-                .WithMessage("Latitude is required field.");
+                .WithMessage(CoordinateErrors.CreateCoordinateCommandValidatorLatitudeIsRequiredError);
 
             RuleFor(command => command.StreetcodeCoordinate.Longtitude)
                 .NotEmpty()
-                .WithMessage("Longtitude is required field.");
+                .WithMessage(CoordinateErrors.CreateCoordinateCommandValidatorLongtitudeIsRequiredError);
         }
     }
 }

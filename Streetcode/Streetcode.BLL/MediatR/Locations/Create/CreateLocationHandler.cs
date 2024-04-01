@@ -27,7 +27,7 @@ namespace Streetcode.BLL.MediatR.Locations.Create
 
             if (newLocation is null)
             {
-                const string errorMsg = "Cannot convert null to location";
+                string errorMsg = LocationsErrors.CreateLocationHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -42,7 +42,7 @@ namespace Streetcode.BLL.MediatR.Locations.Create
             }
             else
             {
-                const string errorMsg = "Failed to create a location";
+                string errorMsg = LocationsErrors.CreateLocationHandlerCanNotCreateLocationError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
