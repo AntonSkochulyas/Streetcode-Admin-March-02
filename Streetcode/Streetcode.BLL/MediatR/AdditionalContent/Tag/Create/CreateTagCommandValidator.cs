@@ -9,6 +9,7 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.Create
         {
             _maxTitleLength = 50;
 
+            // Updated
             RuleFor(command => command.tag.Title)
                 .NotEmpty()
                 .WithMessage(TagErrors.CreateTagCommandValidatorTitleIsRequiredError)
