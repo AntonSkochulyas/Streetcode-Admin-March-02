@@ -51,7 +51,7 @@
 		<!-- The opening and closing braces for a C# statement have been omitted. -->
 		<Rule Id="SA1127" Action="Error" />
 		<!-- A generic constraint on a type or method declaration is on the same line as the declaration, within a C# code file. -->
-		<Rule Id="SA1508" Action="Error" />
+		<Rule Id="SA1508" Action="Warning" />
 		<!-- A closing brace within a C# element, statement, or expression is preceded by a blank line. -->
 		<Rule Id="SA1505" Action="Error" />
 		<!-- An opening brace within a C# element, statement, or expression is followed by a blank line. -->
