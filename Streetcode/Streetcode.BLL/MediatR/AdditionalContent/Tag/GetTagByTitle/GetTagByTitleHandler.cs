@@ -27,7 +27,7 @@ public class GetTagByTitleHandler : IRequestHandler<GetTagByTitleQuery, Result<T
 
         if (tag is null)
         {
-            string errorMsg = $"Cannot find any tag by the title: {request.Title}";
+            string errorMsg = string.Format(TagErrors.GetTagByTitleHandlerCanNotFindByTitleError, request.Title);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

@@ -27,7 +27,7 @@ public class GetSubtitleByIdHandler : IRequestHandler<GetSubtitleByIdQuery, Resu
 
         if (subtitle is null)
         {
-            string errorMsg = $"Cannot find a subtitle with corresponding id: {request.Id}";
+            string errorMsg = SubtitleErrors.GetSubtitleByIdHandlerCanNotFindByIdError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

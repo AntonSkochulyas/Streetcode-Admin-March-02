@@ -46,6 +46,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="MediatR\AdditionalContent\Coordinate\CoordinateErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CoordinateErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\AdditionalContent\Subtitle\SubtitleErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SubtitleErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\AdditionalContent\Tag\TagErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TagErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Locations\LocationsErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -59,6 +74,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="MediatR\AdditionalContent\Coordinate\CoordinateErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CoordinateErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\AdditionalContent\Subtitle\SubtitleErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubtitleErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\AdditionalContent\Tag\TagErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TagErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Locations\LocationsErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocationsErrors.Designer.cs</LastGenOutput>
