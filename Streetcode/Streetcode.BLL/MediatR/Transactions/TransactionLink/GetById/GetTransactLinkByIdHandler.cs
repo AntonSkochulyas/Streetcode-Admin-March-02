@@ -28,7 +28,7 @@ public class GetTransactLinkByIdHandler : IRequestHandler<GetTransactLinkByIdQue
 
         if (transactLink is null)
         {
-            string errorMsg = $"Cannot find any transaction link with corresponding id: {request.Id}";
+            string errorMsg = string.Format(TransactionsErrors.GetTransactLinkByIdHandlerCanNotFindByIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
