@@ -31,9 +31,9 @@ namespace Streetcode.BLL.MediatR.Newss.GetById
                 predicate: sc => sc.Id == id,
                 include: scl => scl
                     .Include(sc => sc.Image)));
-            if(newsDTO is null)
+            if (newsDTO is null)
             {
-                string errorMsg = $"No news by entered Id - {id}";
+                string errorMsg = string.Format(NewsErrors.GetNewsByIdHandlerCanNotFindANewWithGivenIdError, request.id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }

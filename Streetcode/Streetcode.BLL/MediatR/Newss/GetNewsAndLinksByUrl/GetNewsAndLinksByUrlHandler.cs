@@ -34,7 +34,7 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
 
             if (newsDTO is null)
             {
-                string errorMsg = $"No news by entered Url - {url}";
+                string errorMsg = string.Format(NewsErrors.GetNewsAndLinksByUrlHandlerCanNotFindANewsWithGivenURLError, request.url);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -49,12 +49,12 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
             string prevNewsLink = null;
             string nextNewsLink = null;
 
-            if(newsIndex != 0)
+            if (newsIndex != 0)
             {
                 prevNewsLink = news[newsIndex - 1].URL;
             }
 
-            if(newsIndex != news.Count - 1)
+            if (newsIndex != news.Count - 1)
             {
                 nextNewsLink = news[newsIndex + 1].URL;
             }

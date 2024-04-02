@@ -31,9 +31,9 @@ namespace Streetcode.BLL.MediatR.Newss.GetByUrl
                 predicate: sc => sc.URL == url,
                 include: scl => scl
                     .Include(sc => sc.Image)));
-            if(newsDTO is null)
+            if (newsDTO is null)
             {
-                string errorMsg = $"No news by entered Url - {url}";
+                string errorMsg = string.Format(NewsErrors.GetNewsByUrlHandlerCanNotFindANewWithGivenURLError, request.url);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }

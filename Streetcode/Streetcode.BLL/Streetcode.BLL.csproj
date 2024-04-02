@@ -46,6 +46,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="MediatR\Newss\NewsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NewsErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Partners\PartnersErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -94,6 +99,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="MediatR\Newss\NewsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NewsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Partners\PartnersErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PartnersErrors.Designer.cs</LastGenOutput>
