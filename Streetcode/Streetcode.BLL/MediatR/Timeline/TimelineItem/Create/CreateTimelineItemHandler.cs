@@ -32,14 +32,14 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
 
             if (newTimelineItem == null)
             {
-                const string errorMsg = "Can not convert null to timeline item.";
+                string errorMsg = TimelineErrors.CreateTimelineItemHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
 
             if (request.TimelineItem?.HistoricalContexts is null)
             {
-                const string errorMsg = "HistoricalContexts is null";
+                string errorMsg = TimelineErrors.CreateTimelineItemHandlerHistoricalContextsIsNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -64,7 +64,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
             }
             else
             {
-                const string errorMsg = "Failed to create a timeline item.";
+                string errorMsg = TimelineErrors.CreateTimelineItemHandlerFailedToCreateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

@@ -29,7 +29,7 @@ namespace Streetcode.BLL.MediatR.Timeline.HistoricalContext.GetAll
 
             if (historicalContextItems is null)
             {
-                const string errorMsg = $"Cannot find any historical contexts";
+                string errorMsg = TimelineErrors.GetAllHistoricalContextHandlerCanNotFindAnyError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

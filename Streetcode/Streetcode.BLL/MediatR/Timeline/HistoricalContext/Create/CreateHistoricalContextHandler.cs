@@ -26,7 +26,7 @@ namespace Streetcode.BLL.MediatR.Timeline.HistoricalContext.Create
 
             if (newHistoricalContext == null)
             {
-                const string errorMsg = "Cannot convert null to historical context.";
+                string errorMsg = TimelineErrors.CreateHistoricalContextHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -40,7 +40,7 @@ namespace Streetcode.BLL.MediatR.Timeline.HistoricalContext.Create
             }
             else
             {
-                const string errorMsg = "Failed to create a historical context.";
+                string errorMsg = TimelineErrors.CreateHistoricalContextHandlerFailedToCreateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

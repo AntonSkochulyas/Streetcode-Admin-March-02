@@ -16,21 +16,21 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
 
             RuleFor(command => command.TimelineItem.Date)
                 .NotEmpty()
-                .WithMessage("Date is required.");
+                .WithMessage(TimelineErrors.CreateTimelineItemCommandValidatorDateIsRequiredError);
 
             RuleFor(command => command.TimelineItem.DateViewPattern)
                 .NotEmpty()
-                .WithMessage("DataViewPattern is required.");
+                .WithMessage(TimelineErrors.CreateTimelineItemCommandValidatorDataViewPatternIsRequiredError);
 
             RuleFor(command => command.TimelineItem.Title)
                 .NotEmpty()
-                .WithMessage("Title is required.")
+                .WithMessage(TimelineErrors.CreateTimelineItemCommandValidatorTitleIsRequiredError)
                 .MaximumLength(_titleMaxLength)
-                .WithMessage($"Title length must not be longer than {_titleMaxLength} symbols.");
+                .WithMessage(string.Format(TimelineErrors.CreateTimelineItemCommandValidatorTitleMaxLengthError, _titleMaxLength));
 
             RuleFor(command => command.TimelineItem.Description)
                 .MaximumLength(_descriptionMaxLength)
-                .WithMessage($"Title length must not be longer than {_descriptionMaxLength} symbols.");
+                .WithMessage(string.Format(TimelineErrors.CreateTimelineItemCommandValidatorDescriptionMaxLengthError, _descriptionMaxLength));
         }
     }
 }

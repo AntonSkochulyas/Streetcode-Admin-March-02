@@ -56,6 +56,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PaymentErrors.resx</DependentUpon>
     </Compile>
+    <Compile Update="MediatR\Timeline\TimelineErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TimelineErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Toponyms\ToponymsErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -101,6 +106,10 @@
     <EmbeddedResource Update="MediatR\Payment\PaymentErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PaymentErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Timeline\TimelineErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimelineErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Toponyms\ToponymsErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
