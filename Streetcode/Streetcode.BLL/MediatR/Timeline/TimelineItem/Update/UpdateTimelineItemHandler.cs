@@ -37,7 +37,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
 
             if (timelineToUpdate == null)
             {
-                string errorMsg = $"Cannot find a timeline with corresponding id: {request.TimelineItem?.Id}";
+                string errorMsg = string.Format(TimelineErrors.UpdateTimelineItemHandlerCanNotFindWIthGIvenIdError, request.TimelineItem?.Id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -54,7 +54,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
             }
             else
             {
-                const string errorMsg = $"Failed to update a timeline.";
+                string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

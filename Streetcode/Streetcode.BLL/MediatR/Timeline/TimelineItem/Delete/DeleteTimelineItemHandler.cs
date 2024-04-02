@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
 
             if (timilineToDelete == null)
             {
-                string errorMsg = $"Cannot find a timeline with corresponding id: {request.Id}";
+                string errorMsg = string.Format(TimelineErrors.DeleteTimelineItemHandlerCanNotFindWithIdError, request.Id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -38,7 +38,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
             }
             else
             {
-                const string errorMsg = $"Failed to delete a timeline.";
+                string errorMsg = TimelineErrors.DeleteTimelineItemHandlerFailedToDeleteError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
