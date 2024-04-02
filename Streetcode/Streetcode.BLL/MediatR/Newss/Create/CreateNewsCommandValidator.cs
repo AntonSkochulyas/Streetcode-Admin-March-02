@@ -13,23 +13,23 @@ namespace Streetcode.BLL.MediatR.Newss.Create
 
             RuleFor(command => command.newNews.Title)
                 .NotEmpty()
-                .WithMessage("Title is required.")
+                .WithMessage(NewsErrors.CreateNewsCommandValidatorTitleIsRequiredError)
                 .MaximumLength(_maxTitleLength)
-                .WithMessage($"Title length should not be longer than {_maxTitleLength} symbols.");
+                .WithMessage(string.Format(NewsErrors.CreateNewsCommandValidatorTitleMaxLengthError, _maxTitleLength));
 
             RuleFor(command => command.newNews.Text)
                .NotEmpty()
-               .WithMessage("Text is required.");
+               .WithMessage(NewsErrors.CreateNewsCommandValidatorTextIsRequiredError);
 
             RuleFor(command => command.newNews.URL)
                .NotEmpty()
-               .WithMessage("URL is required.")
+               .WithMessage(NewsErrors.CreateNewsCommandValidatorURLIsRequiredError)
                .MaximumLength(_maxURLLength)
-               .WithMessage($"URL length should not be longer than {_maxURLLength} symbols.");
+               .WithMessage(string.Format(NewsErrors.CreateNewsCommandValidatorURLMaxLengthError, _maxURLLength));
 
             RuleFor(command => command.newNews.CreationDate)
                 .NotEmpty()
-                .WithMessage("Creation date is required.");
+                .WithMessage(NewsErrors.CreateNewsCommandValidatorCreationDateIsRequiredError);
         }
     }
 }

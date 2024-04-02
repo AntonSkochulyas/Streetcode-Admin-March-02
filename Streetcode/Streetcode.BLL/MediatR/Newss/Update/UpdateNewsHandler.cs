@@ -28,7 +28,7 @@ namespace Streetcode.BLL.MediatR.Newss.Update
             var news = _mapper.Map<News>(request.news);
             if (news is null)
             {
-                const string errorMsg = $"Cannot convert null to news";
+                string errorMsg = NewsErrors.UpdateNewsHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -51,13 +51,13 @@ namespace Streetcode.BLL.MediatR.Newss.Update
             _repositoryWrapper.NewsRepository.Update(news);
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
 
-            if(resultIsSuccess)
+            if (resultIsSuccess)
             {
                 return Result.Ok(response);
             }
             else
             {
-                const string errorMsg = $"Failed to update news";
+                string errorMsg = NewsErrors.UpdateNewsHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

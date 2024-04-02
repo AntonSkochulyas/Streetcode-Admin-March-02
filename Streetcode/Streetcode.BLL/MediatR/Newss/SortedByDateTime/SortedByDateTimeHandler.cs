@@ -31,7 +31,7 @@ namespace Streetcode.BLL.MediatR.Newss.SortedByDateTime
                 include: cat => cat.Include(img => img.Image));
             if (news == null)
             {
-                const string errorMsg = "There are no news in the database";
+                string errorMsg = NewsErrors.SortedByDateTimeHandlerCanNotFindAnyNewsError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }

@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
             var news = await _repositoryWrapper.NewsRepository.GetFirstOrDefaultAsync(n => n.Id == id);
             if (news == null)
             {
-                string errorMsg = $"No news found by entered Id - {id}";
+                string errorMsg = string.Format(NewsErrors.DeleteNewsHandlerCanNotFindNewsWithGivenIdError, request.id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -35,13 +35,13 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
 
             _repositoryWrapper.NewsRepository.Delete(news);
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
-            if(resultIsSuccess)
+            if (resultIsSuccess)
             {
                 return Result.Ok(Unit.Value);
             }
             else
             {
-                string errorMsg = "Failed to delete news";
+                string errorMsg = NewsErrors.DeleteNewsHandlerFailedToDeleteError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
