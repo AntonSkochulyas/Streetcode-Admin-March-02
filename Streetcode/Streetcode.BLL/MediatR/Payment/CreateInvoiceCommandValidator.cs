@@ -8,7 +8,7 @@ namespace Streetcode.BLL.MediatR.Payment
         {
             RuleFor(command => command.Payment.Amount)
                 .NotEmpty()
-                .WithMessage("Amount is required.");
+                .WithMessage(PaymentErrors.CreateInvoiceCommandValidatorAmounIsRequiredError);
         }
     }
 }
