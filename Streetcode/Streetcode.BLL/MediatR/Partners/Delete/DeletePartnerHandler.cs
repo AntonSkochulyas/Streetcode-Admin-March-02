@@ -25,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Partners.Delete
             var partner = await _repositoryWrapper.PartnersRepository.GetFirstOrDefaultAsync(p => p.Id == request.id);
             if (partner == null)
             {
-                const string errorMsg = "No partner with such id";
+                string errorMsg = PartnersErrors.DeletePartnerHandlerNoPartnerWithGivenIdError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -37,7 +37,7 @@ namespace Streetcode.BLL.MediatR.Partners.Delete
                     _repositoryWrapper.SaveChanges();
                     return Result.Ok(_mapper.Map<PartnerDto>(partner));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logger.LogError(request, ex.Message);
                     return Result.Fail(ex.Message);

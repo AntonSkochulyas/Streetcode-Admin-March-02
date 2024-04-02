@@ -46,6 +46,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="MediatR\Partners\PartnersErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PartnersErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Payment\PaymentErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PaymentErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Toponyms\ToponymsErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -84,6 +94,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="MediatR\Partners\PartnersErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PartnersErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Payment\PaymentErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PaymentErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Toponyms\ToponymsErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ToponymsErrors.Designer.cs</LastGenOutput>
