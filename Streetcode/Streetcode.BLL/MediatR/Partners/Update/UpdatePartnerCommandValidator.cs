@@ -18,33 +18,33 @@ namespace Streetcode.BLL.MediatR.Partners.Update
 
             RuleFor(command => command.Partner.Title)
                 .NotEmpty()
-                .WithMessage("Title is required.")
+                .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorTitleIsRequiredError)
                 .MaximumLength(_titleMaxLength)
-                .WithMessage($"Title length must not be longer than {_titleMaxLength} symbols.");
+                .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorTitleMaxLengthError);
 
             RuleFor(command => command.Partner.LogoId)
                 .NotEmpty()
-                .WithMessage("LogoId is required.");
+                .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorLogoIdIsRequiredError);
 
             RuleFor(command => command.Partner.IsKeyPartner)
               .NotEmpty()
-              .WithMessage("IsKeyPartner is required.");
+              .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorIsKeyPartnerIsRequired);
 
             RuleFor(command => command.Partner.IsVisibleEverywhere)
              .NotEmpty()
-             .WithMessage("IsVisibleEverywhere is required.");
+             .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorIsVisibleEverywhereIsRequiredError);
 
             RuleFor(command => command.Partner.TargetUrl)
                .MaximumLength(_targetURLMaxLength)
-               .WithMessage($"TargetUrl length must not be longer than {_targetURLMaxLength} symbols.");
+               .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorTargetURLMaxLengthError);
 
             RuleFor(command => command.Partner.UrlTitle)
                .MaximumLength(_urlTitleMaxLength)
-               .WithMessage($"UrlTitle length must not be longer than {_urlTitleMaxLength} symbols.");
+               .WithMessage(string.Format(PartnersErrors.UpdatePartnerCommandValidatorURLTitleMaxLengthError, _urlTitleMaxLength));
 
             RuleFor(command => command.Partner.Description)
               .MaximumLength(_descriptionMaxLength)
-              .WithMessage($"Description length must not be longer than {_descriptionMaxLength} symbols.");
+              .WithMessage(string.Format(PartnersErrors.UpdatePartnerCommandValidatorDescriptionMaxLengthError, _descriptionMaxLength));
         }
     }
 }

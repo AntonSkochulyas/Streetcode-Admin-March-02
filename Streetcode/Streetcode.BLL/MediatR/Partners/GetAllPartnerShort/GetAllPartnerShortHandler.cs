@@ -27,7 +27,7 @@ namespace Streetcode.BLL.MediatR.Partners.GetAllPartnerShort
 
             if (partners is null)
             {
-                const string errorMsg = $"Cannot find any partners";
+                string errorMsg = PartnersErrors.GetAllPartnerShortHandlerCanNotFindAnyPartnersError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
