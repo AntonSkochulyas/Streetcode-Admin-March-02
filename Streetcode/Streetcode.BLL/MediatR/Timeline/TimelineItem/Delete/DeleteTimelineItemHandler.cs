@@ -9,13 +9,11 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
     public class DeleteTimelineItemHandler : IRequestHandler<DeleteTimelineItemCommand, Result<Unit>>
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
-        private readonly IBlobService _blobService;
         private readonly ILoggerService _logger;
 
-        public DeleteTimelineItemHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger)
+        public DeleteTimelineItemHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
-            _blobService = blobService;
             _logger = logger;
         }
 

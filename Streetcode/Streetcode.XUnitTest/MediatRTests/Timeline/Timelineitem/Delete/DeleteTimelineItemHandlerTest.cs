@@ -18,7 +18,6 @@
     public class DeleteTimelineItemHandlerTest
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
-        private readonly Mock<IBlobService> _mockBlob;
         private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
@@ -33,8 +32,6 @@
                 c.AddProfile<TimelineItemProfile>();
             });
 
-            _mockBlob = new Mock<IBlobService>();
-
             _mockLogger = new Mock<ILoggerService>();
         }
 
@@ -46,7 +43,7 @@
         public async Task DeleteWithFirstIdShouldNotBeNull()
         {
             // Arrange
-            var handler = new DeleteTimelineItemHandler(_mockRepository.Object, _mockBlob.Object, _mockLogger.Object);
+            var handler = new DeleteTimelineItemHandler(_mockRepository.Object, _mockLogger.Object);
 
             // Act
             var result = await handler.Handle(new DeleteTimelineItemCommand(1), CancellationToken.None);
