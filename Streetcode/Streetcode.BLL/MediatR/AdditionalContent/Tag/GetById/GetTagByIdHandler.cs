@@ -26,7 +26,7 @@ public class GetTagByIdHandler : IRequestHandler<GetTagByIdQuery, Result<TagDto>
 
         if (tag is null)
         {
-            string errorMsg = string.Format(TagErrors.GetTagByIdHandlerCanNotFindByIdError);
+            string errorMsg = TagErrors.GetTagByIdHandlerCanNotFindByIdError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
