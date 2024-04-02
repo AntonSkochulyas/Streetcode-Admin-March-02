@@ -1,6 +1,4 @@
-﻿using System;
-using FluentValidation;
-using Streetcode.BLL.MediatR.Team.Create;
+﻿using FluentValidation;
 
 namespace Streetcode.BLL.MediatR.Team.TeamMembersLinks.Create
 {
@@ -14,17 +12,17 @@ namespace Streetcode.BLL.MediatR.Team.TeamMembersLinks.Create
 
             RuleFor(command => command.teamMember.LogoType)
                 .NotEmpty()
-                .WithMessage("LogoType is required.");
+                .WithMessage(TeamErrors.CreateTeamLinkCommandValidatorLogoTypeIsRequiredError);
 
             RuleFor(command => command.teamMember.TargetUrl)
                 .NotEmpty()
-                .WithMessage("TargetUrl is required.")
+                .WithMessage(TeamErrors.CreateTeamLinkCommandValidatorTargetUrlIsRequiredError)
                 .MaximumLength(_targetUrlMaxLength)
-                .WithMessage($"TargetUrl length must not be longer than {_targetUrlMaxLength} symbols.");
+                .WithMessage(string.Format(TeamErrors.CreateTeamLinkCommandValidatorTargetUrlMaxLengthError, _targetUrlMaxLength));
 
             RuleFor(command => command.teamMember.TeamMemberId)
                 .NotEmpty()
-                .WithMessage("TeamMemberId is required.");
+                .WithMessage(TeamErrors.CreateTeamLinkCommandValidatorTeamMemberIdIsRequiredError);
         }
     }
 }
