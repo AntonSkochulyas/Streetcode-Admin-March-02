@@ -1,31 +1,34 @@
 ﻿using FluentValidation;
 using MediatR;
 
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+namespace Streetcode.BLL.ValidationBehaviors
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
     {
-        _validators = validators;
-    }
+        private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-    {
-        var context = new ValidationContext<TRequest>(request);
-
-        var failures = _validators
-            .Select(v => v.Validate(context))
-            .SelectMany(result => result.Errors)
-            .Where(failure => failure != null)
-            .ToList();
-
-        if (failures.Any())
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
         {
-            throw new ValidationException(failures);
+            _validators = validators;
         }
 
-        return next();
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        {
+            var context = new ValidationContext<TRequest>(request);
+
+            var failures = _validators
+                .Select(v => v.Validate(context))
+                .SelectMany(result => result.Errors)
+                .Where(failure => failure != null)
+                .ToList();
+
+            if (failures.Any())
+            {
+                throw new ValidationException(failures);
+            }
+
+            return next();
+        }
     }
 }

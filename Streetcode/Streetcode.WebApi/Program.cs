@@ -3,6 +3,7 @@ using FluentValidation;
 using Hangfire;
 using MediatR;
 using Streetcode.BLL.Services.BlobStorageService;
+using Streetcode.BLL.ValidationBehaviors;
 using Streetcode.WebApi.ExceptionHandlers;
 using Streetcode.WebApi.Extensions;
 using Streetcode.WebApi.Utils;

@@ -25,10 +25,8 @@ public class ResetFactOrderNumbersHandler : IRequestHandler<ResetFactOrderNumber
     public async Task<Result<IEnumerable<FactDto>>> Handle(ResetFactOrderNumbersCommand request, CancellationToken cancellationToken)
     {
         var facts =
-            (await _repositoryWrapper.FactRepository
-                .GetAllAsync(f => f.StreetcodeId == request.StreetcodeId))
-            .OrderBy(f => f.OrderNumber == null)
-            .ThenBy(f => f.OrderNumber);
+            await _repositoryWrapper.FactRepository
+                .GetAllAsync(f => f.StreetcodeId == request.StreetcodeId);
 
         if (facts is null)
         {
@@ -37,14 +35,16 @@ public class ResetFactOrderNumbersHandler : IRequestHandler<ResetFactOrderNumber
             return Result.Fail(new Error(errorMsg));
         }
 
-        if(!await ResetOrderNumbersToNull(facts))
+        var orderedFacts = facts.OrderBy(f => f.OrderNumber == null).ThenBy(f => f.OrderNumber);
+
+        if (!await ResetOrderNumbersToNull(orderedFacts))
         {
             const string errorMsg = $"Failed to reset order numbers";
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
 
-        if (!await SetOrderNumbersSequantially(facts))
+        if (!await SetOrderNumbersSequantially(orderedFacts))
         {
             const string errorMsg = $"Failed to set order numbers";
             _logger.LogError(request, errorMsg);

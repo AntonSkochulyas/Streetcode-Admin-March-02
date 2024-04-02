@@ -37,7 +37,18 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
                 return Result.Fail(errorMsg);
             }
 
-            var newHistoricalContextTimeline = new HistoricalContextTimeline() { HistoricalContextId = request.TimelineItem.HistoricalContexts.FirstOrDefault().Id, TimelineId = newTimelineItem.Id };
+            if (request.TimelineItem?.HistoricalContexts is null)
+            {
+                const string errorMsg = "HistoricalContexts is null";
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
+            }
+
+            var newHistoricalContextTimeline = new HistoricalContextTimeline()
+            {
+                HistoricalContextId = request.TimelineItem.HistoricalContexts.First().Id,
+                TimelineId = newTimelineItem.Id
+            };
 
             await _repositoryWrapper.HistoricalContextTimelineRepository.CreateAsync(newHistoricalContextTimeline);
 
