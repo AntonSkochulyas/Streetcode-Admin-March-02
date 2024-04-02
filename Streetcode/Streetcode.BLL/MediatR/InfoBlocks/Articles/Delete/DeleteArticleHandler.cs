@@ -25,7 +25,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete
             if (article == null)
             {
                 string errorMsg = $"No article found by entered Id - {id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -40,7 +42,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete
             else
             {
                 string errorMsg = "Failed to delete article";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

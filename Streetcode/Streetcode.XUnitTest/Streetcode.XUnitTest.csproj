@@ -47,6 +47,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\Delete\" />
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\GetAll\" />
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\GetById\" />
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\Update\" />
+	  <Folder Include="MediatRTests\InfoBlocks\AuthorsInfoes\AuthorShips\" />
+	  <Folder Include="MediatRTests\InfoBlocks\AuthorsInfoes\AuthorsHyperLinks\" />
+	  <Folder Include="MediatRTests\InfoBlocks\InfoBlockss\" />
 	  <Folder Include="MediatRTests\Media\Audio\Create\" />
 	  <Folder Include="MediatRTests\Media\Audio\Delete\" />
 	  <Folder Include="MediatRTests\Media\Audio\GetAll\" />

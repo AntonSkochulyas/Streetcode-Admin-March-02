@@ -27,7 +27,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.GetById
             if (dictionaryItem is null)
             {
                 string errorMsg = $"Cannot find a dictionary item with corresponding id: {request.Id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 

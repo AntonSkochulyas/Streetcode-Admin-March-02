@@ -3,7 +3,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks
 {
-    public interface IAuthorHyperLinkRepository : IRepositoryBase<AuthorHyperLink>
+    public interface IAuthorHyperLinkRepository : IRepositoryBase<AuthorShipHyperLink>
     {
     }
 }

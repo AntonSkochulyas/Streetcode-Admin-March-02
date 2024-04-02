@@ -29,7 +29,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Update
             if (article is null)
             {
                 const string errorMsg = $"Cannot convert null to article";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 
@@ -46,7 +48,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Update
             else
             {
                 const string errorMsg = $"Failed to update article";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

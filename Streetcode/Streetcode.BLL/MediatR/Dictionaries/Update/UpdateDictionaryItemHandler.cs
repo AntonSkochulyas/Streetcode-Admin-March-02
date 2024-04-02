@@ -29,7 +29,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Update
             if (dictionaryItem is null)
             {
                 const string errorMsg = $"Cannot convert null to dictionary item";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 
@@ -46,7 +48,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Update
             else
             {
                 const string errorMsg = $"Failed to update dictionary item";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

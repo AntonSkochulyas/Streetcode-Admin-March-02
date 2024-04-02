@@ -8,6 +8,7 @@ namespace Streetcode.DAL.Entities.InfoBlocks
     public class InfoBlock
     {
         private AuthorShip? _authorShip;
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

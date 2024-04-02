@@ -27,7 +27,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.GetById
             if (authorShip is null)
             {
                 string errorMsg = $"Cannot find an authorship with corresponding id: {request.Id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 

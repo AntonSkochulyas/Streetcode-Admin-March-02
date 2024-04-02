@@ -28,7 +28,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Create
             if (newAuthorShip is null)
             {
                 const string errorMsg = "Cannot convert null to authorship";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -43,7 +45,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Create
             else
             {
                 const string errorMsg = "Failed to create an authorship";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

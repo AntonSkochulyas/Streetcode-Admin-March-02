@@ -27,7 +27,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.GetById
             if (article is null)
             {
                 string errorMsg = $"Cannot find an article with corresponding id: {request.Id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 

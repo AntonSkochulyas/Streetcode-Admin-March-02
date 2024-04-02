@@ -11,33 +11,33 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLin
     public class AuthorHyperLinkController : BaseApiController
     {
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AuthorsHyperLinkDto authorHyperLink)
+        public async Task<IActionResult> Create([FromBody] AuthorShipHyperLinkDto authorHyperLink)
         {
-            return HandleResult(await Mediator.Send(new CreateAuthorsHyperLinkCommand(authorHyperLink)));
+            return HandleResult(await Mediator.Send(new CreateAuthorShipHyperLinkCommand(authorHyperLink)));
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return HandleResult(await Mediator.Send(new DeleteAuthorsHyperLinkCommand(id)));
+            return HandleResult(await Mediator.Send(new DeleteAuthorShipHyperLinkCommand(id)));
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            return HandleResult(await Mediator.Send(new GetAuthorsHyperLinksByIdQuery(id)));
+            return HandleResult(await Mediator.Send(new GetAuthorShipHyperLinksByIdQuery(id)));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return HandleResult(await Mediator.Send(new GetAllAuthorsHyperLinksQuery()));
+            return HandleResult(await Mediator.Send(new GetAllAuthorShipHyperLinksQuery()));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] AuthorsHyperLinkDto authorHyperLink)
+        public async Task<IActionResult> Update([FromBody] AuthorShipHyperLinkDto authorHyperLink)
         {
-            return HandleResult(await Mediator.Send(new UpdateAuthorsHyperLinkCommand(authorHyperLink)));
+            return HandleResult(await Mediator.Send(new UpdateAuthorShipHyperLinkCommand(authorHyperLink)));
         }
     }
 }

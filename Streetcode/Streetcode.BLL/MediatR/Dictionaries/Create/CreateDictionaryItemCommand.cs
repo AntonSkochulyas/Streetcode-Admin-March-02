@@ -4,5 +4,5 @@ using Streetcode.BLL.Dto.Dictionaries;
 
 namespace Streetcode.BLL.MediatR.Dictionaries.Create
 {
-    public record CreateDictionaryItemCommand(DictionaryItemDto newDictionaryItem) : IRequest<Result<DictionaryItemDto>>;
+    public record CreateDictionaryItemCommand(DictionaryItemDto? newDictionaryItem) : IRequest<Result<DictionaryItemDto>>;
 }

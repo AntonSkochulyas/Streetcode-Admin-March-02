@@ -25,7 +25,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
             if (authorShip == null)
             {
                 string errorMsg = $"No authorship found by entered Id - {id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -40,7 +42,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
             else
             {
                 string errorMsg = "Failed to delete authorship";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

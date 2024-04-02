@@ -63,7 +63,7 @@ public interface IRepositoryWrapper
     IInfoBlockRepository InfoBlockRepository { get; }
     IArticleRepository ArticleRepository { get; }
     IAuthorShipRepository AuthorShipRepository { get; }
-    IAuthorHyperLinkRepository AuthorHyperLinkRepository { get; }
+    IAuthorHyperLinkRepository AuthorShipHyperLinkRepository { get; }
 
     public int SaveChanges();
 

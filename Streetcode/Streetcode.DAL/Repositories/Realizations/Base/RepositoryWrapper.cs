@@ -641,13 +641,13 @@ public class RepositoryWrapper : IRepositoryWrapper
         }
     }
 
-    public IAuthorHyperLinkRepository AuthorHyperLinkRepository
+    public IAuthorHyperLinkRepository AuthorShipHyperLinkRepository
     {
         get
         {
             if (_authorHyperLinkRepository is null)
             {
-                _authorHyperLinkRepository = new AuthorHyperLinkRepository(_streetcodeDbContext);
+                _authorHyperLinkRepository = new AuthorShipHyperLinkRepository(_streetcodeDbContext);
             }
 
             return _authorHyperLinkRepository;

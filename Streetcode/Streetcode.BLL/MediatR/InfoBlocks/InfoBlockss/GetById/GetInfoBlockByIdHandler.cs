@@ -27,7 +27,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.GetById
             if (infoBlock is null)
             {
                 string errorMsg = $"Cannot find a info block with corresponding id: {request.Id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 

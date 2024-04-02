@@ -4,5 +4,5 @@ using Streetcode.BLL.Dto.InfoBlocks.Articles;
 
 namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Create
 {
-    public record CreateArticleCommand(ArticleDto newArticle) : IRequest<Result<ArticleDto>>;
+    public record CreateArticleCommand(ArticleDto? newArticle) : IRequest<Result<ArticleDto>>;
 }

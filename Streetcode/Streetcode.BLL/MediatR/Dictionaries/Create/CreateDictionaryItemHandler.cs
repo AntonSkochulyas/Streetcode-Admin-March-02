@@ -28,7 +28,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Create
             if (newDictionaryItem is null)
             {
                 const string errorMsg = "Cannot convert null to dictionary item";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -43,7 +45,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Create
             else
             {
                 const string errorMsg = "Failed to create a dictionary item";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

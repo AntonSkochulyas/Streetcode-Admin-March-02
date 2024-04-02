@@ -7,6 +7,6 @@ namespace Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes
         public int Id { get; set; }
         public string? Text { get; set; }
         public int AuthorShipHyperLinkId { get; set; }
-        public AuthorHyperLink? AuthorShipHyperLink { get; set; }
+        public AuthorShipHyperLink? AuthorShipHyperLink { get; set; }
     }
 }

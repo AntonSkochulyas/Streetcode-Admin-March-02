@@ -7,6 +7,7 @@ namespace Streetcode.BLL.Dto.InfoBlocks
     {
         private string? _videoURL;
         private AuthorShip? _authorShip;
+
         public int Id { get; set; }
         public int ArticleId { get; set; }
         public Article? Article { get; set; }
@@ -48,7 +49,7 @@ namespace Streetcode.BLL.Dto.InfoBlocks
 
         private bool IsValidYouTubeUrl(string url)
         {
-            Uri uriResult;
+            Uri? uriResult;
             bool isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out uriResult)
                               && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
                               && uriResult.Host == "www.youtube.com";

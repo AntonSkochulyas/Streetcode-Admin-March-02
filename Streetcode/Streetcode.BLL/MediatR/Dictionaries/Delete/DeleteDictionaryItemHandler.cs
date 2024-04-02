@@ -25,7 +25,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Delete
             if (dictionaryItem == null)
             {
                 string errorMsg = $"No dictionary item found by entered Id - {id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -40,7 +42,9 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Delete
             else
             {
                 string errorMsg = "Failed to delete dictionary item";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

@@ -25,7 +25,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Delete
             if (infoBlock == null)
             {
                 string errorMsg = $"No info block found by entered Id - {id}";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -40,7 +42,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Delete
             else
             {
                 string errorMsg = "Failed to delete info block";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

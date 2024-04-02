@@ -28,7 +28,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
             if (newInfoBlock is null)
             {
                 const string errorMsg = "Cannot convert null to info block";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(errorMsg);
             }
 
@@ -43,7 +45,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
             else
             {
                 const string errorMsg = "Failed to create a info block";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }

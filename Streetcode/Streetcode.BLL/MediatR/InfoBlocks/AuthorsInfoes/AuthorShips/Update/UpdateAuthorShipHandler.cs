@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.InfoBlocks.Articles.Update;
-using Streetcode.DAL.Entities.InfoBlocks.Articles;
 using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -32,7 +29,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Update
             if (authorShip is null)
             {
                 const string errorMsg = $"Cannot convert null to authorship";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
 
@@ -49,7 +48,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Update
             else
             {
                 const string errorMsg = $"Failed to update authorship";
+
                 _logger.LogError(request, errorMsg);
+
                 return Result.Fail(new Error(errorMsg));
             }
         }
