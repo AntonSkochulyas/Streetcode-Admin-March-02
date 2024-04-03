@@ -104,6 +104,8 @@
     </Compile>
     <Compile Update="MediatR\Team\TeamErrors.Designer.cs">
       <DependentUpon>TeamErrors.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
 
