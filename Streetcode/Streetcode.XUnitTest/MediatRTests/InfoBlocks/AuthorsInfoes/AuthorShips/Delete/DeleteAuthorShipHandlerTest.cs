@@ -18,16 +18,16 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
     /// </summary>
     public class DeleteAuthorShipHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteAuthorShipHandlerTest"/> class.
         /// </summary>
         public DeleteAuthorShipHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteAuthorShipHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteAuthorShipHandler(_mockRepository.Object, _mockLogger.Object);
 
             int wrongId = 10;
             var request = new DeleteAuthorShipCommand(wrongId);
@@ -58,7 +58,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteAuthorShipHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteAuthorShipHandler(_mockRepository.Object, _mockLogger.Object);
 
             int correctId = 1;
             var request = new DeleteAuthorShipCommand(correctId);
@@ -67,7 +67,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.AuthorShipRepository.Delete(It.IsAny<AuthorShip>()), Times.Once);
+            _mockRepository.Verify(x => x.AuthorShipRepository.Delete(It.IsAny<AuthorShip>()), Times.Once);
         }
     }
 }

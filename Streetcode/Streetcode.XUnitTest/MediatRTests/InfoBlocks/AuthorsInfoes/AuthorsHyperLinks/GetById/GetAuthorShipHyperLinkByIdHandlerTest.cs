@@ -23,25 +23,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
     /// </summary>
     public class GetAuthorShipHyperLinkByIdHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAuthorShipHyperLinkByIdHandlerTest"/> class.
         /// </summary>
         public GetAuthorShipHyperLinkByIdHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipHyperLinkProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerGetAuthorShipHyperLinkByValidIdResultShouldBeNotNull()
         {
             // Arrange
-            var handler = new GetAuthorShipHyperLinksByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAuthorShipHyperLinksByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int validId = 1;
             var request = new GetAuthorShipHyperLinksByIdQuery(validId);
 
@@ -71,7 +71,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerGetAuthorShipHyperLinkByInvalidIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new GetAuthorShipHyperLinksByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAuthorShipHyperLinksByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int invalidId = 10;
             var request = new GetAuthorShipHyperLinksByIdQuery(invalidId);
 
@@ -90,7 +90,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerGetAuthorShipHyperLinkByValidIdResultShouldBeTypeOfAuthorShipHyperLinkDto()
         {
             // Arrange
-            var handler = new GetAuthorShipHyperLinksByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAuthorShipHyperLinksByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int validId = 1;
             var request = new GetAuthorShipHyperLinksByIdQuery(validId);
 

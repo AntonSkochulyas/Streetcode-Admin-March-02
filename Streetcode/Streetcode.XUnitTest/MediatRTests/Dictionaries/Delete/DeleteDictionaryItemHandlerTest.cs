@@ -20,22 +20,22 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
     /// </summary>
     public class DeleteDictionaryItemHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteDictionaryItemHandlerTest"/> class.
         /// </summary>
         public DeleteDictionaryItemHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetDictionaryItemMock();
+            _mockRepository = RepositoryMocker.GetDictionaryItemRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<DictionaryItemProfile>();
             });
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteDictionaryItemHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteDictionaryItemHandler(_mockRepository.Object, _mockLogger.Object);
 
             int wrongId = 10;
             var request = new DeleteDictionaryItemCommand(wrongId);
@@ -66,7 +66,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteDictionaryItemHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteDictionaryItemHandler(_mockRepository.Object, _mockLogger.Object);
 
             int correctId = 1;
             var request = new DeleteDictionaryItemCommand(correctId);
@@ -75,7 +75,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.DictionaryItemRepository.Delete(It.IsAny<DictionaryItem>()), Times.Once);
+            _mockRepository.Verify(x => x.DictionaryItemRepository.Delete(It.IsAny<DictionaryItem>()), Times.Once);
         }
     }
 }

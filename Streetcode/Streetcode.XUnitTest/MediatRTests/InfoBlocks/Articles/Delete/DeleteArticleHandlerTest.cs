@@ -18,16 +18,16 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
     /// </summary>
     public class DeleteArticleHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteArticleHandlerTest"/> class.
         /// </summary>
         public DeleteArticleHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetArticleRepositoryMock();
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockRepository = RepositoryMocker.GetArticleRepositoryMock();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteArticleHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object);
 
             int wrongId = 10;
             var request = new DeleteArticleCommand(wrongId);
@@ -58,7 +58,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteArticleHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object);
 
             int correctId = 1;
             var request = new DeleteArticleCommand(correctId);
@@ -67,7 +67,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.ArticleRepository.Delete(It.IsAny<Article>()), Times.Once);
+            _mockRepository.Verify(x => x.ArticleRepository.Delete(It.IsAny<Article>()), Times.Once);
         }
     }
 }

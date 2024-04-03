@@ -20,25 +20,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Create
     /// </summary>
     public class CreateArticleHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateArticleHandlerTest"/> class.
         /// </summary>
         public CreateArticleHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetArticleRepositoryMock();
+            _mockRepository = RepositoryMocker.GetArticleRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<ArticleProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Create
         public async Task HandleArticleDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateArticleHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateArticleHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             ArticleDto? articleDto = null;
 
@@ -70,7 +70,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Create
         public async Task HandleValidDtoIsSuccessShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateArticleHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateArticleHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             ArticleDto? articleDto = new ArticleDto()
             {

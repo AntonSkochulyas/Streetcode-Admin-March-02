@@ -20,25 +20,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
     /// </summary>
     public class GetAllAuthorShipHyperLinksHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly IMapper mapper;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly IMapper _mapper;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAllAuthorShipHyperLinksHandlerTest"/> class.
         /// </summary>
         public GetAllAuthorShipHyperLinksHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipHyperLinkProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task GetAllNotNullOrEmptyTest()
         {
             // Arrange
-            var handler = new GetAllAuthorShipHyperLinksHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAllAuthorShipHyperLinksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
             var result = await handler.Handle(new GetAllAuthorShipHyperLinksQuery(), CancellationToken.None);
@@ -66,7 +66,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task GetAllCountShouldBeFour()
         {
             // Arrange
-            var handler = new GetAllAuthorShipHyperLinksHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAllAuthorShipHyperLinksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
             var result = await handler.Handle(new GetAllAuthorShipHyperLinksQuery(), CancellationToken.None);
@@ -83,7 +83,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task GetAllShouldBeTypeListAuthorShipHyperLinkDTO()
         {
             // Arrange
-            var handler = new GetAllAuthorShipHyperLinksHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAllAuthorShipHyperLinksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
             var result = await handler.Handle(new GetAllAuthorShipHyperLinksQuery(), CancellationToken.None);

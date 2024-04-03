@@ -18,16 +18,16 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Delete
     /// </summary>
     public class DeleteInfoBlockHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteInfoBlockHandlerTest"/> class.
         /// </summary>
         public DeleteInfoBlockHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetInfoBlockRepositoryMock();
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockRepository = RepositoryMocker.GetInfoBlockRepositoryMock();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Delete
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteInfoBlockHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteInfoBlockHandler(_mockRepository.Object, _mockLogger.Object);
 
             int wrongId = 10;
             var request = new DeleteInfoBlockCommand(wrongId);
@@ -58,7 +58,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Delete
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteInfoBlockHandler(this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new DeleteInfoBlockHandler(_mockRepository.Object, _mockLogger.Object);
 
             int correctId = 1;
             var request = new DeleteInfoBlockCommand(correctId);
@@ -67,7 +67,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Delete
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.InfoBlockRepository.Delete(It.IsAny<InfoBlock>()), Times.Once);
+            _mockRepository.Verify(x => x.InfoBlockRepository.Delete(It.IsAny<InfoBlock>()), Times.Once);
         }
     }
 }

@@ -22,28 +22,28 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
     /// </summary>
     public class UpdateDictionaryItemHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
-        private readonly Mock<IBlobService> blobService;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
+        private readonly Mock<IBlobService> _blobService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateDictionaryItemHandlerTest"/> class.
         /// </summary>
         public UpdateDictionaryItemHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetDictionaryItemMock();
+            _mockRepository = RepositoryMocker.GetDictionaryItemRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<DictionaryItemProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
 
-            this.blobService = new Mock<IBlobService>();
+            _blobService = new Mock<IBlobService>();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
         public async Task HandlerDictionaryItemDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateDictionaryItemHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateDictionaryItemHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             DictionaryItemDto? dictionaryItemDto = null;
 
@@ -75,7 +75,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
         public async Task HandlerDictionaryItemDtoIsValidIsSucessShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateDictionaryItemHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateDictionaryItemHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             DictionaryItemDto? dictionaryItemDto = new DictionaryItemDto()
             {
@@ -101,7 +101,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
         public async Task HandlerDictionaryItemDtoIsValidUpdateDictionaryItemIsCalled()
         {
             // Arrange
-            var handler = new UpdateDictionaryItemHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateDictionaryItemHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             DictionaryItemDto? dictionaryItemDto = new DictionaryItemDto()
             {
@@ -116,7 +116,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.DictionaryItemRepository.Update(It.IsAny<DictionaryItem>()), Times.Once);
+            _mockRepository.Verify(x => x.DictionaryItemRepository.Update(It.IsAny<DictionaryItem>()), Times.Once);
         }
     }
 }

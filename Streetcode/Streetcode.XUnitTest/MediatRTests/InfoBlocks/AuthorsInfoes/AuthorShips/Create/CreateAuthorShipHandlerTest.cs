@@ -21,25 +21,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
     /// </summary>
     public class CreateAuthorShipHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAuthorShipHandlerTest"/> class.
         /// </summary>
         public CreateAuthorShipHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandleAuthorShipDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateAuthorShipHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateAuthorShipHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             AuthorShipDto? authorShipDto = null;
 
@@ -71,7 +71,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandleValidDtoIsSuccessShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateAuthorShipHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateAuthorShipHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             AuthorShipDto? authorShipDto = new AuthorShipDto()
             {
