@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Streetcode.DAL.Entities.Partners;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
@@ -208,6 +209,40 @@ namespace Streetcode.XUnitTest.Repositories.Mocks
                 .Callback((StreetcodeContent streetcode) =>
                 {
                     streetcodeContents.Remove(streetcode);
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetPartnersRepositoryMock()
+        {
+            var partners = new List<Partner>()
+            {
+                new Partner() { Id = 1, Title = "First partner" },
+                new Partner() { Id = 2, Title = "Second partner" },
+                new Partner() { Id = 3, Title = "Third partner" },
+                new Partner() { Id = 4, Title = "Fourth partner" },
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.PartnersRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<Partner, bool>>>(),
+                    It.IsAny<Func<IQueryable<Partner>, IIncludableQueryable<Partner, object>>>()))
+                .ReturnsAsync(partners);
+
+            mockRepo.Setup(x => x.PartnersRepository.Create(It.IsAny<Partner>()))
+                .Returns((Partner partner) =>
+                {
+                    partners.Add(partner);
+                    return partner;
+                });
+
+            mockRepo.Setup(x => x.PartnersRepository.Delete(It.IsAny<Partner>()))
+                .Callback((Partner partner) =>
+                {
+                    partners.Remove(partner);
                 });
 
             return mockRepo;
