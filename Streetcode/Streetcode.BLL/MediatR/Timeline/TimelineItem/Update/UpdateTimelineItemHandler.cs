@@ -42,7 +42,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
                 return Result.Fail(new Error(errorMsg));
             }
 
-            await UpdateTimeline(timelineToUpdate, request.TimelineItem);
+            await UpdateTimeline(timelineToUpdate, request.TimelineItem!);
 
             _repositoryWrapper.TimelineRepository.Update(timelineToUpdate);
 
@@ -60,7 +60,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
             }
         }
 
-        // Need bug fixes
         private async Task UpdateTimeline(DAL.Entities.Timeline.TimelineItem timelineToUpdate, TimelineItemDto timelineThatUpdate)
         {
             timelineToUpdate.Title = timelineThatUpdate.Title;
