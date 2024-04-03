@@ -21,17 +21,30 @@ public class UpdateFactHandler : IRequestHandler<UpdateFactCommand, Result<FactD
 
     public async Task<Result<FactDto>> Handle(UpdateFactCommand request, CancellationToken cancellationToken)
     {
+        if (await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.Id) is null)
+        {
+            return LogAndReturnError($"The fact with id {request.Fact.Id} does not exist", request);
+        }
+
+        if (await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.StreetcodeId) is null)
+        {
+            return LogAndReturnError($"The streetcode with id {request.Fact.StreetcodeId} does not exist", request);
+        }
+
+        if (await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.ImageId) is null)
+        {
+            return LogAndReturnError($"The image with id {request.Fact.ImageId} does not exist", request);
+        }
+
         var fact = _mapper.Map<DAL.Entities.Streetcode.TextContent.Fact>(request.Fact);
+
         if (fact is null)
         {
-            const string errorMsg = $"Cannot convert null to fact";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            return LogAndReturnError($"Cannot convert null to fact", request);
         }
 
         _repositoryWrapper.FactRepository.Update(fact);
 
-        // TODO: Validate fact.StreetcodeId and fact.ImageId because of exception in SaveChangesAsync if it doesn't exist
         var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
         if (resultIsSuccess)
         {
@@ -40,9 +53,13 @@ public class UpdateFactHandler : IRequestHandler<UpdateFactCommand, Result<FactD
         }
         else
         {
-            const string errorMsg = $"Failed to update fact";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            return LogAndReturnError($"Failed to update fact", request);
         }
+    }
+
+    private Result<FactDto> LogAndReturnError(string errorMsg, UpdateFactCommand request)
+    {
+        _logger.LogError(request, errorMsg);
+        return Result.Fail(new Error(errorMsg));
     }
 }
