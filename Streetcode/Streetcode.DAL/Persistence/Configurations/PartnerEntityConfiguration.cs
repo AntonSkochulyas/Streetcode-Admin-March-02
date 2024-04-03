@@ -15,6 +15,22 @@ namespace Streetcode.DAL.Persistence.Configurations
 
             builder.Property(p => p.IsKeyPartner)
                 .HasDefaultValue("false");
+
+            builder
+                .Property(s => s.Title)
+                .HasMaxLength(255);
+
+            builder
+                .Property(s => s.UrlTitle)
+                .HasMaxLength(255);
+
+            builder
+                .Property(s => s.TargetUrl)
+                .HasMaxLength(255);
+
+            builder
+                .Property(s => s.Description)
+                .HasMaxLength(600);
         }
     }
 }

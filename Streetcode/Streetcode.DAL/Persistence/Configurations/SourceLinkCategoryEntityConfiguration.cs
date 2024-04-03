@@ -12,6 +12,10 @@ namespace Streetcode.DAL.Persistence.Configurations
              .WithOne(p => p.SourceLinkCategory)
              .HasForeignKey(d => d.SourceLinkCategoryId)
              .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Property(s => s.Title)
+                .HasMaxLength(100);
         }
     }
 }

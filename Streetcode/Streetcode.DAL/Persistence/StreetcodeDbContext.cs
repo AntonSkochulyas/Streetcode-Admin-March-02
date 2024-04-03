@@ -73,38 +73,72 @@ public class StreetcodeDbContext : DbContext
 
         modelBuilder.UseCollation("SQL_Ukrainian_CP1251_CI_AS");
 
-        modelBuilder.ApplyConfiguration(new StatisticRecordEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ArtEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new NewsEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new TeamMemberEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new TeamMemberPositionsEntityConfigurations());
-
-        modelBuilder.ApplyConfiguration(new TagEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new StreetcodeTagIndexEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ToponymEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new PartnerEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new HistoricalContextTimelineEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new SourceLinkCategoryEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ImageEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new RelatedFigureEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new StreetcodeArtEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new StreetcodeContentEntityConfiguration());
-
-        modelBuilder.ApplyConfiguration(new RelatedTermEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new AudioEntityConfiguration());
 
         modelBuilder.ApplyConfiguration(new CoordinateEntityConfiguration());
 
         modelBuilder.ApplyConfiguration(new FactEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new HistoricalContextEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new HistoricalContextTimelineEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new ImageDetailsEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new ImageEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new NewsEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new PartnerEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new PartnerSourceLinkEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new PersonStreetcodeEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new PositionsEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new RelatedFigureEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new RelatedTermEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new ResponseEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new SourceLinkCategoryEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new StatisticRecordEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new StreetcodeArtEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new StreetcodeCategoryContentEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new StreetcodeContentEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new StreetcodeTagIndexEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new SubtitleEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TagEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TeamMemberEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TeamMemberLinkEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TeamMemberPositionsEntityConfigurations());
+
+        modelBuilder.ApplyConfiguration(new TermEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TextEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TimelineItemEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new ToponymEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new TransactionLinkEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new VideoEntityConfiguration());
     }
 }

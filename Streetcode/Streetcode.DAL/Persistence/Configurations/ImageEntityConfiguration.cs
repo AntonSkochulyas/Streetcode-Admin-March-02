@@ -33,6 +33,14 @@ namespace Streetcode.DAL.Persistence.Configurations
                 .WithOne(s => s.Image)
                 .HasForeignKey(d => d.ImageId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Property(s => s.BlobName)
+                .HasMaxLength(100);
+
+            builder
+                .Property(s => s.MimeType)
+                .HasMaxLength(10);
         }
     }
 }

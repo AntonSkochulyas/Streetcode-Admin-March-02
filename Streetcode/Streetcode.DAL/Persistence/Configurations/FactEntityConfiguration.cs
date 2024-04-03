@@ -11,5 +11,17 @@ internal class FactEntityConfiguration : IEntityTypeConfiguration<Fact>
     {
         builder.HasIndex(f => new { f.StreetcodeId, f.OrderNumber })
             .IsUnique();
+
+        builder
+            .Property(s => s.Title)
+            .HasMaxLength(100);
+
+        builder
+            .Property(s => s.FactContent)
+            .HasMaxLength(600);
+
+        builder
+            .Property(s => s.ImageDescription)
+            .HasMaxLength(200);
     }
 }

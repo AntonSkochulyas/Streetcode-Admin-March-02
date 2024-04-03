@@ -21,6 +21,18 @@ namespace Streetcode.DAL.Persistence.Configurations
             builder.HasMany(x => x.TeamMemberLinks)
                 .WithOne(x => x.TeamMember)
                 .HasForeignKey(x => x.TeamMemberId);
+
+            builder
+                .Property(s => s.FirstName)
+                .HasMaxLength(50);
+
+            builder
+                .Property(s => s.LastName)
+                .HasMaxLength(50);
+
+            builder
+                .Property(s => s.Description)
+                .HasMaxLength(150);
         }
     }
 }

@@ -8,11 +8,16 @@ namespace Streetcode.DAL.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.HasMany(t => t.Streetcodes)
-            .WithMany(s => s.Tags)
-            .UsingEntity<StreetcodeTagIndex>(
-            sp => sp.HasOne(x => x.Streetcode).WithMany(x => x.StreetcodeTagIndices).HasForeignKey(x => x.StreetcodeId),
-            sp => sp.HasOne(x => x.Tag).WithMany(x => x.StreetcodeTagIndices).HasForeignKey(x => x.TagId));
+            builder
+                .HasMany(t => t.Streetcodes)
+                .WithMany(s => s.Tags)
+                .UsingEntity<StreetcodeTagIndex>(
+                sp => sp.HasOne(x => x.Streetcode).WithMany(x => x.StreetcodeTagIndices).HasForeignKey(x => x.StreetcodeId),
+                sp => sp.HasOne(x => x.Tag).WithMany(x => x.StreetcodeTagIndices).HasForeignKey(x => x.TagId));
+
+            builder
+                .Property(s => s.Title)
+                .HasMaxLength(50);
         }
     }
 }

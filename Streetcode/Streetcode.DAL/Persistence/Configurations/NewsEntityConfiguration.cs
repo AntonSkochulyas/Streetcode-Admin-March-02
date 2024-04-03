@@ -12,6 +12,14 @@ namespace Streetcode.DAL.Persistence.Configurations
                 .HasOne(x => x.Image)
                 .WithOne(x => x.News)
                 .HasForeignKey<News>(x => x.ImageId);
+
+            builder
+                .Property(s => s.Title)
+                .HasMaxLength(150);
+
+            builder
+                .Property(s => s.URL)
+                .HasMaxLength(100);
         }
     }
 }
