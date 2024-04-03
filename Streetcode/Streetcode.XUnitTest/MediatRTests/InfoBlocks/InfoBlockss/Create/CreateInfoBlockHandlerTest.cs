@@ -23,25 +23,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Create
     /// </summary>
     public class CreateInfoBlockHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInfoBlockHandlerTest"/> class.
         /// </summary>
         public CreateInfoBlockHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetInfoBlockRepositoryMock();
+            _mockRepository = RepositoryMocker.GetInfoBlockRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<InfoBlockProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Create
         public async Task HandleArticleDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateInfoBlockHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateInfoBlockHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             InfoBlockDto? infoBlockeDto = null;
 
@@ -73,7 +73,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Create
         public async Task HandleValidDtoIsSuccessShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateInfoBlockHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateInfoBlockHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             InfoBlockDto? infoBlockDto = new InfoBlockDto()
             {

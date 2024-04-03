@@ -20,25 +20,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
     /// </summary>
     public class GetAuthorShipByIdHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAuthorShipByIdHandlerTest"/> class.
         /// </summary>
         public GetAuthorShipByIdHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerGetAuthorShipByValidIdResultShouldBeNotNull()
         {
             // Arrange
-            var handler = new GetAuthorShipByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAuthorShipByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int validId = 1;
             var request = new GetAuthorShipByIdQuery(validId);
 
@@ -68,7 +68,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerGetAuthorShipByInvalidIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new GetAuthorShipByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAuthorShipByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int invalidId = 10;
             var request = new GetAuthorShipByIdQuery(invalidId);
 
@@ -87,7 +87,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerGetAuthorShipByValidIdResultShouldBeTypeOfArticleDto()
         {
             // Arrange
-            var handler = new GetAuthorShipByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetAuthorShipByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int validId = 1;
             var request = new GetAuthorShipByIdQuery(validId);
 

@@ -22,28 +22,28 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Update
     /// </summary>
     public class UpdateArticleHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly IMapper mapper;
-        private readonly Mock<ILoggerService> mockLogger;
-        private readonly Mock<IBlobService> blobService;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly IMapper _mapper;
+        private readonly Mock<ILoggerService> _mockLogger;
+        private readonly Mock<IBlobService> _blobService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateArticleHandlerTest"/> class.
         /// </summary>
         public UpdateArticleHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetArticleRepositoryMock();
+            _mockRepository = RepositoryMocker.GetArticleRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<ArticleProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
 
-            this.blobService = new Mock<IBlobService>();
+            _blobService = new Mock<IBlobService>();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Update
         public async Task HandlerArticleDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateArticleHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateArticleHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             ArticleDto? articleDto = null;
 
@@ -75,7 +75,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Update
         public async Task HandlerArticleDtoIsValidIsSucessShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateArticleHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateArticleHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             ArticleDto? articleDto = new ArticleDto()
             {
@@ -101,7 +101,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Update
         public async Task HandlerArticleDtoIsValidUpdateArticleIsCalled()
         {
             // Arrange
-            var handler = new UpdateArticleHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateArticleHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             ArticleDto? articleDto = new ArticleDto()
             {
@@ -116,7 +116,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Update
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.ArticleRepository.Update(It.IsAny<Article>()), Times.Once);
+            _mockRepository.Verify(x => x.ArticleRepository.Update(It.IsAny<Article>()), Times.Once);
         }
     }
 }

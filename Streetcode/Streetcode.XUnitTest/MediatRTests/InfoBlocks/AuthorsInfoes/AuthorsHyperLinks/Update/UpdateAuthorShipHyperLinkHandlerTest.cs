@@ -24,28 +24,28 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
     /// </summary>
     public class UpdateAuthorShipHyperLinkHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly IMapper mapper;
-        private readonly Mock<ILoggerService> mockLogger;
-        private readonly Mock<IBlobService> blobService;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly IMapper _mapper;
+        private readonly Mock<ILoggerService> _mockLogger;
+        private readonly Mock<IBlobService> _blobService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateAuthorShipHyperLinkHandlerTest"/> class.
         /// </summary>
         public UpdateAuthorShipHyperLinkHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipHyperLinkProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
 
-            this.blobService = new Mock<IBlobService>();
+            _blobService = new Mock<IBlobService>();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerAuthorShipHyperLinkDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateAuthorShipHyperLinkHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateAuthorShipHyperLinkHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             AuthorShipHyperLinkDto? authorShipHyperLinkDto = null;
 
@@ -77,7 +77,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerAuthorShipHyperLinkDtoIsValidIsSucessShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateAuthorShipHyperLinkHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateAuthorShipHyperLinkHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             AuthorShipHyperLinkDto? authorShipHyperLinkDto = new AuthorShipHyperLinkDto()
             {
@@ -103,7 +103,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerAuthorShipHyperLinkDtoIsValidUpdateArticleIsCalled()
         {
             // Arrange
-            var handler = new UpdateAuthorShipHyperLinkHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateAuthorShipHyperLinkHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             AuthorShipHyperLinkDto? authorShipHyperLinkDto = new AuthorShipHyperLinkDto()
             {
@@ -118,7 +118,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.AuthorShipHyperLinkRepository.Update(It.IsAny<AuthorShipHyperLink>()), Times.Once);
+            _mockRepository.Verify(x => x.AuthorShipHyperLinkRepository.Update(It.IsAny<AuthorShipHyperLink>()), Times.Once);
         }
     }
 }

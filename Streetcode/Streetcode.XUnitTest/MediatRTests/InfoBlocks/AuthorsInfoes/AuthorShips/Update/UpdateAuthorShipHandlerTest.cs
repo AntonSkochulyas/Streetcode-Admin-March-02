@@ -23,28 +23,28 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
     /// </summary>
     public class UpdateAuthorShipHandlerTest
     {
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly IMapper mapper;
-        private readonly Mock<ILoggerService> mockLogger;
-        private readonly Mock<IBlobService> blobService;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly IMapper _mapper;
+        private readonly Mock<ILoggerService> _mockLogger;
+        private readonly Mock<IBlobService> _blobService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateAuthorShipHandlerTest"/> class.
         /// </summary>
         public UpdateAuthorShipHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
 
-            this.blobService = new Mock<IBlobService>();
+            _blobService = new Mock<IBlobService>();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerAuthorShipDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateAuthorShipHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateAuthorShipHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             AuthorShipDto? authorShipDto = null;
 
@@ -76,7 +76,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerAuthorShipDtoIsValidIsSucessShouldBeTrue()
         {
             // Arrange
-            var handler = new UpdateAuthorShipHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateAuthorShipHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             AuthorShipDto? authorShipDto = new AuthorShipDto()
             {
@@ -108,7 +108,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
         public async Task HandlerAuthorShipDtoIsValidUpdateArticleIsCalled()
         {
             // Arrange
-            var handler = new UpdateAuthorShipHandler(this.mockRepository.Object, this.mapper, this.blobService.Object, this.mockLogger.Object);
+            var handler = new UpdateAuthorShipHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
             AuthorShipDto? authorShipDto = new AuthorShipDto()
             {
@@ -129,7 +129,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            this.mockRepository.Verify(x => x.AuthorShipRepository.Update(It.IsAny<AuthorShip>()), Times.Once);
+            _mockRepository.Verify(x => x.AuthorShipRepository.Update(It.IsAny<AuthorShip>()), Times.Once);
         }
     }
 }

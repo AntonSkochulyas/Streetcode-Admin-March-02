@@ -20,25 +20,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetById
     /// </summary>
     public class GetInfoBlockByIdHandleTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetInfoBlockByIdHandleTest"/> class.
         /// </summary>
         public GetInfoBlockByIdHandleTest()
         {
-            this.mockRepository = RepositoryMocker.GetInfoBlockRepositoryMock();
+            _mockRepository = RepositoryMocker.GetInfoBlockRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<InfoBlockProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetById
         public async Task HandlerGetInfoBlockByValidIdResultShouldBeNotNull()
         {
             // Arrange
-            var handler = new GetInfoBlockByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int validId = 1;
             var request = new GetInfoBlockByIdQuery(validId);
 
@@ -68,7 +68,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetById
         public async Task HandlerGetInfoBlockByInvalidIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new GetInfoBlockByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int invalidId = 10;
             var request = new GetInfoBlockByIdQuery(invalidId);
 
@@ -87,7 +87,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetById
         public async Task HandlerGetInfoBlockByValidIdResultShouldBeTypeOfArticleDto()
         {
             // Arrange
-            var handler = new GetInfoBlockByIdHandler(this.mockRepository.Object, this.mapper, this.mockLogger.Object);
+            var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
             int validId = 1;
             var request = new GetInfoBlockByIdQuery(validId);
 

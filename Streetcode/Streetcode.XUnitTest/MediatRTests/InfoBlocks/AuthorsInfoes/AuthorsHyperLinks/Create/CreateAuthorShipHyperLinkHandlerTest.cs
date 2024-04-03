@@ -20,25 +20,25 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
     /// </summary>
     public class CreateAuthorShipHyperLinkHandlerTest
     {
-        private readonly IMapper mapper;
-        private readonly Mock<IRepositoryWrapper> mockRepository;
-        private readonly Mock<ILoggerService> mockLogger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAuthorShipHyperLinkHandlerTest"/> class.
         /// </summary>
         public CreateAuthorShipHyperLinkHandlerTest()
         {
-            this.mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
+            _mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<AuthorShipHyperLinkProfile>();
             });
 
-            this.mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();
 
-            this.mockLogger = new Mock<ILoggerService>();
+            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandleAuthorShipHyperLinkDtoIsNullIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateAuthorShipHyperLinkHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateAuthorShipHyperLinkHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             AuthorShipHyperLinkDto? authorShipHyperLinkDto = null;
 
@@ -70,7 +70,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandleValidDtoIsSuccessShouldBeTrue()
         {
             // Arrange
-            var handler = new CreateAuthorShipHyperLinkHandler(this.mapper, this.mockRepository.Object, this.mockLogger.Object);
+            var handler = new CreateAuthorShipHyperLinkHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
             AuthorShipHyperLinkDto? authorShipHyperLinkDto = new AuthorShipHyperLinkDto()
             {
