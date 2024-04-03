@@ -63,6 +63,7 @@
 	  <Folder Include="MediatRTests\Toponyms\GetByStreetcodeId\" />
 	  <Folder Include="MediatRTests\Payment\" />
 	  <Folder Include="MediatRTests\Email\" />
+	  <Folder Include="Repositories\Mocks\Users\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -75,5 +76,6 @@
 	  <None Remove="MediatRTests\Timeline\HistoricalContext\GetAll\" />
 	  <None Remove="MediatRTests\Payment\" />
 	  <None Remove="MediatRTests\Email\" />
+	  <None Remove="Repositories\Mocks\Users\" />
 	</ItemGroup>
 </Project>
