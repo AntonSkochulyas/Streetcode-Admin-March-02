@@ -37,6 +37,10 @@ internal partial class RepositoryMocker
                 return articles.FirstOrDefault(predicate.Compile());
             });
 
+        mockRepo.Setup(x => x.ArticleRepository.Create(It.IsAny<Article>())).Returns(articles[0]);
+
+        mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
+
         return mockRepo;
     }
 }

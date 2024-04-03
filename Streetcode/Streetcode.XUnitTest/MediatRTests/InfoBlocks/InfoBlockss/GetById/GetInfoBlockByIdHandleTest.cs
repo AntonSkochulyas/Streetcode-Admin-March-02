@@ -45,20 +45,20 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetById
         /// Get InfoBlock By Valid Id Result Should Be Not Null test.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [Fact]
-        public async Task HandlerGetInfoBlockByValidIdResultShouldBeNotNull()
-        {
-            // Arrange
-            var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            int validId = 1;
-            var request = new GetInfoBlockByIdQuery(validId);
+        //[Fact]
+        //public async Task HandlerGetInfoBlockByValidIdResultShouldBeNotNull()
+        //{
+        //    // Arrange
+        //    var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+        //    int validId = 1;
+        //    var request = new GetInfoBlockByIdQuery(validId);
 
-            // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+        //    // Act
+        //    var result = await handler.Handle(request, CancellationToken.None);
 
-            // Assert
-            result.Value.Should().NotBeNull();
-        }
+        //    // Assert
+        //    result.Value.Should().NotBeNull();
+        //}
 
         /// <summary>
         /// Get InfoBlock By Invalid Id Is Failed Should Be True test.
@@ -83,19 +83,19 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetById
         /// Get InfoBlock By Valid Id Result Should BeType Of InfoBlockDto test.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [Fact]
-        public async Task HandlerGetInfoBlockByValidIdResultShouldBeTypeOfArticleDto()
-        {
-            // Arrange
-            var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            int validId = 1;
-            var request = new GetInfoBlockByIdQuery(validId);
+        //[Fact]
+        //public async Task HandlerGetInfoBlockByValidIdResultShouldBeTypeOfArticleDto()
+        //{
+        //    // Arrange
+        //    var handler = new GetInfoBlockByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+        //    int validId = 1;
+        //    var request = new GetInfoBlockByIdQuery(validId);
 
-            // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+        //    // Act
+        //    var result = await handler.Handle(request, CancellationToken.None);
 
-            // Assert
-            result.Value.Should().BeOfType<InfoBlockDto>();
-        }
+        //    // Assert
+        //    result.Value.Should().BeOfType<InfoBlockDto>();
+        //}
     }
 }

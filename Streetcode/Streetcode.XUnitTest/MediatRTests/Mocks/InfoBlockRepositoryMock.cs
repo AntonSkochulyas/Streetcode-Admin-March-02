@@ -23,6 +23,22 @@ internal partial class RepositoryMocker
     {
         var mockRepo = new Mock<IRepositoryWrapper>();
 
+        var infoBlock = new InfoBlock()
+        {
+            Id = 1,
+            ArticleId = 1,
+            Article = new Article { Id = 1, Text = "First Text", Title = "First Title" },
+            VideoURL = "www.youtube.com",
+            AuthorShipId = 1,
+            AuthorShip = new AuthorShip
+            {
+                Id = 1,
+                Text = "First Text",
+                AuthorShipHyperLinkId = 1,
+                AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
+            },
+        };
+
         var infoBlocks = new List<InfoBlock>()
             {
                 new InfoBlock
@@ -87,6 +103,9 @@ internal partial class RepositoryMocker
                 },
             };
 
+        mockRepo.Setup(x => x.InfoBlockRepository.Create(It.IsAny<InfoBlock>()))
+            .Returns(infoBlock);
+
         mockRepo.Setup(x => x.InfoBlockRepository.GetAllAsync(It.IsAny<Expression<Func<InfoBlock, bool>>>(), It.IsAny<Func<IQueryable<InfoBlock>, IIncludableQueryable<InfoBlock, object>>>()))
             .ReturnsAsync(infoBlocks);
 
@@ -95,6 +114,8 @@ internal partial class RepositoryMocker
             {
                 return infoBlocks.FirstOrDefault(predicate.Compile());
             });
+
+        mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
         return mockRepo;
     }

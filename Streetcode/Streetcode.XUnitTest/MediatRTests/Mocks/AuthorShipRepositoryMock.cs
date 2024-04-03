@@ -62,6 +62,10 @@ internal partial class RepositoryMocker
                 return authorShips.FirstOrDefault(predicate.Compile());
             });
 
+        mockRepo.Setup(x => x.AuthorShipRepository.Create(It.IsAny<AuthorShip>())).Returns(authorShips[0]);
+
+        mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
+
         return mockRepo;
     }
 }

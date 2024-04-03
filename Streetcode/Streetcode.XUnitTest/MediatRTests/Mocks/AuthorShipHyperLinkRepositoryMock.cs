@@ -37,6 +37,10 @@ internal partial class RepositoryMocker
                 return authorShipHyperLinks.FirstOrDefault(predicate.Compile());
             });
 
+        mockRepo.Setup(x => x.AuthorShipHyperLinkRepository.Create(It.IsAny<AuthorShipHyperLink>())).Returns(authorShipHyperLinks[0]);
+
+        mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
+
         return mockRepo;
     }
 }
