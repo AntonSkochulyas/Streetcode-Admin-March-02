@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Streetcode.DAL.Entities.Team;
+using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
@@ -146,5 +147,38 @@ namespace Streetcode.XUnitTest.Repositories.Mocks
 
             return mockRepo;
         }
+
+        public static Mock<IRepositoryWrapper> GetTimelineRepositoryMock()
+        {
+            var timelineItems = new List<TimelineItem>()
+        {
+            new TimelineItem { Id = 1, Date = DateTime.Now, Title = "First Event", Description = "Description of the first event" },
+            new TimelineItem { Id = 2, Date = DateTime.Now.AddDays(1), Title = "Second Event", Description = "Description of the second event" },
+        };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.TimelineRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<TimelineItem, bool>>>(),
+                    It.IsAny<Func<IQueryable<TimelineItem>, IIncludableQueryable<TimelineItem, object>>>()))
+                .ReturnsAsync(timelineItems);
+
+            mockRepo.Setup(x => x.TimelineRepository.Create(It.IsAny<TimelineItem>()))
+                 .Returns((TimelineItem timelineItem) =>
+                 {
+                     timelineItems.Add(timelineItem);
+                     return timelineItem;
+                 });
+
+            mockRepo.Setup(x => x.TimelineRepository.Delete(It.IsAny<TimelineItem>()))
+            .Callback((TimelineItem timelineItem) =>
+            {
+                timelineItems.Remove(timelineItem);
+            });
+
+            return mockRepo;
+        }
+
     }
 }

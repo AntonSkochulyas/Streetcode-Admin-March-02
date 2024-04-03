@@ -65,6 +65,7 @@
 	  <Folder Include="MediatRTests\Email\" />
 	  <Folder Include="Repositories\Users\" />
 	  <Folder Include="Repositories\Team\" />
+	  <Folder Include="Repositories\Timeline\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,5 +81,6 @@
 	  <None Remove="Repositories\Mocks\Users\" />
 	  <None Remove="Repositories\Users\" />
 	  <None Remove="Repositories\Team\" />
+	  <None Remove="Repositories\Timeline\" />
 	</ItemGroup>
 </Project>
