@@ -2,6 +2,11 @@ using System.Transactions;
 using Repositories.Interfaces;
 using Streetcode.DAL.Repositories.Interfaces.AdditionalContent;
 using Streetcode.DAL.Repositories.Interfaces.Analytics;
+using Streetcode.DAL.Repositories.Interfaces.Dictionaries;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.Articles;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Repositories.Interfaces.Locations;
 using Streetcode.DAL.Repositories.Interfaces.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Newss;
@@ -54,6 +59,11 @@ public interface IRepositoryWrapper
     IStreetcodeToponymRepository StreetcodeToponymRepository { get; }
     IStreetcodeImageRepository StreetcodeImageRepository { get; }
     ILocationRepository LocationRepository { get; }
+    IDictionaryItemRepository DictionaryItemRepository { get; }
+    IInfoBlockRepository InfoBlockRepository { get; }
+    IArticleRepository ArticleRepository { get; }
+    IAuthorShipRepository AuthorShipRepository { get; }
+    IAuthorHyperLinkRepository AuthorShipHyperLinkRepository { get; }
 
     public int SaveChanges();
 

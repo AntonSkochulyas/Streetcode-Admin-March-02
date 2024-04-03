@@ -1,9 +1,15 @@
 using System.Transactions;
 using Repositories.Interfaces;
+using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Interfaces.AdditionalContent;
 using Streetcode.DAL.Repositories.Interfaces.Analytics;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Repositories.Interfaces.Dictionaries;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.Articles;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Repositories.Interfaces.Locations;
 using Streetcode.DAL.Repositories.Interfaces.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Newss;
@@ -18,6 +24,11 @@ using Streetcode.DAL.Repositories.Interfaces.Transactions;
 using Streetcode.DAL.Repositories.Interfaces.Users;
 using Streetcode.DAL.Repositories.Realizations.AdditionalContent;
 using Streetcode.DAL.Repositories.Realizations.Analytics;
+using Streetcode.DAL.Repositories.Realizations.Dictionaries;
+using Streetcode.DAL.Repositories.Realizations.InfoBlocks;
+using Streetcode.DAL.Repositories.Realizations.InfoBlocks.Articles;
+using Streetcode.DAL.Repositories.Realizations.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Repositories.Realizations.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Repositories.Realizations.Locations;
 using Streetcode.DAL.Repositories.Realizations.Media;
 using Streetcode.DAL.Repositories.Realizations.Media.Images;
@@ -109,6 +120,12 @@ public class RepositoryWrapper : IRepositoryWrapper
     private IStreetcodeImageRepository _streetcodeImageRepository;
 
     private ILocationRepository _locationRepository;
+
+    private IDictionaryItemRepository _dictionaryItemRepository;
+    private IInfoBlockRepository _infoBlockRepository;
+    private IArticleRepository _articleRepository;
+    private IAuthorShipRepository _authorShipRepository;
+    private IAuthorHyperLinkRepository _authorHyperLinkRepository;
 
     public RepositoryWrapper(StreetcodeDbContext streetcodeDbContext)
     {
@@ -569,6 +586,71 @@ public class RepositoryWrapper : IRepositoryWrapper
             }
 
             return _locationRepository;
+        }
+    }
+
+    public IDictionaryItemRepository DictionaryItemRepository
+    {
+        get
+        {
+            if (_dictionaryItemRepository is null)
+            {
+                _dictionaryItemRepository = new DictionaryItemRepository(_streetcodeDbContext);
+            }
+
+            return _dictionaryItemRepository;
+        }
+    }
+
+    public IInfoBlockRepository InfoBlockRepository
+    {
+        get
+        {
+            if (_infoBlockRepository is null)
+            {
+                _infoBlockRepository = new InfoBlockRepository(_streetcodeDbContext);
+            }
+
+            return _infoBlockRepository;
+        }
+    }
+
+    public IArticleRepository ArticleRepository
+    {
+        get
+        {
+            if (_articleRepository is null)
+            {
+                _articleRepository = new ArticleRepository(_streetcodeDbContext);
+            }
+
+            return _articleRepository;
+        }
+    }
+
+    public IAuthorShipRepository AuthorShipRepository
+    {
+        get
+        {
+            if (_authorShipRepository is null)
+            {
+                _authorShipRepository = new AuthorShipRepository(_streetcodeDbContext);
+            }
+
+            return _authorShipRepository;
+        }
+    }
+
+    public IAuthorHyperLinkRepository AuthorShipHyperLinkRepository
+    {
+        get
+        {
+            if (_authorHyperLinkRepository is null)
+            {
+                _authorHyperLinkRepository = new AuthorShipHyperLinkRepository(_streetcodeDbContext);
+            }
+
+            return _authorHyperLinkRepository;
         }
     }
 
