@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
-using Streetcode.DAL.Entities.Locations;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.DAL.Repositories.Interfaces.Locations;
-using Streetcode.DAL.Repositories.Interfaces.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,6 +110,39 @@ namespace Streetcode.XUnitTest.Repositories.Mocks
 
                     return null;
                 });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetTeamRepositoryMock()
+        {
+            var teams = new List<TeamMember>()
+            {
+                 new TeamMember { Id = 1, FirstName = "John", LastName = "Doe", Description = "description1", IsMain = true, ImageId = 1 },
+                 new TeamMember { Id = 2, FirstName = "Jane", LastName = "Mur", Description = "description2", IsMain = false, ImageId = 2 },
+                 new TeamMember { Id = 3, FirstName = "Mila", LastName = "Lyubow", Description = "description3", IsMain = true, ImageId = 3 },
+                 new TeamMember { Id = 4, FirstName = "Orest", LastName = "Fifa", Description = "description4", IsMain = false, ImageId = 2 }
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.TeamRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<TeamMember, bool>>>(),
+                    It.IsAny<Func<IQueryable<TeamMember>, IIncludableQueryable<TeamMember, object>>>()))
+                .ReturnsAsync(teams);
+
+            mockRepo.Setup(x => x.TeamRepository.Create(It.IsAny<TeamMember>()))
+                 .Returns((TeamMember teamMember) =>
+                 {
+                     teams.Add(teamMember);
+                     return teamMember;
+                 });
+            mockRepo.Setup(x => x.TeamRepository.Delete(It.IsAny<TeamMember>()))
+            .Callback((TeamMember teamMember) =>
+            {
+                teams.Remove(teamMember);
+            });
 
             return mockRepo;
         }
