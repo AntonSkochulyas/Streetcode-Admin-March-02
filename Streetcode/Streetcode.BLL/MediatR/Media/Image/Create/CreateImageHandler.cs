@@ -51,7 +51,7 @@ public class CreateImageHandler : IRequestHandler<CreateImageCommand, Result<Ima
         }
         else
         {
-            const string errorMsg = "Failed to create an image";
+            string errorMsg = MediaErrors.CreateImageHandlerFailedToCreateAnAudioError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

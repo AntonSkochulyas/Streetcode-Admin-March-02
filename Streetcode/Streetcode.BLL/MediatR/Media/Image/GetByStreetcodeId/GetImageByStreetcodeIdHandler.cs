@@ -33,7 +33,7 @@ public class GetImageByStreetcodeIdHandler : IRequestHandler<GetImageByStreetcod
 
         if (images is null || images.Count() == 0)
         {
-            string errorMsg = $"Cannot find an image with the corresponding streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(MediaErrors.GetImageByStreetcodeIdHandlerCanNotFindAnImageWithGivenStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

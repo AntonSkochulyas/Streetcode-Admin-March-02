@@ -17,17 +17,17 @@ namespace Streetcode.BLL.MediatR.Media.Image.Create
 
 			RuleFor(command => command.Image.MimeType)
                 .NotEmpty()
-                .WithMessage("Mime Type is required.")
+                .WithMessage(MediaErrors.CreateImageCommandValidatorMimeTypeIsRequiredError)
                 .MaximumLength(maxMimeTypeLength)
-                .WithMessage($"Mime Type length should not be longer than {maxMimeTypeLength} symbols.");
+                .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorMimeTypeMaxLengthError, maxMimeTypeLength));
 
 			RuleFor(command => command.Image.Title)
                 .MaximumLength(maxMimeTypeLength)
-                .WithMessage($"Title length should not be longer than {maxTitleLength} symbols.");
+                .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorTitleMaxLengthError, maxTitleLength));
 
 			RuleFor(command => command.Image.Alt)
                 .MaximumLength(maxMimeTypeLength)
-                .WithMessage($"Alt length should not be longer than {maxAltLength} symbols.");
+                .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorAltMaxLengthError, maxAltLength));
         }
 	}
 }

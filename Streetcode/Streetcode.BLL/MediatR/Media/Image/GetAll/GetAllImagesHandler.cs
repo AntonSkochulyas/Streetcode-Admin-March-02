@@ -30,7 +30,7 @@ public class GetAllImagesHandler : IRequestHandler<GetAllImagesQuery, Result<IEn
 
         if (images is null)
         {
-            const string errorMsg = $"Cannot find any image";
+            string errorMsg = MediaErrors.GetAllImagesHandlerCanNotFindAnyImageError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

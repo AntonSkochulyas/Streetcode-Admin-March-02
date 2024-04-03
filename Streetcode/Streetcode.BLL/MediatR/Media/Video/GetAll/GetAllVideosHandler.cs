@@ -28,7 +28,7 @@ public class GetAllVideosHandler : IRequestHandler<GetAllVideosQuery, Result<IEn
 
         if (videos is null)
         {
-            const string errorMsg = "Cannot find any videos";
+            string errorMsg = MediaErrors.GetAllVideosHandlerCanNotFindAnyVideoError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

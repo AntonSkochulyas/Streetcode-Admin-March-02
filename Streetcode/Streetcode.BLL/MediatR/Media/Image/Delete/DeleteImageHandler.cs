@@ -30,7 +30,7 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
 
         if (image is null)
         {
-            string errorMsg = $"Cannot find an image with corresponding categoryId: {request.Id}";
+            string errorMsg = string.Format(MediaErrors.DeleteImageHandlerCanNotFindAnImageWithGivenCategoryIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
@@ -50,7 +50,7 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
         }
         else
         {
-            const string errorMsg = $"Failed to delete an image";
+            string errorMsg = MediaErrors.DeleteImageHandlerFailedToDeleteAnImageError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
