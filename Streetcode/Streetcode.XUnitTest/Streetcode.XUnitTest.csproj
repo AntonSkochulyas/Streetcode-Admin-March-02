@@ -63,7 +63,6 @@
 	  <Folder Include="MediatRTests\Toponyms\GetByStreetcodeId\" />
 	  <Folder Include="MediatRTests\Payment\" />
 	  <Folder Include="MediatRTests\Email\" />
-	  <Folder Include="Repositories\Mocks\Users\" />
 	</ItemGroup>
 
 	<ItemGroup>
