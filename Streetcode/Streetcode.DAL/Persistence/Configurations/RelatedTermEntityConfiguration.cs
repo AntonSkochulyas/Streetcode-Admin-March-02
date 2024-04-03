@@ -11,6 +11,10 @@ namespace Streetcode.DAL.Persistence.Configurations
             builder.HasOne(rt => rt.Term)
              .WithMany(t => t.RelatedTerms)
              .HasForeignKey(rt => rt.TermId);
+
+            builder
+                .Property(s => s.Word)
+                .HasMaxLength(50);
         }
     }
 }
