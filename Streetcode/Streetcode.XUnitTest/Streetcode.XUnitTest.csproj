@@ -66,6 +66,7 @@
 	  <Folder Include="Repositories\Users\" />
 	  <Folder Include="Repositories\Team\" />
 	  <Folder Include="Repositories\Timeline\" />
+	  <Folder Include="Repositories\Streetcode\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,5 +83,6 @@
 	  <None Remove="Repositories\Users\" />
 	  <None Remove="Repositories\Team\" />
 	  <None Remove="Repositories\Timeline\" />
+	  <None Remove="Repositories\Streetcode\" />
 	</ItemGroup>
 </Project>

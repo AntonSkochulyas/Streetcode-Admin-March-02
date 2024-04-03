@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Toponyms;
@@ -180,5 +181,36 @@ namespace Streetcode.XUnitTest.Repositories.Mocks
             return mockRepo;
         }
 
+        public static Mock<IRepositoryWrapper> GetStreetcodeRepositoryMock()
+        {
+            var streetcodeContents = new List<StreetcodeContent>()
+        {
+            new StreetcodeContent { Id = 1, Title = "First Streetcode", TransliterationUrl = "first-streetcode", DateString = "2024-04-05" },
+            new StreetcodeContent { Id = 2, Title = "Second Streetcode", TransliterationUrl = "second-streetcode", DateString = "2024-04-06" },
+        };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.StreetcodeRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<StreetcodeContent, bool>>>(),
+                    It.IsAny<Func<IQueryable<StreetcodeContent>, IIncludableQueryable<StreetcodeContent, object>>>()))
+                .ReturnsAsync(streetcodeContents);
+
+            mockRepo.Setup(x => x.StreetcodeRepository.Create(It.IsAny<StreetcodeContent>()))
+                .Returns((StreetcodeContent streetcode) =>
+                {
+                    streetcodeContents.Add(streetcode);
+                    return streetcode;
+                });
+
+            mockRepo.Setup(x => x.StreetcodeRepository.Delete(It.IsAny<StreetcodeContent>()))
+                .Callback((StreetcodeContent streetcode) =>
+                {
+                    streetcodeContents.Remove(streetcode);
+                });
+
+            return mockRepo;
+        }
     }
 }
