@@ -18,5 +18,9 @@ internal class FactEntityConfiguration : IEntityTypeConfiguration<Fact>
         builder
             .Property(s => s.FactContent)
             .HasMaxLength(600);
+
+        builder
+            .Property(s => s.ImageDescription)
+            .HasMaxLength(200);
     }
 }

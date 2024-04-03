@@ -19,6 +19,8 @@ public class Fact
 
     public Image? Image { get; set; }
 
+    public string? ImageDescription { get; set; }
+
     public int StreetcodeId { get; set; }
 
     public int? OrderNumber { get; set; } = null;
