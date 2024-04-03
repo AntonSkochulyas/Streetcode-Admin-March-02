@@ -86,6 +86,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Create
 
             // Assert
             result.IsSuccess.Should().BeTrue();
+
         }
     }
 }
