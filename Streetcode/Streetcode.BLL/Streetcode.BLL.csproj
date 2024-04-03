@@ -31,6 +31,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,6 +102,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EmailErrors.resx</DependentUpon>
     </Compile>
+    <Compile Update="MediatR\Team\TeamErrors.Designer.cs">
+      <DependentUpon>TeamErrors.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -147,6 +151,10 @@
     <EmbeddedResource Update="MediatR\Email\EmailErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>EmailErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Team\TeamErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TeamErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

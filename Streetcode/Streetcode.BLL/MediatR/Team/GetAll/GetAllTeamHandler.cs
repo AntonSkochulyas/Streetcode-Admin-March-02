@@ -29,7 +29,7 @@ namespace Streetcode.BLL.MediatR.Team.GetAll
 
             if (team is null)
             {
-                const string errorMsg = $"Cannot find any team";
+                string errorMsg = TeamErrors.GetAllTeamHandlerCanNotFindAnyTeamError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

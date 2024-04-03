@@ -34,7 +34,7 @@ namespace Streetcode.BLL.MediatR.Team.GetById
 
             if (team is null)
             {
-                string errorMsg = $"Cannot find any team with corresponding id: {request.Id}";
+                string errorMsg = string.Format(TeamErrors.GetByIdTeamHandlerCanNotFindATeamWithGivenIdError, request.Id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

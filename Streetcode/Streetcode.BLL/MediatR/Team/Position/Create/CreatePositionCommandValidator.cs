@@ -1,8 +1,5 @@
-﻿using System;
-using FluentValidation;
-using Streetcode.BLL.MediatR.Partners.Create;
+﻿using FluentValidation;
 using Streetcode.BLL.MediatR.Team.Create;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Streetcode.BLL.MediatR.Team.Position.Create
 {
@@ -16,9 +13,9 @@ namespace Streetcode.BLL.MediatR.Team.Position.Create
 
             RuleFor(command => command.position.Position)
                 .NotEmpty()
-                .WithMessage("Position is required.")
+                .WithMessage(TeamErrors.CreatePositionCommandValidatorPositionIsRequiredError)
                 .MaximumLength(_positionMaxLength)
-                .WithMessage($"Position length must not be longer than {_positionMaxLength} symbols.");
+                .WithMessage(string.Format(TeamErrors.CreatePositionCommandValidatorPositionMaxLengthError, _positionMaxLength));
         }
     }
 }
