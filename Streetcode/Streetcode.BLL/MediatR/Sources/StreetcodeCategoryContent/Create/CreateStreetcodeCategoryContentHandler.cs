@@ -25,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
             var newStreetcodeCategoryContent = _mapper.Map<DAL.Entities.Sources.StreetcodeCategoryContent>(request.StreetcodeCategoryContentDto);
             if (newStreetcodeCategoryContent is null)
             {
-                const string errorMsg = "Cannot convert null to the streetcode category content";
+                string errorMsg = SourceErrors.CreateStreetcodeCategoryContentHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -39,7 +39,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
             }
             else
             {
-                const string errorMsg = "Failed to create the streetcode category content";
+                string errorMsg = SourceErrors.CreateStreetcodeCategoryContentHandlerFailedToCreateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

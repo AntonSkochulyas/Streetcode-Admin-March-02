@@ -7,9 +7,10 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
     {
         public CreateStreetcodeCategoryContentCommandValidator()
         {
+            ushort maxTextLength = 4000;
             RuleFor(command => command.StreetcodeCategoryContentDto.Text)
                 .MaximumLength(4000)
-                .WithMessage("Text length must not be longer than 4000 symbols.");
+                .WithMessage(string.Format(SourceErrors.CreateStreetcodeCategoryContentCommandTextLengthMaxLengthError, maxTextLength));
         }
     }
 }

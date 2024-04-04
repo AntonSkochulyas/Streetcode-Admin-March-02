@@ -27,7 +27,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetAllCategor
             if ((await _repositoryWrapper.StreetcodeRepository
                 .GetFirstOrDefaultAsync(s => s.Id == request.streetcodeId)) == null)
             {
-                string errorMsg = $"No such streetcode with id = {request.streetcodeId}";
+                string errorMsg = string.Format(SourceErrors.GetAllCategoryContentsBySteetcodeIdAndSourceLinkCategoryIdHandlerWithGivenStreetcodeIdError, request.streetcodeId);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -38,7 +38,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetAllCategor
 
             if (streetcodeContent == null)
             {
-                string errorMsg = "The streetcode content is null";
+                string errorMsg = string.Format(SourceErrors.GetAllCategoryContentsBySteetcodeIdAndSourceLinkCategoryIdHandlerStreetcodeIsNullError);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

@@ -22,7 +22,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
             var sourceLinkCategory = await _repositoryWrapper.SourceCategoryRepository.GetFirstOrDefaultAsync(sc => sc.Id == id);
             if (sourceLinkCategory == null)
             {
-                string errorMsg = $"No source link category found by entered Id - {id}";
+                string errorMsg = string.Format(SourceErrors.DeleteSourceLinkCategoryHandlerCanNotFindSourceLinkCategoryWithGivenIdError, id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -36,7 +36,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
             }
             else
             {
-                string errorMsg = "Failed to delete the source link category";
+                string errorMsg = SourceErrors.DeleteSourceLinkCategoryHandlerFailedToDeleteError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

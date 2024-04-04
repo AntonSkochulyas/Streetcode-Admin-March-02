@@ -24,7 +24,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
             var streetcodeCategoryContent = await _repositoryWrapper.StreetcodeCategoryContentRepository.GetFirstOrDefaultAsync(sc => sc.SourceLinkCategoryId == id);
             if (streetcodeCategoryContent == null)
             {
-                string errorMsg = $"No streetcode category content found by entered Id - {id}";
+                string errorMsg = string.Format(SourceErrors.DeleteStreetcodeCategoryContentHandlerCanNotFindStreetcodeCategoryContentWithGivenIdError, id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -38,7 +38,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
             }
             else
             {
-                string errorMsg = "Failed to delete the source link category";
+                string errorMsg = SourceErrors.DeleteStreetcodeCategoryContentHandlerFailedToDeleteError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

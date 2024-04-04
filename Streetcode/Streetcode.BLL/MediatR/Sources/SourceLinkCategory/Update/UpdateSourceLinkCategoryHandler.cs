@@ -33,7 +33,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update
 
             if (sourceLinkCategory is null)
             {
-                const string errorMsg = $"Cannot convert null to the source link category";
+                string errorMsg = SourceErrors.UpdateSourceLinkCategoryHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -49,7 +49,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update
             }
             else
             {
-                const string errorMsg = $"Failed to update the source link category";
+                string errorMsg = SourceErrors.UpdateSourceLinkCategoryHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

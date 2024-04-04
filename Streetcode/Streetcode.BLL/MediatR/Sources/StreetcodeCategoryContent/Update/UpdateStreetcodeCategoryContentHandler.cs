@@ -30,7 +30,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update
 
             if (streetcodeCategoryContent is null)
             {
-                const string errorMsg = $"Cannot convert null to the street code category content";
+                string errorMsg = SourceErrors.UpdateStreetcodeCategoryContentHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -46,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update
             }
             else
             {
-                const string errorMsg = $"Failed to update the street code category content";
+                string errorMsg = SourceErrors.UpdateStreetcodeCategoryContentHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
