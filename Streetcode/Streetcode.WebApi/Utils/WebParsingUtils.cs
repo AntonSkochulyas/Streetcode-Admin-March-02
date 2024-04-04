@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO.Compression;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Text;
 using Newtonsoft.Json;
@@ -39,7 +40,8 @@ public class WebParsingUtils
         string fileUrl,
         string zipPath,
         string extractTo,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IHttpClientFactory httpClient)
     {
         if (string.IsNullOrEmpty(fileUrl) || !Uri.IsWellFormedUriString(fileUrl, UriKind.Absolute))
         {
@@ -69,11 +71,10 @@ public class WebParsingUtils
 
         var circuitBreakerPolicy = Policy.Handle<Exception>().CircuitBreakerAsync(5, TimeSpan.FromMinutes(1));
 
-        using var client = new HttpClient(clientHandler, false)
-        {
-            DefaultRequestHeaders = { },
-            Timeout = TimeSpan.FromSeconds(60)
-        };
+        using var client = httpClient.CreateClient();
+        client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+        client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+        client.Timeout = TimeSpan.FromSeconds(60);
 
         try
         {
@@ -105,7 +106,7 @@ public class WebParsingUtils
         }
     }
 
-    public async Task ParseZipFileFromWebAsync()
+    public async Task ParseZipFileFromWebAsync(IHttpClientFactory httpClient)
     {
         var projRootDirectory = Directory.GetParent(Environment.CurrentDirectory)?.FullName!;
         var zipPath = $"houses.zip";
@@ -115,7 +116,7 @@ public class WebParsingUtils
 
         try
         {
-            await DownloadAndExtractAsync(_fileToParseUrl, zipPath, extractTo, cancellationToken);
+            await DownloadAndExtractAsync(_fileToParseUrl, zipPath, extractTo, cancellationToken, httpClient);
             Console.WriteLine("Download and extraction completed successfully.");
 
             if (File.Exists(zipPath))
@@ -123,7 +124,7 @@ public class WebParsingUtils
                 File.Delete(zipPath);
             }
 
-            await ProcessCsvFileAsync(extractTo);
+            await ProcessCsvFileAsync(extractTo, httpClient);
         }
         catch (Exception ex)
         {
@@ -146,7 +147,7 @@ public class WebParsingUtils
 
     If the deleteFile flag is set to true, the original CSV file will be deleted. The method also saves the toponyms to a database.
     */
-    public async Task ProcessCsvFileAsync(string extractTo, bool deleteFile = false)
+    public async Task ProcessCsvFileAsync(string extractTo, IHttpClientFactory httpClient, bool deleteFile = false)
     {
         // Following line is required for proper csv encoding
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -200,12 +201,12 @@ public class WebParsingUtils
             var (streetName, streetType) = OptimizeStreetname(row[AddressColumn]);
             string addressRow = $"{cityStringSearchOptimized} {streetName} {streetType}";
 
-            var (latitude, longitude) = await FetchCoordsByAddressAsync(addressRow);
+            var (latitude, longitude) = await FetchCoordsByAddressAsync(addressRow, httpClient);
 
             if (latitude is null || longitude is null)
             {
                 addressRow = cityStringSearchOptimized;
-                (latitude, longitude) = await FetchCoordsByAddressAsync(addressRow);
+                (latitude, longitude) = await FetchCoordsByAddressAsync(addressRow, httpClient);
             }
 
             Console.WriteLine("\n" + addressRow);
@@ -279,7 +280,7 @@ public class WebParsingUtils
     /// </summary>
     /// <param name="address">The address to fetch coordinates for.</param>
     /// <returns>A tuple containing the latitude and longitude of the address.</returns>
-    public static async Task<(string?, string?)> FetchCoordsByAddressAsync(string address)
+    public static async Task<(string?, string?)> FetchCoordsByAddressAsync(string address, IHttpClientFactory httpClient)
     {
         var retryPolicy = Policy.Handle<Exception>().WaitAndRetryAsync(
             3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
@@ -288,7 +289,7 @@ public class WebParsingUtils
 
         try
         {
-            using var client = new HttpClient();
+            using var client = httpClient.CreateClient();
 
             // Add user-agent and referer headers to request
             client.DefaultRequestHeaders.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
