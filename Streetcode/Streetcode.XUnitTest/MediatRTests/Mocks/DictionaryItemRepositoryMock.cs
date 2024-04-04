@@ -37,6 +37,10 @@ internal partial class RepositoryMocker
                 return dictionaryItems.FirstOrDefault(predicate.Compile());
             });
 
+        mockRepo.Setup(x => x.DictionaryItemRepository.Create(It.IsAny<DictionaryItem>())).Returns(dictionaryItems[0]);
+
+        mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
+
         return mockRepo;
     }
 }
