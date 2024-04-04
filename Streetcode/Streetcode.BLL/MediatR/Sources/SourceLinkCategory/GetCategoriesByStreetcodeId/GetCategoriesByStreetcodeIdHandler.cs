@@ -35,7 +35,7 @@ public class GetCategoriesByStreetcodeIdHandler : IRequestHandler<GetCategoriesB
 
         if (srcCategories is null)
         {
-            string errorMsg = $"Cant find any source category with the streetcode id {request.StreetcodeId}";
+            string errorMsg = string.Format(SourceErrors.GetCategoriesContentByStreetcodeIdHandlerWithGivenStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

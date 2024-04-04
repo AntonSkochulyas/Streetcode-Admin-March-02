@@ -28,7 +28,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
             var newSourceLinkCategory = _mapper.Map<DAL.Entities.Sources.SourceLinkCategory>(request.sourceLinkCategoryDto);
             if (newSourceLinkCategory is null)
             {
-                const string errorMsg = "Cannot convert null to a source link category";
+                string errorMsg = SourceErrors.CreateSourceLinkCategoryHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -41,7 +41,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
             }
             else
             {
-                const string errorMsg = "Failed to create the source link category";
+                string errorMsg = SourceErrors.CreateSourceLinkCategoryHandlerFailedToCreateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

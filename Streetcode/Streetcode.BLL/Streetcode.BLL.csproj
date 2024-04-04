@@ -62,6 +62,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PaymentErrors.resx</DependentUpon>
     </Compile>
+    <Compile Update="MediatR\Sources\SourceErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SourceErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Timeline\TimelineErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -121,6 +126,10 @@
     <EmbeddedResource Update="MediatR\Payment\PaymentErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PaymentErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Sources\SourceErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SourceErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Timeline\TimelineErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -41,7 +41,7 @@ public class GetCategoryByIdHandler : IRequestHandler<GetCategoryByIdQuery, Resu
 
         if (srcCategories is null)
         {
-            string errorMsg = $"Cannot find any srcCategory by the corresponding id: {request.Id}";
+            string errorMsg = string.Format(SourceErrors.GetSourceLinkCategoryByIdHandlerCanNotFindANewWithGivenIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
