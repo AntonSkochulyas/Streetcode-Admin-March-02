@@ -28,7 +28,7 @@ public class GetArtByIdHandler : IRequestHandler<GetArtByIdQuery, Result<ArtDto>
 
         if (art is null)
         {
-            string errorMsg = $"Cannot find an art with corresponding id: {request.Id}";
+            string errorMsg = string.Format(MediaErrors.GetArtByIdHandlerCanNotFindArtWithGivenIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

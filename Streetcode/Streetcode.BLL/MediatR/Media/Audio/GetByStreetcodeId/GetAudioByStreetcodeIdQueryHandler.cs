@@ -33,7 +33,7 @@ public class GetAudioByStreetcodeIdQueryHandler : IRequestHandler<GetAudioByStre
             include: q => q.Include(s => s.Audio) !);
         if (streetcode == null)
         {
-            string errorMsg = $"Cannot find an audio with the corresponding streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(MediaErrors.GetAudioByStreetcodeIdQueryHandlerCanNotFindAnAudioWithGivenStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

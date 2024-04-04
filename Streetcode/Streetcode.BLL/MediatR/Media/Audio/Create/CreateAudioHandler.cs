@@ -50,7 +50,7 @@ public class CreateAudioHandler : IRequestHandler<CreateAudioCommand, Result<Aud
         }
         else
         {
-            const string errorMsg = $"Failed to create an audio";
+            string errorMsg = MediaErrors.CreateAudioHandlerFailedToCreateAnAudioError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

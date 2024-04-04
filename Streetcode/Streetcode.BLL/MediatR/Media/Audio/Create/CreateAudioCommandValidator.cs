@@ -17,15 +17,15 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Create
 
 			RuleFor(command => command.Audio.Title)
                 .NotEmpty()
-                .WithMessage("Title is required.")
+                .WithMessage(MediaErrors.CreateAudioCommandValidatorTitleIsRequiredError)
                 .MaximumLength(maxTitleLength)
-                .WithMessage($"Title length should not be longer than {maxTitleLength} symbols.");
+                .WithMessage(string.Format(MediaErrors.CreateAudioCommandValidatorTitleMaxLengthError, maxTitleLength));
 
 			RuleFor(command => command.Audio.MimeType)
                 .NotEmpty()
-                .WithMessage("Blob Name is required.")
+                .WithMessage(MediaErrors.CreateAudioCommandValidatorBlobNameIsRequiredError)
                 .MaximumLength(maxMimeTypeLength)
-                .WithMessage($"Blob Name length should not be longer than {maxMimeTypeLength} symbols.");
+                .WithMessage(string.Format(MediaErrors.CreateAudioCommandValidatorBlobNameMaxLengthError, maxBlobNameLength));
         }
 	}
 }

@@ -107,6 +107,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="MediatR\Media\MediaErrors.Designer.cs">
+      <DependentUpon>MediaErrors.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -157,6 +160,10 @@
     <EmbeddedResource Update="MediatR\Team\TeamErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TeamErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Media\MediaErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MediaErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
