@@ -28,7 +28,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Locations.Create
         /// </summary>
         public CreateLocationHandlerTest()
         {
-            _mockRepository = RepositoryMocker.GetLocationsRepositoryMock();
+            _mockRepository = RepositoryMocker.GetLocationRepositoryMock();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
