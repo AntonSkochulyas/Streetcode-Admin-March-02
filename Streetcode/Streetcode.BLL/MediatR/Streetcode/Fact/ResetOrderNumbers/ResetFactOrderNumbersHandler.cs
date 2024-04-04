@@ -3,6 +3,7 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
+using Streetcode.BLL.MediatR.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Fact.ResetOrderNumbers;
@@ -30,7 +31,7 @@ public class ResetFactOrderNumbersHandler : IRequestHandler<ResetFactOrderNumber
 
         if (facts is null)
         {
-            string errorMsg = $"Cannot find any fact by the streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(StreetcodeErrors.ResetFactOrderHandlerCannotFindAnyFactByStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
@@ -39,14 +40,14 @@ public class ResetFactOrderNumbersHandler : IRequestHandler<ResetFactOrderNumber
 
         if (!await ResetOrderNumbersToNull(orderedFacts))
         {
-            const string errorMsg = $"Failed to reset order numbers";
+            string errorMsg = StreetcodeErrors.ResetFactOrderHandlerFailedToResetOrderNumbersError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
 
         if (!await SetOrderNumbersSequantially(orderedFacts))
         {
-            const string errorMsg = $"Failed to set order numbers";
+            string errorMsg = StreetcodeErrors.ResetFactOrderHandlerFailedToSetOrderNumbersError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

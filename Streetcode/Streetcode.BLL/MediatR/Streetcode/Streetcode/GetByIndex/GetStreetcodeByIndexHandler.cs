@@ -29,7 +29,7 @@ public class GetStreetcodeByIndexHandler : IRequestHandler<GetStreetcodeByIndexQ
 
         if (streetcode is null)
         {
-            string errorMsg = $"Cannot find any streetcode with corresponding index: {request.Index}";
+            string errorMsg = string.Format(StreetcodeErrors.GetStreetcodeByIndexHandlerCannotFindAnyStreetcodeWithCorrespondingIndexError, request.Index);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

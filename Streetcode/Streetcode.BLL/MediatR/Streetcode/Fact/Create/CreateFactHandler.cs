@@ -27,19 +27,19 @@ public class CreateFactHandler : IRequestHandler<CreateFactCommand, Result<FactD
     {
         if (await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.StreetcodeId) is null)
         {
-            return LogAndReturnError($"The streetcode with id {request.Fact.StreetcodeId} does not exist", request);
+            return LogAndReturnError(string.Format(StreetcodeErrors.CreateFactHandlerStreetcodeWithIdDoesNotExistError, request.Fact.FactContent), request);
         }
 
         if (await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.ImageId) is null)
         {
-            return LogAndReturnError($"The image with id {request.Fact.ImageId} does not exist", request);
+            return LogAndReturnError(string.Format(StreetcodeErrors.CreateFactHandlerImageWithIdDoesNotExistError, request.Fact.ImageId), request);
         }
 
         var fact = _mapper.Map<DAL.Entities.Streetcode.TextContent.Fact>(request.Fact);
 
         if (fact is null)
         {
-            return LogAndReturnError($"Cannot convert null to fact", request);
+            return LogAndReturnError(StreetcodeErrors.CreateFactHandlerCannotConvertNullToFactError, request);
         }
 
         _repositoryWrapper.FactRepository.Create(fact);
@@ -52,7 +52,7 @@ public class CreateFactHandler : IRequestHandler<CreateFactCommand, Result<FactD
         }
         else
         {
-            return LogAndReturnError($"Failed to create a fact", request);
+            return LogAndReturnError(StreetcodeErrors.CreateFactHandlerFailedToCreateFactError, request);
         }
     }
 

@@ -28,7 +28,7 @@ public class GetAllTextsHandler : IRequestHandler<GetAllTextsQuery, Result<IEnum
 
         if (texts is null)
         {
-            const string errorMsg = $"Cannot find any text";
+            string errorMsg = StreetcodeErrors.GetAllTextsHandlerCannotFindAnyTextError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

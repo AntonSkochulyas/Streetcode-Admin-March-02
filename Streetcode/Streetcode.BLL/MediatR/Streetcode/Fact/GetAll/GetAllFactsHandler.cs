@@ -27,7 +27,7 @@ public class GetAllFactsHandler : IRequestHandler<GetAllFactsQuery, Result<IEnum
 
         if (facts is null)
         {
-            const string errorMsg = $"Cannot find any fact";
+            string errorMsg = StreetcodeErrors.GetAllFactsHandlerCanNotFindAnyFactsError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
