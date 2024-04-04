@@ -2,6 +2,9 @@ using System.Reflection;
 using FluentValidation;
 using Hangfire;
 using MediatR;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.ValidationBehaviors;
 using Streetcode.WebApi.ExceptionHandlers;
@@ -49,10 +52,13 @@ app.UseHangfireDashboard("/dash");
 
 if (app.Environment.EnvironmentName != "Local")
 {
+    var serviceProvider = app.Services;
+    var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+
     BackgroundJob.Schedule<WebParsingUtils>(
-    wp => wp.ParseZipFileFromWebAsync(), TimeSpan.FromMinutes(1));
+    wp => wp.ParseZipFileFromWebAsync(httpClientFactory), TimeSpan.FromMinutes(1));
     RecurringJob.AddOrUpdate<WebParsingUtils>(
-        wp => wp.ParseZipFileFromWebAsync(), Cron.Monthly);
+        wp => wp.ParseZipFileFromWebAsync(httpClientFactory), Cron.Monthly);
     RecurringJob.AddOrUpdate<BlobService>(
         b => b.CleanBlobStorage(), Cron.Monthly);
 }
