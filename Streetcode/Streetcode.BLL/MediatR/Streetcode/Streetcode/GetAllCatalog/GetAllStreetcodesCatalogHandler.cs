@@ -34,7 +34,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllCatalog
                 return Result.Ok(_mapper.Map<IEnumerable<RelatedFigureDto>>(skipped));
             }
 
-            const string errorMsg = $"Cannot find any subtitles";
+            string errorMsg = StreetcodeErrors.GetAllStreetcodesCatalogHandlerCannotFindAnySubtitlesError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(errorMsg);
         }

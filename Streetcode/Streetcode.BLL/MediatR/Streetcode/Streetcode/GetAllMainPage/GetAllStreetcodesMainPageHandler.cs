@@ -34,7 +34,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllMainPage
                 return Result.Ok(_mapper.Map<IEnumerable<StreetcodeMainPageDto>>(streetcodes));
             }
 
-            const string errorMsg = "No streetcodes exist now";
+            string errorMsg = StreetcodeErrors.GetAllStreetcodesMainPageHandlerNoStreetcodesExistNowError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(errorMsg);
         }

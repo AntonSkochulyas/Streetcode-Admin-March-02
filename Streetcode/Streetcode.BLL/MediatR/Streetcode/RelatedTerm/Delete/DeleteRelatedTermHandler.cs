@@ -26,7 +26,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete
 
             if (relatedTerm is null)
             {
-                string errorMsg = $"Cannot find a related term: {request.word}";
+                string errorMsg = string.Format(StreetcodeErrors.DeleteRelatedTermHandlerCannotFindRelatedTermError, request.word);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -41,7 +41,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete
             }
             else
             {
-                const string errorMsg = "Failed to delete a related term";
+                string errorMsg = StreetcodeErrors.DeleteRelatedTermHandlerFailedToDeleteRelatedTermError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

@@ -28,7 +28,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Term.GetAll
 
             if (terms is null)
             {
-                const string errorMsg = $"Cannot find any term";
+                string errorMsg = StreetcodeErrors.GetAllTermsHandlerCannotFindAnyTermError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

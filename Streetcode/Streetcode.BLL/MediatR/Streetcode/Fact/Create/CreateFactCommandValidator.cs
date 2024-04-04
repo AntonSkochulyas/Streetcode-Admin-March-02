@@ -15,15 +15,15 @@ namespace Streetcode.BLL.MediatR.Streetcode.Fact.Create
 
 			RuleFor(command => command.Fact.Title)
                 .NotEmpty()
-                .WithMessage("Title is required.")
+                .WithMessage(StreetcodeErrors.CreateFactCommandValidatorTitleIsRequiredError)
                 .MaximumLength(maxTitleLength)
-                .WithMessage($"Title length should not be longer than {maxTitleLength} symbols.");
+                .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorTitleMaxLengthError, maxTitleLength));
 
 			RuleFor(command => command.Fact.FactContent)
                 .NotEmpty()
-                .WithMessage("Fact Content is required.")
+                .WithMessage(StreetcodeErrors.CreateFactCommandValidatorFactIsRequiredError)
                 .MaximumLength(maxFactContent)
-                .WithMessage($"Fact Content length should not be longer than {maxFactContent} symbols.");
+                .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorFactContentMaxLengthError, maxFactContent));
         }
 	}
 }

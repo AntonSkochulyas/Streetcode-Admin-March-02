@@ -25,7 +25,7 @@ public class DeleteRelatedFigureHandler : IRequestHandler<DeleteRelatedFigureCom
 
         if (relation is null)
         {
-            string errorMsg = $"Cannot find a relation between streetcodes with corresponding ids: {request.ObserverId} & {request.TargetId}";
+            string errorMsg = string.Format(StreetcodeErrors.DeleteRelatedFigureHandlerCannotFindRelationBetweenStreetcodesWithCorrespondingIdsError, request.ObserverId, request.TargetId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
@@ -39,7 +39,7 @@ public class DeleteRelatedFigureHandler : IRequestHandler<DeleteRelatedFigureCom
         }
         else
         {
-            const string errorMsg = "Failed to delete a relation.";
+            string errorMsg = StreetcodeErrors.DeleteRelatedFigureHandlerFailedToDeleteError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

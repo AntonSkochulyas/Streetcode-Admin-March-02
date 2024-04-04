@@ -29,7 +29,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllShort
                 return Result.Ok(_mapper.Map<IEnumerable<StreetcodeShortDto>>(streetcodes));
             }
 
-            const string errorMsg = "No streetcodes exist now";
+            string errorMsg = StreetcodeErrors.GetAllStreetcodesShortHandlerNoStreetcodesExistNowError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(errorMsg);
         }

@@ -35,7 +35,7 @@ public class GetTextByStreetcodeIdHandler : IRequestHandler<GetTextByStreetcodeI
             if (await _repositoryWrapper.StreetcodeRepository
                  .GetFirstOrDefaultAsync(s => s.Id == request.StreetcodeId) == null)
             {
-                string errorMsg = $"Cannot find a transaction link by a streetcode id: {request.StreetcodeId}, because such streetcode doesn`t exist";
+                string errorMsg = string.Format(StreetcodeErrors.GetTextByStreetcodeIdHandlerCannotFindTransactionLinkByStreetcodeThisStreetcodeDoesNotExistError, request.StreetcodeId);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

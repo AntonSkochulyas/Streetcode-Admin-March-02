@@ -13,13 +13,13 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
 
             RuleFor(command => command.RelatedTerm.Word)
                 .NotEmpty()
-                .WithMessage("Word is required.")
+                .WithMessage(StreetcodeErrors.CreateRelatedTermHandlerWordIsRequiredError)
                 .MaximumLength(maxWordLength)
-                .WithMessage($"Word length should not be longer than {maxWordLength} symbols.");
+                .WithMessage(string.Format(StreetcodeErrors.CreateRelatedTermHandlerMaxWordLengthError, maxWordLength));
 
             RuleFor(command => command.RelatedTerm.TermId)
                 .NotEmpty()
-                .WithMessage("Term Id is required.");
+                .WithMessage(StreetcodeErrors.CreateRelatedTermHandlerTermIdIsRequiredError);
         }
     }
 }

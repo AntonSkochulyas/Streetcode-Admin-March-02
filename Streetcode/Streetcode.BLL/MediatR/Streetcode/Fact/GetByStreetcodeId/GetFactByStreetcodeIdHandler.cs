@@ -28,7 +28,7 @@ public class GetFactByStreetcodeIdHandler : IRequestHandler<GetFactByStreetcodeI
 
         if (facts is null)
         {
-            string errorMsg = $"Cannot find any fact by the streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(StreetcodeErrors.GetFactByStreetcodeHandlerCanNotFindFactWithGivenStreetcodeError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

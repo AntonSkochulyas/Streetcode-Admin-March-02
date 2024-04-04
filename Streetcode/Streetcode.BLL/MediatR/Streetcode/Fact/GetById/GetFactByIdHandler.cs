@@ -26,7 +26,7 @@ public class GetFactByIdHandler : IRequestHandler<GetFactByIdQuery, Result<FactD
 
         if (facts is null)
         {
-            string errorMsg = $"Cannot find any fact with corresponding id: {request.Id}";
+            string errorMsg = string.Format(StreetcodeErrors.GetFactByIdCannotFindAnyFactWithCorrespondingIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

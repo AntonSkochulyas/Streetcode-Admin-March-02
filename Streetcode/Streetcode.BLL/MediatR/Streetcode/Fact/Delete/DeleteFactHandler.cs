@@ -24,7 +24,7 @@ public class DeleteFactHandler : IRequestHandler<DeleteFactCommand, Result<Unit>
         var fact = await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(n => n.Id == id);
         if (fact == null)
         {
-            string errorMsg = $"No fact found by entered Id - {id}";
+            string errorMsg = string.Format(StreetcodeErrors.DeleteFactHandlerNoFactFoundByEnteredIdError, id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(errorMsg);
         }
@@ -37,7 +37,7 @@ public class DeleteFactHandler : IRequestHandler<DeleteFactCommand, Result<Unit>
         }
         else
         {
-            string errorMsg = "Failed to delete fact";
+            string errorMsg = StreetcodeErrors.DeleteFactHandlerFailedToDeleteError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

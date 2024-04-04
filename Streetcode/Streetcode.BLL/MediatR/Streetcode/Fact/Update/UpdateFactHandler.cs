@@ -3,6 +3,7 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
+using Streetcode.BLL.MediatR.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Fact.Update;
@@ -23,24 +24,24 @@ public class UpdateFactHandler : IRequestHandler<UpdateFactCommand, Result<FactD
     {
         if (await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.Id) is null)
         {
-            return LogAndReturnError($"The fact with id {request.Fact.Id} does not exist", request);
+            return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerFactWithIdDoesNotExistError, request.Fact.Id), request);
         }
 
         if (await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.StreetcodeId) is null)
         {
-            return LogAndReturnError($"The streetcode with id {request.Fact.StreetcodeId} does not exist", request);
+            return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerStreetcodeWithIdDoesNotExistError, request.Fact.StreetcodeId), request);
         }
 
         if (await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(x => x.Id == request.Fact.ImageId) is null)
         {
-            return LogAndReturnError($"The image with id {request.Fact.ImageId} does not exist", request);
+            return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerImageWithIdDoesNotExistError, request.Fact.ImageId), request);
         }
 
         var fact = _mapper.Map<DAL.Entities.Streetcode.TextContent.Fact>(request.Fact);
 
         if (fact is null)
         {
-            return LogAndReturnError($"Cannot convert null to fact", request);
+            return LogAndReturnError(StreetcodeErrors.UpdateFactHandlerCannotConvertNullToFactError, request);
         }
 
         _repositoryWrapper.FactRepository.Update(fact);
@@ -53,7 +54,7 @@ public class UpdateFactHandler : IRequestHandler<UpdateFactCommand, Result<FactD
         }
         else
         {
-            return LogAndReturnError($"Failed to update fact", request);
+            return LogAndReturnError(StreetcodeErrors.UpdateFactHandlerFailedToUpdateError, request);
         }
     }
 
