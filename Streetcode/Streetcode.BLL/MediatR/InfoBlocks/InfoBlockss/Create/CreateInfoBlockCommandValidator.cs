@@ -9,21 +9,23 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
             RuleFor(command => command.newInfoBlock.VideoURL)
                 .Custom((videoUrl, context) =>
                 {
-                    if (string.IsNullOrWhiteSpace(videoUrl) || !IsValidYouTubeUrl(videoUrl))
+                    if (string.IsNullOrWhiteSpace(videoUrl) || !IsValidYouTubeURL(videoUrl))
                     {
                         context.AddFailure("Invalid link.");
                     }
                 });
         }
 
-        private bool IsValidYouTubeUrl(string url)
+        private bool IsValidYouTubeURL(string url)
         {
-            Uri? uriResult;
-            bool isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out uriResult)
-                              && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
-                              && uriResult.Host == "www.youtube.com";
+            Uri uri;
 
-            return isValidUrl;
+            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                return uri.Host.Equals("www.youtube.com", StringComparison.OrdinalIgnoreCase);
+            }
+
+            return false;
         }
     }
 }
