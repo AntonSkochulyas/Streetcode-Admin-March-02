@@ -20,11 +20,14 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
 
         public async Task<Result<Unit>> Handle(DeleteStreetcodeCategoryContentCommand request, CancellationToken cancellationToken)
         {
-            int id = request.id;
-            var streetcodeCategoryContent = await _repositoryWrapper.StreetcodeCategoryContentRepository.GetFirstOrDefaultAsync(sc => sc.SourceLinkCategoryId == id);
+            int sourceLinkCategoryId = request.sourceLinkCategoryId;
+            int streetcodeId = request.streetcodeId;
+            var streetcodeCategoryContent = await _repositoryWrapper.StreetcodeCategoryContentRepository
+                .GetFirstOrDefaultAsync(sc => sc.SourceLinkCategoryId == sourceLinkCategoryId && sc.StreetcodeId == streetcodeId);
             if (streetcodeCategoryContent == null)
             {
-                string errorMsg = string.Format(SourceErrors.DeleteStreetcodeCategoryContentHandlerCanNotFindStreetcodeCategoryContentWithGivenIdError, id);
+                string errorMsg = string.Format(
+                    SourceErrors.DeleteStreetcodeCategoryContentHandlerCanNotFindStreetcodeCategoryContentWithGivenIdError, sourceLinkCategoryId, streetcodeId);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }

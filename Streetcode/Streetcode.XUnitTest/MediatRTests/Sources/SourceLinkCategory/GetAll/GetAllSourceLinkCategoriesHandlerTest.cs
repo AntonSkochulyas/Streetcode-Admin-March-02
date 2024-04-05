@@ -6,16 +6,9 @@ using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Sources;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategoryId;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentsByStreetcodeIdAndSourceLinkCategoryId;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.MediatRTests.Mocks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.GetAll

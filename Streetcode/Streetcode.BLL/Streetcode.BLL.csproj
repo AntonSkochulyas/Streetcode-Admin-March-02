@@ -114,6 +114,8 @@
     </Compile>
     <Compile Update="MediatR\Media\MediaErrors.Designer.cs">
       <DependentUpon>MediaErrors.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
 

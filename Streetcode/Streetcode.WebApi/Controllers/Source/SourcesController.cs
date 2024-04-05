@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoryById;
 using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoriesByStreetcodeId;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll;
-using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetCategoryContentByStreetcodeId;
+using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentByStreetcodeId;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.MediatR.Timeline.HistoricalContext.Create;
 using Streetcode.BLL.Dto.Sources;
@@ -11,7 +11,6 @@ using Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete;
 using Streetcode.BLL.MediatR.Timeline.TimelineItem.Update;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentsByStreetcodeIdAndSourceLinkCategoryId;
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete;
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update;
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create;
@@ -42,12 +41,6 @@ namespace Streetcode.WebApi.Controllers.Source
         public async Task<IActionResult> GetCategoryContentByStreetcodeId([FromRoute] int streetcodeId, [FromRoute] int categoryId)
         {
             return HandleResult(await Mediator.Send(new GetCategoryContentByStreetcodeIdQuery(streetcodeId, categoryId)));
-        }
-
-        [HttpGet("{categoryId:int}&{streetcodeId:int}")]
-        public async Task<IActionResult> GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategory([FromRoute] int streetcodeId, [FromRoute] int categoryId)
-        {
-            return HandleResult(await Mediator.Send(new GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategoryIdQuery(streetcodeId, categoryId)));
         }
 
         [HttpGet("{streetcodeId:int}")]
@@ -87,9 +80,9 @@ namespace Streetcode.WebApi.Controllers.Source
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteCategoryContent([FromRoute] int id)
+        public async Task<IActionResult> DeleteCategoryContent([FromRoute] int streetcodeId, [FromRoute] int sourceLinkCategoryId)
         {
-            return HandleResult(await Mediator.Send(new DeleteStreetcodeCategoryContentCommand(id)));
+            return HandleResult(await Mediator.Send(new DeleteStreetcodeCategoryContentCommand(sourceLinkCategoryId, streetcodeId)));
         }
     }
 }

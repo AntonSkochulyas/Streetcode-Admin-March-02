@@ -39,8 +39,9 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.De
             // Arrange
             var handler = new DeleteStreetcodeCategoryContentHandler(_mockRepository.Object, _mockLogger.Object);
 
-            int wrongId = 10;
-            var request = new DeleteStreetcodeCategoryContentCommand(wrongId);
+            int wrongSourceLinkCategoryId = 10;
+            int wrongStreetcodeId = 10;
+            var request = new DeleteStreetcodeCategoryContentCommand(wrongSourceLinkCategoryId, wrongStreetcodeId);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
@@ -55,8 +56,9 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.De
             // Arrange
             var handler = new DeleteStreetcodeCategoryContentHandler(_mockRepository.Object, _mockLogger.Object);
 
-            int correctId = 1;
-            var request = new DeleteStreetcodeCategoryContentCommand(correctId);
+            int correctSourceLinkCategoryId = 1;
+            int correctStreetcoeId = 1;
+            var request = new DeleteStreetcodeCategoryContentCommand(correctSourceLinkCategoryId, correctStreetcoeId);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
@@ -73,8 +75,9 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.De
             // Arrange
             var handler = new DeleteStreetcodeCategoryContentHandler(_mockRepository.Object, _mockLogger.Object);
 
-            int correctId = 1;
-            var request = new DeleteStreetcodeCategoryContentCommand(correctId);
+            int correctSourceLinkCategoryId = 1;
+            int correctStreetcoeId = 1;
+            var request = new DeleteStreetcodeCategoryContentCommand(correctSourceLinkCategoryId, correctStreetcoeId);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
