@@ -2,7 +2,7 @@
 using Moq;
 using Streetcode.DAL.Entities.Toponyms;
 using Xunit;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 
 namespace Streetcode.XUnitTest.Repositories.Users
 {

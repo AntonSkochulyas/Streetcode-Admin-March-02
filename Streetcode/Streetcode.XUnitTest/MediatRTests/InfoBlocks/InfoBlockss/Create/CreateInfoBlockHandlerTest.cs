@@ -15,7 +15,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Create
     using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
     using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

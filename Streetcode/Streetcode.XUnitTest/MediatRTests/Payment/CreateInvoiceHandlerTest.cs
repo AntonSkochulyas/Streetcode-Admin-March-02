@@ -7,7 +7,7 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Interfaces.Payment;
 using Streetcode.BLL.Mapping.Payment;
 using Streetcode.BLL.MediatR.Payment;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 public class CreateInvoiceHandlerTest

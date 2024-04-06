@@ -6,7 +6,7 @@ using Streetcode.BLL.Interfaces.Logging;
 using FluentAssertions;
 using Streetcode.BLL.Mapping.Team;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 using Streetcode.BLL.MediatR.Team.GetById;
 

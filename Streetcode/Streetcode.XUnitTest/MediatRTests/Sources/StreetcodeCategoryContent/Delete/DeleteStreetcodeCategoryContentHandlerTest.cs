@@ -6,7 +6,7 @@ using Streetcode.BLL.Mapping.Sources;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete;
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.Delete

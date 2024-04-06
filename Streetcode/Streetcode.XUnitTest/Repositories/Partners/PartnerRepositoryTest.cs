@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Partners;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Partners

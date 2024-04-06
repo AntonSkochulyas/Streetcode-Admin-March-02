@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.GetById
     using Streetcode.BLL.Mapping.InfoBlocks.Articles;
     using Streetcode.BLL.MediatR.InfoBlocks.Articles.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

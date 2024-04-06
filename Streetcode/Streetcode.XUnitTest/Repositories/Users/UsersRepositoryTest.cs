@@ -2,7 +2,7 @@
 using Moq;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Users

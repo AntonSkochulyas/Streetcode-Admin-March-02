@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetAll
     using Streetcode.BLL.Mapping.InfoBlocks;
     using Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.GetAll;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

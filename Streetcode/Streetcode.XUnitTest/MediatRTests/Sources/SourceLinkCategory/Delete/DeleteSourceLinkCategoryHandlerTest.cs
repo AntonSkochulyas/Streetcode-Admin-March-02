@@ -7,7 +7,7 @@ using Streetcode.BLL.MediatR.Newss.Delete;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete;
 using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
