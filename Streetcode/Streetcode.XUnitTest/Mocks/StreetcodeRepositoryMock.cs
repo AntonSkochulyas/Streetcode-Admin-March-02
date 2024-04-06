@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Streetcode.DAL.Entities.Streetcode;
+using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 
@@ -16,10 +17,10 @@ internal partial class RepositoryMocker
     {
         var streetCodes = new List<StreetcodeContent>
             {
-                new StreetcodeContent() { Id = 1, Title = "First streetcode content title" },
-                new StreetcodeContent() { Id = 2, Title = "Second streetcode content title" },
-                new StreetcodeContent() { Id = 3, Title = "Third streetcode content title" },
-                new StreetcodeContent() { Id = 4, Title = "Fourth streetcode content title" },
+                new StreetcodeContent() { Id = 1, Title = "First streetcode content title", TransliterationUrl = "first-streetcode", DateString = "2024-04-05" },
+                new StreetcodeContent() { Id = 2, Title = "Second streetcode content title", TransliterationUrl = "second-streetcode", DateString = "2024-04-06" },
+                new StreetcodeContent() { Id = 3, Title = "Third streetcode content title", TransliterationUrl = "third-streetcode", DateString = "2024-04-07" },
+                new StreetcodeContent() { Id = 4, Title = "Fourth streetcode content title", TransliterationUrl = "fourth-streetcode", DateString = "2024-04-08" },
             };
 
         var mockRepo = new Mock<IRepositoryWrapper>();
@@ -31,6 +32,23 @@ internal partial class RepositoryMocker
             .ReturnsAsync((Expression<Func<StreetcodeContent, bool>> predicate, Func<IQueryable<StreetcodeContent>, IIncludableQueryable<StreetcodeContent, object>> include) =>
             {
                 return streetCodes.FirstOrDefault(predicate.Compile());
+            });
+
+        mockRepo.Setup(x => x.StreetcodeRepository.Create(It.IsAny<StreetcodeContent>()))
+            .Returns((StreetcodeContent streetcode) =>
+            {
+                streetCodes.Add(streetcode);
+                return streetcode;
+            });
+
+        mockRepo.Setup(x => x.StreetcodeRepository.Delete(It.IsAny<StreetcodeContent>()))
+            .Callback((StreetcodeContent streetcode) =>
+            {
+                streetcode = streetCodes.FirstOrDefault(x => x.Id == streetcode.Id);
+                if (streetcode != null)
+                {
+                    streetCodes.Remove(streetcode);
+                }
             });
 
         return mockRepo;

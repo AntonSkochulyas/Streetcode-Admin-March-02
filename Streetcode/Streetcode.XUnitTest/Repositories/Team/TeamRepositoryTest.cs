@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Team;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.MediatRTests.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Team
@@ -34,7 +34,7 @@ namespace Streetcode.XUnitTest.Repositories.Team
             var result = resultTask.Result;
 
             // Assert
-            result.Count().Should().Be(4);
+            result.Count().Should().Be(6);
         }
 
         [Fact]

@@ -30,17 +30,41 @@ internal partial class RepositoryMocker
                 },
             };
 
-        var timeline_items = new List<TimelineItem>()
+        var timelineItems = new List<TimelineItem>()
+        {
+            new TimelineItem
             {
-                 new TimelineItem { Id = 1, Title = "TimelineItem 1", Description = "First description", Date = DateTime.Now, DateViewPattern = DateViewPattern.DateMonthYear, HistoricalContextTimelines = historicalTimelines },
-                 new TimelineItem { Id = 2, Title = "TimelineItem 2", Description = "Second description", Date = DateTime.Now, DateViewPattern = DateViewPattern.DateMonthYear, HistoricalContextTimelines = historicalTimelines },
-                 new TimelineItem { Id = 3, Title = "TimelineItem 3", Description = "Third description", Date = DateTime.Now, DateViewPattern = DateViewPattern.DateMonthYear, HistoricalContextTimelines = historicalTimelines }
-            };
+                Id = 1,
+                Title = "TimelineItem 1",
+                Description = "First description",
+                Date = DateTime.Now,
+                DateViewPattern = DateViewPattern.DateMonthYear,
+                HistoricalContextTimelines = historicalTimelines
+            },
+            new TimelineItem
+            {
+                Id = 2,
+                Title = "TimelineItem 2",
+                Description = "Second description",
+                Date = DateTime.Now.AddDays(1),
+                DateViewPattern = DateViewPattern.DateMonthYear,
+                HistoricalContextTimelines = historicalTimelines
+            },
+            new TimelineItem
+            {
+                Id = 3,
+                Title = "TimelineItem 3",
+                Description = "Third description",
+                Date = DateTime.Now,
+                DateViewPattern = DateViewPattern.DateMonthYear,
+                HistoricalContextTimelines = historicalTimelines
+            }
+        };
 
         var mockRepo = new Mock<IRepositoryWrapper>();
 
         mockRepo.Setup(repo => repo.TimelineRepository.GetAllAsync(It.IsAny<Expression<Func<TimelineItem, bool>>>(), It.IsAny<Func<IQueryable<TimelineItem>,
-            IIncludableQueryable<TimelineItem, object>>>())).ReturnsAsync(timeline_items);
+            IIncludableQueryable<TimelineItem, object>>>())).ReturnsAsync(timelineItems);
 
         mockRepo.Setup(x => x.TimelineRepository.GetFirstOrDefaultAsync(
              It.IsAny<Expression<Func<TimelineItem, bool>>>(),
@@ -48,12 +72,29 @@ internal partial class RepositoryMocker
              .ReturnsAsync((Expression<Func<TimelineItem, bool>> predicate, Func<IQueryable<TimelineItem>,
              IIncludableQueryable<TimelineItem, object>> include) =>
              {
-                 return timeline_items.FirstOrDefault(predicate.Compile());
+                 return timelineItems.FirstOrDefault(predicate.Compile());
              });
 
-        mockRepo.Setup(x => x.TimelineRepository.Create(It.IsAny<TimelineItem>())).Returns(timeline_items[0]);
         mockRepo.Setup(x => x.HistoricalContextTimelineRepository.CreateAsync(It.IsAny<HistoricalContextTimeline>())).ReturnsAsync(historicalTimelines[0]);
+
         mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
+
+        mockRepo.Setup(x => x.TimelineRepository.Create(It.IsAny<TimelineItem>()))
+             .Returns((TimelineItem timelineItem) =>
+             {
+                 timelineItems.Add(timelineItem);
+                 return timelineItem;
+             });
+
+        mockRepo.Setup(x => x.TimelineRepository.Delete(It.IsAny<TimelineItem>()))
+        .Callback((TimelineItem timelineItem) =>
+        {
+            timelineItem = timelineItems.FirstOrDefault(x => x.Id == timelineItem.Id);
+            if(timelineItem != null)
+            {
+                timelineItems.Remove(timelineItem);
+            }
+        });
 
         return mockRepo;
     }

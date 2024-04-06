@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Timeline;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.MediatRTests.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Timeline
@@ -34,7 +34,7 @@ namespace Streetcode.XUnitTest.Repositories.Timeline
             var result = await repository.GetAllAsync(null, null);
 
             // Assert
-            result.Should().HaveCount(2);
+            result.Should().HaveCount(3);
         }
 
         [Fact]

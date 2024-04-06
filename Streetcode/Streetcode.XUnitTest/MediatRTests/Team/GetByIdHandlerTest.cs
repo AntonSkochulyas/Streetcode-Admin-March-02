@@ -30,7 +30,7 @@ public class GetByIdHandlerTest
     }
 
     [Fact]
-    public async Task WithExistingId2_ShouldReturnDtoWithName2()
+    public async Task WithExistingId2_ShouldReturnDtoWithNameJane()
     {
         // Arrange
         var handler = new GetByIdTeamHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
@@ -40,7 +40,7 @@ public class GetByIdHandlerTest
 
         // Assert
         result.Value.Should().NotBeNull();
-        result.Value.FirstName.Should().BeEquivalentTo("2");
+        result.Value.FirstName.Should().BeEquivalentTo("Jane");
     }
 
     [Fact]

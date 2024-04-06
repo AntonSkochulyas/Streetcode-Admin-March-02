@@ -76,6 +76,23 @@ internal partial class RepositoryMocker
         mockRepo.Setup(x => x.PartnersRepository.CreateAsync(It.IsAny<Partner>()))
             .ReturnsAsync(createdPartner);
 
+        mockRepo.Setup(x => x.PartnersRepository.Create(It.IsAny<Partner>()))
+            .Returns((Partner partner) =>
+            {
+                partners.Add(partner);
+                return partner;
+            });
+
+        mockRepo.Setup(x => x.PartnersRepository.Delete(It.IsAny<Partner>()))
+            .Callback((Partner partner) =>
+            {
+                partner = partners.FirstOrDefault(x => x.Id == partner.Id);
+                if(partner != null)
+                {
+                    partners.Remove(partner);
+                }
+            });
+
         return mockRepo;
     }
 }
