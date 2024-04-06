@@ -14,7 +14,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
     using Streetcode.BLL.MediatR.Dictionaries.Update;
     using Streetcode.DAL.Entities.Dictionaries;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

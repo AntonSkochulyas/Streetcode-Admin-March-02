@@ -1,4 +1,4 @@
-﻿namespace Streetcode.XUnitTest.MediatRTests.Mocks;
+﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Moq;
 using Streetcode.BLL.Interfaces.Email;

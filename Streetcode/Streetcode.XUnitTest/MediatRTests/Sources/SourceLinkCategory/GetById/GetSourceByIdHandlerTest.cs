@@ -16,7 +16,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
     using Streetcode.DAL.Entities.Media.Images;
     using Streetcode.DAL.Entities.Sources;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

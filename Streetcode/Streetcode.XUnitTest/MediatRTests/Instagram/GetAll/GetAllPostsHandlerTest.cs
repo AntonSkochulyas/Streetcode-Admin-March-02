@@ -8,7 +8,7 @@
     using Streetcode.BLL.Interfaces.Instagram;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.MediatR.Instagram.GetAll;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class GetAllPostsHandlerTest

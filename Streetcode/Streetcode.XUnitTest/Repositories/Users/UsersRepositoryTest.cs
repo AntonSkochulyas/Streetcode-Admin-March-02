@@ -1,17 +1,11 @@
-﻿using System;
-using AutoMapper;
-using FluentAssertions;
-using FluentResults;
-using Microsoft.AspNetCore.Routing;
+﻿using FluentAssertions;
 using Moq;
-using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.Mapping.Users;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
-using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
-namespace Streetcode.XUnitTest.Repositories.Mocks.Users
+namespace Streetcode.XUnitTest.Repositories.Users
 {
 	public class UsersRepositoryTest
 	{

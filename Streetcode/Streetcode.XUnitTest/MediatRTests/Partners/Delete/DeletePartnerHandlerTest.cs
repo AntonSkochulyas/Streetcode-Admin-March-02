@@ -11,7 +11,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Partners.Delete
     using Streetcode.BLL.Mapping.Partners;
     using Streetcode.BLL.MediatR.Partners.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

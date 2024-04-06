@@ -15,7 +15,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
     using Streetcode.BLL.MediatR.Media.Image.GetAll;
     using Streetcode.DAL.Entities.Media.Images;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

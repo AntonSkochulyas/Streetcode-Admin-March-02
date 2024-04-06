@@ -14,7 +14,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.Create
     using Streetcode.BLL.Mapping.Media;
     using Streetcode.BLL.MediatR.Media.Audio.Create;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

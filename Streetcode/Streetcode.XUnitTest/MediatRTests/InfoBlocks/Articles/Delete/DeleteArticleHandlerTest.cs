@@ -10,7 +10,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
     using Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete;
     using Streetcode.DAL.Entities.InfoBlocks.Articles;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

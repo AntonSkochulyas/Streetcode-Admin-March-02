@@ -9,7 +9,7 @@ using Streetcode.BLL.Mapping.Media.Images;
 using Streetcode.BLL.MediatR.Media.Image.GetById;
 using Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -9,7 +9,7 @@
     using Streetcode.BLL.MediatR.AdditionalContent.Tag.GetByStreetcodeId;
     using Streetcode.BLL.MediatR.AdditionalContent.Tag.GetTagByTitle;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class GetTagByTitleHandlerTest

@@ -1,11 +1,10 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Toponyms;
-using Streetcode.DAL.Entities.Users;
-using Streetcode.DAL.Enums;
 using Xunit;
+using Streetcode.XUnitTest.Mocks;
 
-namespace Streetcode.XUnitTest.Repositories.Mocks.Users
+namespace Streetcode.XUnitTest.Repositories.Users
 {
     public class ToponymsRepositoryTest
     {
@@ -36,10 +35,11 @@ namespace Streetcode.XUnitTest.Repositories.Mocks.Users
             var result = resultTask.Result;
 
             // Assert
-            result.Count().Should().Be(3);
+            result.Count().Should().Be(4);
             result.Should().ContainSingle(u => u.Community == "First community")
                   .And.ContainSingle(u => u.Community == "Second community")
-                  .And.ContainSingle(u => u.Community == "Third community");
+                  .And.ContainSingle(u => u.Community == "Third community")
+                  .And.ContainSingle(u => u.Community == "Fourth community");
         }
 
         [Fact]

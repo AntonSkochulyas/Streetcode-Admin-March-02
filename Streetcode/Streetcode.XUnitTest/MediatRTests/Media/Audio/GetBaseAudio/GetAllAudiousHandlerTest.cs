@@ -9,7 +9,7 @@ using Streetcode.BLL.Mapping.Media;
 using Streetcode.BLL.MediatR.Media.Art.GetAll;
 using Streetcode.BLL.MediatR.Media.Audio.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

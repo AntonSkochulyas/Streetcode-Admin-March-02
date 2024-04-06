@@ -1,4 +1,4 @@
-﻿namespace Streetcode.XUnitTest.MediatRTests.Mocks;
+﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
@@ -12,12 +12,12 @@ internal partial class RepositoryMocker
     {
         var members = new List<TeamMember>()
         {
-            new TeamMember { Id = 1, FirstName = "1", IsMain = true },
-            new TeamMember { Id = 2, FirstName = "2", IsMain = true },
-            new TeamMember { Id = 3, FirstName = "3", IsMain = false },
-            new TeamMember { Id = 4, FirstName = "4", IsMain = false },
-            new TeamMember { Id = 5, FirstName = "5", IsMain = false },
-            new TeamMember { Id = 6, FirstName = "6", IsMain = false },
+            new TeamMember { Id = 1, FirstName = "John", LastName = "Doe", Description = "description1", IsMain = true, ImageId = 1 },
+            new TeamMember { Id = 2, FirstName = "Jane", LastName = "Mur", Description = "description2", IsMain = true, ImageId = 2 },
+            new TeamMember { Id = 3, FirstName = "Mila", LastName = "Lyubow", Description = "description3", IsMain = false, ImageId = 3 },
+            new TeamMember { Id = 4, FirstName = "Orest", LastName = "Fifa", Description = "description4", IsMain = false, ImageId = 2 },
+            new TeamMember { Id = 5, FirstName = "Alex", LastName = "Smith", Description = "description5", IsMain = false, ImageId = 4 },
+            new TeamMember { Id = 6, FirstName = "Emily", LastName = "Johnson", Description = "description6", IsMain = false, ImageId = 5 }
         };
 
         var mockRepo = new Mock<IRepositoryWrapper>();
@@ -68,6 +68,19 @@ internal partial class RepositoryMocker
 
                 return matchingMembers.SingleOrDefault();
             });
+
+        mockRepo.Setup(x => x.TeamRepository.Create(It.IsAny<TeamMember>()))
+             .Returns((TeamMember teamMember) =>
+             {
+                 members.Add(teamMember);
+                 return teamMember;
+             });
+
+        mockRepo.Setup(x => x.TeamRepository.Delete(It.IsAny<TeamMember>()))
+        .Callback((TeamMember teamMember) =>
+        {
+            members.Remove(teamMember);
+        });
 
         return mockRepo;
     }

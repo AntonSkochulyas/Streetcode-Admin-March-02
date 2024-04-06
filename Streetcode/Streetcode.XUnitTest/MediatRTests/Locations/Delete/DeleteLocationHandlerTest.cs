@@ -11,7 +11,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Locations.Delete
     using Streetcode.BLL.Mapping.Locations;
     using Streetcode.BLL.MediatR.Locations.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>
