@@ -270,7 +270,7 @@ namespace Streetcode.WebApi.Extensions
                     if (!dbContext.Users.Any())
                     {
                         dbContext.Users.AddRange(
-                            new DAL.Entities.Users.User
+                            new DAL.Entities.Users.UserAdditionalInfo
                             {
                                 Email = "admin",
                                 Role = UserRole.MainAdministrator,

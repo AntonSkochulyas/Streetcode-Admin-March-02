@@ -3,7 +3,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.DAL.Repositories.Interfaces.Users
 {
-    public interface IUserRepository : IRepositoryBase<User>
+    public interface IUserRepository : IRepositoryBase<UserAdditionalInfo>
     {
     }
 }

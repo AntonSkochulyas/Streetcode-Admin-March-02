@@ -21,7 +21,7 @@ namespace Streetcode.XUnitTest.Repositories.Mocks.Users
             // Arrange
             var mockRepo = RepositoryMocker.GetUsersRepositoryMock();
             var repository = mockRepo.Object.UserRepository;
-            var newUser = new User { Id = 4, Name = "Test", Surname = "User", Email = "test@example.com", Login = "testuser", Password = "test123", Role = UserRole.Moderator };
+            var newUser = new UserAdditionalInfo { Id = 4, Name = "Test", Surname = "User", Email = "test@example.com", Login = "testuser", Password = "test123", Role = UserRole.Moderator };
 
             // Act
             var createdUser = repository.Create(newUser);
@@ -57,10 +57,10 @@ namespace Streetcode.XUnitTest.Repositories.Mocks.Users
             var userIdToDelete = 1; 
 
             // Act
-            repository.Delete(new User { Id = userIdToDelete });
+            repository.Delete(new UserAdditionalInfo { Id = userIdToDelete });
 
             // Assert
-            mockRepo.Verify(x => x.UserRepository.Delete(It.Is<User>(u => u.Id == userIdToDelete)), Times.Once);
+            mockRepo.Verify(x => x.UserRepository.Delete(It.Is<UserAdditionalInfo>(u => u.Id == userIdToDelete)), Times.Once);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Streetcode.XUnitTest.Repositories.Mocks.Users
             var userIdToDelete = 1;
 
             // Act
-            repository.Delete(new User { Id = userIdToDelete });
+            repository.Delete(new UserAdditionalInfo { Id = userIdToDelete });
 
             // Assert
             var deletedUser = await repository.GetFirstOrDefaultAsync(u => u.Id == userIdToDelete);
@@ -85,13 +85,13 @@ namespace Streetcode.XUnitTest.Repositories.Mocks.Users
             // Arrange
             var mockRepo = RepositoryMocker.GetUsersRepositoryMock();
             var repository = mockRepo.Object.UserRepository;
-            var userToUpdate = new User { Id = 1, Name = "UpdatedName", Surname = "UpdatedSurname", Email = "updatedmail@gmail.com", Login = "updatedlogin", Password = "updatedpassword", Role = UserRole.Administrator };
+            var userToUpdate = new UserAdditionalInfo { Id = 1, Name = "UpdatedName", Surname = "UpdatedSurname", Email = "updatedmail@gmail.com", Login = "updatedlogin", Password = "updatedpassword", Role = UserRole.Administrator };
 
             // Act
             var updatedUser = repository.Update(userToUpdate);
 
             // Assert
-            mockRepo.Verify(x => x.UserRepository.Update(It.IsAny<User>()), Times.Once);
+            mockRepo.Verify(x => x.UserRepository.Update(It.IsAny<UserAdditionalInfo>()), Times.Once);
         }
     }
 
