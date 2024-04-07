@@ -10,12 +10,6 @@ internal partial class RepositoryMocker
 {
     public static Mock<IRepositoryWrapper> GetTagRepositoryMock()
     {
-        var tag = new Tag()
-        {
-            Id = 1,
-            Title = "Test",
-        };
-
         List<Tag> tags = new List<Tag>
             {
                 new Tag
@@ -39,7 +33,11 @@ internal partial class RepositoryMocker
         var mockRepo = new Mock<IRepositoryWrapper>();
 
         mockRepo.Setup(x => x.TagRepository.CreateAsync(It.IsAny<Tag>()))
-            .ReturnsAsync(tag);
+            .ReturnsAsync((Tag tag) =>
+            {
+                tags.Add(tag);
+                return tag;
+            });
 
         mockRepo.Setup(x => x.TagRepository.GetFirstOrDefaultAsync(
             It.IsAny<Expression<Func<Tag, bool>>>(),
@@ -60,6 +58,16 @@ internal partial class RepositoryMocker
            It.IsAny<Func<IQueryable<StreetcodeTagIndex>,
            IIncludableQueryable<StreetcodeTagIndex, object>>>()))
            .Returns(Task.FromResult<IEnumerable<StreetcodeTagIndex>>(tagIndeces));
+
+        mockRepo.Setup(x => x.TagRepository.Delete(It.IsAny<Tag>()))
+            .Callback((Tag tag) =>
+            {
+                tag = tags.FirstOrDefault(x => x.Id == tag.Id);
+                if (tag is not null)
+                {
+                    tags.Remove(tag);
+                }
+            });
 
         mockRepo.Setup(repo => repo.TagRepository.Update(It.IsAny<Tag>()));
 
@@ -99,7 +107,11 @@ internal partial class RepositoryMocker
         var mockRepo = new Mock<IRepositoryWrapper>();
 
         mockRepo.Setup(x => x.TagRepository.CreateAsync(It.IsAny<Tag>()))
-            .ReturnsAsync(tag);
+            .ReturnsAsync((Tag tag) =>
+            {
+                tags.Add(tag);
+                return tag;
+            });
 
         mockRepo.Setup(x => x.TagRepository.GetFirstOrDefaultAsync(
             It.IsAny<Expression<Func<Tag, bool>>>(),
@@ -117,6 +129,16 @@ internal partial class RepositoryMocker
             .ReturnsAsync(tags);
 
         mockRepo.Setup(x => x.TagRepository.Update(It.IsAny<Tag>()));
+
+        mockRepo.Setup(x => x.TagRepository.Delete(It.IsAny<Tag>()))
+            .Callback((Tag tag) =>
+            {
+                tag = tags.FirstOrDefault(x => x.Id == tag.Id);
+                if (tag is not null)
+                {
+                    tags.Remove(tag);
+                }
+            });
 
         mockRepo.Setup(x => x.SaveChanges()).Throws(new InvalidOperationException("Failed to create tag"));
 

@@ -13,7 +13,6 @@
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Newss;
-    using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Update;
     using Streetcode.BLL.MediatR.Newss.Update;
     using Streetcode.DAL.Entities.Media.Images;
     using Streetcode.DAL.Entities.News;

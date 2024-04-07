@@ -67,13 +67,16 @@ namespace Streetcode.XUnitTest.Repositories.Sources.StreetcodeCategoryContent
             // Arrange
             var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCategoryContentRepository;
-            var streetcodeCategoryContentIdToDelete = 1;
+            var streetcodeCategoryContentIdToDelete = 2;
+            var sourceLinkCategoryIdContentIdToDelete = 1;
 
             // Act
             repository.Delete(new DAL.Entities.Sources.StreetcodeCategoryContent { SourceLinkCategoryId = streetcodeCategoryContentIdToDelete });
 
             // Assert
-            var deletedStreetcodeCategoryContent = await repository.GetFirstOrDefaultAsync(s => s.SourceLinkCategoryId == streetcodeCategoryContentIdToDelete);
+            var deletedStreetcodeCategoryContent = await repository.GetFirstOrDefaultAsync(
+                s => s.SourceLinkCategoryId == sourceLinkCategoryIdContentIdToDelete &&
+                s.StreetcodeId == streetcodeCategoryContentIdToDelete);
             deletedStreetcodeCategoryContent.Should().BeNull();
         }
     }
