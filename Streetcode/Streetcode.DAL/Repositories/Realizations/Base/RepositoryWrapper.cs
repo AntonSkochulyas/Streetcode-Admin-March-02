@@ -1,6 +1,5 @@
 using System.Transactions;
 using Repositories.Interfaces;
-using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Interfaces.AdditionalContent;
 using Streetcode.DAL.Repositories.Interfaces.Analytics;
@@ -10,7 +9,6 @@ using Streetcode.DAL.Repositories.Interfaces.InfoBlocks;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.Articles;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
-using Streetcode.DAL.Repositories.Interfaces.Locations;
 using Streetcode.DAL.Repositories.Interfaces.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Newss;
 using Streetcode.DAL.Repositories.Interfaces.Partners;
@@ -28,7 +26,6 @@ using Streetcode.DAL.Repositories.Realizations.InfoBlocks;
 using Streetcode.DAL.Repositories.Realizations.InfoBlocks.Articles;
 using Streetcode.DAL.Repositories.Realizations.InfoBlocks.AuthorsInfoes;
 using Streetcode.DAL.Repositories.Realizations.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
-using Streetcode.DAL.Repositories.Realizations.Locations;
 using Streetcode.DAL.Repositories.Realizations.Media;
 using Streetcode.DAL.Repositories.Realizations.Media.Images;
 using Streetcode.DAL.Repositories.Realizations.Newss;
@@ -114,8 +111,6 @@ public class RepositoryWrapper : IRepositoryWrapper
     private IStreetcodeToponymRepository _streetcodeToponymRepository;
 
     private IStreetcodeImageRepository _streetcodeImageRepository;
-
-    private ILocationRepository _locationRepository;
 
     private IDictionaryItemRepository _dictionaryItemRepository;
     private IInfoBlockRepository _infoBlockRepository;
@@ -558,19 +553,6 @@ public class RepositoryWrapper : IRepositoryWrapper
 			return _streetcodeImageRepository;
 		}
 	}
-
-    public ILocationRepository LocationRepository
-    {
-        get
-        {
-            if (_locationRepository is null)
-            {
-                _locationRepository = new LocationRepository(_streetcodeDbContext);
-            }
-
-            return _locationRepository;
-        }
-    }
 
     public IDictionaryItemRepository DictionaryItemRepository
     {

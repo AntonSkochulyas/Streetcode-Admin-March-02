@@ -7,7 +7,6 @@ using Streetcode.DAL.Repositories.Interfaces.InfoBlocks;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.Articles;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
-using Streetcode.DAL.Repositories.Interfaces.Locations;
 using Streetcode.DAL.Repositories.Interfaces.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Newss;
 using Streetcode.DAL.Repositories.Interfaces.Partners;
@@ -56,7 +55,6 @@ public interface IRepositoryWrapper
     IHistoricalContextTimelineRepository HistoricalContextTimelineRepository { get; }
     IStreetcodeToponymRepository StreetcodeToponymRepository { get; }
     IStreetcodeImageRepository StreetcodeImageRepository { get; }
-    ILocationRepository LocationRepository { get; }
     IDictionaryItemRepository DictionaryItemRepository { get; }
     IInfoBlockRepository InfoBlockRepository { get; }
     IArticleRepository ArticleRepository { get; }
