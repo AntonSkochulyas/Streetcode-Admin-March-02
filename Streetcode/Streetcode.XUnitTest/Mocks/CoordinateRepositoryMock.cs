@@ -17,18 +17,18 @@ internal partial class RepositoryMocker
         };
 
         List<StreetcodeCoordinate> coordinates = new List<StreetcodeCoordinate>
+        {
+            new StreetcodeCoordinate
             {
-                new StreetcodeCoordinate
-                {
-                    Id = 1,
-                    StreetcodeId = 1,
-                },
-                new StreetcodeCoordinate
-                {
-                    Id = 2,
-                    StreetcodeId = 1,
-                },
-            };
+                Id = 1,
+                StreetcodeId = 1,
+            },
+            new StreetcodeCoordinate
+            {
+                Id = 2,
+                StreetcodeId = 1,
+            },
+        };
 
         var mockRepo = new Mock<IRepositoryWrapper>();
 

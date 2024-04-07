@@ -40,14 +40,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapping\Analytics\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Dto\Instagram\" />
-    <Folder Include="MediatR\Analytics\" />
     <Folder Include="MediatR\Streetcode\Fact\Create\" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="MediatR\Analytics\StatisticRecords\StatisticRecordsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StatisticRecordsErrors.resx</DependentUpon>
+    </Compile>
     <Compile Update="MediatR\Newss\NewsErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -98,11 +101,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TagErrors.resx</DependentUpon>
     </Compile>
-    <Compile Update="MediatR\Locations\LocationsErrors.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LocationsErrors.resx</DependentUpon>
-    </Compile>
     <Compile Update="MediatR\Email\EmailErrors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -121,6 +119,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="MediatR\Analytics\StatisticRecords\StatisticRecordsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StatisticRecordsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Newss\NewsErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsErrors.Designer.cs</LastGenOutput>
@@ -160,10 +162,6 @@
     <EmbeddedResource Update="MediatR\AdditionalContent\Tag\TagErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TagErrors.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="MediatR\Locations\LocationsErrors.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocationsErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="MediatR\Email\EmailErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>

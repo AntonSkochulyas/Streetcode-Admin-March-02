@@ -1,30 +1,51 @@
-﻿using FluentResults;
+﻿// Necessary usings
+using FluentResults;
 using MediatR;
+using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces
 namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Delete;
 
-public class DeleteCoordinateHandler : IRequestHandler<DeleteCoordinateCommand, Result<Unit>>
+/// <summary>
+/// Handler that deletes a streetcode coordinate.
+/// </summary>
+public class DeleteCoordinateHandler : IRequestHandler<DeleteCoordinateCommand, Result<StreetcodeCoordinate>>
 {
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
 
+    // Parametric constructor
     public DeleteCoordinateHandler(IRepositoryWrapper repositoryWrapper)
     {
         _repositoryWrapper = repositoryWrapper;
     }
 
-    public async Task<Result<Unit>> Handle(DeleteCoordinateCommand request, CancellationToken cancellationToken)
+    // Delete streetcode coordinate method
+    public async Task<Result<StreetcodeCoordinate>> Handle(DeleteCoordinateCommand request, CancellationToken cancellationToken)
     {
-        var streetcodeCoordinate = await _repositoryWrapper.StreetcodeCoordinateRepository.GetFirstOrDefaultAsync(f => f.Id == request.Id);
+        // Get first finded streetcode coordinate by id
+        var findedStreetcodeCoordinateToDelete = await _repositoryWrapper.StreetcodeCoordinateRepository.GetFirstOrDefaultAsync(f => f.Id == request.Id);
 
-        if (streetcodeCoordinate is null)
+        // If can not find streetcode coordinate by id from request - > return Result.Fail with error from resource file
+        if (findedStreetcodeCoordinateToDelete is null)
         {
             return Result.Fail(new Error(string.Format(CoordinateErrors.DeleteCoordinateHandlerNotFoundByIdError, request.Id)));
         }
 
-        _repositoryWrapper.StreetcodeCoordinateRepository.Delete(streetcodeCoordinate);
+        // Deleting streetcode coordinate
+        _repositoryWrapper.StreetcodeCoordinateRepository.Delete(findedStreetcodeCoordinateToDelete);
 
-        var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
-        return resultIsSuccess ? Result.Ok(Unit.Value) : Result.Fail(new Error(CoordinateErrors.DeleteCoordinateHandlerDeleteFailedError));
+        // Check, that save of deleted streetcode coordinate was successfully
+        var isDeletedSuccessfully = await _repositoryWrapper.SaveChangesAsync() > 0;
+
+        // If save of deleted streetcode coordinate was successfully - > return deleted streetcode coordinate
+        if (isDeletedSuccessfully)
+        {
+            return Result.Ok(findedStreetcodeCoordinateToDelete);
+        }
+
+        // If save of deleted streetcode coordinate was not successfully - > return Result.Fail with error from resource file
+        return Result.Fail(new Error(CoordinateErrors.DeleteCoordinateHandlerDeleteFailedError));
     }
 }
