@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.GetAll
     using Streetcode.BLL.Mapping.Dictionaries;
     using Streetcode.BLL.MediatR.Dictionaries.GetAll;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

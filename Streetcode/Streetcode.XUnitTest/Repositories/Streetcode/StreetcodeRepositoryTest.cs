@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Streetcode;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Streetcode
@@ -34,7 +34,7 @@ namespace Streetcode.XUnitTest.Repositories.Streetcode
             var result = await repository.GetAllAsync(null, null);
 
             // Assert
-            result.Count().Should().Be(2);
+            result.Count().Should().Be(4);
         }
 
         [Fact]

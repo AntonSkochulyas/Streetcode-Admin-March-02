@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
     using Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes;
     using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.GetAll;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

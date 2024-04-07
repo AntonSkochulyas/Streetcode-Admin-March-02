@@ -8,7 +8,7 @@
     using Streetcode.BLL.Mapping.AdditionalContent;
     using Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetByStreetcodeId;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class GetSubtitleByStreetcodeIdHandlerTest

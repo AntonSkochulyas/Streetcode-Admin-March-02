@@ -13,7 +13,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Video.GetById
     using Streetcode.BLL.MediatR.Media.Audio.GetById;
     using Streetcode.BLL.MediatR.Media.Video.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

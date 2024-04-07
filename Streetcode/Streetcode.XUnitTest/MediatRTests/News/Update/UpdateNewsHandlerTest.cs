@@ -18,7 +18,7 @@
     using Streetcode.DAL.Entities.Media.Images;
     using Streetcode.DAL.Entities.News;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class UpdateNewsHandlerTest

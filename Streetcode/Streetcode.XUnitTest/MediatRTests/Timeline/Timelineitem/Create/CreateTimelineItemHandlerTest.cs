@@ -10,7 +10,7 @@
     using Streetcode.BLL.MediatR.Timeline.TimelineItem.Create;
     using Streetcode.DAL.Entities.Timeline;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

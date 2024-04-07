@@ -12,6 +12,10 @@ public static class WebApplicationExtensions
         {
             var streetcodeContext = app.Services.GetRequiredService<StreetcodeDbContext>();
             await streetcodeContext.Database.MigrateAsync();
+
+            var jwtSettings = app.Services.GetRequiredService<IConfiguration>().GetSection("JWT");
+            var secretKey = jwtSettings.GetValue<string>("Secret");
+
         }
         catch (Exception ex)
         {

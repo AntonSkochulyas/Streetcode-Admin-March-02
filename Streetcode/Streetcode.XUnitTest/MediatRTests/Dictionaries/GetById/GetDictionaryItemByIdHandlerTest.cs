@@ -11,7 +11,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.GetById
     using Streetcode.BLL.Mapping.Dictionaries;
     using Streetcode.BLL.MediatR.Dictionaries.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

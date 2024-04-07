@@ -14,7 +14,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Partners.Create
     using Streetcode.BLL.MediatR.Partners.Create;
     using Streetcode.DAL.Entities.Streetcode;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

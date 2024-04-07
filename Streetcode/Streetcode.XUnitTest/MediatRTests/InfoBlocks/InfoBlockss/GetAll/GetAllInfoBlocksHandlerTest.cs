@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetAll
     using Streetcode.BLL.Mapping.InfoBlocks;
     using Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.GetAll;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>
@@ -41,55 +41,55 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.GetAll
             _mockLogger = new Mock<ILoggerService>();
         }
 
-        ///// <summary>
-        ///// Get all not null or empty test.
-        ///// </summary>
-        ///// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        //[Fact]
-        //public async Task GetAllNotNullOrEmptyTest()
-        //{
-        //    // Arrange
-        //    var handler = new GetAllInfoBlocksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+        /// <summary>
+        /// Get all not null or empty test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllNotNullOrEmptyTest()
+        {
+            // Arrange
+            var handler = new GetAllInfoBlocksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-        //    // Act
-        //    var result = await handler.Handle(new GetAllInfoBlocksQuery(), CancellationToken.None);
+            // Act
+            var result = await handler.Handle(new GetAllInfoBlocksQuery(), CancellationToken.None);
 
-        //    // Assert
-        //    result.Value.Should().NotBeNullOrEmpty();
-        //}
+            // Assert
+            result.Value.Should().NotBeNullOrEmpty();
+        }
 
-        ///// <summary>
-        ///// Get all list count shoul be four.
-        ///// </summary>
-        ///// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        //[Fact]
-        //public async Task GetAllCountShouldBeFour()
-        //{
-        //    // Arrange
-        //    var handler = new GetAllInfoBlocksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+        /// <summary>
+        /// Get all list count shoul be four.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllCountShouldBeFour()
+        {
+            // Arrange
+            var handler = new GetAllInfoBlocksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-        //    // Act
-        //    var result = await handler.Handle(new GetAllInfoBlocksQuery(), CancellationToken.None);
+            // Act
+            var result = await handler.Handle(new GetAllInfoBlocksQuery(), CancellationToken.None);
 
-        //    // Assert
-        //    result.Value.Count().Should().Be(4);
-        //}
+            // Assert
+            result.Value.Count().Should().Be(4);
+        }
 
-        ///// <summary>
-        ///// Get all list should be type InfoBlockDTO.
-        ///// </summary>
-        ///// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        //[Fact]
-        //public async Task GetAllShouldBeTypeListArticleDTO()
-        //{
-        //    // Arrange
-        //    var handler = new GetAllInfoBlocksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+        /// <summary>
+        /// Get all list should be type InfoBlockDTO.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllShouldBeTypeListArticleDTO()
+        {
+            // Arrange
+            var handler = new GetAllInfoBlocksHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-        //    // Act
-        //    var result = await handler.Handle(new GetAllInfoBlocksQuery(), CancellationToken.None);
+            // Act
+            var result = await handler.Handle(new GetAllInfoBlocksQuery(), CancellationToken.None);
 
-        //    // Assert
-        //    result.Value.Should().BeOfType<List<InfoBlockDto>>();
-        //}
+            // Assert
+            result.Value.Should().BeOfType<List<InfoBlockDto>>();
+        }
     }
 }
