@@ -32,6 +32,13 @@ internal partial class RepositoryMocker
 
         var mockRepo = new Mock<IRepositoryWrapper>();
 
+        mockRepo.Setup(x => x.TagRepository.Create(It.IsAny<Tag>()))
+            .Returns((Tag tag) =>
+            {
+                tags.Add(tag);
+                return tag;
+            });
+
         mockRepo.Setup(x => x.TagRepository.CreateAsync(It.IsAny<Tag>()))
             .ReturnsAsync((Tag tag) =>
             {
