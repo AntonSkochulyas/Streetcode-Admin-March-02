@@ -117,19 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateLocationCommandValidatorStreetNameError" xml:space="preserve">
-    <value>Streetname length of location must not be longer than {0} symbols.</value>
+  <data name="CreateStatisticRecordCommandValidatorAddressMaxLengthError" xml:space="preserve">
+    <value>Address max length should not be longer than {0} symbols.</value>
   </data>
-  <data name="CreateLocationHandlerCanNotConvertFromNullError" xml:space="preserve">
-    <value>Can not convert null to location</value>
+  <data name="CreateStatisticRecordHandlerCanNotMapError" xml:space="preserve">
+    <value>Can not map statistic record.</value>
   </data>
-  <data name="CreateLocationHandlerCanNotCreateLocationError" xml:space="preserve">
-    <value>Failed to create a location</value>
+  <data name="CreateStatisticRecordHandlerFailedToCreateError" xml:space="preserve">
+    <value>Failed to create a statistic record.</value>
   </data>
-  <data name="DeleteLocationHandlerCanNotDeleteLocationError" xml:space="preserve">
-    <value>Failed to delete location</value>
+  <data name="CreateStatisticRecordHandlerQrIdShoulBeUniqueError" xml:space="preserve">
+    <value>Qr id should be unique per one streetcode.</value>
   </data>
-  <data name="DeleteLocationHandlerNotFoundByIdError" xml:space="preserve">
-    <value>No location found by entered Id - {0}</value>
+  <data name="DeleteStatisticRecordHandlerCanNotFindWithGivenIdError" xml:space="preserve">
+    <value>Can not find a statistic record with given id: {0}.</value>
+  </data>
+  <data name="DeleteStatisticRecordHandlerFailedToDeleteError" xml:space="preserve">
+    <value>Failed to delete a statistic record.</value>
+  </data>
+  <data name="GetAllStatisticRecordsHandlerCanNotGetAnyError" xml:space="preserve">
+    <value>Can not get any statistic records.</value>
   </data>
 </root>

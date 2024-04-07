@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Streetcode.BLL.MediatR.Locations {
+namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Streetcode.BLL.MediatR.Locations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LocationsErrors {
+    internal class StatisticRecordsErrors {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LocationsErrors() {
+        internal StatisticRecordsErrors() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Streetcode.BLL.MediatR.Locations {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Streetcode.BLL.MediatR.Locations.LocationsErrors", typeof(LocationsErrors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Streetcode.BLL.MediatR.Analytics.StatisticRecords.StatisticRecordsErrors", typeof(StatisticRecordsErrors).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,65 @@ namespace Streetcode.BLL.MediatR.Locations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Streetname length of location must not be longer than {0} symbols..
+        ///   Looks up a localized string similar to Address max length should not be longer than {0} symbols..
         /// </summary>
-        internal static string CreateLocationCommandValidatorStreetNameError {
+        internal static string CreateStatisticRecordCommandValidatorAddressMaxLengthError {
             get {
-                return ResourceManager.GetString("CreateLocationCommandValidatorStreetNameError", resourceCulture);
+                return ResourceManager.GetString("CreateStatisticRecordCommandValidatorAddressMaxLengthError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can not convert null to location.
+        ///   Looks up a localized string similar to Can not map statistic record..
         /// </summary>
-        internal static string CreateLocationHandlerCanNotConvertFromNullError {
+        internal static string CreateStatisticRecordHandlerCanNotMapError {
             get {
-                return ResourceManager.GetString("CreateLocationHandlerCanNotConvertFromNullError", resourceCulture);
+                return ResourceManager.GetString("CreateStatisticRecordHandlerCanNotMapError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to create a location.
+        ///   Looks up a localized string similar to Failed to create a statistic record..
         /// </summary>
-        internal static string CreateLocationHandlerCanNotCreateLocationError {
+        internal static string CreateStatisticRecordHandlerFailedToCreateError {
             get {
-                return ResourceManager.GetString("CreateLocationHandlerCanNotCreateLocationError", resourceCulture);
+                return ResourceManager.GetString("CreateStatisticRecordHandlerFailedToCreateError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to delete location.
+        ///   Looks up a localized string similar to Qr id should be unique per one streetcode..
         /// </summary>
-        internal static string DeleteLocationHandlerCanNotDeleteLocationError {
+        internal static string CreateStatisticRecordHandlerQrIdShoulBeUniqueError {
             get {
-                return ResourceManager.GetString("DeleteLocationHandlerCanNotDeleteLocationError", resourceCulture);
+                return ResourceManager.GetString("CreateStatisticRecordHandlerQrIdShoulBeUniqueError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No location found by entered Id - {0}.
+        ///   Looks up a localized string similar to Can not find a statistic record with given id: {0}..
         /// </summary>
-        internal static string DeleteLocationHandlerNotFoundByIdError {
+        internal static string DeleteStatisticRecordHandlerCanNotFindWithGivenIdError {
             get {
-                return ResourceManager.GetString("DeleteLocationHandlerNotFoundByIdError", resourceCulture);
+                return ResourceManager.GetString("DeleteStatisticRecordHandlerCanNotFindWithGivenIdError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete a statistic record..
+        /// </summary>
+        internal static string DeleteStatisticRecordHandlerFailedToDeleteError {
+            get {
+                return ResourceManager.GetString("DeleteStatisticRecordHandlerFailedToDeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not get any statistic records..
+        /// </summary>
+        internal static string GetAllStatisticRecordsHandlerCanNotGetAnyError {
+            get {
+                return ResourceManager.GetString("GetAllStatisticRecordsHandlerCanNotGetAnyError", resourceCulture);
             }
         }
     }
