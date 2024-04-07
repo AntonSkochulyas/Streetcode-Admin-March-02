@@ -8,6 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Repositories\Mocks\**" />
+	  <EmbeddedResource Remove="Repositories\Mocks\**" />
+	  <None Remove="Repositories\Mocks\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.0" />
 		<PackageReference Include="coverlet.collector" Version="3.2.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -79,7 +85,6 @@
 	  <None Remove="MediatRTests\Timeline\HistoricalContext\GetAll\" />
 	  <None Remove="MediatRTests\Payment\" />
 	  <None Remove="MediatRTests\Email\" />
-	  <None Remove="Repositories\Mocks\Users\" />
 	  <None Remove="Repositories\Users\" />
 	  <None Remove="Repositories\Team\" />
 	  <None Remove="Repositories\Timeline\" />

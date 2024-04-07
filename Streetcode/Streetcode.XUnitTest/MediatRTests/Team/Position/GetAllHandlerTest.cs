@@ -10,7 +10,7 @@ using Streetcode.BLL.MediatR.Team.GetAll;
 using Streetcode.BLL.MediatR.Team.Position.GetAll;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 public class GetAllHandlerTest

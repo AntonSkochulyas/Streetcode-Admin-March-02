@@ -17,7 +17,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Update
     using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
     using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>
@@ -74,70 +74,70 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Update
         /// Update InfoBlockDto Is Valid Is Sucess Should Be True test.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        //[Fact]
-        //public async Task HandlerInfoBlockDtoIsValidIsSucessShouldBeTrue()
-        //{
-        //    // Arrange
-        //    var handler = new UpdateInfoBlockHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
+        [Fact]
+        public async Task HandlerInfoBlockDtoIsValidIsSucessShouldBeTrue()
+        {
+            // Arrange
+            var handler = new UpdateInfoBlockHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
-        //    InfoBlockDto? infoBlockDto = new InfoBlockDto()
-        //    {
-        //        Id = 1,
-        //        ArticleId = 1,
-        //        Article = new Article { Id = 1, Text = "First Text", Title = "First Title" },
-        //        VideoURL = "www.youtube.com",
-        //        AuthorShipId = 1,
-        //        AuthorShip = new AuthorShip
-        //        {
-        //            Id = 1,
-        //            Text = "First Text",
-        //            AuthorShipHyperLinkId = 1,
-        //            AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
-        //        },
-        //    };
+            InfoBlockDto? infoBlockDto = new InfoBlockDto()
+            {
+                Id = 1,
+                ArticleId = 1,
+                Article = new Article { Id = 1, Text = "First Text", Title = "First Title" },
+                VideoURL = "www.youtube.com",
+                AuthorShipId = 1,
+                AuthorShip = new AuthorShip
+                {
+                    Id = 1,
+                    Text = "First Text",
+                    AuthorShipHyperLinkId = 1,
+                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
+                },
+            };
 
-        //    var request = new UpdateInfoBlockCommand(infoBlockDto);
+            var request = new UpdateInfoBlockCommand(infoBlockDto);
 
-        //    // Act
-        //    var result = await handler.Handle(request, CancellationToken.None);
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
 
-        //    // Assert
-        //    result.IsSuccess.Should().BeTrue();
-        //}
+            // Assert
+            result.IsSuccess.Should().BeTrue();
+        }
 
         /// <summary>
         /// Update InfoBlockDto Is Valid Update Article Is Called test.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        //[Fact]
-        //public async Task HandlerInfoBlockDtoIsValidUpdateArticleIsCalled()
-        //{
-        //    // Arrange
-        //    var handler = new UpdateInfoBlockHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
+        [Fact]
+        public async Task HandlerInfoBlockDtoIsValidUpdateArticleIsCalled()
+        {
+            // Arrange
+            var handler = new UpdateInfoBlockHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
 
-        //    InfoBlockDto? infoBlockDto = new InfoBlockDto()
-        //    {
-        //        Id = 1,
-        //        ArticleId = 1,
-        //        Article = new Article { Id = 1, Text = "First Text", Title = "First Title" },
-        //        VideoURL = "www.youtube.com",
-        //        AuthorShipId = 1,
-        //        AuthorShip = new AuthorShip
-        //        {
-        //            Id = 1,
-        //            Text = "First Text",
-        //            AuthorShipHyperLinkId = 1,
-        //            AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
-        //        },
-        //    };
+            InfoBlockDto? infoBlockDto = new InfoBlockDto()
+            {
+                Id = 1,
+                ArticleId = 1,
+                Article = new Article { Id = 1, Text = "First Text", Title = "First Title" },
+                VideoURL = "www.youtube.com",
+                AuthorShipId = 1,
+                AuthorShip = new AuthorShip
+                {
+                    Id = 1,
+                    Text = "First Text",
+                    AuthorShipHyperLinkId = 1,
+                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
+                },
+            };
 
-        //    var request = new UpdateInfoBlockCommand(infoBlockDto);
+            var request = new UpdateInfoBlockCommand(infoBlockDto);
 
-        //    // Act
-        //    var result = await handler.Handle(request, CancellationToken.None);
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
 
-        //    // Assert
-        //    _mockRepository.Verify(x => x.InfoBlockRepository.Update(It.IsAny<InfoBlock>()), Times.Once);
-        //}
+            // Assert
+            _mockRepository.Verify(x => x.InfoBlockRepository.Update(It.IsAny<InfoBlock>()), Times.Once);
+        }
     }
 }

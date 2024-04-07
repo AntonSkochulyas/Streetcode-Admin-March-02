@@ -13,7 +13,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.GetById
     using Streetcode.BLL.Mapping.Media.Images;
     using Streetcode.BLL.MediatR.Media.Image.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

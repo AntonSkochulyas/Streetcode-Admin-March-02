@@ -10,7 +10,7 @@ using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetAllCategoryCon
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentsByStreetcodeIdAndSourceLinkCategoryId;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

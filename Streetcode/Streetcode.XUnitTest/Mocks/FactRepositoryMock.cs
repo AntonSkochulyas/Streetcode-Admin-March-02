@@ -1,4 +1,4 @@
-﻿namespace Streetcode.XUnitTest.MediatRTests.Mocks;
+﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;

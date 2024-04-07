@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
     using Streetcode.BLL.Mapping.Toponyms;
     using Streetcode.BLL.MediatR.Toponyms.GetAll;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

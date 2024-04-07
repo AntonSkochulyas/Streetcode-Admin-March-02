@@ -9,7 +9,7 @@
     using Streetcode.BLL.Mapping.Timeline;
     using Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

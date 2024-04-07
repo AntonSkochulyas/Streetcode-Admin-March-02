@@ -6,7 +6,7 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Timeline;
 using Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 using FluentAssertions;
 using Streetcode.BLL.MediatR.Media.Audio.GetByStreetcodeId;

@@ -1,10 +1,18 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Toponyms;
+<<<<<<< HEAD:Streetcode/Streetcode.XUnitTest/Repositories/Toponyms/ToponymsRepositoryTest.cs
 using Streetcode.XUnitTest.Repositories.Mocks;
+=======
+>>>>>>> develop:Streetcode/Streetcode.XUnitTest/Repositories/Users/ToponymsRepositoryTest.cs
 using Xunit;
+using Streetcode.XUnitTest.Mocks;
 
+<<<<<<< HEAD:Streetcode/Streetcode.XUnitTest/Repositories/Toponyms/ToponymsRepositoryTest.cs
 namespace Streetcode.XUnitTest.Repositories.Toponyms
+=======
+namespace Streetcode.XUnitTest.Repositories.Users
+>>>>>>> develop:Streetcode/Streetcode.XUnitTest/Repositories/Users/ToponymsRepositoryTest.cs
 {
     public class ToponymsRepositoryTest
     {
@@ -35,10 +43,11 @@ namespace Streetcode.XUnitTest.Repositories.Toponyms
             var result = resultTask.Result;
 
             // Assert
-            result.Count().Should().Be(3);
+            result.Count().Should().Be(4);
             result.Should().ContainSingle(u => u.Community == "First community")
                   .And.ContainSingle(u => u.Community == "Second community")
-                  .And.ContainSingle(u => u.Community == "Third community");
+                  .And.ContainSingle(u => u.Community == "Third community")
+                  .And.ContainSingle(u => u.Community == "Fourth community");
         }
 
         [Fact]

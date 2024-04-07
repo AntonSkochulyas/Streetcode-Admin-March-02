@@ -8,7 +8,7 @@
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class CreateCoordinateHandlerTest
