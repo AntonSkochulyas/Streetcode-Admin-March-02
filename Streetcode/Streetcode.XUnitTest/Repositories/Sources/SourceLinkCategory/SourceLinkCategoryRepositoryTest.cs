@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Sources.SourceLinkCategory
@@ -11,7 +11,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.SourceLinkCategory
         public void Repository_Create_SourceLinkCategory_EqualFirstNames()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetSourceCategoryRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.SourceCategoryRepository;
             var sourceLinkCategoryToAdd = new DAL.Entities.Sources.SourceLinkCategory()
             {
@@ -28,10 +28,10 @@ namespace Streetcode.XUnitTest.Repositories.Sources.SourceLinkCategory
         }
 
         [Fact]
-        public async Task Repository_GetAllNews_ReturnsAllSourceLinkCategorys()
+        public async Task Repository_GetAllSourceLinkCategories_ReturnsAllSourceLinkCategories()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetSourceCategoryRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.SourceCategoryRepository;
 
             // Act
@@ -45,7 +45,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.SourceLinkCategory
         public void Repository_SourceLinkCategoryUpdate()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetSourceCategoryRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.SourceCategoryRepository;
             var sourceLinkCategoryToUpdate = new DAL.Entities.Sources.SourceLinkCategory()
             {
@@ -65,7 +65,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.SourceLinkCategory
         public async Task Repository_DeleteStreetcodeCategoryContent_RemovesFromDatabase()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetSourceCategoryRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.SourceCategoryRepository;
             var sourceLinkCategoryIdToDelete = 1;
 

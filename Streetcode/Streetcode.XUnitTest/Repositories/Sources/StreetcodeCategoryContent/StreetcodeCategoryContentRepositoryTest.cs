@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.Sources.StreetcodeCategoryContent
@@ -11,7 +11,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.StreetcodeCategoryContent
         public void Repository_Create_StreetcodeCategoryContent_EqualFirstNames()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCategoryContentRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCategoryContentRepository;
             var streetcodeCategoryContentToAdd = new DAL.Entities.Sources.StreetcodeCategoryContent()
             {
@@ -28,10 +28,10 @@ namespace Streetcode.XUnitTest.Repositories.Sources.StreetcodeCategoryContent
         }
 
         [Fact]
-        public async Task Repository_GetAllNews_ReturnsAllStreetcodeCategoryContents()
+        public async Task Repository_GetAllStreetcodeCategoryContent_ReturnsAllStreetcodeCategoryContents()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCategoryContentRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCategoryContentRepository;
 
             // Act
@@ -45,7 +45,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.StreetcodeCategoryContent
         public void Repository_StreetcodeCategoryContentUpdate()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCategoryContentRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCategoryContentRepository;
             var streetcodeCategoryContentToUpdate = new DAL.Entities.Sources.StreetcodeCategoryContent()
             {
@@ -65,7 +65,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.StreetcodeCategoryContent
         public async Task Repository_DeleteStreetcodeCategoryContent_RemovesFromDatabase()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCategoryContentRepositoryMock();
+            var mockRepo = RepositoryMocker.GetSourceRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCategoryContentRepository;
             var streetcodeCategoryContentIdToDelete = 1;
 

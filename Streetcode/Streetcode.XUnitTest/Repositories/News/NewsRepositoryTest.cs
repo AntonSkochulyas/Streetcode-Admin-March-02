@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.News;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.News

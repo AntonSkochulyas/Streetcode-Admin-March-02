@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Tag
