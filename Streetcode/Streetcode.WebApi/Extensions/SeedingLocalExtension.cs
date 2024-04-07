@@ -267,21 +267,22 @@ namespace Streetcode.WebApi.Extensions
                         }
                     }
 
-                    if (!dbContext.Users.Any())
-                    {
-                        dbContext.Users.AddRange(
-                            new DAL.Entities.Users.UserAdditionalInfo
-                            {
-                                Email = "admin",
-                                Role = UserRole.MainAdministrator,
-                                Login = "admin",
-                                Name = "admin",
-                                Password = "admin",
-                                Surname = "admin",
-                            });
+                    // Change User to UserAdditionalInfo after JWT Authorization will be done
+                    //if (!dbContext.Users.Any())
+                    //{
+                    //    dbContext.Users.AddRange(
+                    //        new DAL.Entities.Users.User
+                    //        {
+                    //            Email = "admin",
+                    //            Role = UserRole.MainAdministrator,
+                    //            Login = "admin",
+                    //            Name = "admin",
+                    //            Password = "admin",
+                    //            Surname = "admin",
+                    //        });
 
-                        await dbContext.SaveChangesAsync();
-                    }
+                    //    await dbContext.SaveChangesAsync();
+                    //}
 
                     if (!dbContext.News.Any())
                     {

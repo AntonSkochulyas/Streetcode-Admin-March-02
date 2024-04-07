@@ -14,7 +14,7 @@ namespace Streetcode.DAL.Entities.Users
         public string? Login { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        public char[] Password { get; set; }
+        public string Password { get; set; }
 
         public string? Role { get; set; } = UserRoles.User;
 

@@ -1,11 +1,10 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.Toponyms;
-using Streetcode.DAL.Entities.Users;
-using Streetcode.DAL.Enums;
+using Streetcode.XUnitTest.Repositories.Mocks;
 using Xunit;
 
-namespace Streetcode.XUnitTest.Repositories.Mocks.Users
+namespace Streetcode.XUnitTest.Repositories.Toponyms
 {
     public class ToponymsRepositoryTest
     {

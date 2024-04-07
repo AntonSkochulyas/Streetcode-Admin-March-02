@@ -56,7 +56,6 @@ public class StreetcodeDbContext : IdentityDbContext
     public DbSet<Video> Videos { get; set; }
     public DbSet<StreetcodeCategoryContent> StreetcodeCategoryContent { get; set; }
     public DbSet<StreetcodeArt> StreetcodeArts { get; set; }
-    public DbSet<UserAdditionalInfo> Users { get; set; }
     public DbSet<StreetcodeTagIndex> StreetcodeTagIndices { get; set; }
     public DbSet<TeamMember> TeamMembers { get; set; }
     public DbSet<TeamMemberLink> TeamMemberLinks { get; set; }

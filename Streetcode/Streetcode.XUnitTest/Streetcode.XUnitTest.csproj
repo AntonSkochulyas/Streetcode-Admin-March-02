@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -64,7 +64,6 @@
 	  <Folder Include="MediatRTests\Toponyms\GetByStreetcodeId\" />
 	  <Folder Include="MediatRTests\Payment\" />
 	  <Folder Include="MediatRTests\Email\" />
-	  <Folder Include="Repositories\Users\" />
 	  <Folder Include="Repositories\Team\" />
 	  <Folder Include="Repositories\Timeline\" />
 	  <Folder Include="Repositories\Streetcode\" />

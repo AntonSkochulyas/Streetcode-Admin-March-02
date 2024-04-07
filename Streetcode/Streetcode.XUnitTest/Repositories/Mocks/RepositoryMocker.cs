@@ -6,70 +6,13 @@ using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Toponyms;
-using Streetcode.DAL.Entities.Users;
-using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Streetcode.XUnitTest.Repositories.Mocks
 {
     internal class RepositoryMocker
     {
-        public static Mock<IRepositoryWrapper> GetUsersRepositoryMock()
-        {
-            var users = new List<UserAdditionalInfo>()
-            {
-                new UserAdditionalInfo() { Id = 1, Name = "John", Surname = "Smith", Email = "mail1@gmail.com", Login = "john1", Password = "smith1", Role = UserRole.Administrator },
-                new UserAdditionalInfo() { Id = 2, Name = "Maria", Surname = "Low", Email = "mail2@gmail.com", Login = "maria1", Password = "low1", Role = UserRole.MainAdministrator },
-                new UserAdditionalInfo() { Id = 3, Name = "Anton", Surname = "Shults", Email = "mail3@gmail.com", Login = "anton1", Password = "shults1", Role = UserRole.MainAdministrator },
-            };
-
-            var mockRepo = new Mock<IRepositoryWrapper>();
-
-            mockRepo.Setup(x => x.UserRepository
-                .GetAllAsync(
-                    It.IsAny<Expression<Func<UserAdditionalInfo, bool>>>(),
-                    It.IsAny<Func<IQueryable<UserAdditionalInfo>, IIncludableQueryable<UserAdditionalInfo, object>>>()))
-                .ReturnsAsync(users);
-
-            mockRepo.Setup(x => x.UserRepository.Create(It.IsAny<UserAdditionalInfo>()))
-            .Returns((UserAdditionalInfo user) =>
-            {
-                users.Add(user);
-                return user;
-            });
-
-            mockRepo.Setup(x => x.UserRepository.Delete(It.IsAny<UserAdditionalInfo>()))
-            .Callback((UserAdditionalInfo user) =>
-            {
-                users.Remove(user);
-            });
-
-            mockRepo.Setup(x => x.UserRepository.Update(It.IsAny<UserAdditionalInfo>()))
-                .Returns((UserAdditionalInfo user) =>
-                {
-                    var existingUser = users.Find(u => u.Id == user.Id);
-                    if (existingUser != null)
-                    {
-                        existingUser.Name = user.Name;
-                        existingUser.Surname = user.Surname;
-                        existingUser.Email = user.Email;
-                        existingUser.Login = user.Login;
-                        existingUser.Password = user.Password;
-                        existingUser.Role = user.Role;
-                    }
-
-                    return null;
-                });
-
-            return mockRepo;
-        }
-
         public static Mock<IRepositoryWrapper> GetToponymsRepositoryMock()
         {
             var toponyms = new List<Toponym>()
