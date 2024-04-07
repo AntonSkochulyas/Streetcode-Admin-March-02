@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.GetBaseImage
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.MediatR.Media.Image.GetBaseImage;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

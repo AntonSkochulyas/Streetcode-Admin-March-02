@@ -8,7 +8,7 @@
     using Streetcode.BLL.Mapping.AdditionalContent.Coordinates;
     using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class DeleteCoordinateHandlerTest

@@ -12,25 +12,7 @@ namespace Streetcode.BLL.Dto.InfoBlocks
         public int ArticleId { get; set; }
         public Article? Article { get; set; }
         public int? AuthorShipId { get; set; }
-
-        public string? VideoURL
-        {
-            get
-            {
-                return _videoURL;
-            }
-            set
-            {
-                if (IsValidYouTubeUrl(value))
-                {
-                    _videoURL = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid YouTube URL");
-                }
-            }
-        }
+        public string? VideoURL { get; set; }
 
         public AuthorShip? AuthorShip
         {
@@ -45,16 +27,6 @@ namespace Streetcode.BLL.Dto.InfoBlocks
                     _authorShip = null;
                 }
             }
-        }
-
-        private bool IsValidYouTubeUrl(string url)
-        {
-            Uri? uriResult;
-            bool isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out uriResult)
-                              && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
-                              && uriResult.Host == "www.youtube.com";
-
-            return isValidUrl;
         }
     }
 }

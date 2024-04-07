@@ -10,7 +10,7 @@ using Streetcode.BLL.MediatR.Newss.Create;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create

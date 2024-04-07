@@ -15,7 +15,7 @@
     using Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl;
     using Streetcode.BLL.MediatR.Newss.SortedByDateTime;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     public class SortedNewsByDateTimeHandlerTest

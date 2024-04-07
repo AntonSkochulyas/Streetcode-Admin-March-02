@@ -14,7 +14,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.Create
     using Streetcode.BLL.Mapping.Media.Images;
     using Streetcode.BLL.MediatR.Media.Image.Create;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>

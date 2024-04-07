@@ -11,10 +11,10 @@ namespace Streetcode.BLL.MediatR.Partners.Create
 
         public CreatePartnerCommandValidator()
         {
-            _titleMaxLength = 255;
-            _targetURLMaxLength = 255;
+            _titleMaxLength = 100;
+            _targetURLMaxLength = 200;
             _urlTitleMaxLength = 255;
-            _descriptionMaxLength = 600;
+            _descriptionMaxLength = 450;
 
             RuleFor(command => command.newPartner.Title)
                 .NotEmpty()

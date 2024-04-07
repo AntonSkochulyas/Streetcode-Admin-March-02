@@ -11,7 +11,7 @@ using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Update;
 using Streetcode.BLL.MediatR.Newss.Update;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Update

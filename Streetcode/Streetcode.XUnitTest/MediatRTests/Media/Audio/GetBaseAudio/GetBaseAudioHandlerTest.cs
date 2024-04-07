@@ -10,7 +10,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.MediatR.Media.Audio.GetBaseAudio;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.MediatRTests.Mocks;
+    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>
