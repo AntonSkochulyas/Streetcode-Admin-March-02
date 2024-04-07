@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -25,6 +25,7 @@
 		</PackageReference>
 		<PackageReference Include="FluentAssertions.AspNetCore.Mvc" Version="4.2.0" />
 		<PackageReference Include="Ical.Net" Version="4.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.11" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
@@ -69,7 +70,6 @@
 	  <Folder Include="MediatRTests\Toponyms\GetByStreetcodeId\" />
 	  <Folder Include="MediatRTests\Payment\" />
 	  <Folder Include="MediatRTests\Email\" />
-	  <Folder Include="Repositories\Users\" />
 	  <Folder Include="Repositories\Team\" />
 	  <Folder Include="Repositories\Timeline\" />
 	  <Folder Include="Repositories\Streetcode\" />

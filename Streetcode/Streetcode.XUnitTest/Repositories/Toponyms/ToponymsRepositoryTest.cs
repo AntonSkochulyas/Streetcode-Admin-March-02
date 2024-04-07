@@ -4,7 +4,7 @@ using Streetcode.DAL.Entities.Toponyms;
 using Xunit;
 using Streetcode.XUnitTest.Mocks;
 
-namespace Streetcode.XUnitTest.Repositories.Users
+namespace Streetcode.XUnitTest.Repositories.Toponyms
 {
     public class ToponymsRepositoryTest
     {
