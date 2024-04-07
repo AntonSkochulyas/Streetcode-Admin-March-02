@@ -1,13 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.Partners;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Toponyms;
+using Streetcode.DAL.Entities.News;
+using Streetcode.DAL.Entities.Users;
+using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
+using Streetcode.DAL.Entities.AdditionalContent.Coordinates;
+using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
+using Streetcode.DAL.Entities.AdditionalContent;
 
 namespace Streetcode.XUnitTest.Repositories.Mocks
 {
@@ -186,6 +193,329 @@ namespace Streetcode.XUnitTest.Repositories.Mocks
                 .Callback((Partner partner) =>
                 {
                     partners.Remove(partner);
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetNewsRepositoryMock()
+        {
+            var news = new List<DAL.Entities.News.News>()
+            {
+                new DAL.Entities.News.News() { Id = 1, Title = "First title", Text = "First text", CreationDate = new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc), URL = "Url1", ImageId = 1 },
+                new DAL.Entities.News.News() { Id = 2, Title = "Second title", Text = "Second text", CreationDate = new DateTime(2020, 2, 2, 2, 2, 2, DateTimeKind.Utc), URL = "Url2", ImageId = 2 },
+                new DAL.Entities.News.News() { Id = 3, Title = "Third title", Text = "Third text", CreationDate = new DateTime(2020, 3, 3, 3, 3, 3, DateTimeKind.Utc), URL = "Url3", ImageId = 3 },
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.NewsRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<DAL.Entities.News.News, bool>>>(),
+                    It.IsAny<Func<IQueryable<DAL.Entities.News.News>, IIncludableQueryable<DAL.Entities.News.News, object>>>()))
+                .ReturnsAsync(news);
+
+            mockRepo.Setup(x => x.NewsRepository.Create(It.IsAny<DAL.Entities.News.News>()))
+            .Returns((DAL.Entities.News.News newsItem) =>
+            {
+                news.Add(newsItem);
+                return newsItem;
+            });
+
+            mockRepo.Setup(x => x.NewsRepository.Delete(It.IsAny<DAL.Entities.News.News>()))
+            .Callback((DAL.Entities.News.News newsItem) =>
+            {
+                news.Remove(newsItem);
+            });
+
+            mockRepo.Setup(x => x.NewsRepository.Update(It.IsAny<DAL.Entities.News.News>()))
+                .Returns((DAL.Entities.News.News newsItem) =>
+                {
+                    var existingNewsItem = news.Find(n => n.Id == newsItem.Id);
+                    if (existingNewsItem != null)
+                    {
+                        existingNewsItem.Title = newsItem.Title;
+                        existingNewsItem.Text = newsItem.Text;
+                        existingNewsItem.URL = newsItem.URL;
+                        existingNewsItem.CreationDate = newsItem.CreationDate;
+                        existingNewsItem.ImageId = newsItem.ImageId;
+                        existingNewsItem.Image = newsItem.Image;
+                    }
+
+                    return null;
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetSourceCategoryRepositoryMock()
+        {
+            var sourceLinkCategories = new List<SourceLinkCategory>()
+            {
+                new SourceLinkCategory() { Id = 1, Title = "First title", Image = new Image() { Id = 1, Base64 = "TestBlob1", }},
+                new SourceLinkCategory() { Id = 2, Title = "Second title", Image = new Image() { Id = 2, Base64 = "TestBlob2", }},
+                new SourceLinkCategory() { Id = 3, Title = "Third title", Image = new Image() { Id = 3, Base64 = "TestBlob3", }},
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.SourceCategoryRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<SourceLinkCategory, bool>>>(),
+                    It.IsAny<Func<IQueryable<SourceLinkCategory>, IIncludableQueryable<SourceLinkCategory, object>>>()))
+                .ReturnsAsync(sourceLinkCategories);
+
+            mockRepo.Setup(x => x.SourceCategoryRepository.Create(It.IsAny<SourceLinkCategory>()))
+            .Returns((SourceLinkCategory sourceLinkCategory) =>
+            {
+                sourceLinkCategories.Add(sourceLinkCategory);
+                return sourceLinkCategory;
+            });
+
+            mockRepo.Setup(x => x.SourceCategoryRepository.Delete(It.IsAny<SourceLinkCategory>()))
+            .Callback((SourceLinkCategory sourceLinkCategory) =>
+            {
+                sourceLinkCategories.Remove(sourceLinkCategory);
+            });
+
+            mockRepo.Setup(x => x.SourceCategoryRepository.Update(It.IsAny<SourceLinkCategory>()))
+                .Returns((SourceLinkCategory sourceLinkCategory) =>
+                {
+                    var existingSourceLinkCategory = sourceLinkCategories.Find(s => s.Id == sourceLinkCategory.Id);
+                    if (existingSourceLinkCategory != null)
+                    {
+                        existingSourceLinkCategory.Title = sourceLinkCategory.Title;
+                        existingSourceLinkCategory.Image = sourceLinkCategory.Image;
+                        existingSourceLinkCategory.ImageId = sourceLinkCategory.ImageId;
+                    }
+
+                    return null;
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetStreetcodeCategoryContentRepositoryMock()
+        {
+            var streetcodeCategoryContents = new List<StreetcodeCategoryContent>()
+            {
+                new StreetcodeCategoryContent() { SourceLinkCategoryId = 1, StreetcodeId = 1, Text = "Test1" },
+                new StreetcodeCategoryContent() { SourceLinkCategoryId = 2, StreetcodeId = 1, Text = "Test2" },
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.StreetcodeCategoryContentRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<StreetcodeCategoryContent, bool>>>(),
+                    It.IsAny<Func<IQueryable<StreetcodeCategoryContent>, IIncludableQueryable<StreetcodeCategoryContent, object>>>()))
+                .ReturnsAsync(streetcodeCategoryContents);
+
+            mockRepo.Setup(x => x.StreetcodeCategoryContentRepository.Create(It.IsAny<StreetcodeCategoryContent>()))
+            .Returns((StreetcodeCategoryContent streetcodeCategoryContent) =>
+            {
+                streetcodeCategoryContents.Add(streetcodeCategoryContent);
+                return streetcodeCategoryContent;
+            });
+
+            mockRepo.Setup(x => x.StreetcodeCategoryContentRepository.Delete(It.IsAny<StreetcodeCategoryContent>()))
+            .Callback((StreetcodeCategoryContent streetcodeCategoryContent) =>
+            {
+                streetcodeCategoryContents.Remove(streetcodeCategoryContent);
+            });
+
+            mockRepo.Setup(x => x.StreetcodeCategoryContentRepository.Update(It.IsAny<StreetcodeCategoryContent>()))
+                .Returns((StreetcodeCategoryContent streetcodeCategoryContent) =>
+                {
+                    var existingStreetcodeCategoryContent = streetcodeCategoryContents.Find(
+                        s => s.StreetcodeId == streetcodeCategoryContent.StreetcodeId &&
+                        s.SourceLinkCategoryId == streetcodeCategoryContent.SourceLinkCategoryId);
+                    if (existingStreetcodeCategoryContent != null)
+                    {
+                        existingStreetcodeCategoryContent.Text = streetcodeCategoryContent.Text;
+                        existingStreetcodeCategoryContent.Streetcode = streetcodeCategoryContent.Streetcode;
+                    }
+
+                    return null;
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetStreetcodeCoordinateRepositoryMock()
+        {
+            List<StreetcodeCoordinate> coordinates = new List<StreetcodeCoordinate>
+            {
+                new StreetcodeCoordinate
+                {
+                    Id = 1,
+                    StreetcodeId = 1,
+                    Longtitude = 1,
+                    Latitude = 2
+                },
+                new StreetcodeCoordinate
+                {
+                    Id = 2,
+                    StreetcodeId = 1,
+                    Longtitude = 14,
+                    Latitude = 3
+                },
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.StreetcodeCoordinateRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<StreetcodeCoordinate, bool>>>(),
+                    It.IsAny<Func<IQueryable<StreetcodeCoordinate>, IIncludableQueryable<StreetcodeCoordinate, object>>>()))
+                .ReturnsAsync(coordinates);
+
+            mockRepo.Setup(x => x.StreetcodeCoordinateRepository.Create(It.IsAny<StreetcodeCoordinate>()))
+            .Returns((StreetcodeCoordinate coordinate) =>
+            {
+                coordinates.Add(coordinate);
+                return coordinate;
+            });
+
+            mockRepo.Setup(x => x.StreetcodeCoordinateRepository.Delete(It.IsAny<StreetcodeCoordinate>()))
+            .Callback((StreetcodeCoordinate streetcodeCategoryContent) =>
+            {
+                coordinates.Remove(streetcodeCategoryContent);
+            });
+
+            mockRepo.Setup(x => x.StreetcodeCoordinateRepository.Update(It.IsAny<StreetcodeCoordinate>()))
+                .Returns((StreetcodeCoordinate streetcodeCoordinate) =>
+                {
+                    var existingStreetcodeCoordinate = coordinates.Find(
+                        c => c.Id == streetcodeCoordinate.Id);
+                    if (existingStreetcodeCoordinate != null)
+                    {
+                        existingStreetcodeCoordinate.Latitude = streetcodeCoordinate.Latitude;
+                        existingStreetcodeCoordinate.Streetcode = streetcodeCoordinate.Streetcode;
+                        existingStreetcodeCoordinate.Longtitude = streetcodeCoordinate.Longtitude;
+                        existingStreetcodeCoordinate.StatisticRecord = streetcodeCoordinate.StatisticRecord;
+                        existingStreetcodeCoordinate.StreetcodeId = streetcodeCoordinate.StreetcodeId;
+                    }
+
+                    return null;
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetSubtitleRepositoryMock()
+        {
+            var subtitles = new List<Subtitle>()
+            {
+                new Subtitle
+                {
+                    StreetcodeId = 1,
+                    Id = 1,
+                    SubtitleText = "Test1",
+                },
+                new Subtitle
+                {
+                    StreetcodeId = 1,
+                    Id = 2,
+                    SubtitleText = "Test2",
+                },
+                new Subtitle
+                {
+                    StreetcodeId = 1,
+                    Id = 3,
+                    SubtitleText = "Test3",
+                },
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.SubtitleRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<Subtitle, bool>>>(),
+                    It.IsAny<Func<IQueryable<Subtitle>, IIncludableQueryable<Subtitle, object>>>()))
+                .ReturnsAsync(subtitles);
+
+            mockRepo.Setup(x => x.SubtitleRepository.Create(It.IsAny<Subtitle>()))
+            .Returns((Subtitle subtitle) =>
+            {
+                subtitles.Add(subtitle);
+                return subtitle;
+            });
+
+            mockRepo.Setup(x => x.SubtitleRepository.Delete(It.IsAny<Subtitle>()))
+            .Callback((Subtitle subtitle) =>
+            {
+                subtitles.Remove(subtitle);
+            });
+
+            mockRepo.Setup(x => x.SubtitleRepository.Update(It.IsAny<Subtitle>()))
+                .Returns((Subtitle subtitle) =>
+                {
+                    var existingSubtitle = subtitles.Find(
+                        c => c.Id == subtitle.Id);
+                    if (existingSubtitle != null)
+                    {
+                        existingSubtitle.StreetcodeId = subtitle.StreetcodeId;
+                        existingSubtitle.SubtitleText = subtitle.SubtitleText;
+                        existingSubtitle.Streetcode = subtitle.Streetcode;
+                    }
+
+                    return null;
+                });
+
+            return mockRepo;
+        }
+
+        public static Mock<IRepositoryWrapper> GetTagRepositoryMock()
+        {
+            var tags = new List<Tag>
+            {
+                new Tag
+                {
+                    Id = 1,
+                    Title = "Test",
+                },
+                new Tag
+                {
+                    Id = 2,
+                    Title = "Test",
+                },
+            };
+
+            var mockRepo = new Mock<IRepositoryWrapper>();
+
+            mockRepo.Setup(x => x.TagRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<Tag, bool>>>(),
+                    It.IsAny<Func<IQueryable<Tag>, IIncludableQueryable<Tag, object>>>()))
+                .ReturnsAsync(tags);
+
+            mockRepo.Setup(x => x.TagRepository.Create(It.IsAny<Tag>()))
+            .Returns((Tag tag) =>
+            {
+                tags.Add(tag);
+                return tag;
+            });
+
+            mockRepo.Setup(x => x.TagRepository.Delete(It.IsAny<Tag>()))
+            .Callback((Tag tag) =>
+            {
+                tags.Remove(tag);
+            });
+
+            mockRepo.Setup(x => x.TagRepository.Update(It.IsAny<Tag>()))
+                .Returns((Tag tag) =>
+                {
+                    var existingTag = tags.Find(
+                        t => t.Id == tag.Id);
+                    if (existingTag != null)
+                    {
+                        existingTag.Title = tag.Title;
+                        existingTag.StreetcodeTagIndices = tag.StreetcodeTagIndices;
+                        existingTag.Streetcodes = tag.Streetcodes;
+                    }
+
+                    return null;
                 });
 
             return mockRepo;
