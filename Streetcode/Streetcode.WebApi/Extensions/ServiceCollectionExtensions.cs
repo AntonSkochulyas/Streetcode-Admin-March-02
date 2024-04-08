@@ -21,6 +21,8 @@ using Streetcode.BLL.Interfaces.Text;
 using Streetcode.BLL.Services.Text;
 using Serilog.Events;
 using System.Reflection;
+using Streetcode.BLL.Interfaces.Authentification;
+using Streetcode.BLL.Services.Authentification;
 
 namespace Streetcode.WebApi.Extensions;
 
@@ -45,6 +47,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IInstagramService, InstagramService>();
         services.AddScoped<ITextService, AddTermsToTextService>();
+        services.AddTransient<IJwtService, JwtService>();
     }
 
     public static void AddApplicationServices(this IServiceCollection services, ConfigurationManager configuration)

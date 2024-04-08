@@ -11,6 +11,8 @@ using Streetcode.WebApi.Extensions;
 using Streetcode.WebApi.Utils;
 using Microsoft.AspNetCore.Identity;
 using Streetcode.DAL.Persistence;
+using Streetcode.DAL.Entities.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureApplication();
@@ -27,9 +29,11 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Streetcode.BLL"));
 builder.Services.AddGlobalExceptionHandlerMiddlewareToServices();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<StreetcodeDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddUserStore<UserStore<ApplicationUser, ApplicationRole, StreetcodeDbContext, int>>()
+    .AddRoleStore<RoleStore<ApplicationRole, StreetcodeDbContext, int>>();
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
