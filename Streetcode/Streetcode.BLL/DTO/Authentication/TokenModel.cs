@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Streetcode.BLL.Dto.Authentication
 {
-    public class TokenModelDto
+    public class TokenModel
     {
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }

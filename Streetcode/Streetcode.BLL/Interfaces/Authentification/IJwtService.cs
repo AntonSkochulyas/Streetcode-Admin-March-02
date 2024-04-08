@@ -7,6 +7,7 @@ namespace Streetcode.BLL.Interfaces.Authentification
 {
     public interface IJwtService
     {
-        AuthentificationResponseDto CreateToken(ApplicationUser user, IList<string> userRoles);
+        AuthenticationResponse CreateToken(ApplicationUser user, IList<string> userRoles);
+        ClaimsPrincipal? GetPrincipalFromJwtToken(string? token);
     }
 }

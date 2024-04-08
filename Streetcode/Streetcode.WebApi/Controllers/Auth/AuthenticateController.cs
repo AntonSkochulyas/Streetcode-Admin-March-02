@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Streetcode.BLL.Dto;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
 using Streetcode.DAL.Entities.Users;
+using System.Security.Claims;
 
 namespace Streetcode.WebApi.Controllers.Auth
 {
@@ -44,9 +47,13 @@ namespace Streetcode.WebApi.Controllers.Auth
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
-                var authentificationResponse = _jwtService.CreateToken(user, userRoles);
+                var authenticationResponse = _jwtService.CreateToken(user, userRoles);
+                user.RefreshToken = authenticationResponse.RefreshToken;
+                user.RefreshTokenExpirationDate = authenticationResponse.RefreshTokenExpirationDate;
 
-                return Ok(authentificationResponse);
+                await _userManager.UpdateAsync(user);
+
+                return Ok(authenticationResponse);
             }
 
             return Unauthorized();
@@ -87,7 +94,50 @@ namespace Streetcode.WebApi.Controllers.Auth
 
             await _signInManager.SignInAsync(user, isPersistent: false);
 
-            return Ok(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var authenticationResponse = _jwtService.CreateToken(user, userRoles);
+            user.RefreshToken = authenticationResponse.RefreshToken;
+            user.RefreshTokenExpirationDate = authenticationResponse.RefreshTokenExpirationDate;
+
+            await _userManager.UpdateAsync(user);
+
+            return Ok(authenticationResponse);
+        }
+
+        [HttpPost]
+        [Route("generate-new-refresh-token")]
+        public async Task<IActionResult> GenerateNewRefreshToken(TokenModel tokenModel)
+        {
+            if (tokenModel is null)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            ClaimsPrincipal? principal = _jwtService.GetPrincipalFromJwtToken(tokenModel.AccessToken);
+            if (principal is null)
+            {
+                return BadRequest("Invalid jwt access token");
+            }
+
+            // TO-DO: Probably the code below should be changed after using the UserAdditionalInfo entity
+            string? userName = principal.FindFirstValue(ClaimTypes.Name);
+
+            ApplicationUser? user = await _userManager.FindByNameAsync(userName);
+
+            if (user is null || user.RefreshToken != tokenModel.RefreshToken ||
+                user.RefreshTokenExpirationDate <= DateTime.Now)
+            {
+                return BadRequest("Invalid refresh token");
+            }
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            AuthenticationResponse authenticationResponse = _jwtService.CreateToken(user, userRoles);
+            user.RefreshToken = authenticationResponse.RefreshToken;
+            user.RefreshTokenExpirationDate = authenticationResponse.RefreshTokenExpirationDate;
+
+            await _userManager.UpdateAsync(user);
+
+            return Ok(authenticationResponse);
         }
 
         [HttpGet]
