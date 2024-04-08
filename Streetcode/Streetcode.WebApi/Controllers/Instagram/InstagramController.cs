@@ -1,16 +1,20 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.MediatR.Instagram.GetAll;
-using Streetcode.BLL.MediatR.Payment;
-using Streetcode.BLL.MediatR.Team.Position.GetAll;
-using Streetcode.DAL.Entities.Instagram;
 
 namespace Streetcode.WebApi.Controllers.Instagram;
-    public class InstagramController : BaseApiController
+
+/// <summary>
+/// Represents a controller for managing Instagram posts.
+/// </summary>
+public class InstagramController : BaseApiController
+{
+    /// <summary>
+    /// Retrieves all Instagram posts.
+    /// </summary>
+    /// <returns>The list of Instagram posts.</returns>
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            return HandleResult(await Mediator.Send(new GetAllPostsQuery()));
-        }
+        return HandleResult(await Mediator.Send(new GetAllPostsQuery()));
     }
+}
