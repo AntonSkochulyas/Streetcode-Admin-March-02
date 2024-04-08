@@ -104,5 +104,13 @@ namespace Streetcode.WebApi.Controllers.Auth
                 return Ok(false);
             }
         }
+
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return NoContent();
+        }
     }
 }
