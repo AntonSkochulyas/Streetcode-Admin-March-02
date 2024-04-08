@@ -4,9 +4,9 @@ using Streetcode.BLL.Dto.AdditionalContent;
 
 namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetAll;
 
-public record GetSomeTagsByStartTitleHandlerQuery : IRequest<Result<IEnumerable<TagDto>>>
+public record GetSortedTagsByStartTitleHandlerQuery : IRequest<Result<IEnumerable<TagDto>>>
 {
-    public GetSomeTagsByStartTitleHandlerQuery(int take, string title)
+    public GetSortedTagsByStartTitleHandlerQuery(int take, string title)
     {
         Take = take;
         Title = title;

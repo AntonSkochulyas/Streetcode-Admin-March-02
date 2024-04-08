@@ -7,20 +7,20 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetAll;
 
-public class GetSomeTagsByStartTitleHandler : IRequestHandler<GetSomeTagsByStartTitleHandlerQuery, Result<IEnumerable<TagDto>>>
+public class GetSortedTagsByStartTitleHandler : IRequestHandler<GetSortedTagsByStartTitleHandlerQuery, Result<IEnumerable<TagDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IRepositoryWrapper _repositoryWrapper;
     private readonly ILoggerService _logger;
 
-    public GetSomeTagsByStartTitleHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
+    public GetSortedTagsByStartTitleHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
     {
         _repositoryWrapper = repositoryWrapper;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<Result<IEnumerable<TagDto>>> Handle(GetSomeTagsByStartTitleHandlerQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<TagDto>>> Handle(GetSortedTagsByStartTitleHandlerQuery request, CancellationToken cancellationToken)
     {
         var tags = await _repositoryWrapper.TagRepository.GetAllAsync();
 

@@ -53,9 +53,9 @@ public class TagController : BaseApiController
         return HandleResult(await Mediator.Send(new GetTagByTitleQuery(title)));
     }
 
-    [HttpGet("{title}")]
+    [HttpGet("startsWith/{startTitle}/take/{take}")]
     public async Task<IActionResult> GetTagByTitle([FromRoute] string startTitle, int take = 10)
     {
-        return HandleResult(await Mediator.Send(new GetSomeTagsByStartTitleHandlerQuery(take, startTitle)));
+        return HandleResult(await Mediator.Send(new GetSortedTagsByStartTitleHandlerQuery(take, startTitle)));
     }
 }
