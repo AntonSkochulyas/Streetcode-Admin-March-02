@@ -18,8 +18,8 @@ namespace Streetcode.DAL.Entities.Users
 
         public string? Role { get; set; } = UserRoles.User;
 
-        public int UserAdditionalInfoId { get; set; }
+        //public int UserAdditionalInfoId { get; set; }
 
-        public UserAdditionalInfo? UserAdditionalInfo { get; set; }
+        //public UserAdditionalInfo? UserAdditionalInfo { get; set; }
     }
 }
