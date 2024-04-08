@@ -18,13 +18,11 @@ var configuration = new ConfigurationBuilder()
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-string pathToScript = string.Empty;
-
 Console.WriteLine("Enter '-m' to MIGRATE or '-s' to SEED db:");
 
-string? input = Console.ReadLine();
+Console.ReadLine();
 
-pathToScript = migrationPath;
+string pathToScript = migrationPath;
 
 var upgrader =
     DeployChanges.To
