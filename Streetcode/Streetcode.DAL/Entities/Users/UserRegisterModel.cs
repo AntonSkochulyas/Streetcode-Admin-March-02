@@ -11,10 +11,10 @@ namespace Streetcode.DAL.Entities.Users
 
         [Required(ErrorMessage = "Login is required")]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Login must be between 6 and 32 characters")]
-        public string? Login { get; set; }
+        public string? Username { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         public string? Role { get; set; } = UserRoles.User;
 
