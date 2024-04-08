@@ -7,7 +7,9 @@
     <UserSecretsId>c74223ed-c414-48c4-9b8f-3529e95faa61</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
 	  <CodeAnalysisRuleSet>../settings.ruleset</CodeAnalysisRuleSet>
-
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    
   </PropertyGroup>
 	<ItemGroup>
      <InternalsVisibleTo Include="Streetcode.XIntegrationTest" />
