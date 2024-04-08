@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Media.Images;
 using Streetcode.BLL.MediatR.Media.Art.GetAll;
 using Streetcode.BLL.MediatR.Media.Art.GetById;
@@ -6,6 +7,10 @@ using Streetcode.BLL.MediatR.Media.Art.GetByStreetcodeId;
 
 namespace Streetcode.WebApi.Controllers.Media.Images;
 
+/// <summary>
+/// Test.
+/// </summary>
+[Authorize]
 public class ArtController : BaseApiController
 {
     [HttpGet]
