@@ -120,6 +120,9 @@
   <data name="CreateSourceLinkCategoryCommandValidatorImageIsRequiredError" xml:space="preserve">
     <value>Image is required.</value>
   </data>
+  <data name="CreateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError" xml:space="preserve">
+    <value>StreetcoeId is required.</value>
+  </data>
   <data name="CreateSourceLinkCategoryCommandValidatorTitleIsRequiredError" xml:space="preserve">
     <value>Title is required.</value>
   </data>
@@ -134,9 +137,6 @@
   </data>
   <data name="CreateStreetcodeCategoryContentCommandTextLengthMaxLengthError" xml:space="preserve">
     <value>Text length should not be longer than {0} symbols.</value>
-  </data>
-  <data name="CreateStreetcodeCategoryContentHandlerCanNotConvertFromNullError" xml:space="preserve">
-    <value>Cannot convert null to StreetcodeCategoryContent</value>
   </data>
   <data name="CreateStreetcodeCategoryContentHandlerFailedToCreateError" xml:space="preserve">
     <value>Failed to create a StreetcodeCategoryContent</value>
@@ -180,8 +180,11 @@
   <data name="GetSourceLinkCategoryContentHandlerStreetcodeContentIsNullError" xml:space="preserve">
     <value>The streetcode content is null</value>
   </data>
-  <data name="UpdateSourceLinkCategoryCommandValidatorCreationImageIsRequiredError" xml:space="preserve">
-    <value>Creation image is required.</value>
+  <data name="UpdateSourceLinkCategoryCommandValidatorSourceLinkIdeIsRequiredError" xml:space="preserve">
+    <value>SourceLinkId is required.</value>
+  </data>
+  <data name="UpdateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError" xml:space="preserve">
+    <value>StreetcoeId is required.</value>
   </data>
   <data name="UpdateSourceLinkCategoryCommandValidatorTitleIsRequiredError" xml:space="preserve">
     <value>Title is required.</value>
@@ -206,5 +209,11 @@
   </data>
   <data name="UpdateStreetcodeCategoryContentHandlerFailedToUpdateError" xml:space="preserve">
     <value>Failed to update StreetcodeCategoryContent</value>
+  </data>
+  <data name="UpdateStreetcodeCategoryHandlerCanNotFindSourceLinkCategoryWithGivenIdError" xml:space="preserve">
+    <value>No SourceLinkCategory found by entered Id - {0}.</value>
+  </data>
+  <data name="UpdateStreetcodeCategoryHandlerCanNotFindStreetcodeWithGivenIdError" xml:space="preserve">
+    <value>No Streetcode found by entered Id - {0}.</value>
   </data>
 </root>

@@ -70,6 +70,15 @@ namespace Streetcode.BLL.MediatR.Sources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to StreetcoeId is required..
+        /// </summary>
+        internal static string CreateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError {
+            get {
+                return ResourceManager.GetString("CreateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title is required..
         /// </summary>
         internal static string CreateSourceLinkCategoryCommandValidatorTitleIsRequiredError {
@@ -111,15 +120,6 @@ namespace Streetcode.BLL.MediatR.Sources {
         internal static string CreateStreetcodeCategoryContentCommandTextLengthMaxLengthError {
             get {
                 return ResourceManager.GetString("CreateStreetcodeCategoryContentCommandTextLengthMaxLengthError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot convert null to StreetcodeCategoryContent.
-        /// </summary>
-        internal static string CreateStreetcodeCategoryContentHandlerCanNotConvertFromNullError {
-            get {
-                return ResourceManager.GetString("CreateStreetcodeCategoryContentHandlerCanNotConvertFromNullError", resourceCulture);
             }
         }
         
@@ -253,11 +253,20 @@ namespace Streetcode.BLL.MediatR.Sources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creation image is required..
+        ///   Looks up a localized string similar to SourceLinkId is required..
         /// </summary>
-        internal static string UpdateSourceLinkCategoryCommandValidatorCreationImageIsRequiredError {
+        internal static string UpdateSourceLinkCategoryCommandValidatorSourceLinkIdeIsRequiredError {
             get {
-                return ResourceManager.GetString("UpdateSourceLinkCategoryCommandValidatorCreationImageIsRequiredError", resourceCulture);
+                return ResourceManager.GetString("UpdateSourceLinkCategoryCommandValidatorSourceLinkIdeIsRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StreetcoeId is required..
+        /// </summary>
+        internal static string UpdateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError {
+            get {
+                return ResourceManager.GetString("UpdateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError", resourceCulture);
             }
         }
         
@@ -330,6 +339,24 @@ namespace Streetcode.BLL.MediatR.Sources {
         internal static string UpdateStreetcodeCategoryContentHandlerFailedToUpdateError {
             get {
                 return ResourceManager.GetString("UpdateStreetcodeCategoryContentHandlerFailedToUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No SourceLinkCategory found by entered Id - {0}..
+        /// </summary>
+        internal static string UpdateStreetcodeCategoryHandlerCanNotFindSourceLinkCategoryWithGivenIdError {
+            get {
+                return ResourceManager.GetString("UpdateStreetcodeCategoryHandlerCanNotFindSourceLinkCategoryWithGivenIdError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Streetcode found by entered Id - {0}..
+        /// </summary>
+        internal static string UpdateStreetcodeCategoryHandlerCanNotFindStreetcodeWithGivenIdError {
+            get {
+                return ResourceManager.GetString("UpdateStreetcodeCategoryHandlerCanNotFindStreetcodeWithGivenIdError", resourceCulture);
             }
         }
     }
