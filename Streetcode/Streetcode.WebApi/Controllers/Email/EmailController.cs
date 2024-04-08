@@ -4,12 +4,20 @@ using Streetcode.BLL.MediatR.Email;
 
 namespace Streetcode.WebApi.Controllers.Email
 {
-  public class EmailController : BaseApiController
-  {
-    [HttpPost]
-    public async Task<IActionResult> Send([FromBody] EmailDto email)
+    /// <summary>
+    /// Controller for handling email operations.
+    /// </summary>
+    public class EmailController : BaseApiController
     {
-      return HandleResult(await Mediator.Send(new SendEmailCommand(email)));
+        /// <summary>
+        /// Sends an email.
+        /// </summary>
+        /// <param name="email">The email data.</param>
+        /// <returns>The result of the email sending operation.</returns>
+        [HttpPost]
+        public async Task<IActionResult> Send([FromBody] EmailDto email)
+        {
+            return HandleResult(await Mediator.Send(new SendEmailCommand(email)));
+        }
     }
-  }
 }
