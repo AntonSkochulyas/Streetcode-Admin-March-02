@@ -121,10 +121,6 @@ namespace Streetcode.DAL.Persistence.Configurations
             builder
                 .Property(s => s.ShortDescription)
                 .HasMaxLength(33);
-
-            builder
-                .Property(s => s.Tags)
-                .HasMaxLength(50);
         }
     }
 }
