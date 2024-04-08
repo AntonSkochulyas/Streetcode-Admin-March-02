@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoryById;
 using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoriesByStreetcodeId;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll;
-using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetCategoryContentByStreetcodeId;
+using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentByStreetcodeId;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.MediatR.Timeline.HistoricalContext.Create;
 using Streetcode.BLL.Dto.Sources;
@@ -11,10 +11,6 @@ using Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete;
 using Streetcode.BLL.MediatR.Timeline.TimelineItem.Update;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentsByStreetcodeIdAndSourceLinkCategoryId;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create;
 
 namespace Streetcode.WebApi.Controllers.Source
 {
@@ -44,12 +40,6 @@ namespace Streetcode.WebApi.Controllers.Source
             return HandleResult(await Mediator.Send(new GetCategoryContentByStreetcodeIdQuery(streetcodeId, categoryId)));
         }
 
-        [HttpGet("{categoryId:int}&{streetcodeId:int}")]
-        public async Task<IActionResult> GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategory([FromRoute] int streetcodeId, [FromRoute] int categoryId)
-        {
-            return HandleResult(await Mediator.Send(new GetAllCategoryContentsByStreetcodeIdAndSourceLinkCategoryIdQuery(streetcodeId, categoryId)));
-        }
-
         [HttpGet("{streetcodeId:int}")]
         public async Task<IActionResult> GetCategoriesByStreetcodeId([FromRoute] int streetcodeId)
         {
@@ -57,39 +47,21 @@ namespace Streetcode.WebApi.Controllers.Source
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSourceLink([FromBody] SourceLinkCategoryDto sourceLinkCategoryDto)
+        public async Task<IActionResult> CreateSourceLink([FromBody] CreateSourceLinkCategoryContentDto sourceLinkCategoryContentDto)
         {
-            return HandleResult(await Mediator.Send(new CreateSourceLinkCategoryCommand(sourceLinkCategoryDto)));
+            return HandleResult(await Mediator.Send(new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto)));
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateSourceLink([FromBody] SourceLinkCategoryDto sourceLinkCategoryDto)
+        public async Task<IActionResult> UpdateSourceLink([FromBody] UpdateSourceLinkCategoryContentDto sourceLinkCategoryContentDto)
         {
-            return HandleResult(await Mediator.Send(new UpdateSourceLinkCategoryCommand(sourceLinkCategoryDto)));
+            return HandleResult(await Mediator.Send(new UpdateSourceLinkCategoryCommand(sourceLinkCategoryContentDto)));
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteSourceLink([FromRoute] int id)
         {
             return HandleResult(await Mediator.Send(new DeleteSourceLinkCategoryCommand(id)));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateCategoryContent([FromBody] StreetcodeCategoryContentDto streetcodeCategoryContentDto)
-        {
-            return HandleResult(await Mediator.Send(new CreateStreetcodeCategoryContentCommand(streetcodeCategoryContentDto)));
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateCategoryContent([FromBody] StreetcodeCategoryContentDto streetcodeCategoryContentDto)
-        {
-            return HandleResult(await Mediator.Send(new UpdateStreetcodeCategoryContentCommand(streetcodeCategoryContentDto)));
-        }
-
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteCategoryContent([FromRoute] int id)
-        {
-            return HandleResult(await Mediator.Send(new DeleteStreetcodeCategoryContentCommand(id)));
         }
     }
 }
