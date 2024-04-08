@@ -43,8 +43,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         {
             // Arrange
             var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            SourceLinkCategoryDto? sourceLinkDto = null;
-            var request = new CreateSourceLinkCategoryCommand(sourceLinkDto);
+            CreateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = null;
+            var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
@@ -58,19 +58,38 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         {
             // Arrange
             var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            SourceLinkCategoryDto? sourceLinkCategoryDto = new SourceLinkCategoryDto()
+            CreateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = new CreateSourceLinkCategoryContentDto()
             {
-                Id = 1,
                 ImageId = 1,
-                Title = "Test1"
+                Title = "Test1",
+                StreetcodeId = 1,
             };
-            var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryDto);
+            var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 
             // Act
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
             result.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task Handle_ImageIdIsInvalid_IsFailedShouldBeTrue()
+        {
+            // Arrange
+            var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
+            CreateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = new CreateSourceLinkCategoryContentDto()
+            {
+                ImageId = 0,
+                Title = "Test1"
+            };
+            var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
+
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert
+            result.IsFailed.Should().BeTrue();
         }
     }
 }

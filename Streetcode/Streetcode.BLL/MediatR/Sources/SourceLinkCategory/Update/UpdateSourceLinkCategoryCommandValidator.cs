@@ -6,17 +6,21 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update
     {
         public UpdateSourceLinkCategoryCommandValidator()
         {
-            ushort maxTitleLength = 100;
+            ushort maxTextLength = 4000;
 
-            RuleFor(command => command.sourceLinkCategoryDto.Title)
+            RuleFor(command => command.SourceLinkCategoryContentDto.SourceLinkId)
                 .NotEmpty()
-                .WithMessage(SourceErrors.UpdateSourceLinkCategoryCommandValidatorTitleIsRequiredError)
-                .MaximumLength(maxTitleLength)
-                .WithMessage(string.Format(SourceErrors.UpdateSourceLinkCategoryCommandValidatorTitleMaxLengthError, maxTitleLength));
+                .GreaterThan(0)
+                .WithMessage(SourceErrors.UpdateSourceLinkCategoryCommandValidatorSourceLinkIdeIsRequiredError);
 
-            RuleFor(command => command.sourceLinkCategoryDto.Image)
-                .NotNull()
-                .WithMessage(SourceErrors.UpdateSourceLinkCategoryCommandValidatorCreationImageIsRequiredError);
+            RuleFor(command => command.SourceLinkCategoryContentDto.StreetcodeId)
+                .NotEmpty()
+                .GreaterThan(0)
+                .WithMessage(SourceErrors.UpdateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError);
+
+            RuleFor(command => command.SourceLinkCategoryContentDto.Text)
+                .MaximumLength(maxTextLength)
+                .WithMessage(SourceErrors.UpdateStreetcodeCategoryContentCommandTextLengthMaxLengthError);
         }
     }
 }

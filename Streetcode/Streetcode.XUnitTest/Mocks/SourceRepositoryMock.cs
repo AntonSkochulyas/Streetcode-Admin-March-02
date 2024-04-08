@@ -2,10 +2,13 @@
 
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.Media.Images;
+using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Repositories.Realizations.Source;
 using System.Linq.Expressions;
 
 internal partial class RepositoryMocker
@@ -88,7 +91,49 @@ internal partial class RepositoryMocker
                 return streetcodeContents.FirstOrDefault(predicate.Compile());
             });
 
-        mockRepo.Setup(x => x.SourceCategoryRepository.Create(It.IsAny<SourceLinkCategory>())).Returns(sources[0]);
+        mockRepo.Setup(x => x.SourceCategoryRepository
+                .GetAllAsync(
+                    It.IsAny<Expression<Func<SourceLinkCategory, bool>>>(),
+                    It.IsAny<Func<IQueryable<SourceLinkCategory>, IIncludableQueryable<SourceLinkCategory, object>>>()))
+                .ReturnsAsync(sources);
+
+        mockRepo.Setup(x => x.StreetcodeCategoryContentRepository.Create(It.IsAny<StreetcodeCategoryContent>()))
+            .Returns((StreetcodeCategoryContent streetcodeContent) =>
+            {
+                streetcodeCategoryContents.Add(streetcodeContent);
+                return streetcodeContent;
+            });
+
+        mockRepo.Setup(x => x.SourceCategoryRepository.Create(It.IsAny<SourceLinkCategory>()))
+            .Returns((SourceLinkCategory sourceLinkCategory) =>
+            {
+                sources.Add(sourceLinkCategory);
+                return sourceLinkCategory;
+            });
+
+        mockRepo.Setup(x => x.SourceCategoryRepository.Delete(It.IsAny<SourceLinkCategory>()))
+            .Callback((SourceLinkCategory sourceLinkCategory) =>
+            {
+                sourceLinkCategory = sources.FirstOrDefault(x => x.Id == sourceLinkCategory.Id);
+                if (sourceLinkCategory is not null)
+                {
+                    sources.Remove(sourceLinkCategory);
+                }
+            });
+
+        mockRepo.Setup(x => x.StreetcodeCategoryContentRepository.Delete(It.IsAny<StreetcodeCategoryContent>()))
+            .Callback((StreetcodeCategoryContent streetcodeCategoryContent) =>
+            {
+                streetcodeCategoryContent = streetcodeCategoryContents.FirstOrDefault(
+                    x => x.SourceLinkCategoryId == streetcodeCategoryContent.SourceLinkCategoryId &&
+                    x.StreetcodeId == streetcodeCategoryContent.StreetcodeId);
+
+                if (streetcodeCategoryContent is not null)
+                {
+                    streetcodeCategoryContents.Remove(streetcodeCategoryContent);
+                }
+            });
+
         mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
         return mockRepo;
