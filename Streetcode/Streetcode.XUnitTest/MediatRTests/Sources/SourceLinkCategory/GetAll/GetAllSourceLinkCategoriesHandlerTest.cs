@@ -8,7 +8,7 @@ using Streetcode.BLL.Mapping.Sources;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.MediatRTests.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.GetAll
