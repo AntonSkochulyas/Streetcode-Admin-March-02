@@ -2,17 +2,15 @@ using System.Reflection;
 using FluentValidation;
 using Hangfire;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.ValidationBehaviors;
-using Streetcode.WebApi.ExceptionHandlers;
 using Streetcode.WebApi.Extensions;
 using Streetcode.WebApi.Utils;
+using Microsoft.AspNetCore.Identity;
+using Streetcode.DAL.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureApplication();
@@ -28,6 +26,10 @@ builder.Services.ConfigureSerilog(builder);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Streetcode.BLL"));
 builder.Services.AddGlobalExceptionHandlerMiddlewareToServices();
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<StreetcodeDbContext>()
+    .AddDefaultTokenProviders();
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
@@ -49,6 +51,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
 });
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
