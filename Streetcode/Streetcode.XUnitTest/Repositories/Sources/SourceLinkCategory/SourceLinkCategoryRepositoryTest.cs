@@ -38,7 +38,7 @@ namespace Streetcode.XUnitTest.Repositories.Sources.SourceLinkCategory
             var result = await repository.GetAllAsync(null, null);
 
             // Assert
-            result.Should().HaveCount(3);
+            result.Should().HaveCount(4);
         }
 
         [Fact]

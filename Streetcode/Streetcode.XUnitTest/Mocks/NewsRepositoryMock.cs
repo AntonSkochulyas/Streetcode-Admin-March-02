@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -37,7 +38,7 @@ internal partial class RepositoryMocker
                 },
                 new News()
                 {
-                    Id = 1,
+                    Id = 2,
                     Title = "Title1",
                     Text = "Text1",
                     CreationDate = new DateTime(2024, 3, 22, 0, 0, 0, DateTimeKind.Utc),
@@ -46,7 +47,7 @@ internal partial class RepositoryMocker
                 },
                 new News()
                 {
-                    Id = 2,
+                    Id = 3,
                     Title = "Title2",
                     Text = "Text2",
                     CreationDate = new DateTime(2022, 3, 21, 0, 0, 0, DateTimeKind.Utc),
@@ -55,7 +56,7 @@ internal partial class RepositoryMocker
                 },
                 new News()
                 {
-                    Id = 3,
+                    Id = 4,
                     Title = "Title3",
                     Text = "Text3",
                     CreationDate = new DateTime(2024, 3, 23, 0, 0, 0, DateTimeKind.Utc),
@@ -83,7 +84,11 @@ internal partial class RepositoryMocker
         var mockRepo = new Mock<IRepositoryWrapper>();
 
         mockRepo.Setup(x => x.NewsRepository.Create(It.IsAny<News>()))
-            .Returns(newsItem);
+            .Returns((News newsItem) =>
+            {
+                news.Add(newsItem);
+                return newsItem;
+            });
 
         mockRepo.Setup(x => x.NewsRepository.GetFirstOrDefaultAsync(
             It.IsAny<Expression<Func<News, bool>>>(),
@@ -106,6 +111,16 @@ internal partial class RepositoryMocker
             IIncludableQueryable<Image, object>> include) =>
             {
                 return images.FirstOrDefault(predicate.Compile());
+            });
+
+        mockRepo.Setup(x => x.NewsRepository.Delete(It.IsAny<News>()))
+            .Callback((News newsItem) =>
+            {
+                newsItem = news.FirstOrDefault(x => x.Id == newsItem.Id);
+                if (newsItem is not null)
+                {
+                    news.Remove(newsItem);
+                }
             });
 
         mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);

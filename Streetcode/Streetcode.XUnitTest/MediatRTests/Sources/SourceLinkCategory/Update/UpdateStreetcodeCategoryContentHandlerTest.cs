@@ -7,7 +7,6 @@ using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Sources;
-using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Update;
 using Streetcode.BLL.MediatR.Newss.Update;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
 using Streetcode.DAL.Repositories.Interfaces.Base;

@@ -2,7 +2,6 @@
 
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
-using Streetcode.DAL.Entities.Locations;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;

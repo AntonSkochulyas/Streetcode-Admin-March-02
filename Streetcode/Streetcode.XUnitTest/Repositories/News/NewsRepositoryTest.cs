@@ -42,7 +42,7 @@ namespace Streetcode.XUnitTest.Repositories.News
             var result = await repository.GetAllAsync(null, null);
 
             // Assert
-            result.Should().HaveCount(3);
+            result.Should().HaveCount(4);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Streetcode.XUnitTest.Repositories.News
             repository.Delete(new DAL.Entities.News.News { Id = newsItemIdToDelete });
 
             // Assert
-            var deletedNewsItem = await repository.GetFirstOrDefaultAsync(u => u.Id == newsItemIdToDelete);
+            var deletedNewsItem = await repository.GetFirstOrDefaultAsync(n => n.Id == newsItemIdToDelete);
             deletedNewsItem.Should().BeNull();
         }
     }

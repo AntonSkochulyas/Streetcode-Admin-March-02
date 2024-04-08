@@ -93,7 +93,7 @@
         {
             // Arrange
             var handler = new GetNewsAndLinksByUrlHandler(_mapper, _mockRepository.Object, _blobService.Object, _mockLogger.Object);
-            string validUrl = "example1.com";
+            string validUrl = "example.com";
             var request = new GetNewsAndLinksByUrlQuery(validUrl);
 
             // Act
