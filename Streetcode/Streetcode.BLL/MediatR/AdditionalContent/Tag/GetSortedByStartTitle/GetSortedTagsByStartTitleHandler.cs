@@ -3,9 +3,11 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.AdditionalContent;
 using Streetcode.BLL.Interfaces.Logging;
+using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using System.Linq.Expressions;
 
-namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetAll;
+namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetSortedByStartTitle;
 
 public class GetSortedTagsByStartTitleHandler : IRequestHandler<GetSortedTagsByStartTitleHandlerQuery, Result<IEnumerable<TagDto>>>
 {
@@ -22,15 +24,35 @@ public class GetSortedTagsByStartTitleHandler : IRequestHandler<GetSortedTagsByS
 
     public async Task<Result<IEnumerable<TagDto>>> Handle(GetSortedTagsByStartTitleHandlerQuery request, CancellationToken cancellationToken)
     {
-        var tags = await _repositoryWrapper.TagRepository.GetAllAsync();
-
-        if(request.Title == string.Empty)
+        if (request.Take < 1)
         {
-            tags = tags.Where(t => t.Title.StartsWith(request.Title));
+            string errorMsg = "Take can not be less than 1";
+            _logger.LogError(request, errorMsg);
+            return Result.Fail(new Error(errorMsg));
         }
 
-        tags = tags.OrderBy(t => t.Title)
-            .Take(request.Take);
+        var sortExpression = new Dictionary<Expression<Func<DAL.Entities.AdditionalContent.Tag, object>>, SortDirection>
+        {
+            { t => t.Title, SortDirection.Ascending }
+        };
+
+        IQueryable<DAL.Entities.AdditionalContent.Tag>? tags = null;
+
+        if (request.StartsWithTitle != string.Empty)
+        {
+            tags = _repositoryWrapper.TagRepository
+            .Get(
+                take: request.Take,
+                orderBy: sortExpression,
+                predicate: t => t.Title.StartsWith(request.StartsWithTitle));
+        }
+        else
+        {
+            tags = _repositoryWrapper.TagRepository
+            .Get(
+                take: request.Take,
+                orderBy: sortExpression);
+        }
 
         if (tags is null)
         {
