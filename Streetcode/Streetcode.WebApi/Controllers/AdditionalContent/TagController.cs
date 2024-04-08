@@ -52,4 +52,10 @@ public class TagController : BaseApiController
     {
         return HandleResult(await Mediator.Send(new GetTagByTitleQuery(title)));
     }
+
+    [HttpGet("{title}")]
+    public async Task<IActionResult> GetTagByTitle([FromRoute] string startTitle, int take = 10)
+    {
+        return HandleResult(await Mediator.Send(new GetSomeTagsByStartTitleHandlerQuery(take, startTitle)));
+    }
 }
