@@ -112,11 +112,19 @@ namespace Streetcode.DAL.Persistence.Configurations
 
             builder
                 .Property(s => s.Teaser)
-                .HasMaxLength(650);
+                .HasMaxLength(450);
 
             builder
                 .Property(s => s.TransliterationUrl)
-                .HasMaxLength(150);
+                .HasMaxLength(100);
+
+            builder
+                .Property(s => s.ShortDescription)
+                .HasMaxLength(33);
+
+            builder
+                .Property(s => s.Tags)
+                .HasMaxLength(50);
         }
     }
 }

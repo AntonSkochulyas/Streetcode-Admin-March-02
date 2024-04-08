@@ -28,23 +28,21 @@ public class StreetcodeContent
     [Required]
     public int Index { get; set; }
 
-    [MaxLength(650)]
     public string? Teaser { get; set; }
 
     [Required]
-    [MaxLength(50)]
     public string? DateString { get; set; }
 
-    [MaxLength(50)]
+    public string? ShortDescription { get; set; }
+
     public string? Alias { get; set; }
 
     public StreetcodeStatus Status { get; set; }
 
     [Required]
-    [MaxLength(100)]
     public string? Title { get; set; }
+
     [Required]
-    [MaxLength(150)]
     public string? TransliterationUrl { get; set; }
 
     public int ViewCount { get; set; }

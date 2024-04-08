@@ -9,6 +9,7 @@ public class StreetcodeDto
     public int Index { get; set; }
     public string? Title { get; set; }
     public string? DateString { get; set; }
+    public string? ShortDescription { get; set; }
     public string? Alias { get; set; }
     public string? TransliterationUrl { get; set; }
     public StreetcodeStatus Status { get; set; }
