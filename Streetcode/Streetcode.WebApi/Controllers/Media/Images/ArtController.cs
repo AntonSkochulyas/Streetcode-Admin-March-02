@@ -7,6 +7,9 @@ using Streetcode.BLL.MediatR.Media.Art.GetByStreetcodeId;
 
 namespace Streetcode.WebApi.Controllers.Media.Images;
 
+/// <summary>
+/// Test.
+/// </summary>
 [Authorize]
 public class ArtController : BaseApiController
 {
