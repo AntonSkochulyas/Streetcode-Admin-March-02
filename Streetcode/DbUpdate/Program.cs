@@ -1,8 +1,11 @@
 ﻿using DbUp;
 using Microsoft.Extensions.Configuration;
 
-string migrationPath = Path.Combine(Directory.GetCurrentDirectory(),
-    "Streetcode.DAL", "Persistence", "ScriptsMigration");
+string migrationPath = Path.Combine(
+    Directory.GetCurrentDirectory(),
+    "Streetcode.DAL",
+    "Persistence",
+    "ScriptsMigration");
 
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Local";
 
@@ -15,12 +18,11 @@ var configuration = new ConfigurationBuilder()
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-string pathToScript = "";
-
 Console.WriteLine("Enter '-m' to MIGRATE or '-s' to SEED db:");
-pathToScript = Console.ReadLine();
 
-pathToScript = migrationPath;
+Console.ReadLine();
+
+string pathToScript = migrationPath;
 
 var upgrader =
     DeployChanges.To
@@ -36,9 +38,11 @@ if (!result.Successful)
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(result.Error);
     Console.ResetColor();
+
 #if DEBUG
     Console.ReadLine();
 #endif
+
     return -1;
 }
 
