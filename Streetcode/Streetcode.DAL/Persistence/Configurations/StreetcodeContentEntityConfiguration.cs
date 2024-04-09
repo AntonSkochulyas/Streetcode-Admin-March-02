@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.Partners;
 using Streetcode.DAL.Entities.Sources;
@@ -121,6 +120,16 @@ namespace Streetcode.DAL.Persistence.Configurations
             builder
                 .Property(s => s.ShortDescription)
                 .HasMaxLength(33);
+
+            builder.HasOne(s => s.ImageBlackAndWhite)
+                .WithOne()
+                .HasForeignKey<StreetcodeContent>(s => s.ImageBlackAndWhiteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(s => s.ImageAnimated)
+                .WithOne()
+                .HasForeignKey<StreetcodeContent>(s => s.ImageAnimatedId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

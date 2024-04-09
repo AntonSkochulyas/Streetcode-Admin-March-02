@@ -62,6 +62,12 @@ public class StreetcodeContent
 
     public Audio? Audio { get; set; }
 
+    public int? ImageBlackAndWhiteId { get; set; }
+    public ImageMain? ImageBlackAndWhite { get; set; }
+
+    public int? ImageAnimatedId { get; set; }
+    public ImageMain? ImageAnimated { get; set; }
+
     public List<StatisticRecord> StatisticRecords { get; set; } = new();
 
     public List<StreetcodeCoordinate> Coordinates { get; set; } = new();
