@@ -1,8 +1,10 @@
+using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using MimeKit;
+using Streetcode.DAL.Enums;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -131,6 +133,45 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T>
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default)
     {
         return await GetQueryable(predicate, include, selector).FirstOrDefaultAsync();
+    }
+
+    public IQueryable<T> Get(
+        Expression<Func<T, bool>>? predicate = default,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default,
+        Expression<Func<T, T>>? selector = default,
+        int skip = 0,
+        int take = 0,
+        Dictionary<Expression<Func<T, object>>, SortDirection>? orderBy = null)
+    {
+        IQueryable<T> query = GetQueryable(predicate, include);
+
+        if ((orderBy != null) && orderBy.Any())
+        {
+            var orderedData = orderBy.Values.First() == SortDirection.Ascending
+                ? query.OrderBy(orderBy.Keys.First())
+                : query.OrderByDescending(orderBy.Keys.First());
+
+            foreach (var expression in orderBy.Skip(1))
+            {
+                orderedData = expression.Value == SortDirection.Ascending
+                    ? orderedData.ThenBy(expression.Key)
+                    : orderedData.ThenByDescending(expression.Key);
+            }
+
+            query = orderedData;
+        }
+
+        if (skip > 0)
+        {
+            query = query.Skip(skip);
+        }
+
+        if (take > 0)
+        {
+            query = query.Take(take);
+        }
+
+        return query;
     }
 
     private IQueryable<T> GetQueryable(
