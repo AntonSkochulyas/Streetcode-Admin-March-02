@@ -52,6 +52,8 @@ public class RepositoryWrapper : IRepositoryWrapper
 
     private IImageRepository _imageRepository;
 
+    private IImageMainRepository _imageMainRepository;
+
     private IImageDetailsRepository _imageDetailsRepository;
 
     private IArtRepository _artRepository;
@@ -159,6 +161,19 @@ public class RepositoryWrapper : IRepositoryWrapper
             }
 
             return _imageRepository;
+        }
+    }
+
+    public IImageMainRepository ImageMainRepository
+    {
+        get
+        {
+            if (_imageMainRepository is null)
+            {
+                _imageMainRepository = new ImageMainRepository(_streetcodeDbContext);
+}
+
+            return _imageMainRepository;
         }
     }
 
