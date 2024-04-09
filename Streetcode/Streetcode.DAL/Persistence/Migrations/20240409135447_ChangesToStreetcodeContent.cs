@@ -19,18 +19,6 @@ namespace Streetcode.DAL.Persistence.Migrations
                 oldType: "nvarchar(150)",
                 oldMaxLength: 150);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Teaser",
-                schema: "streetcode",
-                table: "streetcodes",
-                type: "nvarchar(450)",
-                maxLength: 450,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(650)",
-                oldMaxLength: 650,
-                oldNullable: true);
-
             migrationBuilder.AddColumn<int>(
                 name: "ImageAnimatedId",
                 schema: "streetcode",
@@ -156,18 +144,6 @@ namespace Streetcode.DAL.Persistence.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
                 oldMaxLength: 100);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Teaser",
-                schema: "streetcode",
-                table: "streetcodes",
-                type: "nvarchar(650)",
-                maxLength: 650,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)",
-                oldMaxLength: 450,
-                oldNullable: true);
         }
     }
 }

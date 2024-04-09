@@ -796,8 +796,8 @@ namespace Streetcode.DAL.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Teaser")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(650)
+                        .HasColumnType("nvarchar(650)");
 
                     b.Property<string>("Title")
                         .IsRequired()

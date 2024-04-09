@@ -12,7 +12,7 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Persistence.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    [Migration("20240409131446_ChangesToStreetcodeContent")]
+    [Migration("20240409135447_ChangesToStreetcodeContent")]
     partial class ChangesToStreetcodeContent
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -798,8 +798,8 @@ namespace Streetcode.DAL.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Teaser")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(650)
+                        .HasColumnType("nvarchar(650)");
 
                     b.Property<string>("Title")
                         .IsRequired()

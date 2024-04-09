@@ -7,7 +7,7 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<StreetcodeDto>
 {
     public BaseStreetcodeCommandValidator()
     {
-        int maxTeaserLength = 450;
+        int maxTeaserLength = 650;
         int maxUrlLength = 100;
         int maxShortSecriptionLength = 33;
         int maxDateStringLength = 50;

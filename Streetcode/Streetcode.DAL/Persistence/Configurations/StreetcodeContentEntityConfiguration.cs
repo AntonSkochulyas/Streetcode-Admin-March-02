@@ -111,7 +111,7 @@ namespace Streetcode.DAL.Persistence.Configurations
 
             builder
                 .Property(s => s.Teaser)
-                .HasMaxLength(450);
+                .HasMaxLength(650);
 
             builder
                 .Property(s => s.TransliterationUrl)
