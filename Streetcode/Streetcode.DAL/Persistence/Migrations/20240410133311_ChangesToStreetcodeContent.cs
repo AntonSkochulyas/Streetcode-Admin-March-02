@@ -33,6 +33,13 @@ namespace Streetcode.DAL.Persistence.Migrations
                 type: "int",
                 nullable: true);
 
+            migrationBuilder.AddColumn<int>(
+                name: "ImageForLinkId",
+                schema: "streetcode",
+                table: "streetcodes",
+                type: "int",
+                nullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "ShortDescription",
                 schema: "streetcode",
@@ -72,6 +79,14 @@ namespace Streetcode.DAL.Persistence.Migrations
                 unique: true,
                 filter: "[ImageBlackAndWhiteId] IS NOT NULL");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_streetcodes_ImageForLinkId",
+                schema: "streetcode",
+                table: "streetcodes",
+                column: "ImageForLinkId",
+                unique: true,
+                filter: "[ImageForLinkId] IS NOT NULL");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_streetcodes_images_main_ImageAnimatedId",
                 schema: "streetcode",
@@ -91,6 +106,16 @@ namespace Streetcode.DAL.Persistence.Migrations
                 principalTable: "images_main",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_streetcodes_images_main_ImageForLinkId",
+                schema: "streetcode",
+                table: "streetcodes",
+                column: "ImageForLinkId",
+                principalSchema: "media",
+                principalTable: "images_main",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,6 +127,11 @@ namespace Streetcode.DAL.Persistence.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_streetcodes_images_main_ImageBlackAndWhiteId",
+                schema: "streetcode",
+                table: "streetcodes");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_streetcodes_images_main_ImageForLinkId",
                 schema: "streetcode",
                 table: "streetcodes");
 
@@ -119,6 +149,11 @@ namespace Streetcode.DAL.Persistence.Migrations
                 schema: "streetcode",
                 table: "streetcodes");
 
+            migrationBuilder.DropIndex(
+                name: "IX_streetcodes_ImageForLinkId",
+                schema: "streetcode",
+                table: "streetcodes");
+
             migrationBuilder.DropColumn(
                 name: "ImageAnimatedId",
                 schema: "streetcode",
@@ -126,6 +161,11 @@ namespace Streetcode.DAL.Persistence.Migrations
 
             migrationBuilder.DropColumn(
                 name: "ImageBlackAndWhiteId",
+                schema: "streetcode",
+                table: "streetcodes");
+
+            migrationBuilder.DropColumn(
+                name: "ImageForLinkId",
                 schema: "streetcode",
                 table: "streetcodes");
 

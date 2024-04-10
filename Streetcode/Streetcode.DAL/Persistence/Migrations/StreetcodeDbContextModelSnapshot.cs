@@ -781,6 +781,9 @@ namespace Streetcode.DAL.Persistence.Migrations
                     b.Property<int?>("ImageBlackAndWhiteId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ImageForLinkId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Index")
                         .HasColumnType("int");
 
@@ -832,6 +835,10 @@ namespace Streetcode.DAL.Persistence.Migrations
                     b.HasIndex("ImageBlackAndWhiteId")
                         .IsUnique()
                         .HasFilter("[ImageBlackAndWhiteId] IS NOT NULL");
+
+                    b.HasIndex("ImageForLinkId")
+                        .IsUnique()
+                        .HasFilter("[ImageForLinkId] IS NOT NULL");
 
                     b.HasIndex("Index")
                         .IsUnique();
@@ -1595,11 +1602,18 @@ namespace Streetcode.DAL.Persistence.Migrations
                         .HasForeignKey("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "ImageBlackAndWhiteId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Streetcode.DAL.Entities.Media.Images.ImageMain", "ImageForLink")
+                        .WithOne()
+                        .HasForeignKey("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "ImageForLinkId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Audio");
 
                     b.Navigation("ImageAnimated");
 
                     b.Navigation("ImageBlackAndWhite");
+
+                    b.Navigation("ImageForLink");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Streetcode.TextContent.Fact", b =>

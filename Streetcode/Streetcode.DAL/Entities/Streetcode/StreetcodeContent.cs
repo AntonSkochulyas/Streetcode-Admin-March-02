@@ -68,6 +68,9 @@ public class StreetcodeContent
     public int? ImageAnimatedId { get; set; }
     public ImageMain? ImageAnimated { get; set; }
 
+    public int? ImageForLinkId { get; set; }
+    public ImageMain? ImageForLink { get; set; }
+
     public List<StatisticRecord> StatisticRecords { get; set; } = new();
 
     public List<StreetcodeCoordinate> Coordinates { get; set; } = new();
