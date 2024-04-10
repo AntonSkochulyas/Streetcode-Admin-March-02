@@ -32,25 +32,11 @@ public class CreateStreetcodeHandler : IRequestHandler<CreateStreetcodeCommand, 
             return Result.Fail(new Error(errorMsg));
         }
 
-        if(await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageAnimatedId) is null)
+        string? errorMsg1 = await FindError(request);
+        if (errorMsg1 is not null)
         {
-            string errorMsg = $"The image with id {request.Streetcode.ImageAnimatedId} does not exist";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
-        }
-
-        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageBlackAndWhiteId) is null)
-        {
-            string errorMsg = $"The image with id {request.Streetcode.ImageBlackAndWhiteId} does not exist";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
-        }
-
-        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageForLinkId) is null)
-        {
-            string errorMsg = $"The image with id {request.Streetcode.ImageBlackAndWhiteId} does not exist";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            _logger.LogError(request, errorMsg1);
+            return Result.Fail(new Error(errorMsg1));
         }
 
         var createdStreetcode = _repository.StreetcodeRepository.Create(streetcode);
@@ -76,5 +62,50 @@ public class CreateStreetcodeHandler : IRequestHandler<CreateStreetcodeCommand, 
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
+    }
+
+    private async Task<string?> FindError(CreateStreetcodeCommand request)
+    {
+        if (await _repository.StreetcodeRepository.GetFirstOrDefaultAsync(i => i.Index == request.Streetcode.Index) is not null)
+        {
+            return $"The streetcode with index {request.Streetcode.ImageAnimatedId} already exist";
+        }
+
+        if (await _repository.StreetcodeRepository.GetFirstOrDefaultAsync(i => i.TransliterationUrl == request.Streetcode.TransliterationUrl) is not null)
+        {
+            return $"The streetcode with transliterationUrl {request.Streetcode.TransliterationUrl} already exist";
+        }
+
+        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageAnimatedId) is null)
+        {
+            return $"The image with id {request.Streetcode.ImageAnimatedId} does not exist";
+        }
+
+        if (await _repository.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.ImageAnimatedId == request.Streetcode.ImageAnimatedId) is not null)
+        {
+            return $"The image with id {request.Streetcode.ImageAnimatedId} is already used";
+        }
+
+        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageBlackAndWhiteId) is null)
+        {
+            return $"The image with id {request.Streetcode.ImageBlackAndWhiteId} does not exist";
+        }
+
+        if (await _repository.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.ImageBlackAndWhiteId == request.Streetcode.ImageBlackAndWhiteId) is not null)
+        {
+            return $"The image with id {request.Streetcode.ImageBlackAndWhiteId} is already used";
+        }
+
+        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageForLinkId) is null)
+        {
+            return $"The image with id {request.Streetcode.ImageForLinkId} does not exist";
+        }
+
+        if (await _repository.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.ImageForLinkId == request.Streetcode.ImageForLinkId) is not null)
+        {
+            return $"The image with id {request.Streetcode.ImageForLinkId} is already used";
+        }
+
+        return null;
     }
 }
