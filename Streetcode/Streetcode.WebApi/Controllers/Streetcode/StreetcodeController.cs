@@ -10,6 +10,7 @@ using Streetcode.BLL.MediatR.Streetcode.Streetcode.GetByFilter;
 using Streetcode.BLL.Dto.AdditionalContent.Filter;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode.GetShortById;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllStreetcodesMainPage;
+using Streetcode.BLL.MediatR.Streetcode.Streetcode.Create;
 
 namespace Streetcode.WebApi.Controllers.Streetcode;
 
@@ -113,5 +114,16 @@ public class StreetcodeController : BaseApiController
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         return HandleResult(await Mediator.Send(new GetStreetcodeByIdQuery(id)));
+    }
+
+    /// <summary>
+    /// Creates a streetcode.
+    /// </summary>
+    /// <param name="streetcodeDto">Thedto of the streetcode to add.</param>
+    /// <returns>The created streetcode.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] BaseStreetcodeDto streetcodeDto)
+    {
+        return HandleResult(await Mediator.Send(new CreateStreetcodeCommand(streetcodeDto)));
     }
 }

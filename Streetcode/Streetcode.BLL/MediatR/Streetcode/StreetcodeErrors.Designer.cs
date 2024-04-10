@@ -636,5 +636,13 @@ namespace Streetcode.BLL.MediatR.Streetcode {
                 return ResourceManager.GetString("UpdateRelatedTermHandlerWordIsRequiredError", resourceCulture);
             }
         }
+
+        internal static string CreateStreetcodeCannotCreateNewStreetcodeError
+        {
+            get
+            {
+                return ResourceManager.GetString("CreateStreetcodeCannotCreateNewStreetcodeError", resourceCulture);
+            }
+        }
     }
 }
