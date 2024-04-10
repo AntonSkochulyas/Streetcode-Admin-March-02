@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.MediatR.AdditionalContent.Tag.GetAll;
 using Streetcode.BLL.MediatR.AdditionalContent.Tag.GetById;
 using Streetcode.BLL.MediatR.AdditionalContent.Tag.GetByStreetcodeId;
+using Streetcode.BLL.MediatR.AdditionalContent.Tag.GetSortedByStartTitle;
 
 namespace Streetcode.WebApi.Controllers.AdditionalContent;
 
@@ -51,5 +52,11 @@ public class TagController : BaseApiController
     public async Task<IActionResult> GetTagByTitle([FromRoute] string title)
     {
         return HandleResult(await Mediator.Send(new GetTagByTitleQuery(title)));
+    }
+
+    [HttpGet("get-titles")]
+    public async Task<IActionResult> GetSortedTagsByStartTitle([FromQuery] string? startsWithTitle, [FromQuery] int? take)
+    {
+        return HandleResult(await Mediator.Send(new GetSortedTagsByStartTitleHandlerQuery(startsWithTitle, take)));
     }
 }

@@ -20,7 +20,7 @@ using Streetcode.DAL.Persistence.Configurations;
 
 namespace Streetcode.DAL.Persistence;
 
-public class StreetcodeDbContext : IdentityDbContext
+public class StreetcodeDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
 {
     public StreetcodeDbContext()
     {

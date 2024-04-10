@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Streetcode.DAL.Persistence;
 
@@ -11,9 +12,10 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Persistence.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    partial class StreetcodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408230930_RefreshTokensAndApplicationUserAdded")]
+    partial class RefreshTokensAndApplicationUserAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,29 +379,6 @@ namespace Streetcode.DAL.Persistence.Migrations
                     b.ToTable("image_details", "media");
                 });
 
-            modelBuilder.Entity("Streetcode.DAL.Entities.Media.Images.ImageMain", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BlobName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("MimeType")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("images_main", "media");
-                });
-
             modelBuilder.Entity("Streetcode.DAL.Entities.Media.Images.StreetcodeImage", b =>
                 {
                     b.Property<int>("ImageId")
@@ -680,21 +659,8 @@ namespace Streetcode.DAL.Persistence.Migrations
                     b.Property<DateTime>("EventStartOrPersonBirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ImageAnimatedId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ImageBlackAndWhiteId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ImageForLinkId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Index")
                         .HasColumnType("int");
-
-                    b.Property<string>("ShortDescription")
-                        .HasMaxLength(33)
-                        .HasColumnType("nvarchar(33)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -714,8 +680,8 @@ namespace Streetcode.DAL.Persistence.Migrations
 
                     b.Property<string>("TransliterationUrl")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -732,18 +698,6 @@ namespace Streetcode.DAL.Persistence.Migrations
                     b.HasIndex("AudioId")
                         .IsUnique()
                         .HasFilter("[AudioId] IS NOT NULL");
-
-                    b.HasIndex("ImageAnimatedId")
-                        .IsUnique()
-                        .HasFilter("[ImageAnimatedId] IS NOT NULL");
-
-                    b.HasIndex("ImageBlackAndWhiteId")
-                        .IsUnique()
-                        .HasFilter("[ImageBlackAndWhiteId] IS NOT NULL");
-
-                    b.HasIndex("ImageForLinkId")
-                        .IsUnique()
-                        .HasFilter("[ImageForLinkId] IS NOT NULL");
 
                     b.HasIndex("Index")
                         .IsUnique();
@@ -1601,28 +1555,7 @@ namespace Streetcode.DAL.Persistence.Migrations
                         .HasForeignKey("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "AudioId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Streetcode.DAL.Entities.Media.Images.ImageMain", "ImageAnimated")
-                        .WithOne()
-                        .HasForeignKey("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "ImageAnimatedId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Streetcode.DAL.Entities.Media.Images.ImageMain", "ImageBlackAndWhite")
-                        .WithOne()
-                        .HasForeignKey("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "ImageBlackAndWhiteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Streetcode.DAL.Entities.Media.Images.ImageMain", "ImageForLink")
-                        .WithOne()
-                        .HasForeignKey("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "ImageForLinkId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Audio");
-
-                    b.Navigation("ImageAnimated");
-
-                    b.Navigation("ImageBlackAndWhite");
-
-                    b.Navigation("ImageForLink");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Streetcode.TextContent.Fact", b =>
