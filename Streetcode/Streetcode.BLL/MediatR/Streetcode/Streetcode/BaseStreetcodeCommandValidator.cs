@@ -8,6 +8,7 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<StreetcodeDto>
     public BaseStreetcodeCommandValidator()
     {
         int maxTeaserLength = 650;
+        int maxTeaserLengthWithNewLine = 550;
         int maxUrlLength = 100;
         int maxShortSecriptionLength = 33;
         int maxDateStringLength = 50;
@@ -16,8 +17,28 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<StreetcodeDto>
         int maxNumberOfTags = 50;
 
         RuleFor(command => command.Teaser)
-            .MaximumLength(maxTeaserLength)
-            .WithMessage($"Teaser length of streetcode must not be longer than {maxTeaserLength} symbols.");
+            .Custom((teaser, context) =>
+            {
+                if(teaser is null)
+                {
+                    context.AddFailure($"Teaser can not be null.");
+                }
+
+                if (teaser.IndexOf('\n') != -1)
+                {
+                    if (teaser.Length > maxTeaserLengthWithNewLine)
+                    {
+                        context.AddFailure($"The length of teaser with new line of must not be longer than {maxTeaserLengthWithNewLine} symbols.");
+                    }
+                }
+                else
+                {
+                    if (teaser.Length > maxTeaserLength)
+                    {
+                        context.AddFailure($"Teaser length of streetcode must not be longer than {{maxTeaserLength}} symbols.");
+                    }
+                }
+            });
 
         RuleFor(command => command.TransliterationUrl)
             .MaximumLength(maxUrlLength)

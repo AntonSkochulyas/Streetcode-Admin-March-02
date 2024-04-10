@@ -27,7 +27,28 @@ public class CreateStreetcodeHandler : IRequestHandler<CreateStreetcodeCommand, 
 
         if (streetcode is null)
         {
-            string errorMsg = StreetcodeErrors.CreateStreetcodeCannotCreateNewStreetcodeError;
+            string errorMsg = "Failed to map dto";
+            _logger.LogError(request, errorMsg);
+            return Result.Fail(new Error(errorMsg));
+        }
+
+        if(await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageAnimatedId) is null)
+        {
+            string errorMsg = $"The image with id {request.Streetcode.ImageAnimatedId} does not exist";
+            _logger.LogError(request, errorMsg);
+            return Result.Fail(new Error(errorMsg));
+        }
+
+        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageBlackAndWhiteId) is null)
+        {
+            string errorMsg = $"The image with id {request.Streetcode.ImageBlackAndWhiteId} does not exist";
+            _logger.LogError(request, errorMsg);
+            return Result.Fail(new Error(errorMsg));
+        }
+
+        if (await _repository.ImageMainRepository.GetFirstOrDefaultAsync(i => i.Id == request.Streetcode.ImageForLinkId) is null)
+        {
+            string errorMsg = $"The image with id {request.Streetcode.ImageBlackAndWhiteId} does not exist";
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
@@ -38,7 +59,7 @@ public class CreateStreetcodeHandler : IRequestHandler<CreateStreetcodeCommand, 
 
         if(!isSuccessResult)
         {
-            string errorMsg = StreetcodeErrors.CreateRelatedTermHandlerCannotSaveChangesInDatabaseAfterRelatedWordCreationError;
+            string errorMsg = "Failed to save streetcode";
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
