@@ -1,14 +1,27 @@
-﻿using FluentValidation;
+﻿// Necesassry usings
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Partners.Update
 {
+    /// <summary>
+    /// Validator, that validates a model inside a UpdatePartnerQuery.
+    /// </summary>
     internal class UpdatePartnerCommandValidator : AbstractValidator<UpdatePartnerQuery>
     {
+        // Title max length
         private readonly int _titleMaxLength;
+
+        // Target URL max length
         private readonly int _targetURLMaxLength;
+
+        // URL title max length
         private readonly int _urlTitleMaxLength;
+
+        // Description max length
         private readonly int _descriptionMaxLength;
 
+        // Constructor
         public UpdatePartnerCommandValidator()
         {
             _titleMaxLength = 100;

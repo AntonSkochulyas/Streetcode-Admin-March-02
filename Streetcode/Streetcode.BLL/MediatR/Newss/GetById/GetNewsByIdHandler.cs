@@ -1,21 +1,34 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Interfaces.BlobStorage;
-using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Interfaces.Logging;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.GetById
 {
+    /// <summary>
+    /// Handler, that handles a process of getting news by given id.
+    /// </summary>
     public class GetNewsByIdHandler : IRequestHandler<GetNewsByIdQuery, Result<NewsDto>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Blob service
         private readonly IBlobService _blobService;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public GetNewsByIdHandler(IMapper mapper, IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger)
         {
             _mapper = mapper;
@@ -24,6 +37,18 @@ namespace Streetcode.BLL.MediatR.Newss.GetById
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that gets a news by given id from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request with news id to get.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A NewsDto, or error, if it was while getting process.
+        /// </returns>
         public async Task<Result<NewsDto>> Handle(GetNewsByIdQuery request, CancellationToken cancellationToken)
         {
             int id = request.id;

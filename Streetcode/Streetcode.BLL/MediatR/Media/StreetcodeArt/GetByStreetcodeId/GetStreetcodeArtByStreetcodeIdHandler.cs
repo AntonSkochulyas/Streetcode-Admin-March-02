@@ -1,22 +1,34 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
 using Streetcode.BLL.Dto.Media.Art;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
 {
-  public class GetStreetcodeArtByStreetcodeIdHandler : IRequestHandler<GetStreetcodeArtByStreetcodeIdQuery, Result<IEnumerable<StreetcodeArtDto>>>
+    /// <summary>
+    /// Handler, that handles a process of getting art by streetcode id.
+    /// </summary>
+    public class GetStreetcodeArtByStreetcodeIdHandler : IRequestHandler<GetStreetcodeArtByStreetcodeIdQuery, Result<IEnumerable<StreetcodeArtDto>>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Blob service
         private readonly IBlobService _blobService;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor
         public GetStreetcodeArtByStreetcodeIdHandler(
             IRepositoryWrapper repositoryWrapper,
             IMapper mapper,
@@ -29,16 +41,20 @@ namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that gets an art by given id.
+        /// </summary>
+        /// <param name="request">
+        /// Request with art id to get.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of StreetcodeArtDto, or error, if it was while getting process.
+        /// </returns>
         public async Task<Result<IEnumerable<StreetcodeArtDto>>> Handle(GetStreetcodeArtByStreetcodeIdQuery request, CancellationToken cancellationToken)
         {
-            /*
-            if ((await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.StreetcodeId)) is null)
-            {
-                return Result.Fail(
-                    new Error($"Cannot find a streetcode arts by a streetcode id: {request.StreetcodeId}, because such streetcode doesn`t exist"));
-            }
-            */
-
             var art = await _repositoryWrapper
             .StreetcodeArtRepository
             .GetAllAsync(

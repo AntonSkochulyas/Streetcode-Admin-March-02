@@ -1,21 +1,42 @@
-﻿using FluentResults;
+﻿// Necessary usings
+using FluentResults;
 using MediatR;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces
 namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
 {
+    /// <summary>
+    /// Handler, that handles a process of deleting a authorship.
+    /// </summary>
     public class DeleteAuthorShipHandler : IRequestHandler<DeleteAuthorShipCommand, Result<Unit>>
     {
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor 
         public DeleteAuthorShipHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that deletes authorship by given id.
+        /// </summary>
+        /// <param name="request">
+        /// Request with authorship id to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A Unit, or error, if it was while deleting process.
+        /// </returns>
         public async Task<Result<Unit>> Handle(DeleteAuthorShipCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;

@@ -1,3 +1,5 @@
+// Necessary usings.
+using System.Linq.Expressions;
 using AutoMapper;
 using FluentResults;
 using MediatR;
@@ -5,16 +7,25 @@ using Streetcode.BLL.Dto.AdditionalContent;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-using System.Linq.Expressions;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetSortedByStartTitle;
 
+/// <summary>
+/// Handler, that sorts a tags by start title.
+/// </summary>
 public class GetSortedTagsByStartTitleHandler : IRequestHandler<GetSortedTagsByStartTitleHandlerQuery, Result<IEnumerable<TagDto>>>
 {
+    // Mapper
     private readonly IMapper _mapper;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor
     public GetSortedTagsByStartTitleHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
     {
         _repositoryWrapper = repositoryWrapper;
@@ -22,6 +33,18 @@ public class GetSortedTagsByStartTitleHandler : IRequestHandler<GetSortedTagsByS
         _logger = logger;
     }
 
+    /// <summary>
+    /// Method, that sorts a tags by start title. 
+    /// </summary>
+    /// <param name="request">
+    /// Request with start title to sort.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token for cancelling operation.
+    /// </param>
+    /// <returns>
+    /// A IEnumerable of TagDto, or error, if it was while sorting process.
+    /// </returns>
     public async Task<Result<IEnumerable<TagDto>>> Handle(GetSortedTagsByStartTitleHandlerQuery request, CancellationToken cancellationToken)
     {
         if (request.Take < 1)
