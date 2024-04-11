@@ -69,7 +69,7 @@ namespace Streetcode.XUnitTest.Repositories.Media.Audio
         }
 
         [Fact]
-        public async Task Repository_DeleteArt_RemovesFromDatabase()
+        public async Task Repository_DeleteAudio_RemovesFromDatabase()
         {
             // Arrange
             var mockRepo = RepositoryMocker.GetAudiosRepositoryMock();
