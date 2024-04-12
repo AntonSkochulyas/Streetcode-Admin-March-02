@@ -52,13 +52,9 @@ public class RepositoryWrapper : IRepositoryWrapper
 
     private IImageRepository? _imageRepository;
 
-<<<<<<< HEAD
     private IImageDetailsRepository? _imageDetailsRepository;
-=======
-    private IImageMainRepository _imageMainRepository;
 
-    private IImageDetailsRepository _imageDetailsRepository;
->>>>>>> 27b16bde9814869bd5c29214f14401bae63a642e
+    private IImageMainRepository _imageMainRepository;
 
     private IArtRepository? _artRepository;
 
