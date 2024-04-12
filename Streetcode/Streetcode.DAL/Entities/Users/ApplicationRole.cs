@@ -2,7 +2,7 @@
 
 namespace Streetcode.DAL.Entities.Users
 {
-    public class ApplicationRole : IdentityRole<int>
+    public class ApplicationRole : IdentityRole<string>
     {
     }
 }

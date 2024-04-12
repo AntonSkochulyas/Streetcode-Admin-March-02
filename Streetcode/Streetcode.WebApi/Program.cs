@@ -34,8 +34,8 @@ builder.Services.AddGlobalExceptionHandlerMiddlewareToServices();
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<StreetcodeDbContext>()
     .AddDefaultTokenProviders()
-    .AddUserStore<UserStore<ApplicationUser, ApplicationRole, StreetcodeDbContext, int>>()
-    .AddRoleStore<RoleStore<ApplicationRole, StreetcodeDbContext, int>>();
+    .AddUserStore<UserStore<ApplicationUser, ApplicationRole, StreetcodeDbContext, string>>()
+    .AddRoleStore<RoleStore<ApplicationRole, StreetcodeDbContext, string>>();
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
