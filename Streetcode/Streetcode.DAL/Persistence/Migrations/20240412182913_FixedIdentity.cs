@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Streetcode.DAL.Persistence.Migrations
 {
-    public partial class ChangesToStreetcodeContent : Migration
+    public partial class FixedIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +48,19 @@ namespace Streetcode.DAL.Persistence.Migrations
                 type: "nvarchar(33)",
                 maxLength: 33,
                 nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "RefreshToken",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "RefreshTokenExpirationDate",
+                table: "AspNetUsers",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.CreateTable(
                 name: "images_main",
@@ -173,6 +187,14 @@ namespace Streetcode.DAL.Persistence.Migrations
                 name: "ShortDescription",
                 schema: "streetcode",
                 table: "streetcodes");
+
+            migrationBuilder.DropColumn(
+                name: "RefreshToken",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "RefreshTokenExpirationDate",
+                table: "AspNetUsers");
 
             migrationBuilder.AlterColumn<string>(
                 name: "TransliterationUrl",
