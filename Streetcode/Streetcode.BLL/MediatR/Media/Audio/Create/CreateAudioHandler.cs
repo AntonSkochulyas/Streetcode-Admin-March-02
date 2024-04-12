@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Media.Audio;
@@ -6,15 +7,27 @@ using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessasry namespaces.
 namespace Streetcode.BLL.MediatR.Media.Audio.Create;
 
+/// <summary>
+/// Handler, that handles a process of creating an audio.
+/// </summary>
 public class CreateAudioHandler : IRequestHandler<CreateAudioCommand, Result<AudioDto>>
 {
+    // Mapper
     private readonly IMapper _mapper;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Blob service
     private readonly IBlobService _blobService;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor
     public CreateAudioHandler(
         IBlobService blobService,
         IRepositoryWrapper repositoryWrapper,
@@ -27,6 +40,18 @@ public class CreateAudioHandler : IRequestHandler<CreateAudioCommand, Result<Aud
         _logger = logger;
     }
 
+    /// <summary>
+    /// Method, that creates an audio.
+    /// </summary>
+    /// <param name="request">
+    /// Request with new audio.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token, for cancelling operation, if it needed.
+    /// </param>
+    /// <returns>
+    /// A AudioDto, or error, if it was while creating process.
+    /// </returns>
     public async Task<Result<AudioDto>> Handle(CreateAudioCommand request, CancellationToken cancellationToken)
     {
         string hashBlobStorageName = _blobService.SaveFileInStorage(

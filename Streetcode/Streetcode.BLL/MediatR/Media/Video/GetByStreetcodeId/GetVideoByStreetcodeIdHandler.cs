@@ -1,22 +1,31 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
-using Streetcode.BLL.Dto.Media.Audio;
 using Streetcode.BLL.Dto.Media.Video;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.ResultVariations;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Video.GetByStreetcodeId;
 
+/// <summary>
+/// Handler, that handles a process of getting video by streetcode id.
+/// </summary>
 public class GetVideoByStreetcodeIdHandler : IRequestHandler<GetVideoByStreetcodeIdQuery, Result<VideoDto>>
 {
+    // Mapper
     private readonly IMapper _mapper;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor
     public GetVideoByStreetcodeIdHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
     {
         _repositoryWrapper = repositoryWrapper;
@@ -24,6 +33,18 @@ public class GetVideoByStreetcodeIdHandler : IRequestHandler<GetVideoByStreetcod
         _logger = logger;
     }
 
+    /// <summary>
+    /// Method, that gets a video from database by streetcode id.
+    /// </summary>
+    /// <param name="request">
+    /// Request with streetcode id to get.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token, for cancelling operation, if it needed.
+    /// </param>
+    /// <returns>
+    /// A VideoDto, or error, if it was while getting process.
+    /// </returns>
     public async Task<Result<VideoDto>> Handle(GetVideoByStreetcodeIdQuery request, CancellationToken cancellationToken)
     {
         var video = await _repositoryWrapper.VideoRepository

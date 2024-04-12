@@ -1,16 +1,25 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreateAuthorShipHyperLinkCommand.
+    /// </summary>
     public sealed class CreateAuthorShipHyperLinkCommandValidator : AbstractValidator<CreateAuthorShipHyperLinkCommand>
     {
+        // Max title length
+        private readonly ushort _maxTitleLength;
+
+        // Constructor
         public CreateAuthorShipHyperLinkCommandValidator()
         {
-            int maxTitleLength = 150;
+            _maxTitleLength = 150;
 
             RuleFor(command => command.newAuthorHyperLink.Title)
-                .MaximumLength(maxTitleLength)
-                .WithMessage("Title length of author hyper link must not be longer than 150 symbols.");
+                .MaximumLength(_maxTitleLength)
+                .WithMessage($"Title length of author hyper link must not be longer than {_maxTitleLength} symbols.");
         }
     }
 }
