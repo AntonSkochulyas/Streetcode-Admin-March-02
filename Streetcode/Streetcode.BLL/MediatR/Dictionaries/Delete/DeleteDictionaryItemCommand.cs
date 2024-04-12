@@ -11,5 +11,6 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Delete
     /// <param name="Id">
     /// Dictionary item id to delete.
     /// </param>
-    public record DeleteDictionaryItemCommand(int Id) : IRequest<Result<Unit>>;
+    public record DeleteDictionaryItemCommand(int Id)
+        : IRequest<Result<Unit>>;
 }

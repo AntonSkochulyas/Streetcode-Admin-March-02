@@ -1,4 +1,4 @@
-﻿// Necessary usings.
+// Necessary usings.
 using FluentValidation;
 
 // Necessary namespaces.
@@ -9,29 +9,24 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Create
     /// </summary>
     public class CreateAudioCommandValidator : AbstractValidator<CreateAudioCommand>
     {
-        // Max title length
-		private readonly int maxTitleLength;
-
-        // Max blob name length
-		private readonly int maxBlobNameLength;
-
-        // Max mime type length
-		private readonly int maxMimeTypeLength;
-
-        // Constructor
 		public CreateAudioCommandValidator()
 		{
-			maxTitleLength = 100;
-			maxBlobNameLength = 100;
-			maxMimeTypeLength = 10;
+            // Max title length
+            int maxTitleLength = 100;
 
-			RuleFor(command => command.Audio.Title)
+            // Max blob name length
+            int maxBlobNameLength = 100;
+
+            // Max mime type length
+            int maxMimeTypeLength = 10;
+
+            RuleFor(command => command.Audio.Title)
                 .NotEmpty()
                 .WithMessage(MediaErrors.CreateAudioCommandValidatorTitleIsRequiredError)
                 .MaximumLength(maxTitleLength)
                 .WithMessage(string.Format(MediaErrors.CreateAudioCommandValidatorTitleMaxLengthError, maxTitleLength));
 
-			RuleFor(command => command.Audio.MimeType)
+            RuleFor(command => command.Audio.MimeType)
                 .NotEmpty()
                 .WithMessage(MediaErrors.CreateAudioCommandValidatorBlobNameIsRequiredError)
                 .MaximumLength(maxMimeTypeLength)

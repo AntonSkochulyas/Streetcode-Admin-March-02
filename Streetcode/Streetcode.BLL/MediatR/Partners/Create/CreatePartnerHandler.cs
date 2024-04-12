@@ -46,13 +46,13 @@ namespace Streetcode.BLL.MediatR.Partners.Create
         /// </returns>
         public async Task<Result<PartnerDto>> Handle(CreatePartnerCommand request, CancellationToken cancellationToken)
         {
-            var newPartner = _mapper.Map<Partner>(request.newPartner);
+            var newPartner = _mapper.Map<Partner>(request.NewPartner);
             try
             {
                 newPartner.Streetcodes.Clear();
                 newPartner = await _repositoryWrapper.PartnersRepository.CreateAsync(newPartner);
                 _repositoryWrapper.SaveChanges();
-                var streetcodeIds = request.newPartner.Streetcodes.Select(s => s.Id).ToList();
+                var streetcodeIds = request.NewPartner.Streetcodes.Select(s => s.Id).ToList();
                 newPartner.Streetcodes.AddRange(await _repositoryWrapper
                     .StreetcodeRepository
                     .GetAllAsync(s => streetcodeIds.Contains(s.Id)));

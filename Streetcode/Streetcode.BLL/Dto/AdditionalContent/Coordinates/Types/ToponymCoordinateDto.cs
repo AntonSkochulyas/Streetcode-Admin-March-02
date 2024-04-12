@@ -2,5 +2,5 @@
 
 public class ToponymCoordinateDto : CoordinateDto
 {
-    public int ToponymId { get; set; }
+    public int? ToponymId { get; set; }
 }

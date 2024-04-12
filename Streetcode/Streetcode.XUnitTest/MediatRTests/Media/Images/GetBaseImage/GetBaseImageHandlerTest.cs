@@ -7,7 +7,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.GetBaseImage
     using System.Threading.Tasks;
     using FluentAssertions;
     using Moq;
-    using Streetcode.BLL.Dto.Media.Images;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.MediatR.Media.Image.GetBaseImage;

@@ -11,5 +11,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Delete
     /// <param name="Id">
     /// Infoblock id to delete.
     /// </param>
-    public record DeleteInfoBlockCommand(int Id) : IRequest<Result<Unit>>;
+    public record DeleteInfoBlockCommand(int Id)
+        : IRequest<Result<Unit>>;
 }

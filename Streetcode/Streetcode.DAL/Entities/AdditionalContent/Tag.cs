@@ -11,9 +11,9 @@ public class Tag
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
-    public IEnumerable<StreetcodeTagIndex> StreetcodeTagIndices { get; set; }
+    public IEnumerable<StreetcodeTagIndex>? StreetcodeTagIndices { get; set; }
 
-    public IEnumerable<StreetcodeContent> Streetcodes { get; set; }
+    public IEnumerable<StreetcodeContent>? Streetcodes { get; set; }
 }

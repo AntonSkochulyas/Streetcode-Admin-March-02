@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.Create
     /// <param name="StatisticRecordDto">
     /// Statistic record to add in database.
     /// </param>
-    public record CreateStatisticRecordCommand(StatisticRecordDto StatisticRecordDto) : IRequest<Result<StatisticRecordDto>>;
+    public record CreateStatisticRecordCommand(StatisticRecordDto StatisticRecordDto)
+        : IRequest<Result<StatisticRecordDto>>;
 }

@@ -1,4 +1,4 @@
-﻿// Necessary usings.
+// Necessary usings.
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Interfaces.Logging;
@@ -40,11 +40,11 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
         /// </returns>
         public async Task<Result<Unit>> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
         {
-            int id = request.id;
+            int id = request.Id;
             var news = await _repositoryWrapper.NewsRepository.GetFirstOrDefaultAsync(n => n.Id == id);
             if (news == null)
             {
-                string errorMsg = string.Format(NewsErrors.DeleteNewsHandlerCanNotFindNewsWithGivenIdError, request.id);
+                string errorMsg = string.Format(NewsErrors.DeleteNewsHandlerCanNotFindNewsWithGivenIdError, request.Id);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }

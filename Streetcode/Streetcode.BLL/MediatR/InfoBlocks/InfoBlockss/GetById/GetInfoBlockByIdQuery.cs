@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.GetById
     /// <param name="Id">
     /// Infoblock id to get.
     /// </param>
-    public record GetInfoBlockByIdQuery(int Id) : IRequest<Result<InfoBlockDto>>;
+    public record GetInfoBlockByIdQuery(int Id)
+        : IRequest<Result<InfoBlockDto>>;
 }

@@ -9,8 +9,8 @@ namespace Streetcode.BLL.Services.Instagram
     {
         private readonly HttpClient _httpClient;
         private readonly InstagramEnvironmentVariables _envirovment;
-        private readonly string _userId;
-        private readonly string _accessToken;
+        private readonly string? _userId;
+        private readonly string? _accessToken;
         private static int postLimit = 10;
 
         public InstagramService(IOptions<InstagramEnvironmentVariables> instagramEnvirovment, IHttpClientFactory httpClient)

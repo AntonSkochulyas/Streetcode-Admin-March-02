@@ -11,5 +11,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Dele
     /// <param name="Id">
     /// Authorship hyperlink id to delete.
     /// </param>
-    public record DeleteAuthorShipHyperLinkCommand(int Id) : IRequest<Result<Unit>>;
+    public record DeleteAuthorShipHyperLinkCommand(int Id)
+        : IRequest<Result<Unit>>;
 }

@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Newss.GetById
     /// <param name="id">
     /// News id to get.
     /// </param>
-    public record GetNewsByIdQuery(int id) : IRequest<Result<NewsDto>>;
+    public record GetNewsByIdQuery(int Id)
+        : IRequest<Result<NewsDto>>;
 }

@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetById;
 /// <param name="Id">
 /// Id to finding a tag.
 /// </param>
-public record GetTagByIdQuery(int Id) : IRequest<Result<TagDto>>;
+public record GetTagByIdQuery(int Id)
+    : IRequest<Result<TagDto>>;

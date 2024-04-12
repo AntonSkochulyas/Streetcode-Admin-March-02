@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Newss.Create
     /// <param name="newNews">
     /// New news.
     /// </param>
-    public record CreateNewsCommand(NewsDto newNews) : IRequest<Result<NewsDto>>;
+    public record CreateNewsCommand(NewsDto NewNews)
+        : IRequest<Result<NewsDto>>;
 }

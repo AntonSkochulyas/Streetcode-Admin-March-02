@@ -2,11 +2,9 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.Instagram;
-    using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.MediatR.Instagram.GetAll;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;

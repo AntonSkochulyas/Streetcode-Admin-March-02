@@ -9,4 +9,9 @@ namespace Streetcode.BLL.MediatR.Media.Art.GetAll;
 /// <summary>
 /// Query, that requests a handler to get all arts from database.
 /// </summary>
-public record GetAllArtsQuery : IRequest<Result<IEnumerable<ArtDto>>>;
+public record GetAllArtsQuery : IRequest<Result<IEnumerable<ArtDto>>>
+{
+    public GetAllArtsQuery()
+    {
+    }
+}

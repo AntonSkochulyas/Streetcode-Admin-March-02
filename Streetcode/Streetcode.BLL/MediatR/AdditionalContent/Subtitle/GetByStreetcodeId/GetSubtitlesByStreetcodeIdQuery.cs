@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetByStreetcodeId
     /// <param name="StreetcodeId">
     /// Param to finding a model.
     /// </param>
-    public record GetSubtitlesByStreetcodeIdQuery(int StreetcodeId) : IRequest<Result<SubtitleDto>>;
+    public record GetSubtitlesByStreetcodeIdQuery(int StreetcodeId)
+        : IRequest<Result<SubtitleDto>>;
 }

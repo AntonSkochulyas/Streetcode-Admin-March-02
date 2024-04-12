@@ -10,4 +10,5 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Create;
 /// Command, that request a handler to create an audio.
 /// </summary>
 /// <param name="Audio"></param>
-public record CreateAudioCommand(AudioFileBaseCreateDto Audio) : IRequest<Result<AudioDto>>;
+public record CreateAudioCommand(AudioFileBaseCreateDto Audio)
+    : IRequest<Result<AudioDto>>;

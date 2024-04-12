@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Crea
     /// <param name="newAuthorHyperLink">
     /// New author hyper link.
     /// </param>
-    public record CreateAuthorShipHyperLinkCommand(AuthorShipHyperLinkDto? newAuthorHyperLink) : IRequest<Result<AuthorShipHyperLinkDto>>;
+    public record CreateAuthorShipHyperLinkCommand(AuthorShipHyperLinkDto? NewAuthorHyperLink)
+        : IRequest<Result<AuthorShipHyperLinkDto>>;
 }

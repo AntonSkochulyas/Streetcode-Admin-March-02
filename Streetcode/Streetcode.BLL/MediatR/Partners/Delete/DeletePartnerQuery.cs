@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Partners.Delete
     /// <param name="id">
     /// Partner id to delete.
     /// </param>
-    public record DeletePartnerQuery(int id) : IRequest<Result<PartnerDto>>;
+    public record DeletePartnerQuery(int Id)
+        : IRequest<Result<PartnerDto>>;
 }

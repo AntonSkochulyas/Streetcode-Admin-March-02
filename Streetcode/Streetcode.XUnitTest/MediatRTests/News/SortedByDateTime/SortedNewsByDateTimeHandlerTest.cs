@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;
@@ -12,7 +10,6 @@
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Newss;
-    using Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl;
     using Streetcode.BLL.MediatR.Newss.SortedByDateTime;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;

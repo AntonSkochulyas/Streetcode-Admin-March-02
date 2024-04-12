@@ -1,21 +1,16 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.News.GetAll
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;
     using Moq;
-    using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
     using Streetcode.BLL.Dto.News;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Newss;
-    using Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetAll;
     using Streetcode.BLL.MediatR.Newss.GetAll;
-    using Streetcode.BLL.Services.BlobStorageService;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;

@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.GetB
     /// <param name="Id">
     /// Authorship hyperlink id to get.
     /// </param>
-    public record GetAuthorShipHyperLinksByIdQuery(int Id) : IRequest<Result<AuthorShipHyperLinkDto>>;
+    public record GetAuthorShipHyperLinksByIdQuery(int Id)
+        : IRequest<Result<AuthorShipHyperLinkDto>>;
 }

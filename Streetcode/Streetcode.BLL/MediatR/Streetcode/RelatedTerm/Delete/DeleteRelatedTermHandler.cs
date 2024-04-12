@@ -22,11 +22,11 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete
 
         public async Task<Result<RelatedTermDto>> Handle(DeleteRelatedTermCommand request, CancellationToken cancellationToken)
         {
-            var relatedTerm = await _repository.RelatedTermRepository.GetFirstOrDefaultAsync(rt => rt.Word.ToLower().Equals(request.word.ToLower()));
+            var relatedTerm = await _repository.RelatedTermRepository.GetFirstOrDefaultAsync(rt => rt.Word.ToLower().Equals(request.Word.ToLower()));
 
             if (relatedTerm is null)
             {
-                string errorMsg = string.Format(StreetcodeErrors.DeleteRelatedTermHandlerCannotFindRelatedTermError, request.word);
+                string errorMsg = string.Format(StreetcodeErrors.DeleteRelatedTermHandlerCannotFindRelatedTermError, request.Word);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

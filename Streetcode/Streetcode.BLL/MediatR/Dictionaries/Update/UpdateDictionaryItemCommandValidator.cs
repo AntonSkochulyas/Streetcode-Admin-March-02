@@ -15,7 +15,7 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Update
         // Max description length
         private readonly ushort _maxDescriptionLength;
 
-        // Constructor 
+        // Constructor.
         public UpdateDictionaryItemCommandValidator()
         {
             _maxNameLength = 50;

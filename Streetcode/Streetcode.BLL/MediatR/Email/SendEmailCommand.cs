@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.Email;
 /// <param name="Email">
 /// Email to send.
 /// </param>
-public record SendEmailCommand(EmailDto Email) : IRequest<Result<Unit>>;
+public record SendEmailCommand(EmailDto Email)
+    : IRequest<Result<Unit>>;

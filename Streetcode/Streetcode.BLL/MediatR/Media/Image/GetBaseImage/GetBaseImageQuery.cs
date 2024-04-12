@@ -11,4 +11,5 @@ namespace Streetcode.BLL.MediatR.Media.Image.GetBaseImage;
 /// <param name="Id">
 /// Base image id to get.
 /// </param>
-public record GetBaseImageQuery(int Id) : IRequest<Result<MemoryStream>>;
+public record GetBaseImageQuery(int Id)
+    : IRequest<Result<MemoryStream>>;

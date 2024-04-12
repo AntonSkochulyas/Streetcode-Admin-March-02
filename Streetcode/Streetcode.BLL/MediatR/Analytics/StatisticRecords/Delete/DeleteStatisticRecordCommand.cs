@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.Delete
     /// <param name="Id">
     /// Statistic record id to delete.
     /// </param>
-    public record DeleteStatisticRecordCommand(int Id) : IRequest<Result<StatisticRecordDto>>;
+    public record DeleteStatisticRecordCommand(int Id)
+        : IRequest<Result<StatisticRecordDto>>;
 }

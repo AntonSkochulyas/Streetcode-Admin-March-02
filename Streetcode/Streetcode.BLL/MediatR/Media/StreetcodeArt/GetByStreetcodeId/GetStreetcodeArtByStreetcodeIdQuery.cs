@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
     /// <param name="StreetcodeId">
     /// Streetcode id art to get.
     /// </param>
-    public record GetStreetcodeArtByStreetcodeIdQuery(int StreetcodeId) : IRequest<Result<IEnumerable<StreetcodeArtDto>>>;
+    public record GetStreetcodeArtByStreetcodeIdQuery(int StreetcodeId)
+        : IRequest<Result<IEnumerable<StreetcodeArtDto>>>;
 }

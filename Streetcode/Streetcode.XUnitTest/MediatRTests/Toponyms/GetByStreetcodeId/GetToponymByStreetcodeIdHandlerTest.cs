@@ -9,5 +9,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetByStreetcodeId
     /// </summary>
     public class GetToponymByStreetcodeIdHandlerTest
     {
+        public GetToponymByStreetcodeIdHandlerTest()
+        {
+        }
     }
 }

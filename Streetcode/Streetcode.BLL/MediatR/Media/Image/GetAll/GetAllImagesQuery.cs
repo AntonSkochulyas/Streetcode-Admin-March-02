@@ -9,4 +9,9 @@ namespace Streetcode.BLL.MediatR.Media.Image.GetAll;
 /// <summary>
 /// Query, that requests a handler to get all images from database.
 /// </summary>
-public record GetAllImagesQuery : IRequest<Result<IEnumerable<ImageDto>>>;
+public record GetAllImagesQuery : IRequest<Result<IEnumerable<ImageDto>>>
+{
+    public GetAllImagesQuery()
+    {
+    }
+}

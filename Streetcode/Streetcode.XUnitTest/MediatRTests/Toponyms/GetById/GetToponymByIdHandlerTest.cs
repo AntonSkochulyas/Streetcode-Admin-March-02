@@ -6,7 +6,6 @@
     using Moq;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Toponyms;
-    using Streetcode.BLL.MediatR.Media.Art.GetById;
     using Streetcode.BLL.MediatR.Toponyms.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;

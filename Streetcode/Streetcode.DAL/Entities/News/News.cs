@@ -13,11 +13,11 @@ namespace Streetcode.DAL.Entities.News
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
-        public string URL { get; set; }
+        public string? URL { get; set; }
         public int? ImageId { get; set; }
         public Image? Image { get; set; }
 

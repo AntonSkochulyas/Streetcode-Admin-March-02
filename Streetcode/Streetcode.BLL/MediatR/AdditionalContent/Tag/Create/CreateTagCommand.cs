@@ -13,5 +13,6 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.Create
     /// <param name="tag">
     /// Tag to add in database.
     /// </param>
-    public record CreateTagCommand(CreateTagDto tag) : IRequest<Result<TagDto>>;
+    public record CreateTagCommand(CreateTagDto Tag)
+        : IRequest<Result<TagDto>>;
 }

@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Newss.GetByUrl
     /// <param name="url">
     /// New url to get
     /// </param>
-    public record GetNewsByUrlQuery(string url) : IRequest<Result<NewsDto>>;
+    public record GetNewsByUrlQuery(string Url)
+        : IRequest<Result<NewsDto>>;
 }

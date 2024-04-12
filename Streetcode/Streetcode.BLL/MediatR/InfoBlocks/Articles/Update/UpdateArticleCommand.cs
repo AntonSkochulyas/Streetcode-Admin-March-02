@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Update
     /// <param name="article">
     /// Article to update.
     /// </param>
-    public record UpdateArticleCommand(ArticleDto article) : IRequest<Result<ArticleDto>>;
+    public record UpdateArticleCommand(ArticleDto Article)
+        : IRequest<Result<ArticleDto>>;
 }

@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.Media.Image.GetById;
 /// <param name="Id">
 /// Image id to get.
 /// </param>
-public record GetImageByIdQuery(int Id) : IRequest<Result<ImageDto>>;
+public record GetImageByIdQuery(int Id)
+    : IRequest<Result<ImageDto>>;

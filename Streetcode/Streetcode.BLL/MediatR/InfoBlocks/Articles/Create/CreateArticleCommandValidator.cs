@@ -9,25 +9,22 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Create
     /// </summary>
     public sealed class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>
     {
-        // Max title length
-        private readonly ushort _maxTitleLength;
-
-        // Max text length
-        private readonly ushort _maxTextLength;
-
         // Constructor
         public CreateArticleCommandValidator()
         {
-            _maxTitleLength = 50;
-            _maxTextLength = 15000;
+            // Max title length
+            int maxTitleLength = 50;
 
-            RuleFor(command => command.newArticle.Title)
-                .MaximumLength(_maxTitleLength)
-                .WithMessage($"Title length of article must not be longer than {_maxTitleLength} symbols.");
+            // Max text length
+            int maxTextLength = 15000;
 
-            RuleFor(command => command.newArticle.Text)
-                .MaximumLength(_maxTextLength)
-                .WithMessage($"Text length of article must not be longer than {_maxTextLength} symbols.");
+            RuleFor(command => command.NewArticle.Title)
+                .MaximumLength(maxTitleLength)
+                .WithMessage("Title length of article must not be longer than 50 symbols.");
+
+            RuleFor(command => command.NewArticle.Text)
+                .MaximumLength(maxTextLength)
+                .WithMessage("Text length of article must not be longer than 15000 symbols.");
         }
     }
 }

@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Create
     /// <param name="newArticle">
     /// New article to create.
     /// </param>
-    public record CreateArticleCommand(ArticleDto? newArticle) : IRequest<Result<ArticleDto>>;
+    public record CreateArticleCommand(ArticleDto? NewArticle)
+        : IRequest<Result<ArticleDto>>;
 }

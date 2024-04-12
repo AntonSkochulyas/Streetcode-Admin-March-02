@@ -1,9 +1,5 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.News.GetById
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;
@@ -12,8 +8,6 @@
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Newss;
-    using Streetcode.BLL.MediatR.AdditionalContent.GetById;
-    using Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetById;
     using Streetcode.BLL.MediatR.Newss.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;

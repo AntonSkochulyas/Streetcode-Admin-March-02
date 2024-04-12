@@ -11,5 +11,6 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
     /// <param name="id">
     /// News id to delete.
     /// </param>
-    public record DeleteNewsCommand(int id) : IRequest<Result<Unit>>;
+    public record DeleteNewsCommand(int Id)
+        : IRequest<Result<Unit>>;
 }

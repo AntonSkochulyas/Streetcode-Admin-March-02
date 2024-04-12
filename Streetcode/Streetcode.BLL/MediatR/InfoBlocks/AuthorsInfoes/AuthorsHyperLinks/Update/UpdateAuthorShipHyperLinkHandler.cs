@@ -47,7 +47,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Upda
         /// </returns>
         public async Task<Result<AuthorShipHyperLinkDto>> Handle(UpdateAuthorShipHyperLinkCommand request, CancellationToken cancellationToken)
         {
-            var authorHyperLink = _mapper.Map<AuthorShipHyperLink>(request.authorsHyperLink);
+            var authorHyperLink = _mapper.Map<AuthorShipHyperLink>(request.AuthorsHyperLink);
 
             if (authorHyperLink is null)
             {

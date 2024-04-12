@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Upda
     /// <param name="authorsHyperLink">
     /// Updated authorship hyperlink.
     /// </param>
-    public record UpdateAuthorShipHyperLinkCommand(AuthorShipHyperLinkDto? authorsHyperLink) : IRequest<Result<AuthorShipHyperLinkDto>>;
+    public record UpdateAuthorShipHyperLinkCommand(AuthorShipHyperLinkDto? AuthorsHyperLink)
+        : IRequest<Result<AuthorShipHyperLinkDto>>;
 }

@@ -10,5 +10,6 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
     /// Query, that requests a handler to get a news and links by give url from database.
     /// </summary>
     /// <param name="url"></param>
-    public record GetNewsAndLinksByUrlQuery(string url) : IRequest<Result<NewsDtoWithURLs>>;
+    public record GetNewsAndLinksByUrlQuery(string Url)
+        : IRequest<Result<NewsDtoWithURLs>>;
 }

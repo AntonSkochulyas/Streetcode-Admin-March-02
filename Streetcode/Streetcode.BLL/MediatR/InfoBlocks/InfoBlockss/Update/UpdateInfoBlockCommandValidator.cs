@@ -12,7 +12,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Update
         // Constructor
         public UpdateInfoBlockCommandValidator()
         {
-            RuleFor(command => command.infoBlock.VideoURL)
+            RuleFor(command => command.InfoBlock.VideoURL)
                 .Custom((videoUrl, context) =>
                 {
                     if (string.IsNullOrWhiteSpace(videoUrl) || !IsValidYouTubeURL(videoUrl))
@@ -25,7 +25,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Update
         // Method, that checks is valid youtube url
         private static bool IsValidYouTubeURL(string url)
         {
-            if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))
             {
                 return uri.Host.Equals("www.youtube.com", StringComparison.OrdinalIgnoreCase);
             }

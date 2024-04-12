@@ -1,4 +1,4 @@
-﻿// Necessary usings.
+// Necessary usings.
 using FluentValidation;
 
 // Necessary namespaces.
@@ -9,20 +9,17 @@ namespace Streetcode.BLL.MediatR.Media.Image.Create
     /// </summary>
     public class CreateImageCommandValidator : AbstractValidator<CreateImageCommand>
     {
-        // Max mime type length
-		private readonly ushort maxMimeTypeLength;
-
-        // Max title length
-		private readonly ushort maxTitleLength;
-
-        // Max alt length
-		private readonly ushort maxAltLength;
-
         // Constructor
 		public CreateImageCommandValidator()
 		{
-            maxTitleLength = 100;
-            maxMimeTypeLength = 10;
+            // Max title length
+            int maxTitleLength = 100;
+
+            // Max mime type length
+            int maxMimeTypeLength = 10;
+
+            // Max alt length
+            int maxAltLength = 50;
 
             RuleFor(command => command.Image.MimeType)
                 .NotEmpty()
@@ -31,6 +28,7 @@ namespace Streetcode.BLL.MediatR.Media.Image.Create
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorMimeTypeMaxLengthError, maxMimeTypeLength));
 
             RuleFor(command => command.Image.Title)
+                .MaximumLength(maxMimeTypeLength)
                 .MaximumLength(maxTitleLength)
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorTitleMaxLengthError, maxTitleLength));
 

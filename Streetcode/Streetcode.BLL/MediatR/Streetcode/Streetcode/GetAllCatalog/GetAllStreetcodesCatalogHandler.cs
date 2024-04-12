@@ -30,7 +30,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllCatalog
 
             if (streetcodes != null)
             {
-                var skipped = streetcodes.Skip((request.page - 1) * request.count).Take(request.count);
+                var skipped = streetcodes.Skip((request.Page - 1) * request.Count).Take(request.Count);
                 return Result.Ok(_mapper.Map<IEnumerable<RelatedFigureDto>>(skipped));
             }
 

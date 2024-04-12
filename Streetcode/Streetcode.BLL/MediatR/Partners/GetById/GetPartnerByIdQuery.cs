@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.Partners.GetById;
 /// <param name="Id">
 /// Partner id to get.
 /// </param>
-public record GetPartnerByIdQuery(int Id) : IRequest<Result<PartnerDto>>;
+public record GetPartnerByIdQuery(int Id)
+    : IRequest<Result<PartnerDto>>;

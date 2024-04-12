@@ -54,6 +54,12 @@ public class TagController : BaseApiController
         return HandleResult(await Mediator.Send(new GetTagByTitleQuery(title)));
     }
 
+    /// <summary>
+    /// Get sorted tags by start title.
+    /// </summary>
+    /// <param name="startsWithTitle">Start Title.</param>
+    /// <param name="take">Query Take.</param>
+    /// <returns>Tag.</returns>
     [HttpGet("get-titles")]
     public async Task<IActionResult> GetSortedTagsByStartTitle([FromQuery] string? startsWithTitle, [FromQuery] int? take)
     {

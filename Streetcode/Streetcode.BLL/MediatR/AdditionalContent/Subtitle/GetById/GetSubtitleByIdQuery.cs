@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.GetById;
 /// <param name="Id">
 /// Id to find a subtitle.
 /// </param>
-public record GetSubtitleByIdQuery(int Id) : IRequest<Result<SubtitleDto>>;
+public record GetSubtitleByIdQuery(int Id)
+    : IRequest<Result<SubtitleDto>>;

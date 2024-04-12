@@ -3,5 +3,10 @@ using MediatR;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetCount
 {
-    public record GetStreetcodesCountQuery : IRequest<Result<int>>;
+    public record GetStreetcodesCountQuery : IRequest<Result<int>>
+    {
+        public GetStreetcodesCountQuery()
+        {
+        }
+    }
 }

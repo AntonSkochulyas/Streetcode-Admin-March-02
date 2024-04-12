@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.Media.Video.GetByStreetcodeId;
 /// <param name="StreetcodeId">
 /// Streetcode id video to get.
 /// </param>
-public record GetVideoByStreetcodeIdQuery(int StreetcodeId) : IRequest<Result<VideoDto>>;
+public record GetVideoByStreetcodeIdQuery(int StreetcodeId)
+    : IRequest<Result<VideoDto>>;

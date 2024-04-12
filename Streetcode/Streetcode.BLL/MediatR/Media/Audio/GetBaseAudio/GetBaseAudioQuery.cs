@@ -11,4 +11,5 @@ namespace Streetcode.BLL.MediatR.Media.Audio.GetBaseAudio;
 /// <param name="Id">
 /// Base audio id to get.
 /// </param>
-public record GetBaseAudioQuery(int Id) : IRequest<Result<MemoryStream>>;
+public record GetBaseAudioQuery(int Id)
+    : IRequest<Result<MemoryStream>>;

@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Update
     /// <param name="infoBlock">
     /// Updated infoblock.
     /// </param>
-    public record UpdateInfoBlockCommand(InfoBlockDto? infoBlock) : IRequest<Result<InfoBlockDto>>;
+    public record UpdateInfoBlockCommand(InfoBlockDto? InfoBlock)
+        : IRequest<Result<InfoBlockDto>>;
 }

@@ -9,5 +9,10 @@ namespace Streetcode.BLL.MediatR.Newss.SortedByDateTime
     /// <summary>
     /// Query, that requests a handler to sort a news by date time.
     /// </summary>
-    public record SortedByDateTimeQuery() : IRequest<Result<List<NewsDto>>>;
+    public record SortedByDateTimeQuery : IRequest<Result<List<NewsDto>>>
+    {
+        public SortedByDateTimeQuery()
+        {
+        }
+    }
 }

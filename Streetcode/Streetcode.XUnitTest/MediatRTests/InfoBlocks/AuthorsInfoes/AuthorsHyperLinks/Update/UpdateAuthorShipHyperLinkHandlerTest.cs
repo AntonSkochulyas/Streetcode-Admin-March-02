@@ -5,12 +5,10 @@
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
-using Streetcode.BLL.MediatR.InfoBlocks.Articles.Update;
 using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Update;
 using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Repositories.Interfaces.Base;

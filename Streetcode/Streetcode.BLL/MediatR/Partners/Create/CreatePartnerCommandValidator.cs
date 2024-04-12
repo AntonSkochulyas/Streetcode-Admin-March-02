@@ -9,54 +9,49 @@ namespace Streetcode.BLL.MediatR.Partners.Create
     /// </summary>
     internal class CreatePartnerCommandValidator : AbstractValidator<CreatePartnerCommand>
     {
-        // Title max length
-        private readonly int _titleMaxLength;
-
-        // Target URL max length
-        private readonly int _targetURLMaxLength;
-
-        // URL title max length
-        private readonly int _urlTitleMaxLength;
-
-        // Description max length
-        private readonly int _descriptionMaxLength;
-
         // Constructor
         public CreatePartnerCommandValidator()
         {
-            _titleMaxLength = 100;
-            _targetURLMaxLength = 200;
-            _urlTitleMaxLength = 255;
-            _descriptionMaxLength = 450;
+            // Title max length
+            int titleMaxLength = 100;
 
-            RuleFor(command => command.newPartner.Title)
+            // Target URL max length
+            int targetURLMaxLength = 200;
+
+            // URL title max length
+            int urlTitleMaxLength = 255;
+
+            // Description max length
+            int descriptionMaxLength = 450;
+
+            RuleFor(command => command.NewPartner.Title)
                 .NotEmpty()
                 .WithMessage(PartnersErrors.CreatePartnerCommandValidatorTitleIsRequiredError)
-                .MaximumLength(_titleMaxLength)
-                .WithMessage(string.Format(PartnersErrors.CreatePartnerCommandValidatorTitleMaxLengthError, _titleMaxLength));
+                .MaximumLength(titleMaxLength)
+                .WithMessage(string.Format(PartnersErrors.CreatePartnerCommandValidatorTitleMaxLengthError, titleMaxLength));
 
-            RuleFor(command => command.newPartner.LogoId)
+            RuleFor(command => command.NewPartner.LogoId)
                 .NotEmpty()
                 .WithMessage(PartnersErrors.CreatePartnerCommandValidatorLogoIdIsRequiredError);
 
-            RuleFor(command => command.newPartner.IsKeyPartner)
+            RuleFor(command => command.NewPartner.IsKeyPartner)
               .NotEmpty()
               .WithMessage(PartnersErrors.CreatePartnerCommandValidatorIsKeyPartnerIsRequiredError);
 
-            RuleFor(command => command.newPartner.IsVisibleEverywhere)
+            RuleFor(command => command.NewPartner.IsVisibleEverywhere)
              .NotEmpty()
              .WithMessage(PartnersErrors.CreatePartnerCommandValidatorIsVisibleEverywhereIsRequiredError);
 
-            RuleFor(command => command.newPartner.TargetUrl)
-               .MaximumLength(_targetURLMaxLength)
-               .WithMessage(string.Format(PartnersErrors.CreatePartnerCommandValidatorTargetURLMaxLengthError, _targetURLMaxLength));
+            RuleFor(command => command.NewPartner.TargetUrl)
+               .MaximumLength(targetURLMaxLength)
+               .WithMessage(string.Format(PartnersErrors.CreatePartnerCommandValidatorTargetURLMaxLengthError, targetURLMaxLength));
 
-            RuleFor(command => command.newPartner.UrlTitle)
-               .MaximumLength(_urlTitleMaxLength)
-               .WithMessage(string.Format(PartnersErrors.CreatePartnerCommandValidatorURLTitleMaxLengthError, _urlTitleMaxLength));
+            RuleFor(command => command.NewPartner.UrlTitle)
+               .MaximumLength(urlTitleMaxLength)
+               .WithMessage(string.Format(PartnersErrors.CreatePartnerCommandValidatorURLTitleMaxLengthError, urlTitleMaxLength));
 
-            RuleFor(command => command.newPartner.Description)
-              .MaximumLength(_descriptionMaxLength)
+            RuleFor(command => command.NewPartner.Description)
+              .MaximumLength(descriptionMaxLength)
               .WithMessage(PartnersErrors.CreatePartnerCommandValidatorDescriptionMaxLengthError);
         }
     }

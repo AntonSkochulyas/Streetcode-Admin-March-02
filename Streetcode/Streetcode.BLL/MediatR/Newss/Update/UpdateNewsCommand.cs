@@ -10,5 +10,6 @@ namespace Streetcode.BLL.MediatR.Newss.Update
     /// Command, that requests a handler to 
     /// </summary>
     /// <param name="news"></param>
-    public record UpdateNewsCommand(NewsDto news) : IRequest<Result<NewsDto>>;
+    public record UpdateNewsCommand(NewsDto News)
+        : IRequest<Result<NewsDto>>;
 }

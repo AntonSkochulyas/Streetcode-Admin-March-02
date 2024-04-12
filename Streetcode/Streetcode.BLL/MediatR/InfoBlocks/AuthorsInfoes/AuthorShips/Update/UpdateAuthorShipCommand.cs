@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Update
     /// <param name="authorShip">
     /// Updated authorship.
     /// </param>
-    public record UpdateAuthorShipCommand(AuthorShipDto? authorShip) : IRequest<Result<AuthorShipDto>>;
+    public record UpdateAuthorShipCommand(AuthorShipDto? AuthorShip)
+        : IRequest<Result<AuthorShipDto>>;
 }

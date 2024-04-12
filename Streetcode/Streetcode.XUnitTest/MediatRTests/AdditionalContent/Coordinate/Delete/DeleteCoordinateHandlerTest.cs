@@ -1,11 +1,8 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.AdditionalContent.Coordinate.Delete
 {
     using System.Threading.Tasks;
-    using AutoMapper;
     using FluentAssertions;
     using Moq;
-    using Streetcode.BLL.Interfaces.Logging;
-    using Streetcode.BLL.Mapping.AdditionalContent.Coordinates;
     using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
@@ -14,13 +11,10 @@
     public class DeleteCoordinateHandlerTest
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
-        private readonly Mock<ILoggerService> _mockLogger;
 
         public DeleteCoordinateHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetCoordinateRepositoryMock();
-
-            _mockLogger = new Mock<ILoggerService>();
         }
 
         [Fact]

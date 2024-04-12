@@ -5,7 +5,6 @@ namespace Streetcode.BLL.Dto.InfoBlocks
 {
     public class InfoBlockDto
     {
-        private string? _videoURL;
         private AuthorShip? _authorShip;
 
         public int Id { get; set; }

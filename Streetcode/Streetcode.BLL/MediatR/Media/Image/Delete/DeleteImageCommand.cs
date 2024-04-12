@@ -11,4 +11,5 @@ namespace Streetcode.BLL.MediatR.Media.Image.Delete;
 /// <param name="Id">
 /// Image id to delete.
 /// </param>
-public record DeleteImageCommand(int Id) : IRequest<Result<Unit>>;
+public record DeleteImageCommand(int Id)
+    : IRequest<Result<Unit>>;

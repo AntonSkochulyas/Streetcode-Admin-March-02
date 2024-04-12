@@ -45,7 +45,7 @@ namespace Streetcode.BLL.MediatR.Partners.Delete
         /// </returns>
         public async Task<Result<PartnerDto>> Handle(DeletePartnerQuery request, CancellationToken cancellationToken)
         {
-            var partner = await _repositoryWrapper.PartnersRepository.GetFirstOrDefaultAsync(p => p.Id == request.id);
+            var partner = await _repositoryWrapper.PartnersRepository.GetFirstOrDefaultAsync(p => p.Id == request.Id);
             if (partner == null)
             {
                 string errorMsg = PartnersErrors.DeletePartnerHandlerNoPartnerWithGivenIdError;

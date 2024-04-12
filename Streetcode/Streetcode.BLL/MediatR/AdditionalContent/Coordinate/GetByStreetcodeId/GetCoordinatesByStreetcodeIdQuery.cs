@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.GetByStreetcodeId
     /// <param name="StreetcodeId">
     /// Param for finding elements.
     /// </param>
-    public record GetCoordinatesByStreetcodeIdQuery(int StreetcodeId) : IRequest<Result<IEnumerable<StreetcodeCoordinateDto>>>;
+    public record GetCoordinatesByStreetcodeIdQuery(int StreetcodeId)
+        : IRequest<Result<IEnumerable<StreetcodeCoordinateDto>>>;
 }

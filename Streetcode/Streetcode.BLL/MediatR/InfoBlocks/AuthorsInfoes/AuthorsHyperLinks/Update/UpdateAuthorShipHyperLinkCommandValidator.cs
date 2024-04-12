@@ -9,17 +9,15 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Upda
     /// </summary>
     internal class UpdateAuthorShipHyperLinkCommandValidator : AbstractValidator<UpdateAuthorShipHyperLinkCommand>
     {
-        // Max title length
-        private readonly ushort _maxTitleLength;
-
         // Constructor
         public UpdateAuthorShipHyperLinkCommandValidator()
         {
-            _maxTitleLength = 150;
+            // Max title length
+            int maxTitleLength = 150;
 
-            RuleFor(command => command.authorsHyperLink.Title)
-                .MaximumLength(_maxTitleLength)
-                .WithMessage($"Title length of author hyper link must not be longer than {_maxTitleLength} symbols.");
+            RuleFor(command => command.AuthorsHyperLink.Title)
+                .MaximumLength(maxTitleLength)
+                .WithMessage("Title length of author hyper link must not be longer than 150 symbols.");
         }
     }
 }

@@ -9,4 +9,9 @@ namespace Streetcode.BLL.MediatR.Partners.GetAll;
 /// <summary>
 /// Query, that requests a handler to get all partners from database.
 /// </summary>
-public record GetAllPartnersQuery : IRequest<Result<IEnumerable<PartnerDto>>>;
+public record GetAllPartnersQuery : IRequest<Result<IEnumerable<PartnerDto>>>
+{
+    public GetAllPartnersQuery()
+    {
+    }
+}

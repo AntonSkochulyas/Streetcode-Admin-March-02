@@ -1,9 +1,7 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.AdditionalContent.Subtitle.GetAll
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;

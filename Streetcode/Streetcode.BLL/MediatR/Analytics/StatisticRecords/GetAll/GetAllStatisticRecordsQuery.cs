@@ -9,5 +9,10 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.GetAll
     /// <summary>
     /// Query, that requests handler to get all statistic records from database.
     /// </summary>
-    public record GetAllStatisticRecordsQuery : IRequest<Result<IEnumerable<StatisticRecordDto>>>;
+    public record GetAllStatisticRecordsQuery : IRequest<Result<IEnumerable<StatisticRecordDto>>>
+    {
+        public GetAllStatisticRecordsQuery()
+        {
+        }
+    }
 }

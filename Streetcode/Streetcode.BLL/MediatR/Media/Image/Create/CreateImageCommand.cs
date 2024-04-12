@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.Media.Image.Create;
 /// <param name="Image">
 /// New image.
 /// </param>
-public record CreateImageCommand(ImageFileBaseCreateDto Image) : IRequest<Result<ImageDto>>;
+public record CreateImageCommand(ImageFileBaseCreateDto Image)
+    : IRequest<Result<ImageDto>>;

@@ -12,4 +12,5 @@ namespace Streetcode.BLL.MediatR.Media.Audio.GetByStreetcodeId;
 /// <param name="StreetcodeId">
 /// Audio streetcode id to get.
 /// </param>
-public record GetAudioByStreetcodeIdQuery(int StreetcodeId) : IRequest<Result<AudioDto>>;
+public record GetAudioByStreetcodeIdQuery(int StreetcodeId)
+    : IRequest<Result<AudioDto>>;

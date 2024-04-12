@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Partners.Create
     /// <param name="newPartner">
     /// New partner.
     /// </param>
-    public record CreatePartnerCommand(CreatePartnerDto newPartner) : IRequest<Result<PartnerDto>>;
+    public record CreatePartnerCommand(CreatePartnerDto NewPartner)
+        : IRequest<Result<PartnerDto>>;
 }

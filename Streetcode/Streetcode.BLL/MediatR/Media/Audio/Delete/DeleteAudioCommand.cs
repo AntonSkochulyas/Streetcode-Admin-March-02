@@ -11,4 +11,5 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Delete;
 /// <param name="Id">
 /// Audio id to delete.
 /// </param>
-public record DeleteAudioCommand(int Id) : IRequest<Result<Unit>>;
+public record DeleteAudioCommand(int Id)
+    : IRequest<Result<Unit>>;

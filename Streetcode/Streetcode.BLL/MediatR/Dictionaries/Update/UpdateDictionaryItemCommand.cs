@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Update
     /// <param name="dictionaryItem">
     /// Updated dictionary item.
     /// </param>
-    public record UpdateDictionaryItemCommand(DictionaryItemDto dictionaryItem) : IRequest<Result<DictionaryItemDto>>;
+    public record UpdateDictionaryItemCommand(DictionaryItemDto dictionaryItem)
+        : IRequest<Result<DictionaryItemDto>>;
 }

@@ -51,7 +51,7 @@ namespace Streetcode.BLL.MediatR.Newss.Update
         /// </returns>
         public async Task<Result<NewsDto>> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
         {
-            var news = _mapper.Map<News>(request.news);
+            var news = _mapper.Map<News>(request.News);
             if (news is null)
             {
                 string errorMsg = NewsErrors.UpdateNewsHandlerCanNotConvertFromNullError;

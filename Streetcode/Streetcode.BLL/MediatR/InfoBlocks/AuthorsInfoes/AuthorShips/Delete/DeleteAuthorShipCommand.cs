@@ -11,5 +11,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
     /// <param name="Id">
     /// Authorship id to delete.
     /// </param>
-    public record DeleteAuthorShipCommand(int Id) : IRequest<Result<Unit>>;
+    public record DeleteAuthorShipCommand(int Id)
+        : IRequest<Result<Unit>>;
 }

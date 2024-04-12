@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
-using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Dto.Sources;
-using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Sources;
-using Streetcode.BLL.MediatR.Newss.Update;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.Mocks;

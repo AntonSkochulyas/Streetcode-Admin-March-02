@@ -26,11 +26,11 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetByTransliterationUrl
         {
             var streetcode = await _repository.StreetcodeRepository
                 .GetFirstOrDefaultAsync(
-                    predicate: st => st.TransliterationUrl == request.url);
+                    predicate: st => st.TransliterationUrl == request.Url);
 
             if (streetcode == null)
             {
-                string errorMsg = string.Format(StreetcodeErrors.GetStreetcodeByTransliterationUrlHandlerCannotFindStreetcodeByTransliterationUrlError, request.url);
+                string errorMsg = string.Format(StreetcodeErrors.GetStreetcodeByTransliterationUrlHandlerCannotFindStreetcodeByTransliterationUrlError, request.Url);
                 _logger.LogError(request, errorMsg);
                 return new Error(errorMsg);
             }

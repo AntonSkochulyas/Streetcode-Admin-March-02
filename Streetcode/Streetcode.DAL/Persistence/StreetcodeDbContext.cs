@@ -31,115 +31,114 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser, Applicatio
     {
     }
 
-    public DbSet<Art> Arts { get; set; }
-    public DbSet<Audio> Audios { get; set; }
-    public DbSet<ToponymCoordinate> ToponymCoordinates { get; set; }
-    public DbSet<StreetcodeCoordinate> StreetcodeCoordinates { get; set; }
-    public DbSet<Fact> Facts { get; set; }
-    public DbSet<HistoricalContext> HistoricalContexts { get; set; }
-    public DbSet<Image> Images { get; set; }
-    public DbSet<ImageMain> ImagesMain { get; set; }
-    public DbSet<ImageDetails> ImageDetailses { get; set; }
-    public DbSet<Partner> Partners { get; set; }
-    public DbSet<PartnerSourceLink> PartnerSourceLinks { get; set; }
-    public DbSet<RelatedFigure> RelatedFigures { get; set; }
-    public DbSet<Response> Responses { get; set; }
-    public DbSet<StreetcodeContent> Streetcodes { get; set; }
-    public DbSet<Subtitle> Subtitles { get; set; }
-    public DbSet<StatisticRecord> StatisticRecords { get; set; }
-    public DbSet<Tag> Tags { get; set; }
-    public DbSet<Term> Terms { get; set; }
-    public DbSet<RelatedTerm> RelatedTerms { get; set; }
-    public DbSet<Text> Texts { get; set; }
-    public DbSet<TimelineItem> TimelineItems { get; set; }
-    public DbSet<Toponym> Toponyms { get; set; }
-    public DbSet<TransactionLink> TransactionLinks { get; set; }
-    public DbSet<Video> Videos { get; set; }
-    public DbSet<StreetcodeCategoryContent> StreetcodeCategoryContent { get; set; }
-    public DbSet<StreetcodeArt> StreetcodeArts { get; set; }
-    public DbSet<StreetcodeTagIndex> StreetcodeTagIndices { get; set; }
-    public DbSet<TeamMember> TeamMembers { get; set; }
-    public DbSet<TeamMemberLink> TeamMemberLinks { get; set; }
-    public DbSet<Positions> Positions { get; set; }
-    public DbSet<News> News { get; set; }
-    public DbSet<SourceLinkCategory> SourceLinks { get; set; }
-    public DbSet<StreetcodeImage> StreetcodeImages { get; set; }
-    public DbSet<HistoricalContextTimeline> HistoricalContextsTimelines { get; set; }
-    public DbSet<StreetcodePartner> StreetcodePartners { get; set; }
-    public DbSet<TeamMemberPositions> TeamMemberPosition { get; set; }
+    public DbSet<Art>? Arts { get; set; }
+    public DbSet<Audio>? Audios { get; set; }
+    public DbSet<ToponymCoordinate>? ToponymCoordinates { get; set; }
+    public DbSet<StreetcodeCoordinate>? StreetcodeCoordinates { get; set; }
+    public DbSet<Fact>? Facts { get; set; }
+    public DbSet<HistoricalContext>? HistoricalContexts { get; set; }
+    public DbSet<Image>? Images { get; set; }
+    public DbSet<ImageDetails>? ImageDetailses { get; set; }
+    public DbSet<Partner>? Partners { get; set; }
+    public DbSet<PartnerSourceLink>? PartnerSourceLinks { get; set; }
+    public DbSet<RelatedFigure>? RelatedFigures { get; set; }
+    public DbSet<Response>? Responses { get; set; }
+    public DbSet<StreetcodeContent>? Streetcodes { get; set; }
+    public DbSet<Subtitle>? Subtitles { get; set; }
+    public DbSet<StatisticRecord>? StatisticRecords { get; set; }
+    public DbSet<Tag>? Tags { get; set; }
+    public DbSet<Term>? Terms { get; set; }
+    public DbSet<RelatedTerm>? RelatedTerms { get; set; }
+    public DbSet<Text>? Texts { get; set; }
+    public DbSet<TimelineItem>? TimelineItems { get; set; }
+    public DbSet<Toponym>? Toponyms { get; set; }
+    public DbSet<TransactionLink>? TransactionLinks { get; set; }
+    public DbSet<Video>? Videos { get; set; }
+    public DbSet<StreetcodeCategoryContent>? StreetcodeCategoryContent { get; set; }
+    public DbSet<StreetcodeArt>? StreetcodeArts { get; set; }
+    public DbSet<StreetcodeTagIndex>? StreetcodeTagIndices { get; set; }
+    public DbSet<TeamMember>? TeamMembers { get; set; }
+    public DbSet<TeamMemberLink>? TeamMemberLinks { get; set; }
+    public DbSet<Positions>? Positions { get; set; }
+    public DbSet<News>? News { get; set; }
+    public DbSet<SourceLinkCategory>? SourceLinks { get; set; }
+    public DbSet<StreetcodeImage>? StreetcodeImages { get; set; }
+    public DbSet<HistoricalContextTimeline>? HistoricalContextsTimelines { get; set; }
+    public DbSet<StreetcodePartner>? StreetcodePartners { get; set; }
+    public DbSet<TeamMemberPositions>? TeamMemberPosition { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
 
-        modelBuilder.UseCollation("SQL_Ukrainian_CP1251_CI_AS");
+        builder.UseCollation("SQL_Ukrainian_CP1251_CI_AS");
 
-        modelBuilder.ApplyConfiguration(new ArtEntityConfiguration());
+        builder.ApplyConfiguration(new ArtEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new AudioEntityConfiguration());
+        builder.ApplyConfiguration(new AudioEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new CoordinateEntityConfiguration());
+        builder.ApplyConfiguration(new CoordinateEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new FactEntityConfiguration());
+        builder.ApplyConfiguration(new FactEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new HistoricalContextEntityConfiguration());
+        builder.ApplyConfiguration(new HistoricalContextEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new HistoricalContextTimelineEntityConfiguration());
+        builder.ApplyConfiguration(new HistoricalContextTimelineEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new ImageDetailsEntityConfiguration());
+        builder.ApplyConfiguration(new ImageDetailsEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new ImageEntityConfiguration());
+        builder.ApplyConfiguration(new ImageEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new NewsEntityConfiguration());
+        builder.ApplyConfiguration(new NewsEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new PartnerEntityConfiguration());
+        builder.ApplyConfiguration(new PartnerEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new PartnerSourceLinkEntityConfiguration());
+        builder.ApplyConfiguration(new PartnerSourceLinkEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new PersonStreetcodeEntityConfiguration());
+        builder.ApplyConfiguration(new PersonStreetcodeEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new PositionsEntityConfiguration());
+        builder.ApplyConfiguration(new PositionsEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new RelatedFigureEntityConfiguration());
+        builder.ApplyConfiguration(new RelatedFigureEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new RelatedTermEntityConfiguration());
+        builder.ApplyConfiguration(new RelatedTermEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new ResponseEntityConfiguration());
+        builder.ApplyConfiguration(new ResponseEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new SourceLinkCategoryEntityConfiguration());
+        builder.ApplyConfiguration(new SourceLinkCategoryEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new StatisticRecordEntityConfiguration());
+        builder.ApplyConfiguration(new StatisticRecordEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new StreetcodeArtEntityConfiguration());
+        builder.ApplyConfiguration(new StreetcodeArtEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new StreetcodeCategoryContentEntityConfiguration());
+        builder.ApplyConfiguration(new StreetcodeCategoryContentEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new StreetcodeContentEntityConfiguration());
+        builder.ApplyConfiguration(new StreetcodeContentEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new StreetcodeTagIndexEntityConfiguration());
+        builder.ApplyConfiguration(new StreetcodeTagIndexEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new SubtitleEntityConfiguration());
+        builder.ApplyConfiguration(new SubtitleEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TagEntityConfiguration());
+        builder.ApplyConfiguration(new TagEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TeamMemberEntityConfiguration());
+        builder.ApplyConfiguration(new TeamMemberEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TeamMemberLinkEntityConfiguration());
+        builder.ApplyConfiguration(new TeamMemberLinkEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TeamMemberPositionsEntityConfigurations());
+        builder.ApplyConfiguration(new TeamMemberPositionsEntityConfigurations());
 
-        modelBuilder.ApplyConfiguration(new TermEntityConfiguration());
+        builder.ApplyConfiguration(new TermEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TextEntityConfiguration());
+        builder.ApplyConfiguration(new TextEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TimelineItemEntityConfiguration());
+        builder.ApplyConfiguration(new TimelineItemEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new ToponymEntityConfiguration());
+        builder.ApplyConfiguration(new ToponymEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new TransactionLinkEntityConfiguration());
+        builder.ApplyConfiguration(new TransactionLinkEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+        builder.ApplyConfiguration(new UserEntityConfiguration());
 
-        modelBuilder.ApplyConfiguration(new VideoEntityConfiguration());
+        builder.ApplyConfiguration(new VideoEntityConfiguration());
     }
 }

@@ -12,5 +12,6 @@ namespace Streetcode.BLL.MediatR.Dictionaries.GetById
     /// <param name="Id">
     /// Dictionary item id to find.
     /// </param>
-    public record GetDictionaryItemByIdQuery(int Id) : IRequest<Result<DictionaryItemDto>>;
+    public record GetDictionaryItemByIdQuery(int Id)
+        : IRequest<Result<DictionaryItemDto>>;
 }

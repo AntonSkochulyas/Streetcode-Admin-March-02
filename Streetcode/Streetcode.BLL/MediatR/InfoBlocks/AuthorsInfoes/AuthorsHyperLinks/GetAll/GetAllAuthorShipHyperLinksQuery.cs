@@ -9,5 +9,10 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.GetA
     /// <summary>
     /// Query, that request handler to get all authorship hyperlinks from database.
     /// </summary>
-    public record GetAllAuthorShipHyperLinksQuery : IRequest<Result<IEnumerable<AuthorShipHyperLinkDto>>>;
+    public record GetAllAuthorShipHyperLinksQuery : IRequest<Result<IEnumerable<AuthorShipHyperLinkDto>>>
+    {
+        public GetAllAuthorShipHyperLinksQuery()
+        {
+        }
+    }
 }
