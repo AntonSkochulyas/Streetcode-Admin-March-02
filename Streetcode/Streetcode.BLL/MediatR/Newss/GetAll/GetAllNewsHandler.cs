@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
@@ -7,15 +8,27 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Interfaces.Logging;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.GetAll
 {
+    /// <summary>
+    /// Handler, that handles a process of getting all news from database.
+    /// </summary>
     public class GetAllNewsHandler : IRequestHandler<GetAllNewsQuery, Result<IEnumerable<NewsDto>>>
     {
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Blob service
         private readonly IBlobService _blobService;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor
         public GetAllNewsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, IBlobService blobService, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -24,6 +37,18 @@ namespace Streetcode.BLL.MediatR.Newss.GetAll
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that gets all news from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all news from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of NewsDto, or error, if it was while getting process.
+        /// </returns>
         public async Task<Result<IEnumerable<NewsDto>>> Handle(GetAllNewsQuery request, CancellationToken cancellationToken)
         {
             var news = await _repositoryWrapper.NewsRepository.GetAllAsync(

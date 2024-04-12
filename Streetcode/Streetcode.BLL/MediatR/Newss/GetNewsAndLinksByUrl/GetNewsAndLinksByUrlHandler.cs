@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
@@ -7,14 +8,27 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Interfaces.Logging;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
 {
+    /// <summary>
+    /// Handler, that handles a process of getting a news and links by given url.
+    /// </summary>
     public class GetNewsAndLinksByUrlHandler : IRequestHandler<GetNewsAndLinksByUrlQuery, Result<NewsDtoWithURLs>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Blob service
         private readonly IBlobService _blobService;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public GetNewsAndLinksByUrlHandler(IMapper mapper, IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger)
         {
             _mapper = mapper;
@@ -23,6 +37,18 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that gets a news and links by given url.
+        /// </summary>
+        /// <param name="request">
+        /// Request with news and links url to get.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A NewsDtoWithURLs, or error, if it was while getting process.
+        /// </returns>
         public async Task<Result<NewsDtoWithURLs>> Handle(GetNewsAndLinksByUrlQuery request, CancellationToken cancellationToken)
         {
             string url = request.Url;

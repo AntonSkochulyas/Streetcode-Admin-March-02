@@ -1,12 +1,21 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Update
 {
+    /// <summary>
+    /// Validator, that validates a model inside UpdateNewsCommand.
+    /// </summary>
     internal class UpdateNewsCommandValidator : AbstractValidator<UpdateNewsCommand>
     {
+        // Parametric constructor
         public UpdateNewsCommandValidator()
         {
+            // Max title length
             int maxTitleLength = 150;
+
+            // Max URL length
             int maxURLLength = 100;
 
             RuleFor(command => command.News.Title)

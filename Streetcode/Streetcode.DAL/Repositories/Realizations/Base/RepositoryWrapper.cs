@@ -52,7 +52,13 @@ public class RepositoryWrapper : IRepositoryWrapper
 
     private IImageRepository? _imageRepository;
 
+<<<<<<< HEAD
     private IImageDetailsRepository? _imageDetailsRepository;
+=======
+    private IImageMainRepository _imageMainRepository;
+
+    private IImageDetailsRepository _imageDetailsRepository;
+>>>>>>> 27b16bde9814869bd5c29214f14401bae63a642e
 
     private IArtRepository? _artRepository;
 
@@ -163,6 +169,19 @@ public class RepositoryWrapper : IRepositoryWrapper
             }
 
             return _imageRepository;
+        }
+    }
+
+    public IImageMainRepository ImageMainRepository
+    {
+        get
+        {
+            if (_imageMainRepository is null)
+            {
+                _imageMainRepository = new ImageMainRepository(_streetcodeDbContext);
+}
+
+            return _imageMainRepository;
         }
     }
 

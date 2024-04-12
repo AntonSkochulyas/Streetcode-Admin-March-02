@@ -1,13 +1,23 @@
-﻿using FluentValidation;
+// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Audio.Create
 {
-	public class CreateAudioCommandValidator : AbstractValidator<CreateAudioCommand>
+    /// <summary>
+    /// Validator, that validates a model inside CreateAudioCommand.
+    /// </summary>
+    public class CreateAudioCommandValidator : AbstractValidator<CreateAudioCommand>
     {
 		public CreateAudioCommandValidator()
 		{
+            // Max title length
             int maxTitleLength = 100;
+
+            // Max blob name length
             int maxBlobNameLength = 100;
+
+            // Max mime type length
             int maxMimeTypeLength = 10;
 
             RuleFor(command => command.Audio.Title)

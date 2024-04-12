@@ -1,17 +1,28 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Audio.GetBaseAudio;
 
+/// <summary>
+/// Handler, that handles a process of getting base audio by given id.
+/// </summary>
 public class GetBaseAudioHandler : IRequestHandler<GetBaseAudioQuery, Result<MemoryStream>>
 {
+    // Blob storage
     private readonly IBlobService _blobStorage;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor
     public GetBaseAudioHandler(IBlobService blobService, IRepositoryWrapper repositoryWrapper, ILoggerService logger)
     {
         _blobStorage = blobService;
@@ -19,6 +30,18 @@ public class GetBaseAudioHandler : IRequestHandler<GetBaseAudioQuery, Result<Mem
         _logger = logger;
     }
 
+    /// <summary>
+    /// Method, that gets a base audio by given id.
+    /// </summary>
+    /// <param name="request">
+    /// Base audio id to get.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token, for cancelling operation, if it needed.
+    /// </param>
+    /// <returns>
+    /// A MemoryStream, or error, if it was while getting process.
+    /// </returns>
     public async Task<Result<MemoryStream>> Handle(GetBaseAudioQuery request, CancellationToken cancellationToken)
     {
         var audio = await _repositoryWrapper.AudioRepository.GetFirstOrDefaultAsync(a => a.Id == request.Id);

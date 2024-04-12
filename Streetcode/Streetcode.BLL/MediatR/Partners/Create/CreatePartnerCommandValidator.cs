@@ -1,14 +1,27 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessaru namespaces.
 namespace Streetcode.BLL.MediatR.Partners.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreatePartnerCommand.
+    /// </summary>
     internal class CreatePartnerCommandValidator : AbstractValidator<CreatePartnerCommand>
     {
+        // Constructor
         public CreatePartnerCommandValidator()
         {
+            // Title max length
             int titleMaxLength = 100;
+
+            // Target URL max length
             int targetURLMaxLength = 200;
+
+            // URL title max length
             int urlTitleMaxLength = 255;
+
+            // Description max length
             int descriptionMaxLength = 450;
 
             RuleFor(command => command.NewPartner.Title)

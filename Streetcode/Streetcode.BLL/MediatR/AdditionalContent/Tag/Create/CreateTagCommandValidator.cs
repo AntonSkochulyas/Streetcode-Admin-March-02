@@ -1,11 +1,18 @@
-﻿using FluentValidation;
+﻿// Necessary usings
+using FluentValidation;
 
+// Necessary namespaces
 namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.Create
 {
+    /// <summary>
+    /// Validator, that validates a CreateTagCommand.
+    /// </summary>
     internal class CreateTagCommandValidator : AbstractValidator<CreateTagCommand>
     {
+        // Constructor.
         public CreateTagCommandValidator()
         {
+            // Max title length
             ushort maxTitleLength = 50;
 
             // Updated

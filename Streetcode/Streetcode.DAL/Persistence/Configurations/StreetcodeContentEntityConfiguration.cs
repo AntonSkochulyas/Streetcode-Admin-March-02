@@ -115,7 +115,26 @@ namespace Streetcode.DAL.Persistence.Configurations
 
             builder
                 .Property(s => s.TransliterationUrl)
-                .HasMaxLength(150);
+                .HasMaxLength(100);
+
+            builder
+                .Property(s => s.ShortDescription)
+                .HasMaxLength(33);
+
+            builder.HasOne(s => s.ImageBlackAndWhite)
+                .WithOne()
+                .HasForeignKey<StreetcodeContent>(s => s.ImageBlackAndWhiteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(s => s.ImageAnimated)
+                .WithOne()
+                .HasForeignKey<StreetcodeContent>(s => s.ImageAnimatedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(s => s.ImageForLink)
+                .WithOne()
+                .HasForeignKey<StreetcodeContent>(s => s.ImageForLinkId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

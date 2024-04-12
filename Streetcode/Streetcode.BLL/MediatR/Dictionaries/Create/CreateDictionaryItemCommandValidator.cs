@@ -1,13 +1,18 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Dictionaries.Create
 {
+    /// <summary>
+    /// Validatorm that validates a model inside CreateDictionaryItemCommand.
+    /// </summary>
     public sealed class CreateDictionaryItemCommandValidator : AbstractValidator<CreateDictionaryItemCommand>
     {
         public CreateDictionaryItemCommandValidator()
         {
             int maxNameLength = 50;
-            int maxDescriptionLength = 50;
+            int maxDescriptionLength = 500;
 
             RuleFor(command => command.NewDictionaryItem.Name)
                 .MaximumLength(maxNameLength)

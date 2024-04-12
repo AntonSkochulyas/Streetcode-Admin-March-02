@@ -1,9 +1,15 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Update
 {
+    /// <summary>
+    /// Validator, that validates a model inside UpdateInfoBlockCommand.
+    /// </summary>
     internal class UpdateInfoBlockCommandValidator : AbstractValidator<UpdateInfoBlockCommand>
     {
+        // Constructor
         public UpdateInfoBlockCommandValidator()
         {
             RuleFor(command => command.InfoBlock.VideoURL)
@@ -16,6 +22,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Update
                 });
         }
 
+        // Method, that checks is valid youtube url
         private static bool IsValidYouTubeURL(string url)
         {
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))

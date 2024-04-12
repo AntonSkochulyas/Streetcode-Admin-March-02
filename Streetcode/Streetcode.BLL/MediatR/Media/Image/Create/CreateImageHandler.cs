@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Media.Images;
@@ -6,15 +7,27 @@ using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Image.Create;
 
+/// <summary>
+/// Handler, that handles a process of creating a new image.
+/// </summary>
 public class CreateImageHandler : IRequestHandler<CreateImageCommand, Result<ImageDto>>
 {
+    // Mapper
     private readonly IMapper _mapper;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Blob service
     private readonly IBlobService _blobService;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor 
     public CreateImageHandler(
         IBlobService blobService,
         IRepositoryWrapper repositoryWrapper,
@@ -27,6 +40,18 @@ public class CreateImageHandler : IRequestHandler<CreateImageCommand, Result<Ima
         _logger = logger;
     }
 
+    /// <summary>
+    /// Method, that creates a new image.
+    /// </summary>
+    /// <param name="request">
+    /// Request with new image.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token, for cancelling operation, if it needed.
+    /// </param>
+    /// <returns>
+    /// A ImageDto, or error, if it was while creating process.
+    /// </returns>
     public async Task<Result<ImageDto>> Handle(CreateImageCommand request, CancellationToken cancellationToken)
     {
         string hashBlobStorageName = _blobService.SaveFileInStorage(
