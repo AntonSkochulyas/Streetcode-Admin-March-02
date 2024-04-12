@@ -15,7 +15,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
 
     /// <summary>
     /// CAN NOT TEST
-    /// BLL -> MediatR -> Media -> Audio -> GetBaseAudio
+    /// BLL -> MediatR -> Media -> Audio -> GetBaseAudio.
     /// </summary>
     public class GetBaseAudioHandlerTest
     {

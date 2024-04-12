@@ -3,7 +3,6 @@ using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Media.Audio;
-using Streetcode.BLL.Dto.Transactions;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.MediatR.ResultVariations;
 using Streetcode.BLL.Interfaces.Logging;

@@ -4,22 +4,17 @@ namespace Streetcode.BLL.MediatR.Partners.Update
 {
     internal class UpdatePartnerCommandValidator : AbstractValidator<UpdatePartnerQuery>
     {
-        private readonly int _titleMaxLength;
-        private readonly int _targetURLMaxLength;
-        private readonly int _urlTitleMaxLength;
-        private readonly int _descriptionMaxLength;
-
         public UpdatePartnerCommandValidator()
         {
-            _titleMaxLength = 100;
-            _targetURLMaxLength = 200;
-            _urlTitleMaxLength = 255;
-            _descriptionMaxLength = 450;
+            int titleMaxLength = 100;
+            int targetURLMaxLength = 200;
+            int urlTitleMaxLength = 255;
+            int descriptionMaxLength = 450;
 
             RuleFor(command => command.Partner.Title)
                 .NotEmpty()
                 .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorTitleIsRequiredError)
-                .MaximumLength(_titleMaxLength)
+                .MaximumLength(titleMaxLength)
                 .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorTitleMaxLengthError);
 
             RuleFor(command => command.Partner.LogoId)
@@ -35,16 +30,16 @@ namespace Streetcode.BLL.MediatR.Partners.Update
              .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorIsVisibleEverywhereIsRequiredError);
 
             RuleFor(command => command.Partner.TargetUrl)
-               .MaximumLength(_targetURLMaxLength)
+               .MaximumLength(targetURLMaxLength)
                .WithMessage(PartnersErrors.UpdatePartnerCommandValidatorTargetURLMaxLengthError);
 
             RuleFor(command => command.Partner.UrlTitle)
-               .MaximumLength(_urlTitleMaxLength)
-               .WithMessage(string.Format(PartnersErrors.UpdatePartnerCommandValidatorURLTitleMaxLengthError, _urlTitleMaxLength));
+               .MaximumLength(urlTitleMaxLength)
+               .WithMessage(string.Format(PartnersErrors.UpdatePartnerCommandValidatorURLTitleMaxLengthError, urlTitleMaxLength));
 
             RuleFor(command => command.Partner.Description)
-              .MaximumLength(_descriptionMaxLength)
-              .WithMessage(string.Format(PartnersErrors.UpdatePartnerCommandValidatorDescriptionMaxLengthError, _descriptionMaxLength));
+              .MaximumLength(descriptionMaxLength)
+              .WithMessage(string.Format(PartnersErrors.UpdatePartnerCommandValidatorDescriptionMaxLengthError, descriptionMaxLength));
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.Newss.Create;
-using Streetcode.DAL.Entities.News;
-using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create

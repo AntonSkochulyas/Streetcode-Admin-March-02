@@ -9,11 +9,11 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Create
             int maxNameLength = 50;
             int maxDescriptionLength = 50;
 
-            RuleFor(command => command.newDictionaryItem.Name)
+            RuleFor(command => command.NewDictionaryItem.Name)
                 .MaximumLength(maxNameLength)
                 .WithMessage("Name length of dictionary item must not be longer than 50 symbols.");
 
-            RuleFor(command => command.newDictionaryItem.Description)
+            RuleFor(command => command.NewDictionaryItem.Description)
                 .MaximumLength(maxDescriptionLength)
                 .WithMessage("Description length of dictionary item must not be longer than 500 symbols.");
         }

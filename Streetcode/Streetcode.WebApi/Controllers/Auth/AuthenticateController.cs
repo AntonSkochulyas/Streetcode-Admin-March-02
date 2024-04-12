@@ -1,9 +1,6 @@
-﻿using FluentResults;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Streetcode.BLL.Dto;
 using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
@@ -49,7 +46,7 @@ namespace Streetcode.WebApi.Controllers.Auth
 
                 var authenticationResponse = _jwtService.CreateToken(user, userRoles);
                 user.RefreshToken = authenticationResponse.RefreshToken;
-                user.RefreshTokenExpirationDate = authenticationResponse.RefreshTokenExpirationDate;
+                user.RefreshTokenExpirationDate = (DateTime)authenticationResponse.RefreshTokenExpirationDate;
 
                 await _userManager.UpdateAsync(user);
 
@@ -97,7 +94,7 @@ namespace Streetcode.WebApi.Controllers.Auth
             var userRoles = await _userManager.GetRolesAsync(user);
             var authenticationResponse = _jwtService.CreateToken(user, userRoles);
             user.RefreshToken = authenticationResponse.RefreshToken;
-            user.RefreshTokenExpirationDate = authenticationResponse.RefreshTokenExpirationDate;
+            user.RefreshTokenExpirationDate = (DateTime)authenticationResponse.RefreshTokenExpirationDate;
 
             await _userManager.UpdateAsync(user);
 
@@ -133,7 +130,7 @@ namespace Streetcode.WebApi.Controllers.Auth
             var userRoles = await _userManager.GetRolesAsync(user);
             AuthenticationResponse authenticationResponse = _jwtService.CreateToken(user, userRoles);
             user.RefreshToken = authenticationResponse.RefreshToken;
-            user.RefreshTokenExpirationDate = authenticationResponse.RefreshTokenExpirationDate;
+            user.RefreshTokenExpirationDate = (DateTime)authenticationResponse.RefreshTokenExpirationDate;
 
             await _userManager.UpdateAsync(user);
 

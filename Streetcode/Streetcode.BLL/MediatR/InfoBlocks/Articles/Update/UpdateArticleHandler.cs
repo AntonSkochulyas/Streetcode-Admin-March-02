@@ -24,7 +24,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Update
 
         public async Task<Result<ArticleDto>> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
         {
-            var article = _mapper.Map<Article>(request.article);
+            var article = _mapper.Map<Article>(request.Article);
 
             if (article is null)
             {

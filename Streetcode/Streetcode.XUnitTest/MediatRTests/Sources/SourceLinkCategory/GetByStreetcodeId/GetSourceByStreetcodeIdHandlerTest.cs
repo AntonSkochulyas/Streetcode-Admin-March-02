@@ -8,13 +8,11 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetByStreetcodeId
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Dto.Media.Images;
-    using Streetcode.BLL.Dto.Sources;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Sources;
     using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoriesByStreetcodeId;
     using Streetcode.DAL.Entities.Media.Images;
-    using Streetcode.DAL.Entities.Sources;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;

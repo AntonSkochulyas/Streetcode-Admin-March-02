@@ -4,5 +4,6 @@ using Streetcode.BLL.Dto.InfoBlocks.Articles;
 
 namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Update
 {
-    public record UpdateArticleCommand(ArticleDto article) : IRequest<Result<ArticleDto>>;
+    public record UpdateArticleCommand(ArticleDto Article)
+        : IRequest<Result<ArticleDto>>;
 }

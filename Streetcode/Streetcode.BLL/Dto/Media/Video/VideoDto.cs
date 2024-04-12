@@ -1,5 +1,3 @@
-using Streetcode.BLL.Dto.AdditionalContent;
-
 namespace Streetcode.BLL.Dto.Media.Video;
 
 public class VideoDto

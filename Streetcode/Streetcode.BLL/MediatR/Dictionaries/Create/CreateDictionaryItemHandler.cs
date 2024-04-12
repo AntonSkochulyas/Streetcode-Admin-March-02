@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Create
 
         public async Task<Result<DictionaryItemDto>> Handle(CreateDictionaryItemCommand request, CancellationToken cancellationToken)
         {
-            var newDictionaryItem = _mapper.Map<DictionaryItem>(request.newDictionaryItem);
+            var newDictionaryItem = _mapper.Map<DictionaryItem>(request.NewDictionaryItem);
 
             if (newDictionaryItem is null)
             {

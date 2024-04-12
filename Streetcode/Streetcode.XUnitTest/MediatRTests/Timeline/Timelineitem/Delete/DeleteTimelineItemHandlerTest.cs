@@ -1,12 +1,9 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.Timeline.Timelineitem.Delete
 {
     using System.Threading.Tasks;
-    using AutoMapper;
     using FluentAssertions;
     using Moq;
-    using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
-    using Streetcode.BLL.Mapping.Timeline;
     using Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
@@ -26,11 +23,6 @@
         public DeleteTimelineItemHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetTimelineRepositoryMock();
-
-            var mapperConfig = new MapperConfiguration(c =>
-            {
-                c.AddProfile<TimelineItemProfile>();
-            });
 
             _mockLogger = new Mock<ILoggerService>();
         }

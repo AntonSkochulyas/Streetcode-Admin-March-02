@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Moq;
-using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
 using Streetcode.XUnitTest.Mocks;
 using Xunit;
 

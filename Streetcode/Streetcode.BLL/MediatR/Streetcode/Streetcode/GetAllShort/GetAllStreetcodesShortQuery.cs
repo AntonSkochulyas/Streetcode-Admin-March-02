@@ -4,5 +4,10 @@ using Streetcode.BLL.Dto.Streetcode;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllShort
 {
-    public record GetAllStreetcodesShortQuery : IRequest<Result<IEnumerable<StreetcodeShortDto>>>;
+    public record GetAllStreetcodesShortQuery : IRequest<Result<IEnumerable<StreetcodeShortDto>>>
+    {
+        public GetAllStreetcodesShortQuery()
+        {
+        }
+    }
 }

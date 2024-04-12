@@ -1,20 +1,13 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Streetcode.BLL.Dto.Media.Art;
 using Streetcode.BLL.Dto.Media.Audio;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Media;
-using Streetcode.BLL.MediatR.Media.Art.GetAll;
 using Streetcode.BLL.MediatR.Media.Audio.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.Mocks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
@@ -47,39 +40,39 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
         [Fact]
         public async Task Get_All_Not_Null_Or_Empty_Test()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllAudiosHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert        
             result.Value.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
         public async Task Get_All_Count_Should_Be_Four()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllAudiosHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert        
             result.Value.Count().Should().Be(4);
         }
 
         [Fact]
         public async Task Get_All_Should_Be_Type_List_AudioDTO()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllAudiosHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert        
             result.Value.Should().BeOfType<List<AudioDto>>();
         }
     }

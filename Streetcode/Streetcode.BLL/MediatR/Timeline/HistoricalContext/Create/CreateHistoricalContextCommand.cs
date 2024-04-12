@@ -4,5 +4,6 @@ using Streetcode.BLL.Dto.Timeline;
 
 namespace Streetcode.BLL.MediatR.Timeline.HistoricalContext.Create
 {
-    public record CreateHistoricalContextCommand(HistoricalContextDto NewHistoricalContext) : IRequest<Result<HistoricalContextDto>>;
+    public record CreateHistoricalContextCommand(HistoricalContextDto NewHistoricalContext)
+        : IRequest<Result<HistoricalContextDto>>;
 }

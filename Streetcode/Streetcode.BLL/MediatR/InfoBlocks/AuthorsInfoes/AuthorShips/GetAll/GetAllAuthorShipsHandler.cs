@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.InfoBlocks.Articles.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.GetAll

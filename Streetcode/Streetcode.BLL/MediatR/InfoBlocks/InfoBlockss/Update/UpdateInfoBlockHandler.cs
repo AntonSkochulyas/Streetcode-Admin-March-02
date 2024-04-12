@@ -24,7 +24,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Update
 
         public async Task<Result<InfoBlockDto>> Handle(UpdateInfoBlockCommand request, CancellationToken cancellationToken)
         {
-            var infoBlock = _mapper.Map<InfoBlock>(request.infoBlock);
+            var infoBlock = _mapper.Map<InfoBlock>(request.InfoBlock);
 
             if (infoBlock is null)
             {

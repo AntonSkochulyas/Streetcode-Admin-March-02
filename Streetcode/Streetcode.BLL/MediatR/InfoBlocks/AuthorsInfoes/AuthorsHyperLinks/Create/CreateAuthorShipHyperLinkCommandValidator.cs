@@ -8,7 +8,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Crea
         {
             int maxTitleLength = 150;
 
-            RuleFor(command => command.newAuthorHyperLink.Title)
+            RuleFor(command => command.NewAuthorHyperLink.Title)
                 .MaximumLength(maxTitleLength)
                 .WithMessage("Title length of author hyper link must not be longer than 150 symbols.");
         }

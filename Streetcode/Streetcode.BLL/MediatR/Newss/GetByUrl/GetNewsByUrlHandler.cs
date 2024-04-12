@@ -3,7 +3,6 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Interfaces.BlobStorage;
-using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Interfaces.Logging;
@@ -26,14 +25,14 @@ namespace Streetcode.BLL.MediatR.Newss.GetByUrl
 
         public async Task<Result<NewsDto>> Handle(GetNewsByUrlQuery request, CancellationToken cancellationToken)
         {
-            string url = request.url;
+            string url = request.Url;
             var newsDTO = _mapper.Map<NewsDto>(await _repositoryWrapper.NewsRepository.GetFirstOrDefaultAsync(
                 predicate: sc => sc.URL == url,
                 include: scl => scl
                     .Include(sc => sc.Image)));
             if (newsDTO is null)
             {
-                string errorMsg = string.Format(NewsErrors.GetNewsByUrlHandlerCanNotFindANewWithGivenURLError, request.url);
+                string errorMsg = string.Format(NewsErrors.GetNewsByUrlHandlerCanNotFindANewWithGivenURLError, request.Url);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }

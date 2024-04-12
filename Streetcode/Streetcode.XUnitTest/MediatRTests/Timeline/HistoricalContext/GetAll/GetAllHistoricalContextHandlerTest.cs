@@ -1,10 +1,8 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Moq;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Timeline;
-using Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.Mocks;
 using Xunit;
@@ -13,13 +11,13 @@ using Streetcode.BLL.MediatR.Timeline.HistoricalContext.GetAll;
 
 namespace Streetcode.XUnitTest.MediatRTests.Timeline.HistoricalContext.GetAll
 {
-    public class GetAllHandlerTest
+    public class GetAllHistoricalContextHandlerTest
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
 
-        public GetAllHandlerTest()
+        public GetAllHistoricalContextHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetHistoricalContextRepositoryMock();
 
@@ -36,39 +34,39 @@ namespace Streetcode.XUnitTest.MediatRTests.Timeline.HistoricalContext.GetAll
         [Fact]
         public async Task Get_All_Not_Null_Or_Empty_Test()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllHistoricalContextHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllHistoricalContextQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert
             result.Value.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
         public async Task Get_All_Count_Should_Be_Two()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllHistoricalContextHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllHistoricalContextQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert
             result.Value.Count().Should().Be(3);
         }
 
         [Fact]
         public async Task Get_All_Should_Be_Type_List_TimelineItemDTO()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllHistoricalContextHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllHistoricalContextQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert
             result.Value.Should().BeOfType<List<HistoricalContextDto>>();
         }
     }

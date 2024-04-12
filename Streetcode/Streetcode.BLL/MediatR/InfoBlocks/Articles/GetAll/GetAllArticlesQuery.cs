@@ -4,5 +4,10 @@ using Streetcode.BLL.Dto.InfoBlocks.Articles;
 
 namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.GetAll
 {
-    public record GetAllArticlesQuery : IRequest<Result<IEnumerable<ArticleDto>>>;
+    public record GetAllArticlesQuery : IRequest<Result<IEnumerable<ArticleDto>>>
+    {
+        public GetAllArticlesQuery()
+        {
+        }
+    }
 }

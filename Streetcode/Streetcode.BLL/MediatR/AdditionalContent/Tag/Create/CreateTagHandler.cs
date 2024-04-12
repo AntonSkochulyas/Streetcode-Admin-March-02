@@ -24,7 +24,7 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.Create
         {
             var newTag = await _repositoryWrapper.TagRepository.CreateAsync(new DAL.Entities.AdditionalContent.Tag()
             {
-                Title = request.tag.Title
+                Title = request.Tag.Title
             });
 
             try

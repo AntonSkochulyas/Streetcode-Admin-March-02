@@ -4,5 +4,10 @@ using Streetcode.BLL.Dto.Analytics;
 
 namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.GetAll
 {
-    public record GetAllStatisticRecordsQuery : IRequest<Result<IEnumerable<StatisticRecordDto>>>;
+    public record GetAllStatisticRecordsQuery : IRequest<Result<IEnumerable<StatisticRecordDto>>>
+    {
+        public GetAllStatisticRecordsQuery()
+        {
+        }
+    }
 }

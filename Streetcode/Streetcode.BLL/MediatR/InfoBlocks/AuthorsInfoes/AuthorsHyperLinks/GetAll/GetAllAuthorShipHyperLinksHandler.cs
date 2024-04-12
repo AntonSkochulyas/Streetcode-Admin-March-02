@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;

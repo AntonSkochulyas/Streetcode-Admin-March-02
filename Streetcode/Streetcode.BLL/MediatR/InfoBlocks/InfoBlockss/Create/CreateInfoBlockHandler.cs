@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
 
         public async Task<Result<InfoBlockDto>> Handle(CreateInfoBlockCommand request, CancellationToken cancellationToken)
         {
-            var newInfoBlock = _mapper.Map<InfoBlock>(request.newInfoBlock);
+            var newInfoBlock = _mapper.Map<InfoBlock>(request.NewInfoBlock);
 
             if (newInfoBlock is null)
             {

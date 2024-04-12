@@ -24,7 +24,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Update
 
         public async Task<Result<AuthorShipDto>> Handle(UpdateAuthorShipCommand request, CancellationToken cancellationToken)
         {
-            var authorShip = _mapper.Map<AuthorShip>(request.authorShip);
+            var authorShip = _mapper.Map<AuthorShip>(request.AuthorShip);
 
             if (authorShip is null)
             {

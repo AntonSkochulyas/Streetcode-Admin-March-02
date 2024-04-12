@@ -3,7 +3,6 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Interfaces.BlobStorage;
-using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Interfaces.Logging;
@@ -26,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
 
         public async Task<Result<NewsDtoWithURLs>> Handle(GetNewsAndLinksByUrlQuery request, CancellationToken cancellationToken)
         {
-            string url = request.url;
+            string url = request.Url;
             var newsDTO = _mapper.Map<NewsDto>(await _repositoryWrapper.NewsRepository.GetFirstOrDefaultAsync(
                 predicate: sc => sc.URL == url,
                 include: scl => scl
@@ -34,7 +33,7 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
 
             if (newsDTO is null)
             {
-                string errorMsg = string.Format(NewsErrors.GetNewsAndLinksByUrlHandlerCanNotFindANewsWithGivenURLError, request.url);
+                string errorMsg = string.Format(NewsErrors.GetNewsAndLinksByUrlHandlerCanNotFindANewsWithGivenURLError, request.Url);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -46,8 +45,8 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
 
             var news = (await _repositoryWrapper.NewsRepository.GetAllAsync()).ToList();
             var newsIndex = news.FindIndex(x => x.Id == newsDTO.Id);
-            string prevNewsLink = null;
-            string nextNewsLink = null;
+            string? prevNewsLink = null;
+            string? nextNewsLink = null;
 
             if (newsIndex != 0)
             {

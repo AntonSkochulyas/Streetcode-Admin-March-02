@@ -1,6 +1,4 @@
-﻿using System;
-using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using Streetcode.BLL.Dto.Email;
 using Streetcode.BLL.Interfaces.Email;
@@ -11,7 +9,6 @@ using Xunit;
 
 public class SendEmailHandlerTest
 {
-    private readonly IMapper _mapper;
     private readonly Mock<IEmailService> _mockRepository;
     private readonly Mock<ILoggerService> _mockLogger;
 

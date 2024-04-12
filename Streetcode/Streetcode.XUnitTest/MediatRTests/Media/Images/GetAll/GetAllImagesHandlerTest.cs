@@ -7,13 +7,10 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
     using AutoMapper;
     using FluentAssertions;
     using Moq;
-    using Streetcode.BLL.Dto.Media.Audio;
     using Streetcode.BLL.Dto.Media.Images;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
-    using Streetcode.BLL.MediatR.Media.Audio.GetAll;
     using Streetcode.BLL.MediatR.Media.Image.GetAll;
-    using Streetcode.DAL.Entities.Media.Images;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;

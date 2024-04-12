@@ -2,8 +2,6 @@ using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.AdditionalContent;
-using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
-using Streetcode.BLL.Dto.AdditionalContent.Tag;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 

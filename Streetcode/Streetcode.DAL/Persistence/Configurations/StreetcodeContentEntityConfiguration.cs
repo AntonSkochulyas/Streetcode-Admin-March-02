@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.Partners;
 using Streetcode.DAL.Entities.Sources;

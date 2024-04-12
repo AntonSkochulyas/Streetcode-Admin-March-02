@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Create
 
         public async Task<Result<AuthorShipDto>> Handle(CreateAuthorShipCommand request, CancellationToken cancellationToken)
         {
-            var newAuthorShip = _mapper.Map<AuthorShip>(request.newAuthorShip);
+            var newAuthorShip = _mapper.Map<AuthorShip>(request.NewAuthorShip);
 
             if (newAuthorShip is null)
             {

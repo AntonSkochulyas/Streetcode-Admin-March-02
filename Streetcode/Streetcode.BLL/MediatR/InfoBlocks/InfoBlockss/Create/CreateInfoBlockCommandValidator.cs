@@ -6,7 +6,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
     {
         public CreateInfoBlockCommandValidator()
         {
-            RuleFor(command => command.newInfoBlock.VideoURL)
+            RuleFor(command => command.NewInfoBlock.VideoURL)
                 .Custom((videoUrl, context) =>
                 {
                     if (string.IsNullOrWhiteSpace(videoUrl) || !IsValidYouTubeURL(videoUrl))

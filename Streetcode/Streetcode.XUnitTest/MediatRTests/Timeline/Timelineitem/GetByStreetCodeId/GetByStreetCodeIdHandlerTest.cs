@@ -1,18 +1,12 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Moq;
-using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Timeline;
-using Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.Mocks;
 using Xunit;
 using FluentAssertions;
-using Streetcode.BLL.MediatR.Media.Audio.GetByStreetcodeId;
-using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.MediatR.Timeline.TimelineItem.GetByStreetcodeId;
-using Streetcode.BLL.Dto.Timeline;
 
 namespace Streetcode.XUnitTest.MediatRTests.Timeline.Timelineitem.GetByStreetCodeId
 {

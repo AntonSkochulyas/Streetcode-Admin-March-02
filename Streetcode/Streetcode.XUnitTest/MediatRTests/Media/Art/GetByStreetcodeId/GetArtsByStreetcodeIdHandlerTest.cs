@@ -9,5 +9,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Art.GetByStreetcodeId
     /// </summary>
     public class GetArtsByStreetcodeIdHandlerTest
     {
+        public GetArtsByStreetcodeIdHandlerTest()
+        {
+        }
     }
 }

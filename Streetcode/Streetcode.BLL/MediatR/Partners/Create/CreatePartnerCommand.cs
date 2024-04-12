@@ -4,5 +4,6 @@ using Streetcode.BLL.Dto.Partners;
 
 namespace Streetcode.BLL.MediatR.Partners.Create
 {
-  public record CreatePartnerCommand(CreatePartnerDto newPartner) : IRequest<Result<PartnerDto>>;
+  public record CreatePartnerCommand(CreatePartnerDto NewPartner)
+        : IRequest<Result<PartnerDto>>;
 }

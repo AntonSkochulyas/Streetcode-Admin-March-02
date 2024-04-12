@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -24,16 +23,16 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryCo
         public async Task<Result<StreetcodeCategoryContentDto>> Handle(GetCategoryContentByStreetcodeIdQuery request, CancellationToken cancellationToken)
         {
             if (await _repositoryWrapper.StreetcodeRepository
-                .GetFirstOrDefaultAsync(s => s.Id == request.streetcodeId) == null)
+                .GetFirstOrDefaultAsync(s => s.Id == request.StreetcodeId) == null)
             {
-                string errorMsg = string.Format(SourceErrors.GetSourceLinkCategoryByIdHandlerCanNotFindAWithGivenStreetcodeIdError, request.streetcodeId);
+                string errorMsg = string.Format(SourceErrors.GetSourceLinkCategoryByIdHandlerCanNotFindAWithGivenStreetcodeIdError, request.StreetcodeId);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
             var streetcodeContent = await _repositoryWrapper.StreetcodeCategoryContentRepository
                 .GetFirstOrDefaultAsync(
-                    sc => sc.StreetcodeId == request.streetcodeId && sc.SourceLinkCategoryId == request.categoryId);
+                    sc => sc.StreetcodeId == request.StreetcodeId && sc.SourceLinkCategoryId == request.CategoryId);
 
             if (streetcodeContent == null)
             {

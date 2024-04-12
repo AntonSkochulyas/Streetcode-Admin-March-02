@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Crea
 
         public async Task<Result<AuthorShipHyperLinkDto>> Handle(CreateAuthorShipHyperLinkCommand request, CancellationToken cancellationToken)
         {
-            var newAuthorHyperLink = _mapper.Map<AuthorShipHyperLink>(request.newAuthorHyperLink);
+            var newAuthorHyperLink = _mapper.Map<AuthorShipHyperLink>(request.NewAuthorHyperLink);
 
             if (newAuthorHyperLink is null)
             {

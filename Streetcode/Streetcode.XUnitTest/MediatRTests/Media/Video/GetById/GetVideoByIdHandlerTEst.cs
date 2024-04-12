@@ -10,7 +10,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Video.GetById
     using Moq;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Media;
-    using Streetcode.BLL.MediatR.Media.Audio.GetById;
     using Streetcode.BLL.MediatR.Media.Video.GetById;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;

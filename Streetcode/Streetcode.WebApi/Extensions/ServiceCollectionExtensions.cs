@@ -125,9 +125,9 @@ public static class ServiceCollectionExtensions
 
     public class CorsConfiguration
     {
-        public List<string> AllowedOrigins { get; set; }
-        public List<string> AllowedHeaders { get; set; }
-        public List<string> AllowedMethods { get; set; }
+        public List<string>? AllowedOrigins { get; set; }
+        public List<string>? AllowedHeaders { get; set; }
+        public List<string>? AllowedMethods { get; set; }
         public int PreflightMaxAge { get; set; }
     }
 }
