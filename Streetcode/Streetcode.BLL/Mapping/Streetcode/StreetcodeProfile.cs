@@ -10,10 +10,16 @@ public class StreetcodeProfile : Profile
 {
     public StreetcodeProfile()
     {
+        CreateMap<StreetcodeContent, BaseStreetcodeDto>()
+            .ForMember(x => x.StreetcodeType, conf => conf.MapFrom(s => GetStreetcodeType(s)))
+            .ReverseMap();
+
         CreateMap<StreetcodeContent, StreetcodeDto>()
             .ForMember(x => x.StreetcodeType, conf => conf.MapFrom(s => GetStreetcodeType(s)))
             .ReverseMap();
+
         CreateMap<StreetcodeContent, StreetcodeShortDto>().ReverseMap();
+
         CreateMap<StreetcodeContent, StreetcodeMainPageDto>()
              .ForPath(dto => dto.Text, conf => conf
                 .MapFrom(e => e.Text.Title))

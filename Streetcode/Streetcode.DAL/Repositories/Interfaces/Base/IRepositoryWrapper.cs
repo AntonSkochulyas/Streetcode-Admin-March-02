@@ -27,6 +27,7 @@ public interface IRepositoryWrapper
     IVideoRepository VideoRepository { get; }
     IImageRepository ImageRepository { get; }
     IImageDetailsRepository ImageDetailsRepository { get; }
+    IImageMainRepository ImageMainRepository { get; }
     IAudioRepository AudioRepository { get; }
     IStreetcodeCoordinateRepository StreetcodeCoordinateRepository { get; }
     IPartnersRepository PartnersRepository { get; }

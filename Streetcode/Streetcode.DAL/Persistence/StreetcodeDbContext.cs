@@ -38,6 +38,7 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser, Applicatio
     public DbSet<Fact> Facts { get; set; }
     public DbSet<HistoricalContext> HistoricalContexts { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<ImageMain> ImagesMain { get; set; }
     public DbSet<ImageDetails> ImageDetailses { get; set; }
     public DbSet<Partner> Partners { get; set; }
     public DbSet<PartnerSourceLink> PartnerSourceLinks { get; set; }
