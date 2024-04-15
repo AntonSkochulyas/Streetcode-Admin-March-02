@@ -19,76 +19,50 @@ namespace Streetcode.BLL.Services.Authentification
             _configuration = configuration;
         }
 
-        public AuthenticationResponse CreateToken(ApplicationUser user, IList<string> userRoles)
+        public JwtSecurityToken CreateToken(List<Claim> authClaims)
         {
-            var authSignKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] !));
+            var authSignKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+            _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int tokenValidityInMinutes);
 
-            List<Claim> authClaims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
-
-            var expirationDate = DateTime.Now.AddMinutes(Convert.ToInt32(_configuration["JWT:ExpirationMinutes"]));
-
-            var tokenGenerator = new JwtSecurityToken(
+            var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: expirationDate,
+                expires: DateTime.Now.AddMinutes(tokenValidityInMinutes),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSignKey, SecurityAlgorithms.HmacSha256));
 
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            string token = tokenHandler.WriteToken(tokenGenerator);
-
-            var refreshTokenExpirationDate = DateTime.Now.AddDays(Convert.ToInt32(_configuration["RefreshToken:ExpirationDays"]));
-
-            return new AuthenticationResponse()
-            {
-                Token = token,
-                Expiration = expirationDate,
-                RefreshToken = GenerateRefreshToken(),
-                RefreshTokenExpirationDate = refreshTokenExpirationDate
-            };
+            return token;
         }
 
-        public ClaimsPrincipal? GetPrincipalFromJwtToken(string? token)
+        public string GenerateRefreshToken()
         {
-            var tokenvalidationParameters = new TokenValidationParameters()
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters()
             {
-                ValidateAudience = true,
-                ValidateIssuer = true,
-                ValidAudience = _configuration["JWT:ValidAudience"],
-                ValidIssuer = _configuration["JWT:ValidIssuer"],
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] !)),
-                ValidateLifetime = false // should be false
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = false,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])),
+                ValidateLifetime = false,
             };
 
-            JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-            ClaimsPrincipal principal = jwtSecurityTokenHandler.ValidateToken(token, tokenvalidationParameters, out SecurityToken securityToken);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
 
-            if (securityToken is not JwtSecurityToken jwtSecurityToken ||
-                jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
             }
 
             return principal;
-        }
-
-        private string GenerateRefreshToken()
-        {
-            byte[] bytes = new byte[64];
-            var randomNumberGenerator = RandomNumberGenerator.Create();
-            randomNumberGenerator.GetBytes(bytes);
-
-            return Convert.ToBase64String(bytes);
         }
     }
 }
