@@ -17,10 +17,12 @@ using Streetcode.DAL.Repositories.Interfaces.Team;
 using Streetcode.DAL.Repositories.Interfaces.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Transactions;
+using Streetcode.DAL.Repositories.Interfaces.Users;
 namespace Streetcode.DAL.Repositories.Interfaces.Base;
 
 public interface IRepositoryWrapper
 {
+    IApplicationUserRepository ApplicationUserRepository { get; }
     IFactRepository FactRepository { get; }
     IArtRepository ArtRepository { get; }
     IStreetcodeArtRepository StreetcodeArtRepository { get; }
@@ -61,6 +63,8 @@ public interface IRepositoryWrapper
     IArticleRepository ArticleRepository { get; }
     IAuthorShipRepository AuthorShipRepository { get; }
     IAuthorHyperLinkRepository AuthorShipHyperLinkRepository { get; }
+
+    IUserAdditionalInfoRepository UserAdditionalInfoRepository { get; }
 
     public int SaveChanges();
 

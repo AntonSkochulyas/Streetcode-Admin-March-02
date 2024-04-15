@@ -20,7 +20,7 @@ using Streetcode.DAL.Persistence.Configurations;
 
 namespace Streetcode.DAL.Persistence;
 
-public class StreetcodeDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
 {
     public StreetcodeDbContext()
     {
@@ -31,6 +31,7 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser, Applicatio
     {
     }
 
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Art>? Arts { get; set; }
     public DbSet<Audio>? Audios { get; set; }
     public DbSet<ToponymCoordinate>? ToponymCoordinates { get; set; }
