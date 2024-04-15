@@ -138,6 +138,15 @@
   <data name="CreateStreetcodeCategoryContentCommandTextLengthMaxLengthError" xml:space="preserve">
     <value>Text length should not be longer than {0} symbols.</value>
   </data>
+  <data name="CreateStreetcodeCategoryContentCommandValidatorSourceLinkIdIsRequiredError" xml:space="preserve">
+    <value>SourceLinkId is required.</value>
+  </data>
+  <data name="CreateStreetcodeCategoryContentCommandValidatorStreetcodeIdIsRequiredError" xml:space="preserve">
+    <value>StreetcoeId is required.</value>
+  </data>
+  <data name="CreateStreetcodeCategoryContentHandlerCanNotConvertFromNullError" xml:space="preserve">
+    <value>Cannot convert from null</value>
+  </data>
   <data name="CreateStreetcodeCategoryContentHandlerFailedToCreateError" xml:space="preserve">
     <value>Failed to create a StreetcodeCategoryContent</value>
   </data>
@@ -198,8 +207,17 @@
   <data name="UpdateSourceLinkCategoryHandlerFailedToUpdateError" xml:space="preserve">
     <value>Failed to update SourceLinkCategory</value>
   </data>
+  <data name="UpdateSourceLinkHandlerCanNotFindImageWithGivenIdError" xml:space="preserve">
+    <value>Cant find any image with the ImageId - {0}</value>
+  </data>
   <data name="UpdateStreetcodeCategoryContentCommandTextLengthMaxLengthError" xml:space="preserve">
     <value>Text length should not be longer than {0} symbols.</value>
+  </data>
+  <data name="UpdateStreetcodeCategoryContentCommandValidatorSourceLinkIdIsRequiredError" xml:space="preserve">
+    <value>SourceLinkId is required.</value>
+  </data>
+  <data name="UpdateStreetcodeCategoryContentCommandValidatorStreetcodeIdIsRequired" xml:space="preserve">
+    <value>StreetcoeId is required.</value>
   </data>
   <data name="UpdateStreetcodeCategoryContentCommandValidatorTextMaxLengthError" xml:space="preserve">
     <value>Text length should not be longer than {0} symbols.</value>

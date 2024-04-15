@@ -41,7 +41,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Update
         {
             // Arrange
             var handler = new UpdateSourceLinkCategoryHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            UpdateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = null;
+            SourceLinkCategoryDto? sourceLinkCategoryContentDto = null;
             var request = new UpdateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 
             // Act
@@ -56,11 +56,11 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Update
         {
             // Arrange
             var handler = new UpdateSourceLinkCategoryHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            var sourceLinkCategoryContentDto = new UpdateSourceLinkCategoryContentDto()
+            var sourceLinkCategoryContentDto = new SourceLinkCategoryDto()
             {
-                SourceLinkId = 1,
-                StreetcodeId = 1,
-                Text = "Test",
+                ImageId = 1,
+                Id = 1,
+                Title = "Test",
             };
             var request = new UpdateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 
@@ -76,11 +76,11 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Update
         {
             // Arrange
             var handler = new UpdateSourceLinkCategoryHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            var sourceLinkCategoryContentDto = new UpdateSourceLinkCategoryContentDto()
+            var sourceLinkCategoryContentDto = new SourceLinkCategoryDto()
             {
-                SourceLinkId = 1,
-                StreetcodeId = 1,
-                Text = "Test",
+                ImageId = 1,
+                Id = 1,
+                Title = "Test",
             };
             var request = new UpdateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 

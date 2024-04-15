@@ -25,6 +25,26 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
 
         public async Task<Result<SourceLinkCategoryDto>> Handle(CreateSourceLinkCategoryCommand request, CancellationToken cancellationToken)
         {
+            if (request.SourceLinkCategoryContentDto.Title is null)
+            {
+                string errorMsg = SourceErrors.UpdateSourceLinkCategoryCommandValidatorTitleIsRequiredError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
+
+            var image = await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(
+                x => x.ImageDetails!.ImageId == request.SourceLinkCategoryContentDto.ImageId);
+
+            if (image is null)
+            {
+                string errorMsg = string.Format(
+                    SourceErrors.UpdateSourceLinkHandlerCanNotFindImageWithGivenIdError,
+                    request.SourceLinkCategoryContentDto.ImageId);
+
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
+            }
+
             var newSourceLinkCategory = _mapper.Map<DAL.Entities.Sources.SourceLinkCategory>(request.SourceLinkCategoryContentDto);
             if (newSourceLinkCategory is null)
             {
@@ -32,28 +52,6 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
-
-            var streetcode = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(
-                x => x.Id == request.SourceLinkCategoryContentDto.StreetcodeId);
-
-            if (streetcode is null)
-            {
-                string errorMsg = string.Format(
-                    SourceErrors.UpdateSourceLinkCategoryCommandValidatorStreetcodeIdeIsRequiredError,
-                    request.SourceLinkCategoryContentDto.StreetcodeId);
-
-                _logger.LogError(request, errorMsg);
-                return Result.Fail(errorMsg);
-            }
-
-            var streetcodeCategoryContent = new DAL.Entities.Sources.StreetcodeCategoryContent()
-            {
-                StreetcodeId = request.SourceLinkCategoryContentDto.StreetcodeId,
-                SourceLinkCategoryId = newSourceLinkCategory.Id,
-                Text = request.SourceLinkCategoryContentDto.Text
-            };
-
-            newSourceLinkCategory.StreetcodeCategoryContents.Add(streetcodeCategoryContent);
 
             var entity = _repositoryWrapper.SourceCategoryRepository.Create(newSourceLinkCategory);
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
