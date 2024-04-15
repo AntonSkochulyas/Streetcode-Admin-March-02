@@ -8,7 +8,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Dto.Toponyms;
-    using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Toponyms;
     using Streetcode.BLL.MediatR.Toponyms.GetAll;
     using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -22,7 +21,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
-        private readonly Mock<ILoggerService> _mockLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAllToponymsHandlerTest"/> class.
@@ -37,8 +35,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
             });
 
             _mapper = mapperConfig.CreateMapper();
-
-            _mockLogger = new Mock<ILoggerService>();
         }
 
         /// <summary>
@@ -49,7 +45,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
         public async Task GetAllNotNullOrEmptyTest()
         {
             // Arrange
-            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
 
             // Act
             var result = await handler.Handle(new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Title = "First streetname" }), CancellationToken.None);
@@ -66,7 +62,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
         public async Task GetAllShouldBeTypeListToponymDTO()
         {
             // Arrange
-            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
 
             // Act
             var result = await handler.Handle(new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Title = "First streetname" }), CancellationToken.None);

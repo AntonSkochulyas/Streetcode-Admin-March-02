@@ -20,6 +20,9 @@ using Streetcode.BLL.Services.Instagram;
 using Streetcode.BLL.Interfaces.Text;
 using Streetcode.BLL.Services.Text;
 using Serilog.Events;
+using System.Reflection;
+using Streetcode.BLL.Interfaces.Authentification;
+using Streetcode.BLL.Services.Authentification;
 
 namespace Streetcode.WebApi.Extensions;
 
@@ -44,6 +47,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IInstagramService, InstagramService>();
         services.AddScoped<ITextService, AddTermsToTextService>();
+        services.AddTransient<IJwtService, JwtService>();
     }
 
     public static void AddApplicationServices(this IServiceCollection services, ConfigurationManager configuration)
@@ -110,16 +114,43 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(opt =>
         {
-            opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApi", Version = "v1" });
+            opt.SwaggerDoc("v1", new OpenApiInfo { Title = "StreetcodeApi", Version = "v1" });
             opt.CustomSchemaIds(x => x.FullName);
+
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            opt.IncludeXmlComments(xmlPath);
+
+            opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Please insert JWT with Bearer into field",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
+
+            opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                     new OpenApiSecurityScheme
+                     {
+                           Reference = new OpenApiReference
+                           {
+                             Type = ReferenceType.SecurityScheme,
+                             Id = "Bearer"
+                           }
+                     },
+                     new string[] { }
+                }
+            });
         });
     }
 
     public class CorsConfiguration
     {
-        public List<string> AllowedOrigins { get; set; }
-        public List<string> AllowedHeaders { get; set; }
-        public List<string> AllowedMethods { get; set; }
+        public List<string>? AllowedOrigins { get; set; }
+        public List<string>? AllowedHeaders { get; set; }
+        public List<string>? AllowedMethods { get; set; }
         public int PreflightMaxAge { get; set; }
     }
 }

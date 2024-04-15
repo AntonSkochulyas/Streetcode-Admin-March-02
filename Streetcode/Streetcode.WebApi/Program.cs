@@ -2,17 +2,19 @@ using System.Reflection;
 using FluentValidation;
 using Hangfire;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.ValidationBehaviors;
-using Streetcode.WebApi.ExceptionHandlers;
 using Streetcode.WebApi.Extensions;
 using Streetcode.WebApi.Utils;
+using Microsoft.AspNetCore.Identity;
+using Streetcode.DAL.Persistence;
+using Streetcode.DAL.Entities.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureApplication();
@@ -28,6 +30,12 @@ builder.Services.ConfigureSerilog(builder);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Streetcode.BLL"));
 builder.Services.AddGlobalExceptionHandlerMiddlewareToServices();
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<StreetcodeDbContext>()
+    .AddDefaultTokenProviders()
+    .AddUserStore<UserStore<ApplicationUser, ApplicationRole, StreetcodeDbContext, string>>()
+    .AddRoleStore<RoleStore<ApplicationRole, StreetcodeDbContext, string>>();
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
@@ -46,9 +54,21 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = builder.Configuration["JWT:ValidAudience"],
         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
 });
+
+builder.Services.AddControllers();
+
+// To-DO: uncomment to require authorization for all controllers except marked with [AllowAnonymous]
+
+/*builder.Services.AddControllers(options =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});*/
 
 var app = builder.Build();
 

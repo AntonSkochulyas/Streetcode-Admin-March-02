@@ -1,6 +1,4 @@
-﻿using Streetcode.DAL.Entities.Team;
-
-namespace Streetcode.BLL.Dto.Team
+﻿namespace Streetcode.BLL.Dto.Team
 {
     public class PositionDto
     {

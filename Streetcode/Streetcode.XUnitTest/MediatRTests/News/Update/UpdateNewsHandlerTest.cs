@@ -1,14 +1,10 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.News.Update
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;
     using Moq;
-    using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
     using Streetcode.BLL.Dto.News;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;

@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Moq;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
@@ -12,13 +11,13 @@ using FluentAssertions;
 
 namespace Streetcode.XUnitTest.MediatRTests.Timeline.Timelineitem.GetAll
 {
-    public class GetAllHandlerTest
+    public class GetAllTimelineItemsHandlerTest
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
 
-        public GetAllHandlerTest()
+        public GetAllTimelineItemsHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetTimelineRepositoryMock();
 
@@ -36,40 +35,39 @@ namespace Streetcode.XUnitTest.MediatRTests.Timeline.Timelineitem.GetAll
         [Fact]
         public async Task Get_All_Not_Null_Or_Empty_Test()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllTimelineItemsHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            var request = new GetAllTimelineItemsQuery();
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllTimelineItemsQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert
             result.Value.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
         public async Task Get_All_Count_Should_Be_Two()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllTimelineItemsHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllTimelineItemsQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert
             result.Value.Count().Should().Be(3);
         }
 
         [Fact]
         public async Task Get_All_Should_Be_Type_List_TimelineItemDTO()
         {
-            //Arrange
+            // Arrange
             var handler = new GetAllTimelineItemsHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-            //Act
+            // Act
             var result = await handler.Handle(new GetAllTimelineItemsQuery(), CancellationToken.None);
 
-            //Assert        
+            // Assert
             result.Value.Should().BeOfType<List<TimelineItemDto>>();
         }
     }

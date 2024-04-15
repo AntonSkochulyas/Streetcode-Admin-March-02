@@ -3,6 +3,8 @@
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Streetcode.DAL.Entities.AdditionalContent;
+using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
+using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 
@@ -49,6 +51,25 @@ internal partial class RepositoryMocker
         {
             return subtitles.FirstOrDefault(predicate.Compile());
         });
+
+        mockRepo.Setup(x => x.SubtitleRepository.Create(It.IsAny<Subtitle>()))
+            .Returns((Subtitle subtitle) =>
+            {
+                subtitles.Add(subtitle);
+                return subtitle;
+            });
+
+        mockRepo.Setup(x => x.SubtitleRepository.Delete(It.IsAny<Subtitle>()))
+            .Callback((Subtitle subtitle) =>
+            {
+                subtitle = subtitles.FirstOrDefault(x => x.Id == subtitle.Id);
+                if (subtitle is not null)
+                {
+                    subtitles.Remove(subtitle);
+                }
+            });
+
+        mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
         return mockRepo;
     }

@@ -1,26 +1,22 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Moq;
-using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Timeline;
-using Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.XUnitTest.Mocks;
 using Xunit;
 using FluentAssertions;
-using Streetcode.BLL.MediatR.Media.Art.GetById;
 using Streetcode.BLL.MediatR.Timeline.TimelineItem.GetById;
 
 namespace Streetcode.XUnitTest.MediatRTests.Timeline.Timelineitem.GetById
 {
-    public class GetByIdHandlerTest
+    public class GetTimelineByIdHandlerTest
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
 
-        public GetByIdHandlerTest()
+        public GetTimelineByIdHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetTimelineRepositoryMock();
 

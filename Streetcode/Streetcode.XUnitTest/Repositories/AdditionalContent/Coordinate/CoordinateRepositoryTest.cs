@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Coordinate
@@ -12,7 +12,7 @@ namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Coordinate
         public void Repository_Create_StreetcodeCoordinate_EqualFirstNames()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCoordinateRepositoryMock();
+            var mockRepo = RepositoryMocker.GetCoordinateRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCoordinateRepository;
             var streetcodeCoordinateToAdd = new StreetcodeCoordinate()
             {
@@ -31,7 +31,7 @@ namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Coordinate
         public async Task Repository_GetAllStreetcodeCoordinates_ReturnsAllStreetcodeCoordinates()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCoordinateRepositoryMock();
+            var mockRepo = RepositoryMocker.GetCoordinateRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCoordinateRepository;
 
             // Act
@@ -45,7 +45,7 @@ namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Coordinate
         public void Repository_StreetcodeCoordinateUpdate()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCoordinateRepositoryMock();
+            var mockRepo = RepositoryMocker.GetCoordinateRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCoordinateRepository;
             var streetcodeCoordinateToUpdate = new StreetcodeCoordinate()
             {
@@ -66,7 +66,7 @@ namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Coordinate
         public async Task Repository_DeleteStreetcodeCoordinate_RemovesFromDatabase()
         {
             // Arrange
-            var mockRepo = RepositoryMocker.GetStreetcodeCoordinateRepositoryMock();
+            var mockRepo = RepositoryMocker.GetCoordinateRepositoryMock();
             var repository = mockRepo.Object.StreetcodeCoordinateRepository;
             var streetcodeCoordinateIdToDelete = 1;
 

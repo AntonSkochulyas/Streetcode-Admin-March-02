@@ -1,5 +1,4 @@
 ﻿using Streetcode.BLL.Dto.AdditionalContent;
-using Streetcode.BLL.Dto.Partners;
 
 namespace Streetcode.BLL.Dto.Partners;
 

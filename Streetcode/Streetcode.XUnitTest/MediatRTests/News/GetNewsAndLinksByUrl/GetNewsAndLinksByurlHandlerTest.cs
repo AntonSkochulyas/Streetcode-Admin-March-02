@@ -1,9 +1,5 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.News.GetNewsAndLinksByUrl
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;
@@ -12,7 +8,6 @@
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Newss;
-    using Streetcode.BLL.MediatR.Newss.GetByUrl;
     using Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
@@ -93,7 +88,7 @@
         {
             // Arrange
             var handler = new GetNewsAndLinksByUrlHandler(_mapper, _mockRepository.Object, _blobService.Object, _mockLogger.Object);
-            string validUrl = "example1.com";
+            string validUrl = "example.com";
             var request = new GetNewsAndLinksByUrlQuery(validUrl);
 
             // Act

@@ -9,28 +9,37 @@ using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.GetByStreetcodeId;
 namespace Streetcode.WebApi.Controllers.AdditionalContent;
 
 /// <summary>
-/// Controller that handles endpoints for:
-/// - Create coordinate;
-/// - Delete coordinate by id;
-/// - Get coordinate by streetcode id.
+/// Controller with CRUD operations for Coordinate entity.
 /// </summary>
 public class CoordinateController : BaseApiController
 {
-    // Get coordinate by streetcode id
+    /// <summary>
+    /// Get coordinate by streetcode id.
+    /// </summary>
+    /// <param name="streetcodeId">The id of the streetcode to find.</param>
+    /// <returns>Coordinates.</returns>
     [HttpGet("{streetcodeId:int}")]
     public async Task<IActionResult> GetByStreetcodeId([FromRoute] int streetcodeId)
     {
         return HandleResult(await Mediator.Send(new GetCoordinatesByStreetcodeIdQuery(streetcodeId)));
     }
 
-    // Create coordinate
+    /// <summary>
+    /// Create a new coordinate.
+    /// </summary>
+    /// <param name="coordinateDto">The coordinate DTO.</param>
+    /// <returns>The created coordinate.</returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] StreetcodeCoordinateDto coordinateDto)
     {
         return HandleResult(await Mediator.Send(new CreateCoordinateCommand(coordinateDto)));
     }
 
-    // Delete coordinate by id
+    /// <summary>
+    /// Delete a coordinate by id.
+    /// </summary>
+    /// <param name="id">The id of the coordinate to delete.</param>
+    /// <returns>The result of the delete operation.</returns>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

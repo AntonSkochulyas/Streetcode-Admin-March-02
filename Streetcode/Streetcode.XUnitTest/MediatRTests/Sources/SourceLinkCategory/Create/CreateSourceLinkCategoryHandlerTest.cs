@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Media.Images;
 using Streetcode.BLL.Mapping.Sources;
-using Streetcode.BLL.MediatR.Newss.Create;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create;
 using Streetcode.DAL.Repositories.Interfaces.Base;

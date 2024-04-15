@@ -1,12 +1,18 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreateInfoBlockCommand.
+    /// </summary>
     public sealed class CreateInfoBlockCommandValidator : AbstractValidator<CreateInfoBlockCommand>
     {
+        // Constructor
         public CreateInfoBlockCommandValidator()
         {
-            RuleFor(command => command.newInfoBlock.VideoURL)
+            RuleFor(command => command.NewInfoBlock.VideoURL)
                 .Custom((videoUrl, context) =>
                 {
                     if (string.IsNullOrWhiteSpace(videoUrl) || !IsValidYouTubeURL(videoUrl))
@@ -16,11 +22,10 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
                 });
         }
 
-        private bool IsValidYouTubeURL(string url)
+        // Method, that checks is valid youtube url
+        private static bool IsValidYouTubeURL(string url)
         {
-            Uri uri;
-
-            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
+            if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
             {
                 return uri.Host.Equals("www.youtube.com", StringComparison.OrdinalIgnoreCase);
             }

@@ -1,16 +1,13 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Update;
 
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
 {
     public class UpdateRelatedTermCommandValidator : AbstractValidator<UpdateRelatedTermCommand>
     {
-        private readonly int maxWordLength;
-
         public UpdateRelatedTermCommandValidator()
         {
-            maxWordLength = 50;
+            int maxWordLength = 50;
 
             RuleFor(command => command.RelatedTerm.Word)
                 .NotEmpty()

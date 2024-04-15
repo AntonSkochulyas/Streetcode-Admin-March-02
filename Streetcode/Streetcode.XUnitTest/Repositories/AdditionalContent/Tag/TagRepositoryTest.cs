@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
-using Streetcode.XUnitTest.Repositories.Mocks;
+using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
 namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Tag
@@ -68,7 +68,7 @@ namespace Streetcode.XUnitTest.Repositories.AdditionalContent.Tag
             var tagIdToDelete = 1;
 
             // Act
-            repository.Delete(new DAL.Entities.AdditionalContent.Tag { Id = tagIdToDelete });
+            repository.Delete(new DAL.Entities.AdditionalContent.Tag { Id = tagIdToDelete, Title = "Test", });
 
             // Assert
             var deletedTag = await repository.GetFirstOrDefaultAsync(s => s.Id == tagIdToDelete);

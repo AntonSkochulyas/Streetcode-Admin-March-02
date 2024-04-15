@@ -1,21 +1,33 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Dictionaries.Update
 {
+    /// <summary>
+    /// Validator, that validates a model inside UpdateDictionaryItemCommand.
+    /// </summary>
     internal class UpdateDictionaryItemCommandValidator : AbstractValidator<UpdateDictionaryItemCommand>
     {
+        // Max name length
+        private readonly ushort _maxNameLength;
+
+        // Max description length
+        private readonly ushort _maxDescriptionLength;
+
+        // Constructor.
         public UpdateDictionaryItemCommandValidator()
         {
-            int maxNameLength = 50;
-            int maxDescriptionLength = 50;
+            _maxNameLength = 50;
+            _maxDescriptionLength = 500;
 
             RuleFor(command => command.dictionaryItem.Name)
-                .MaximumLength(maxNameLength)
-                .WithMessage("Name length of dictionary item must not be longer than 50 symbols.");
+                .MaximumLength(_maxNameLength)
+                .WithMessage($"Name length of dictionary item must not be longer than {_maxNameLength} symbols.");
 
             RuleFor(command => command.dictionaryItem.Description)
-                    .MaximumLength(maxDescriptionLength)
-                    .WithMessage("Description length of dictionary item must not be longer than 500 symbols.");
+                    .MaximumLength(_maxDescriptionLength)
+                    .WithMessage($"Description length of dictionary item must not be longer than {_maxDescriptionLength} symbols.");
         }
     }
 }

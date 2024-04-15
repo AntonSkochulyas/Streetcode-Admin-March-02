@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
@@ -7,14 +8,27 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Update
 {
+    /// <summary>
+    /// Handler, that handles a process of updating a news.
+    /// </summary>
     public class UpdateNewsHandler : IRequestHandler<UpdateNewsCommand, Result<NewsDto>>
     {
+        // Rpository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Blob service
         private readonly IBlobService _blobSevice;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Parametric constructor 
         public UpdateNewsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, IBlobService blobService, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -23,9 +37,21 @@ namespace Streetcode.BLL.MediatR.Newss.Update
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that updates a news.
+        /// </summary>
+        /// <param name="request">
+        /// Request with updated news.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A NewsDto, or error, if it was while updating process.
+        /// </returns>
         public async Task<Result<NewsDto>> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
         {
-            var news = _mapper.Map<News>(request.news);
+            var news = _mapper.Map<News>(request.News);
             if (news is null)
             {
                 string errorMsg = NewsErrors.UpdateNewsHandlerCanNotConvertFromNullError;

@@ -10,7 +10,7 @@ using Streetcode.DAL.Entities.InfoBlocks.Articles;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 
-internal partial class RepositoryMocker
+internal static partial class RepositoryMocker
 {
     /// <summary>
     /// Mocks article repository.

@@ -1,9 +1,17 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Partners;
-using Streetcode.BLL.Dto.Partners.Create;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Partners.Update
 {
-  public record UpdatePartnerQuery(CreatePartnerDto Partner) : IRequest<Result<PartnerDto>>;
+    /// <summary>
+    /// Query, that requests a handler to update partner.
+    /// </summary>
+    /// <param name="Partner">
+    /// Updated partner.
+    /// </param>
+    public record UpdatePartnerQuery(CreatePartnerDto Partner)
+        : IRequest<Result<PartnerDto>>;
 }

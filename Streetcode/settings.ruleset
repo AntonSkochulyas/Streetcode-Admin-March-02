@@ -35,9 +35,9 @@
 		<!-- A static element is positioned beneath an instance element of the same type. -->
 		<Rule Id="SA1649" Action="Warning" />
 		<!-- The file name of a C# code file does not match the first type declared in the file. For generics that are defined as Class1<T> the name of the file needs to be Class1{T}.cs or Class1`1.cs depending on the fileNamingConvention setting -->
-		<Rule Id="SA1117" Action="Error" />
+		<Rule Id="SA1117" Action="None" />
 		<!-- The parameters to a C# method or indexer call or declaration are not all on the same line or each on a separate line. -->
-		<Rule Id="SA1116" Action="Warning" />
+		<Rule Id="SA1116" Action="None" />
 		<!-- The parameters to a C# method or indexer call or declaration span across multiple lines, but the first parameter does not start on the line after the opening bracket. -->
 		<Rule Id="SA1005" Action="Warning" />
 		<!-- A single-line comment within a C# code file does not begin with a single space. -->

@@ -5,13 +5,10 @@ namespace Streetcode.BLL.MediatR.Streetcode.Fact.Create
 {
 	public class CreateFactCommandValidator : AbstractValidator<CreateFactCommand>
     {
-		private readonly int maxTitleLength;
-		private readonly int maxFactContent;
-
 		public CreateFactCommandValidator()
 		{
-			maxTitleLength = 100;
-			maxFactContent = 600;
+			int maxTitleLength = 100;
+			int maxFactContent = 600;
 
 			RuleFor(command => command.Fact.Title)
                 .NotEmpty()

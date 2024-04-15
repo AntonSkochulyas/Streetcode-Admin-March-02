@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.AspNetCore.Rewrite;
-using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
-using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Dto.Transactions;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.ResultVariations;

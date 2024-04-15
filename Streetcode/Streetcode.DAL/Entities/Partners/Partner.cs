@@ -12,7 +12,7 @@ public class Partner
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     public int LogoId { get; set; }
 

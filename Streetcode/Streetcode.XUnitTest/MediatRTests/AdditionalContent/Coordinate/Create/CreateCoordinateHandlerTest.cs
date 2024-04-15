@@ -15,7 +15,6 @@
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
-        private readonly Mock<ILoggerService> _mockLogger;
 
         public CreateCoordinateHandlerTest()
         {
@@ -27,8 +26,6 @@
             });
 
             _mapper = mapperConfig.CreateMapper();
-
-            _mockLogger = new Mock<ILoggerService>();
         }
 
         [Fact]

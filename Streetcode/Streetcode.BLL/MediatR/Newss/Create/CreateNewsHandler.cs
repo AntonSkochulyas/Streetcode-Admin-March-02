@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.News;
@@ -6,13 +7,24 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Create
 {
+    /// <summary>
+    /// Handler, that handles a process of creating a news.
+    /// </summary>
     public class CreateNewsHandler : IRequestHandler<CreateNewsCommand, Result<NewsDto>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Parametic constructor
         public CreateNewsHandler(IMapper mapper, IRepositoryWrapper repositoryWrapper, ILoggerService logger)
         {
             _mapper = mapper;
@@ -20,9 +32,21 @@ namespace Streetcode.BLL.MediatR.Newss.Create
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that creates a new news.
+        /// </summary>
+        /// <param name="request">
+        /// Request with new news.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A NewsDto, or error, if it was while creating process.
+        /// </returns>
         public async Task<Result<NewsDto>> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
         {
-            var newNews = _mapper.Map<News>(request.newNews);
+            var newNews = _mapper.Map<News>(request.NewNews);
             if (newNews is null)
             {
                 string errorMsg = NewsErrors.CreateNewsHandlerCanNotConvertFromNullError;

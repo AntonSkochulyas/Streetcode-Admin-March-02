@@ -2,10 +2,8 @@
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.Dto.Partners;
 using Streetcode.BLL.Dto.Team;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.Partners.GetById;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Team.GetById

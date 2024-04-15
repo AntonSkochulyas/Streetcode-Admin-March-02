@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Partners;
@@ -6,14 +7,24 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Entities.Partners;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Partners.Update
 {
+    /// <summary>
+    /// Handler, that handles a process of updating a partner.
+    /// </summary>
     public class UpdatePartnerHandler : IRequestHandler<UpdatePartnerQuery, Result<PartnerDto>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor 
         public UpdatePartnerHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -21,6 +32,18 @@ namespace Streetcode.BLL.MediatR.Partners.Update
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that updates a partner.
+        /// </summary>
+        /// <param name="request">
+        /// Request with updated partner.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A PartnerDto, or error, if it was while updating process.
+        /// </returns>
         public async Task<Result<PartnerDto>> Handle(UpdatePartnerQuery request, CancellationToken cancellationToken)
         {
             var partner = _mapper.Map<Partner>(request.Partner);

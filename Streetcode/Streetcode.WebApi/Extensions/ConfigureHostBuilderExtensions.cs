@@ -1,14 +1,7 @@
-﻿using Serilog.Events;
-using Serilog;
+﻿using Serilog;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.Services.Instagram;
 using Streetcode.BLL.Services.Payment;
-using Serilog.Sinks.SystemConsole.Themes;
-using Streetcode.DAL.Entities.AdditionalContent.Email;
-using Hangfire;
-using Microsoft.EntityFrameworkCore;
-using static Streetcode.WebApi.Extensions.ServiceCollectionExtensions;
-using Streetcode.DAL.Persistence;
 
 namespace Streetcode.WebApi.Extensions;
 

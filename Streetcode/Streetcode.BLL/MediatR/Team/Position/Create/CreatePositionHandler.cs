@@ -25,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Team.Create
         {
             var newPosition = await _repository.PositionRepository.CreateAsync(new Positions()
             {
-                Position = request.position.Position
+                Position = request.Position.Position
             });
 
             try

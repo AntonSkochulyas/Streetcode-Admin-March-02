@@ -4,7 +4,6 @@ using MediatR;
 using Streetcode.BLL.Dto.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Entities.Toponyms;
-using Streetcode.BLL.Interfaces.Logging;
 
 namespace Streetcode.BLL.MediatR.Toponyms.GetAll;
 
@@ -13,13 +12,11 @@ public class GetAllToponymsHandler : IRequestHandler<GetAllToponymsQuery,
 {
     private readonly IMapper _mapper;
     private readonly IRepositoryWrapper _repositoryWrapper;
-    private readonly ILoggerService _logger;
 
-    public GetAllToponymsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
+    public GetAllToponymsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper)
     {
         _repositoryWrapper = repositoryWrapper;
         _mapper = mapper;
-        _logger = logger;
     }
 
     public async Task<Result<GetAllToponymsResponseDto>> Handle(GetAllToponymsQuery query, CancellationToken cancellationToken)
@@ -33,8 +30,6 @@ public class GetAllToponymsHandler : IRequestHandler<GetAllToponymsQuery,
         {
             FindStreetcodesWithMatchTitle(ref toponyms, filterRequest.Title);
         }
-
-        // int pagesAmount = ApplyPagination(ref toponyms, filterRequest.Amount, filterRequest.Page);
 
         var toponymDtos = _mapper.Map<IEnumerable<ToponymDto>>(toponyms.AsEnumerable());
 
@@ -58,18 +53,4 @@ public class GetAllToponymsHandler : IRequestHandler<GetAllToponymsQuery,
             .GroupBy(s => s.StreetName)
             .Select(g => g.First());
     }
-
-    // private int ApplyPagination(
-    //    ref IQueryable<Toponym> toponyms,
-    //    int amount,
-    //    int page)
-    // {
-    //    var totalPages = (int)Math.Ceiling(toponyms.Count() / (double)amount);
-
-    // toponyms = toponyms
-    //        .Skip((page - 1) * amount)
-    //        .Take(amount);
-
-    // return totalPages;
-    // }
 }

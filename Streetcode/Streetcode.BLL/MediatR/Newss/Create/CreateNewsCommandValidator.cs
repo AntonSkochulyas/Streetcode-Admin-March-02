@@ -1,33 +1,40 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside a CreateNewsCommand.
+    /// </summary>
     internal class CreateNewsCommandValidator : AbstractValidator<CreateNewsCommand>
     {
-        private readonly int _maxTitleLength;
-        private readonly int _maxURLLength;
+        // Constructor
         public CreateNewsCommandValidator()
         {
-            _maxTitleLength = 150;
-            _maxURLLength = 100;
+            // Max title length
+            int maxTitleLength = 150;
 
-            RuleFor(command => command.newNews.Title)
+            // Max URL length
+            int maxURLLength = 100;
+
+            RuleFor(command => command.NewNews.Title)
                 .NotEmpty()
                 .WithMessage(NewsErrors.CreateNewsCommandValidatorTitleIsRequiredError)
-                .MaximumLength(_maxTitleLength)
-                .WithMessage(string.Format(NewsErrors.CreateNewsCommandValidatorTitleMaxLengthError, _maxTitleLength));
+                .MaximumLength(maxTitleLength)
+                .WithMessage(string.Format(NewsErrors.CreateNewsCommandValidatorTitleMaxLengthError, maxTitleLength));
 
-            RuleFor(command => command.newNews.Text)
+            RuleFor(command => command.NewNews.Text)
                .NotEmpty()
                .WithMessage(NewsErrors.CreateNewsCommandValidatorTextIsRequiredError);
 
-            RuleFor(command => command.newNews.URL)
+            RuleFor(command => command.NewNews.URL)
                .NotEmpty()
                .WithMessage(NewsErrors.CreateNewsCommandValidatorURLIsRequiredError)
-               .MaximumLength(_maxURLLength)
-               .WithMessage(string.Format(NewsErrors.CreateNewsCommandValidatorURLMaxLengthError, _maxURLLength));
+               .MaximumLength(maxURLLength)
+               .WithMessage(string.Format(NewsErrors.CreateNewsCommandValidatorURLMaxLengthError, maxURLLength));
 
-            RuleFor(command => command.newNews.CreationDate)
+            RuleFor(command => command.NewNews.CreationDate)
                 .NotEmpty()
                 .WithMessage(NewsErrors.CreateNewsCommandValidatorCreationDateIsRequiredError);
         }

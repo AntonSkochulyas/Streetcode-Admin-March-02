@@ -1,31 +1,38 @@
-﻿using System;
+// Necessary usings.
 using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Image.Create
 {
-	public class CreateImageCommandValidator : AbstractValidator<CreateImageCommand>
+    /// <summary>
+    /// Validator, that validates a model inside CreateImageCommand.
+    /// </summary>
+    public class CreateImageCommandValidator : AbstractValidator<CreateImageCommand>
     {
-		private readonly int maxBlobNameLength;
-		private readonly int maxMimeTypeLength;
-		private readonly int maxTitleLength;
-		private readonly int maxAltLength;
-
+        // Constructor
 		public CreateImageCommandValidator()
 		{
-			maxBlobNameLength = 100;
-			maxMimeTypeLength = 10;
+            // Max title length
+            int maxTitleLength = 100;
 
-			RuleFor(command => command.Image.MimeType)
+            // Max mime type length
+            int maxMimeTypeLength = 10;
+
+            // Max alt length
+            int maxAltLength = 50;
+
+            RuleFor(command => command.Image.MimeType)
                 .NotEmpty()
                 .WithMessage(MediaErrors.CreateImageCommandValidatorMimeTypeIsRequiredError)
                 .MaximumLength(maxMimeTypeLength)
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorMimeTypeMaxLengthError, maxMimeTypeLength));
 
-			RuleFor(command => command.Image.Title)
+            RuleFor(command => command.Image.Title)
                 .MaximumLength(maxMimeTypeLength)
+                .MaximumLength(maxTitleLength)
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorTitleMaxLengthError, maxTitleLength));
 
-			RuleFor(command => command.Image.Alt)
+            RuleFor(command => command.Image.Alt)
                 .MaximumLength(maxMimeTypeLength)
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorAltMaxLengthError, maxAltLength));
         }

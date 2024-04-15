@@ -30,11 +30,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
         {
             _mockRepository = RepositoryMocker.GetDictionaryItemRepositoryMock();
 
-            var mapperConfig = new MapperConfiguration(c =>
-            {
-                c.AddProfile<DictionaryItemProfile>();
-            });
-
             _mockLogger = new Mock<ILoggerService>();
         }
 

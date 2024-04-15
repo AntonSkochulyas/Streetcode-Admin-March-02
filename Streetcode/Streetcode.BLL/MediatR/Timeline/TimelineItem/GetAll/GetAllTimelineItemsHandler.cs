@@ -2,10 +2,8 @@ using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.AdditionalContent.Coordinates;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll;
@@ -29,7 +27,7 @@ public class GetAllTimelineItemsHandler : IRequestHandler<GetAllTimelineItemsQue
             .TimelineRepository.GetAllAsync(
                 include: ti => ti
                   .Include(til => til.HistoricalContextTimelines)
-                    .ThenInclude(x => x.HistoricalContext)!);
+                    .ThenInclude(x => x.HistoricalContext) !);
 
         if (timelineItems is null)
         {

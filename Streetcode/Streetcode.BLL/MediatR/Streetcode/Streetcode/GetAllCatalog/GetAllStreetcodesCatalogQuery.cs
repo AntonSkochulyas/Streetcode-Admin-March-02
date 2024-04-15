@@ -4,5 +4,6 @@ using Streetcode.BLL.Dto.Streetcode.RelatedFigure;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllCatalog
 {
-  public record GetAllStreetcodesCatalogQuery(int page, int count) : IRequest<Result<IEnumerable<RelatedFigureDto>>>;
+  public record GetAllStreetcodesCatalogQuery(int Page, int Count)
+        : IRequest<Result<IEnumerable<RelatedFigureDto>>>;
 }

@@ -1,16 +1,9 @@
 ﻿namespace Streetcode.XUnitTest.MediatRTests.News.Delete
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using AutoMapper;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.Logging;
-    using Streetcode.BLL.Mapping.Newss;
-    using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Delete;
     using Streetcode.BLL.MediatR.Newss.Delete;
     using Streetcode.DAL.Entities.News;
     using Streetcode.DAL.Repositories.Interfaces.Base;

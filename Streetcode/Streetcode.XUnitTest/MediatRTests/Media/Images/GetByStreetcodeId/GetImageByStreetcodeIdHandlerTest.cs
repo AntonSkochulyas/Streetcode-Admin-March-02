@@ -7,14 +7,13 @@
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Media.Images;
-    using Streetcode.BLL.MediatR.Media.Audio.GetByStreetcodeId;
     using Streetcode.BLL.MediatR.Media.Image.GetByStreetcodeId;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>
-    /// 
+    /// Can not test.
     /// </summary>
     public class GetImageByStreetcodeIdHandlerTest
     {
