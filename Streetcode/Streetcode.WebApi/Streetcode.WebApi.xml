@@ -645,7 +645,7 @@
             <param name="sourceLinkCategoryContentDto">The DTO containing the source link category data.</param>
             <returns>The created source link category.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.UpdateSourceLink(Streetcode.BLL.Dto.Sources.UpdateSourceLinkCategoryContentDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.UpdateSourceLink(Streetcode.BLL.Dto.Sources.SourceLinkCategoryDto)">
             <summary>
             Update an existing source link category.
             </summary>
