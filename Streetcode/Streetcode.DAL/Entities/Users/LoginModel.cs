@@ -2,7 +2,7 @@
 
 namespace Streetcode.DAL.Entities.Users
 {
-    public class UserLoginModel
+    public class LoginModel
     {
         [Required(ErrorMessage = "Login is required")]
         public string? Username { get; set; }

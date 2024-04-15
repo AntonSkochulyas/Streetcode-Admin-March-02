@@ -1,17 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Streetcode.DAL.Entities.Users
+﻿namespace Streetcode.BLL.Dto.Users
 {
-    [Table("UserAdditionalInfo", Schema = "UserAdditionalInfo")]
-    public class UserAdditionalInfo
+    public class UserAdditionalInfoDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         public string? Phone { get; set; }
-
         public string? FirstName { get; set; }
 
         public string? SecondName { get; set; }

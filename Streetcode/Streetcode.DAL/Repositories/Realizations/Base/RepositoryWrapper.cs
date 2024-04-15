@@ -19,6 +19,7 @@ using Streetcode.DAL.Repositories.Interfaces.Team;
 using Streetcode.DAL.Repositories.Interfaces.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Transactions;
+using Streetcode.DAL.Repositories.Interfaces.Users;
 using Streetcode.DAL.Repositories.Realizations.AdditionalContent;
 using Streetcode.DAL.Repositories.Realizations.Analytics;
 using Streetcode.DAL.Repositories.Realizations.Dictionaries;
@@ -37,6 +38,7 @@ using Streetcode.DAL.Repositories.Realizations.Team;
 using Streetcode.DAL.Repositories.Realizations.Timeline;
 using Streetcode.DAL.Repositories.Realizations.Toponyms;
 using Streetcode.DAL.Repositories.Realizations.Transactions;
+using Streetcode.DAL.Repositories.Realizations.Users;
 
 namespace Streetcode.DAL.Repositories.Realizations.Base;
 
@@ -124,9 +126,38 @@ public class RepositoryWrapper : IRepositoryWrapper
 
     private IAuthorHyperLinkRepository? _authorHyperLinkRepository;
 
+    private IUserAdditionalInfoRepository? _userAdditionalInfoRepository;
+    private IApplicationUserRepository? _applicationUserRepository;
+
     public RepositoryWrapper(StreetcodeDbContext streetcodeDbContext)
     {
         _streetcodeDbContext = streetcodeDbContext;
+    }
+
+    public IApplicationUserRepository ApplicationUserRepository
+    {
+        get
+        {
+            if (_applicationUserRepository is null)
+            {
+                _applicationUserRepository = new ApplicationUserRepository(_streetcodeDbContext);
+            }
+
+            return _applicationUserRepository;
+        }
+    }
+
+    public IUserAdditionalInfoRepository UserAdditionalInfoRepository
+    {
+        get
+        {
+            if (_userAdditionalInfoRepository is null)
+            {
+                _userAdditionalInfoRepository = new UserAdditionalInfoRepository(_streetcodeDbContext);
+            }
+
+            return _userAdditionalInfoRepository;
+        }
     }
 
     public INewsRepository NewsRepository

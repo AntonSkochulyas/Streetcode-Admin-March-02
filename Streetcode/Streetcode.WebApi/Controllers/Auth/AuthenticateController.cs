@@ -1,56 +1,71 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Streetcode.BLL.Dto;
-using Streetcode.BLL.Dto.Authentication;
+using Streetcode.BLL.Dto.Users;
+using Streetcode.BLL.Dto.Users.UserRegisterModel;
 using Streetcode.BLL.Interfaces.Authentification;
 using Streetcode.DAL.Entities.Users;
-using System.Security.Claims;
 
 namespace Streetcode.WebApi.Controllers.Auth
 {
     [AllowAnonymous]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class AuthenticateController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
         private readonly IJwtService _jwtService;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,
-            SignInManager<ApplicationUser> signInManager, IJwtService jwtService)
+        public AuthenticateController(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration,
+            IJwtService jwtService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _signInManager = signInManager;
+            _configuration = configuration;
             _jwtService = jwtService;
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            if (!ModelState.IsValid)
-            {
-                string errorMessage = string.Join(" | ", ModelState.Values.SelectMany(x => x.Errors).Select(e => e.ErrorMessage));
-                return Problem(errorMessage);
-            }
+            var user = await _userManager.FindByNameAsync(loginModel.Username);
 
-            var user = await _userManager.FindByNameAsync(model.Username);
-
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, loginModel.Password))
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
-                var authenticationResponse = _jwtService.CreateToken(user, userRoles);
-                user.RefreshToken = authenticationResponse.RefreshToken;
-                user.RefreshTokenExpirationDate = (DateTime)authenticationResponse.RefreshTokenExpirationDate;
+                var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
+
+                foreach (var userRole in userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+
+                var token = _jwtService.CreateToken(authClaims);
+                var refreshToken = _jwtService.GenerateRefreshToken();
+                _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInDays"], out int refreshTokenValidityInDays);
+
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenValidityInDays);
 
                 await _userManager.UpdateAsync(user);
 
-                return Ok(authenticationResponse);
+                return Ok(new
+                {
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    RefreshToken = refreshToken,
+                    Expiration = token.ValidTo,
+                });
             }
 
             return Unauthorized();
@@ -58,106 +73,118 @@ namespace Streetcode.WebApi.Controllers.Auth
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
+        public async Task<IActionResult> Register([FromBody] UserRegisterModel registerModel)
         {
-            if (!ModelState.IsValid)
+            var userExists = await _userManager.FindByNameAsync(registerModel.Username);
+            if (userExists != null)
             {
-                string errorMessage = string.Join(" | ", ModelState.Values.SelectMany(x => x.Errors).Select(e => e.ErrorMessage));
-                return Problem(errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response() { Status = "Error", Message = "User already exists." });
             }
 
-            var isUserExists = await _userManager.FindByNameAsync(model.Username);
-
-            if (isUserExists != null)
+            ApplicationUser user = new ApplicationUser()
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists." });
-            }
-
-            ApplicationUser user = new()
-            {
+                Id = registerModel.Id.ToString(),
+                UserAdditionalInfoId = registerModel.UserAdditionalInfoId,
+                UserAdditionalInfo = registerModel.UserAdditionalInfo,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username,
+                UserName = registerModel.Username,
             };
 
-            var isRegisteredSuccessfully = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, registerModel.Password);
 
-            if (!isRegisteredSuccessfully.Succeeded)
+            if (!result.Succeeded)
             {
-                string errorMessage = string.Join(" | ", isRegisteredSuccessfully.Errors.Select(e => e.Description));
-
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new Response { Status = "Error", Message = errorMessage });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response() { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
 
-            await _signInManager.SignInAsync(user, isPersistent: false);
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var authenticationResponse = _jwtService.CreateToken(user, userRoles);
-            user.RefreshToken = authenticationResponse.RefreshToken;
-            user.RefreshTokenExpirationDate = (DateTime)authenticationResponse.RefreshTokenExpirationDate;
-
-            await _userManager.UpdateAsync(user);
-
-            return Ok(authenticationResponse);
+            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
         [HttpPost]
-        [Route("generate-new-refresh-token")]
-        public async Task<IActionResult> GenerateNewRefreshToken(TokenModel tokenModel)
+        [Route("register-admin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] UserRegisterModel registerModel)
         {
-            if (tokenModel is null)
+            var userExists = await _userManager.FindByNameAsync(registerModel.Username);
+            if (userExists != null)
             {
-                return BadRequest("Invalid client request");
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response() { Status = "Error", Message = "User already exists." });
             }
 
-            ClaimsPrincipal? principal = _jwtService.GetPrincipalFromJwtToken(tokenModel.AccessToken);
-            if (principal is null)
+            ApplicationUser user = new ApplicationUser()
             {
-                return BadRequest("Invalid jwt access token");
+                UserAdditionalInfoId = registerModel.UserAdditionalInfoId,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = registerModel.Username
+            };
+
+            var result = await _userManager.CreateAsync(user, registerModel.Password);
+
+            if (!result.Succeeded)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response() { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
 
-            // TO-DO: Probably the code below should be changed after using the UserAdditionalInfo entity
-            string? userName = principal.FindFirstValue(ClaimTypes.Name);
-
-            ApplicationUser? user = await _userManager.FindByNameAsync(userName);
-
-            if (user is null || user.RefreshToken != tokenModel.RefreshToken ||
-                user.RefreshTokenExpirationDate <= DateTime.Now)
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
             {
-                return BadRequest("Invalid refresh token");
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
             }
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-            AuthenticationResponse authenticationResponse = _jwtService.CreateToken(user, userRoles);
-            user.RefreshToken = authenticationResponse.RefreshToken;
-            user.RefreshTokenExpirationDate = (DateTime)authenticationResponse.RefreshTokenExpirationDate;
+            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            }
 
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+            }
+
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, UserRoles.User);
+            }
+
+            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        }
+
+        [HttpPost]
+        [Route("refresh-token")]
+        public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
+        {
+            if (tokenModel == null)
+            {
+                return BadRequest("Invalid client request.");
+            }
+
+            string? accessToken = tokenModel.AccessToken;
+            string? refreshToken = tokenModel.RefreshToken;
+
+            var principal = _jwtService.GetPrincipalFromExpiredToken(accessToken);
+            if (principal == null)
+            {
+                return BadRequest("Invalid access token or refresh token.");
+            }
+
+            string username = principal.Identity.Name;
+
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                return BadRequest("Invalid access token or refresh token.");
+            }
+
+            var newAccessToken = _jwtService.CreateToken(principal.Claims.ToList());
+            var newRefreshToken = _jwtService.GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
             await _userManager.UpdateAsync(user);
 
-            return Ok(authenticationResponse);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> IsAlreadyRegistered(string email)
-        {
-            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
-
-            if (user is null)
+            return new ObjectResult(new
             {
-                return Ok(true);
-            }
-            else
-            {
-                return Ok(false);
-            }
-        }
-
-        [HttpGet("logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-
-            return NoContent();
+                accessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
+                refreshToken = newRefreshToken,
+            });
         }
 
         [Authorize]
@@ -168,7 +195,7 @@ namespace Streetcode.WebApi.Controllers.Auth
             var user = await _userManager.FindByNameAsync(username);
             if (user == null)
             {
-                return BadRequest("Invalid user name");
+                return BadRequest("Invalid user name.");
             }
 
             user.RefreshToken = null;
