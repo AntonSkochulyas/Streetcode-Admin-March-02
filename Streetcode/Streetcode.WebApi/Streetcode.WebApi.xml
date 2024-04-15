@@ -645,6 +645,13 @@
             <param name="sourceLinkCategoryContentDto">The DTO containing the source link category data.</param>
             <returns>The created source link category.</returns>
         </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.CreateStreetcodeCategoryContent(Streetcode.BLL.Dto.Sources.StreetcodeCategoryContentDto)">
+            <summary>
+            Create a new streetcode category content.
+            </summary>
+            <param name="streetcodeCategoryContentDto">The DTO containing the streetcode category content data.</param>
+            <returns>The created streetcode category content.</returns>
+        </member>
         <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.UpdateSourceLink(Streetcode.BLL.Dto.Sources.SourceLinkCategoryDto)">
             <summary>
             Update an existing source link category.
@@ -652,11 +659,26 @@
             <param name="sourceLinkCategoryContentDto">The DTO containing the updated source link category data.</param>
             <returns>The updated source link category.</returns>
         </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.UpdateStreetcodeCategoryContent(Streetcode.BLL.Dto.Sources.StreetcodeCategoryContentDto)">
+            <summary>
+            Update an existing streetcode category content.
+            </summary>
+            <param name="streetcodeCategoryContentDto">The DTO containing the updated streetcode category content data.</param>
+            <returns>The updated streetcode category content.</returns>
+        </member>
         <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.DeleteSourceLink(System.Int32)">
             <summary>
             Delete a source link category by its ID.
             </summary>
             <param name="id">The ID of the source link category to delete.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.DeleteStreetcodeCategoryContent(System.Int32,System.Int32)">
+            <summary>
+            Delete a streetcode category content by IDs.
+            </summary>
+            <param name="sourceLinkId">The ID of the source link category to delete.</param>
+            /// <param name="streetcodeId">The ID of the streetcode to delete.</param>
             <returns>The result of the deletion operation.</returns>
         </member>
         <member name="T:Streetcode.WebApi.Controllers.Streetcode.RelatedFigureController">

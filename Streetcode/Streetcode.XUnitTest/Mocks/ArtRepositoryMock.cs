@@ -1,8 +1,10 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
 using Streetcode.DAL.Entities.Media.Images;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 
@@ -31,6 +33,23 @@ internal partial class RepositoryMocker
             .ReturnsAsync((Expression<Func<Art, bool>> predicate, Func<IQueryable<Art>, IIncludableQueryable<Art, object>> include) =>
             {
                 return arts.FirstOrDefault(predicate.Compile());
+            });
+
+        mockRepo.Setup(x => x.ArtRepository.Create(It.IsAny<Art>()))
+            .Returns((Art art) =>
+            {
+                arts.Add(art);
+                return art;
+            });
+
+        mockRepo.Setup(x => x.ArtRepository.Delete(It.IsAny<Art>()))
+            .Callback((Art art) =>
+            {
+                art = arts.FirstOrDefault(x => x.Id == art.Id);
+                if (art is not null)
+                {
+                    arts.Remove(art);
+                }
             });
 
         return mockRepo;

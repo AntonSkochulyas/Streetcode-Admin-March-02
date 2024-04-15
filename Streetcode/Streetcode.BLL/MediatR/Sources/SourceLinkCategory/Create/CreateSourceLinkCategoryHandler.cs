@@ -21,15 +21,23 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
 
         public async Task<Result<SourceLinkCategoryDto>> Handle(CreateSourceLinkCategoryCommand request, CancellationToken cancellationToken)
         {
-            if (request.SourceLinkCategoryContentDto.Title is null)
+            var newSourceLinkCategory = _mapper.Map<DAL.Entities.Sources.SourceLinkCategory>(request.SourceLinkCategoryContentDto);
+            if (newSourceLinkCategory is null)
+            {
+                string errorMsg = SourceErrors.CreateSourceLinkCategoryHandlerCanNotConvertFromNullError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
+            }
+
+            if (newSourceLinkCategory.Title is null)
             {
                 string errorMsg = SourceErrors.UpdateSourceLinkCategoryCommandValidatorTitleIsRequiredError;
-                _logger.LogError(request, errorMsg);
+                _logger.LogError(newSourceLinkCategory, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
             var image = await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(
-                x => x.ImageDetails!.ImageId == request.SourceLinkCategoryContentDto.ImageId);
+                x => x.Id == newSourceLinkCategory.ImageId);
 
             if (image is null)
             {
@@ -37,15 +45,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create
                     SourceErrors.UpdateSourceLinkHandlerCanNotFindImageWithGivenIdError,
                     request.SourceLinkCategoryContentDto.ImageId);
 
-                _logger.LogError(request, errorMsg);
-                return Result.Fail(errorMsg);
-            }
-
-            var newSourceLinkCategory = _mapper.Map<DAL.Entities.Sources.SourceLinkCategory>(request.SourceLinkCategoryContentDto);
-            if (newSourceLinkCategory is null)
-            {
-                string errorMsg = SourceErrors.CreateSourceLinkCategoryHandlerCanNotConvertFromNullError;
-                _logger.LogError(request, errorMsg);
+                _logger.LogError(newSourceLinkCategory, errorMsg);
                 return Result.Fail(errorMsg);
             }
 

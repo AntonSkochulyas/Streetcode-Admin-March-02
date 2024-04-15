@@ -25,26 +25,6 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update
 
         public async Task<Result<SourceLinkCategoryDto>> Handle(UpdateSourceLinkCategoryCommand request, CancellationToken cancellationToken)
         {
-            if (request.SourceLinkDto.Title is null)
-            {
-                string errorMsg = SourceErrors.UpdateSourceLinkCategoryCommandValidatorTitleIsRequiredError;
-                _logger.LogError(request, errorMsg);
-                return Result.Fail(new Error(errorMsg));
-            }
-
-            var image = await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(
-                x => x.ImageDetails!.ImageId == request.SourceLinkDto.ImageId);
-
-            if (image is null)
-            {
-                string errorMsg = string.Format(
-                    SourceErrors.UpdateSourceLinkHandlerCanNotFindImageWithGivenIdError,
-                    request.SourceLinkDto.ImageId);
-
-                _logger.LogError(request, errorMsg);
-                return Result.Fail(errorMsg);
-            }
-
             var sourceLinkCategory = _mapper.Map<DAL.Entities.Sources.SourceLinkCategory>(request.SourceLinkDto);
 
             if (sourceLinkCategory is null)
@@ -52,6 +32,26 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update
                 string errorMsg = SourceErrors.UpdateSourceLinkCategoryHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
+            }
+
+            if (sourceLinkCategory.Title is null)
+            {
+                string errorMsg = SourceErrors.UpdateSourceLinkCategoryCommandValidatorTitleIsRequiredError;
+                _logger.LogError(sourceLinkCategory, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
+
+            var image = await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(
+                x => x.Id == sourceLinkCategory.ImageId);
+
+            if (image is null)
+            {
+                string errorMsg = string.Format(
+                    SourceErrors.UpdateSourceLinkHandlerCanNotFindImageWithGivenIdError,
+                    request.SourceLinkDto.ImageId);
+
+                _logger.LogError(sourceLinkCategory, errorMsg);
+                return Result.Fail(errorMsg);
             }
 
             _repositoryWrapper.SourceCategoryRepository.Update(sourceLinkCategory);
