@@ -105,19 +105,20 @@ namespace Streetcode.WebApi.Extensions
 
                     if (!dbContext.ApplicationUsers.Any())
                     {
-                        // Получаем UserAdditionalInfo из базы данных
                         var userAdditionalInfo = await dbContext.UsersAdditionalInfo.FirstOrDefaultAsync();
+
+                        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
                         var adminUser = new ApplicationUser()
                         {
-                            UserName = "Admin1",
+                            UserName = configuration["JWT:AdminLogin"],
                             UserAdditionalInfoId = userAdditionalInfo.Id,
                             UserAdditionalInfo = userAdditionalInfo
                         };
 
                         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-                        var result = await userManager.CreateAsync(adminUser, "Admin_test_1");
+                        var result = await userManager.CreateAsync(adminUser, configuration["JWT:AdminPassword"]);
 
                         if (result.Succeeded)
                         {
