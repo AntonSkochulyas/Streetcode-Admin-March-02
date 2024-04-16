@@ -1,6 +1,8 @@
 ﻿// Necessary usings
+using AutoMapper;
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -10,7 +12,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Dele
     /// <summary>
     /// Handler, that handles a process of deleting an authorship hyperlink.
     /// </summary>
-    public class DeleteAuthorShipHyperLinkHandler : IRequestHandler<DeleteAuthorShipHyperLinkCommand, Result<Unit>>
+    public class DeleteAuthorShipHyperLinkHandler : IRequestHandler<DeleteAuthorShipHyperLinkCommand, Result<AuthorShipHyperLinkDto>>
     {
         // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
@@ -18,11 +20,15 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Dele
         // Logger
         private readonly ILoggerService _logger;
 
+        // Mapper
+        private readonly IMapper _mapper;
+
         // Parametric constructor
-        public DeleteAuthorShipHyperLinkHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger)
+        public DeleteAuthorShipHyperLinkHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -37,7 +43,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Dele
         /// <returns>
         /// A Unit, or error, if it was while deleting process.
         /// </returns>
-        public async Task<Result<Unit>> Handle(DeleteAuthorShipHyperLinkCommand request, CancellationToken cancellationToken)
+        public async Task<Result<AuthorShipHyperLinkDto>> Handle(DeleteAuthorShipHyperLinkCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;
 
@@ -58,7 +64,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Dele
 
             if (resultISSuccess)
             {
-                return Result.Ok(Unit.Value);
+                return Result.Ok(_mapper.Map<AuthorShipHyperLinkDto>(authorsHyperLink));
             }
             else
             {

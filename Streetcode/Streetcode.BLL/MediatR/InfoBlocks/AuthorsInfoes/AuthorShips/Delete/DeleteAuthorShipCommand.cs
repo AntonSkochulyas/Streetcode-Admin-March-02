@@ -1,6 +1,7 @@
 ﻿// Necessary usings
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes;
 
 // Necessary namespaces
 namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
@@ -12,5 +13,5 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
     /// Authorship id to delete.
     /// </param>
     public record DeleteAuthorShipCommand(int Id)
-        : IRequest<Result<Unit>>;
+        : IRequest<Result<AuthorShipDto>>;
 }

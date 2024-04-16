@@ -1,6 +1,7 @@
 ﻿// Necessary usings.
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.News;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Delete
@@ -12,5 +13,5 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
     /// News id to delete.
     /// </param>
     public record DeleteNewsCommand(int Id)
-        : IRequest<Result<Unit>>;
+        : IRequest<Result<NewsDto>>;
 }

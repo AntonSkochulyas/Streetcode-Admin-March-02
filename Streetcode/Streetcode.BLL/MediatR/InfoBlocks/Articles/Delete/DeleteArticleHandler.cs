@@ -1,6 +1,8 @@
 ﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -10,7 +12,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete
     /// <summary>
     /// Handler, that handles a process of deleting an article by given id.
     /// </summary>
-    public class DeleteArticleHandler : IRequestHandler<DeleteArticleCommand, Result<Unit>>
+    public class DeleteArticleHandler : IRequestHandler<DeleteArticleCommand, Result<ArticleDto>>
     {
         // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
@@ -18,11 +20,15 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete
         // Logger
         private readonly ILoggerService _logger;
 
+        // Mapper
+        private readonly IMapper _mapper;
+
         // Constructor
-        public DeleteArticleHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger)
+        public DeleteArticleHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -37,7 +43,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete
         /// <returns>
         /// A Unit, or error, if it was while deleting process.
         /// </returns>
-        public async Task<Result<Unit>> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
+        public async Task<Result<ArticleDto>> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;
 
@@ -58,7 +64,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete
 
             if (resultISSuccess)
             {
-                return Result.Ok(Unit.Value);
+                return Result.Ok(_mapper.Map<ArticleDto>(article));
             }
             else
             {
