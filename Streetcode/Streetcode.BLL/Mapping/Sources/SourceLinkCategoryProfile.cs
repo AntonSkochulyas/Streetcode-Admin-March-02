@@ -26,6 +26,5 @@ public class SourceLinkCategoryProfile : Profile
             .ForMember(dest => dest.ImageId, opt => opt.MapFrom(dto => dto.ImageId));
 
         CreateMap<CreateSourceLinkCategoryContentDto, SourceLinkCategory>();
-        CreateMap<UpdateSourceLinkCategoryContentDto, SourceLinkCategory>();
     }
 }

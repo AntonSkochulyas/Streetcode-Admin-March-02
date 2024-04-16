@@ -60,7 +60,6 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
             {
                 ImageId = 1,
                 Title = "Test1",
-                StreetcodeId = 1,
             };
             var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 
