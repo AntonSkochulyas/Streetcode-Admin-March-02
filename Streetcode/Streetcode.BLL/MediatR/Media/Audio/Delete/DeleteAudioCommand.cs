@@ -1,6 +1,7 @@
 ﻿// Necessary usings.
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.Media.Audio;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Audio.Delete;
@@ -12,4 +13,4 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Delete;
 /// Audio id to delete.
 /// </param>
 public record DeleteAudioCommand(int Id)
-    : IRequest<Result<Unit>>;
+    : IRequest<Result<AudioDto>>;

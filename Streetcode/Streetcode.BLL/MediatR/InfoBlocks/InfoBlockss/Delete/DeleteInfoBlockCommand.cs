@@ -1,6 +1,7 @@
 ﻿// Necessary usings.
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.InfoBlocks;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Delete
@@ -12,5 +13,5 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Delete
     /// Infoblock id to delete.
     /// </param>
     public record DeleteInfoBlockCommand(int Id)
-        : IRequest<Result<Unit>>;
+        : IRequest<Result<InfoBlockDto>>;
 }

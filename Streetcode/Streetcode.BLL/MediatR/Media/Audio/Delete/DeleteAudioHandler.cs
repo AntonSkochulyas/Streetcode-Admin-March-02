@@ -1,6 +1,8 @@
 ﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.Media.Audio;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -11,7 +13,7 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Delete;
 /// <summary>
 /// Hadnler, that handles a process of deleting an audio.
 /// </summary>
-public class DeleteAudioHandler : IRequestHandler<DeleteAudioCommand, Result<Unit>>
+public class DeleteAudioHandler : IRequestHandler<DeleteAudioCommand, Result<AudioDto>>
 {
     // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
@@ -22,12 +24,16 @@ public class DeleteAudioHandler : IRequestHandler<DeleteAudioCommand, Result<Uni
     // Logger
     private readonly ILoggerService _logger;
 
+    // Mapper
+    private readonly IMapper _mapper;
+
     // Parametric constructor
-    public DeleteAudioHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger)
+    public DeleteAudioHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger, IMapper mapper)
     {
         _repositoryWrapper = repositoryWrapper;
         _blobService = blobService;
         _logger = logger;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -42,7 +48,7 @@ public class DeleteAudioHandler : IRequestHandler<DeleteAudioCommand, Result<Uni
     /// <returns>
     /// A Unit, or error, if it was while deleting process.
     /// </returns>
-    public async Task<Result<Unit>> Handle(DeleteAudioCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AudioDto>> Handle(DeleteAudioCommand request, CancellationToken cancellationToken)
     {
         var audio = await _repositoryWrapper.AudioRepository.GetFirstOrDefaultAsync(a => a.Id == request.Id);
 
@@ -65,7 +71,7 @@ public class DeleteAudioHandler : IRequestHandler<DeleteAudioCommand, Result<Uni
         if (resultIsSuccess)
         {
             _logger?.LogInformation($"DeleteAudioCommand handled successfully");
-            return Result.Ok(Unit.Value);
+            return Result.Ok(_mapper.Map<AudioDto>(audio));
         }
         else
         {

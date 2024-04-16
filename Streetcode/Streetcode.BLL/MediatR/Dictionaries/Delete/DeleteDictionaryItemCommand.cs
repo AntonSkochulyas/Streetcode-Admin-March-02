@@ -1,6 +1,7 @@
 ﻿// Necessary usings
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.Dictionaries;
 
 // Necessary namespaces
 namespace Streetcode.BLL.MediatR.Dictionaries.Delete
@@ -12,5 +13,5 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Delete
     /// Dictionary item id to delete.
     /// </param>
     public record DeleteDictionaryItemCommand(int Id)
-        : IRequest<Result<Unit>>;
+        : IRequest<Result<DictionaryItemDto>>;
 }

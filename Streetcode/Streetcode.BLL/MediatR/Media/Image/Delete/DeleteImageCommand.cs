@@ -1,6 +1,7 @@
 ﻿// Necessary usings.
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.Media.Images;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Image.Delete;
@@ -12,4 +13,4 @@ namespace Streetcode.BLL.MediatR.Media.Image.Delete;
 /// Image id to delete.
 /// </param>
 public record DeleteImageCommand(int Id)
-    : IRequest<Result<Unit>>;
+    : IRequest<Result<ImageDto>>;

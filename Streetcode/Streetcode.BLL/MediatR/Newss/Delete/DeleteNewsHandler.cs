@@ -1,6 +1,8 @@
 // Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -10,7 +12,7 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
     /// <summary>
     /// Handler, that handles a process of deleting a news.
     /// </summary>
-    public class DeleteNewsHandler : IRequestHandler<DeleteNewsCommand, Result<Unit>>
+    public class DeleteNewsHandler : IRequestHandler<DeleteNewsCommand, Result<NewsDto>>
     {
         // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
@@ -18,11 +20,15 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
         // Logger
         private readonly ILoggerService _logger;
 
+        // Mapper
+        private readonly IMapper _mapper;
+
         // Parametric constructor
-        public DeleteNewsHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger)
+        public DeleteNewsHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _logger = logger;
+            _mapper = mapper;
         }
 
 
@@ -38,7 +44,7 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
         /// <returns>
         /// A Unit, or error, if it was while deleting process.
         /// </returns>
-        public async Task<Result<Unit>> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
+        public async Task<Result<NewsDto>> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;
             var news = await _repositoryWrapper.NewsRepository.GetFirstOrDefaultAsync(n => n.Id == id);
@@ -58,7 +64,7 @@ namespace Streetcode.BLL.MediatR.Newss.Delete
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
             if (resultIsSuccess)
             {
-                return Result.Ok(Unit.Value);
+                return Result.Ok(_mapper.Map<NewsDto>(news));
             }
             else
             {

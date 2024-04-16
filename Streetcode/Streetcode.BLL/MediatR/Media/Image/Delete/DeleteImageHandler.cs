@@ -1,7 +1,9 @@
 ﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Streetcode.BLL.Dto.Media.Images;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -12,7 +14,7 @@ namespace Streetcode.BLL.MediatR.Media.Image.Delete;
 /// <summary>
 /// Handler, that handles a process of deleting an image.
 /// </summary>
-public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Unit>>
+public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<ImageDto>>
 {
     // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
@@ -23,12 +25,16 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
     // Logger
     private readonly ILoggerService _logger;
 
+    // Mapper
+    private readonly IMapper _mapper;
+
     // Parametric constructor 
-    public DeleteImageHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger)
+    public DeleteImageHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger, IMapper mapper)
     {
         _repositoryWrapper = repositoryWrapper;
         _blobService = blobService;
         _logger = logger;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -43,7 +49,7 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
     /// <returns>
     /// A Unit, or error, if it was while deleting process.
     /// </returns>
-    public async Task<Result<Unit>> Handle(DeleteImageCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ImageDto>> Handle(DeleteImageCommand request, CancellationToken cancellationToken)
     {
         var image = await _repositoryWrapper.ImageRepository
             .GetFirstOrDefaultAsync(
@@ -66,9 +72,9 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
             _blobService.DeleteFileInStorage(image.BlobName);
         }
 
-        if(resultIsSuccess)
+        if (resultIsSuccess)
         {
-            return Result.Ok(Unit.Value);
+            return Result.Ok(_mapper.Map<ImageDto>(image));
         }
         else
         {

@@ -1,6 +1,7 @@
 ﻿// Necessary usings.
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Delete
@@ -12,5 +13,5 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Dele
     /// Authorship hyperlink id to delete.
     /// </param>
     public record DeleteAuthorShipHyperLinkCommand(int Id)
-        : IRequest<Result<Unit>>;
+        : IRequest<Result<AuthorShipHyperLinkDto>>;
 }
