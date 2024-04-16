@@ -5,7 +5,6 @@ using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.ValidationBehaviors;
@@ -30,9 +29,15 @@ builder.Services.AddValidatorsFromAssembly(Assembly.Load("Streetcode.BLL"));
 builder.Services.AddGlobalExceptionHandlerMiddlewareToServices();
 builder.Services.ConfigurePolicy();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<StreetcodeDbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+})
+.AddEntityFrameworkStores<StreetcodeDbContext>()
+.AddDefaultTokenProviders();
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>

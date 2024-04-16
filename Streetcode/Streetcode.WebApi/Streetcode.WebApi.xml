@@ -103,6 +103,61 @@
             - Get all statistic records.
             </summary>
         </member>
+        <member name="T:Streetcode.WebApi.Controllers.Auth.AuthenticateController">
+            <summary>
+            Controller for managing authorization.
+            Handles endpoints for:
+            - Login;
+            - Logout;
+            - Register;
+            - RegisterAdmin;
+            - RefreshToken;
+            - RevokeByUsername;
+            - RevokeAll.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.Login(Streetcode.BLL.Dto.Users.LoginModelDto)">
+            <summary>
+            Login endpoint.
+            </summary>
+            <returns>A response, that contains: access token, refresh token and refresh token expiration date.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.Logout">
+            <summary>
+            Logout endpoint.
+            </summary>
+            <returns>A message, that user logout successfully.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.Register(Streetcode.BLL.Dto.Users.RegisterModelDto)">
+            <summary>
+            Register endpoint.
+            </summary>
+            <returns>A response, that contains status and message for registration operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.RegisterAdmin(Streetcode.BLL.Dto.Users.RegisterModelDto)">
+            <summary>
+            Register admin endpoint.
+            </summary>
+            <returns>A response, that contains status and message for admin registration operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.RefreshToken(Streetcode.BLL.Dto.Users.TokenModelDto)">
+            <summary>
+            Refresh token endpoint.
+            </summary>
+            <returns>A response, that contains a new access and refresh token.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.RevokeByUsername(System.String)">
+            <summary>
+            Revoke by username endpoint.
+            </summary>
+            <returns>A message, that token revoked successfully or eror, if it was.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthenticateController.RevokeAll">
+            <summary>
+            Revoke by username endpoint.
+            </summary>
+            <returns>A message, that token revoked successfully or eror, if it was.</returns>
+        </member>
         <member name="T:Streetcode.WebApi.Controllers.BaseApiController">
             <summary>
             Base API controller for handling common functionality and dependencies.
