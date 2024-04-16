@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.MediatR.Fact.ResetOrderNumbers;
@@ -52,6 +53,7 @@ public class FactController : BaseApiController
     /// </summary>
     /// <param name="position">The fact data.</param>
     /// <returns>The created fact.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] FactBaseDto position)
     {
@@ -63,6 +65,7 @@ public class FactController : BaseApiController
     /// </summary>
     /// <param name="fact">The updated fact data.</param>
     /// <returns>The updated fact.</returns>
+    [Authorize("Admin")]
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] FactDto fact)
     {
@@ -74,6 +77,7 @@ public class FactController : BaseApiController
     /// </summary>
     /// <param name="streetcodeId">The ID of the streetcode.</param>
     /// <returns>The updated facts with reset order numbers.</returns>
+    [Authorize("Admin")]
     [HttpPut("{streetcodeId:int}")]
     public async Task<IActionResult> UpdateOrderNumbers([FromRoute] int streetcodeId)
     {
@@ -85,6 +89,7 @@ public class FactController : BaseApiController
     /// </summary>
     /// <param name="id">The ID of the fact.</param>
     /// <returns>The result of the deletion operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

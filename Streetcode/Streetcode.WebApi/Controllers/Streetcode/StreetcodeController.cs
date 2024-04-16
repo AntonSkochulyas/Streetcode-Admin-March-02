@@ -12,6 +12,7 @@ using Streetcode.BLL.MediatR.Streetcode.Streetcode.GetShortById;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllStreetcodesMainPage;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode.Create;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode.Delete;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Streetcode.WebApi.Controllers.Streetcode;
 
@@ -122,6 +123,7 @@ public class StreetcodeController : BaseApiController
     /// </summary>
     /// <param name="streetcodeDto">Thedto of the streetcode to add.</param>
     /// <returns>The created streetcode.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] BaseStreetcodeDto streetcodeDto)
     {
@@ -133,6 +135,7 @@ public class StreetcodeController : BaseApiController
     /// </summary>
     /// <param name="streetcodeId">The ID of the streetcode.</param>
     /// <returns>The result of the delete operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{streetcodeId}")]
     public async Task<IActionResult> Delete([FromRoute] int streetcodeId)
     {

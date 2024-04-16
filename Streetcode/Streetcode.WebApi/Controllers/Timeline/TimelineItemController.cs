@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.MediatR.Timeline.TimelineItem.Create;
@@ -51,6 +52,7 @@ public class TimelineItemController : BaseApiController
     /// </summary>
     /// <param name="timelineItem">The timeline item to create.</param>
     /// <returns>The created timeline item.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TimelineItemDto timelineItem)
     {
@@ -62,6 +64,7 @@ public class TimelineItemController : BaseApiController
     /// </summary>
     /// <param name="timelineItem">The timeline item to update.</param>
     /// <returns>The updated timeline item.</returns>
+    [Authorize("Admin")]
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] TimelineItemDto timelineItem)
     {
@@ -73,6 +76,7 @@ public class TimelineItemController : BaseApiController
     /// </summary>
     /// <param name="id">The ID of the timeline item to delete.</param>
     /// <returns>The result of the deletion operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

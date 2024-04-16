@@ -1,4 +1,5 @@
 ﻿// Necessary usings
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Analytics;
 using Streetcode.BLL.MediatR.Analytics.StatisticRecords.Create;
@@ -16,6 +17,7 @@ namespace Streetcode.WebApi.Controllers.Analytics
     public class StatisticRecordController : BaseApiController
     {
         // Create statistic record
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] StatisticRecordDto statisticRecordDto)
         {
@@ -30,6 +32,7 @@ namespace Streetcode.WebApi.Controllers.Analytics
         }
 
         // Delete statistic record by id
+        [Authorize("Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

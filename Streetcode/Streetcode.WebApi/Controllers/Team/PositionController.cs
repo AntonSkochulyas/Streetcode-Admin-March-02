@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Team;
 using Streetcode.BLL.MediatR.Team.Create;
 using Streetcode.BLL.MediatR.Team.Position.GetAll;
@@ -25,6 +26,7 @@ namespace Streetcode.WebApi.Controllers.Team
         /// </summary>
         /// <param name="position">The position to create.</param>
         /// <returns>The created position.</returns>
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PositionDto position)
         {

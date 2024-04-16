@@ -7,6 +7,7 @@ using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Streetcode.WebApi.Controllers.Source
 {
@@ -74,6 +75,7 @@ namespace Streetcode.WebApi.Controllers.Source
         /// </summary>
         /// <param name="sourceLinkCategoryContentDto">The DTO containing the source link category data.</param>
         /// <returns>The created source link category.</returns>
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateSourceLink([FromBody] CreateSourceLinkCategoryContentDto sourceLinkCategoryContentDto)
         {
@@ -85,6 +87,7 @@ namespace Streetcode.WebApi.Controllers.Source
         /// </summary>
         /// <param name="sourceLinkCategoryContentDto">The DTO containing the updated source link category data.</param>
         /// <returns>The updated source link category.</returns>
+        [Authorize("Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateSourceLink([FromBody] UpdateSourceLinkCategoryContentDto sourceLinkCategoryContentDto)
         {
@@ -96,6 +99,7 @@ namespace Streetcode.WebApi.Controllers.Source
         /// </summary>
         /// <param name="id">The ID of the source link category to delete.</param>
         /// <returns>The result of the deletion operation.</returns>
+        [Authorize("Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteSourceLink([FromRoute] int id)
         {

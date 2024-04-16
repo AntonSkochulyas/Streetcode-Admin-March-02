@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Streetcode.TextContent;
 using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create;
 using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete;
@@ -28,6 +29,7 @@ namespace Streetcode.WebApi.Controllers.Streetcode.TextContent
         /// </summary>
         /// <param name="relatedTerm">The related term to create.</param>
         /// <returns>The created related term.</returns>
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] RelatedTermDto relatedTerm)
         {
@@ -40,6 +42,7 @@ namespace Streetcode.WebApi.Controllers.Streetcode.TextContent
         /// <param name="id">The ID of the related term to update.</param>
         /// <param name="relatedTerm">The related term to update.</param>
         /// <returns>The updated related term.</returns>
+        [Authorize("Admin")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] RelatedTermDto relatedTerm)
         {
@@ -51,6 +54,7 @@ namespace Streetcode.WebApi.Controllers.Streetcode.TextContent
         /// </summary>
         /// <param name="word">The word of the related term to delete.</param>
         /// <returns>The result of the deletion.</returns>
+        [Authorize("Admin")]
         [HttpDelete("{word}")]
         public async Task<IActionResult> Delete([FromRoute] string word)
         {

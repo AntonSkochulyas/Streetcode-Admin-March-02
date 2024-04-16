@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes;
 using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Create;
 using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete;
@@ -18,6 +19,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes
         /// </summary>
         /// <param name="authorShip">The authorship data.</param>
         /// <returns>The created authorship.</returns>
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AuthorShipDto authorShip)
         {
@@ -29,6 +31,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes
         /// </summary>
         /// <param name="id">The ID of the authorship to delete.</param>
         /// <returns>The result of the deletion operation.</returns>
+        [Authorize("Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -61,6 +64,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes
         /// </summary>
         /// <param name="authorShip">The updated authorship data.</param>
         /// <returns>The updated authorship.</returns>
+        [Authorize("Admin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] AuthorShipDto authorShip)
         {
