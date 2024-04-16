@@ -1,8 +1,10 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
 using Streetcode.DAL.Entities.Media;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
@@ -49,6 +51,23 @@ internal partial class RepositoryMocker
             IIncludableQueryable<StreetcodeContent, object>> include) =>
             {
                 return streetCodes.FirstOrDefault(predicate.Compile());
+            });
+
+        mockRepo.Setup(x => x.AudioRepository.Create(It.IsAny<Audio>()))
+            .Returns((Audio audio) =>
+            {
+                audios.Add(audio);
+                return audio;
+            });
+
+        mockRepo.Setup(x => x.AudioRepository.Delete(It.IsAny<Audio>()))
+            .Callback((Audio audio) =>
+            {
+                audio = audios.FirstOrDefault(x => x.Id == audio.Id);
+                if (audio is not null)
+                {
+                    audios.Remove(audio);
+                }
             });
 
         mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);

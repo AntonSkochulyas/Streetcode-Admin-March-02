@@ -11,7 +11,7 @@ namespace Streetcode.XUnitTest.Repositories.Media.Art
 		[Fact]
 		public void Repository_Create_Art_EqualsDescription()
 		{
-            //Arrange
+            // Arrange
             var mockRepo = RepositoryMocker.GetArtRepositoryMock();
             var repository = mockRepo.Object.ArtRepository;
             var artItemToAdd = new DAL.Entities.Media.Images.Art()

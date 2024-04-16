@@ -15,12 +15,20 @@ internal partial class RepositoryMocker
 {
     public static Mock<IRepositoryWrapper> GetSourceRepositoryMock()
     {
+        var images = new List<Image>()
+        {
+            new Image() { Id = 1, Base64 = "TestBlob1" },
+            new Image() { Id = 2, Base64 = "TestBlob2" },
+            new Image() { Id = 3, Base64 = "TestBlob3" },
+            new Image() { Id = 4, Base64 = "TestBlob4" }
+        };
+
         var sources = new List<SourceLinkCategory>()
         {
-            new SourceLinkCategory { Id = 1, Title = "First title", ImageId = 1, Image = new Image() { Id = 1, Base64 = "TestBlob1", } },
-            new SourceLinkCategory { Id = 2, Title = "Second title", ImageId = 2, Image = new Image() { Id = 2, Base64 = "TestBlob2", } },
-            new SourceLinkCategory { Id = 3, Title = "Third title", ImageId = 3, Image = new Image() { Id = 3, Base64 = "TestBlob3", } },
-            new SourceLinkCategory { Id = 4, Title = "Fourth title", ImageId = 4, Image = new Image() { Id = 4, Base64 = "TestBlob4", } },
+            new SourceLinkCategory { Id = 1, Title = "First title", ImageId = 1, Image = images[0] },
+            new SourceLinkCategory { Id = 2, Title = "Second title", ImageId = 2, Image = images[1] },
+            new SourceLinkCategory { Id = 3, Title = "Third title", ImageId = 3, Image = images[2] },
+            new SourceLinkCategory { Id = 4, Title = "Fourth title", ImageId = 4, Image = images[3] },
         };
 
         var streetcodeCategoryContents = new List<StreetcodeCategoryContent>()
@@ -89,6 +97,19 @@ internal partial class RepositoryMocker
                 IIncludableQueryable<StreetcodeContent, object>> include) =>
             {
                 return streetcodeContents.FirstOrDefault(predicate.Compile());
+            });
+
+        mockRepo.Setup(repo => repo.ImageRepository.GetFirstOrDefaultAsync(
+            It.IsAny<Expression<Func<Image, bool>>>(),
+            It.IsAny<Func<IQueryable<Image>,
+            IIncludableQueryable<Image, object>>>()))
+            .ReturnsAsync(
+            (
+                Expression<Func<Image, bool>> predicate,
+                Func<IQueryable<Image>,
+                IIncludableQueryable<Image, object>> include) =>
+            {
+                return images.FirstOrDefault(predicate.Compile());
             });
 
         mockRepo.Setup(x => x.SourceCategoryRepository

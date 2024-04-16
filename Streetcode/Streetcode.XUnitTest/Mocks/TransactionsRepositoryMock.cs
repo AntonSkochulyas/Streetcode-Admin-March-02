@@ -4,6 +4,8 @@ using Moq;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 using Streetcode.DAL.Entities.Transactions;
+using Streetcode.DAL.Entities.Sources;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 
 namespace Streetcode.XUnitTest.Mocks
 {
@@ -26,6 +28,23 @@ namespace Streetcode.XUnitTest.Mocks
                     It.IsAny<Expression<Func<TransactionLink, bool>>>(),
                     It.IsAny<Func<IQueryable<TransactionLink>, IIncludableQueryable<TransactionLink, object>>>()))
                 .ReturnsAsync(transactions);
+
+            mockRepo.Setup(x => x.TransactLinksRepository.Create(It.IsAny<TransactionLink>()))
+                .Returns((TransactionLink transactionLink) =>
+                {
+                    transactions.Add(transactionLink);
+                    return transactionLink;
+                });
+
+            mockRepo.Setup(x => x.TransactLinksRepository.Delete(It.IsAny<TransactionLink>()))
+            .Callback((TransactionLink transactionLink) =>
+            {
+                transactionLink = transactions.FirstOrDefault(x => x.Id == transactionLink.Id);
+                if (transactionLink is not null)
+                {
+                    transactions.Remove(transactionLink);
+                }
+            });
 
             return mockRepo;
         }
