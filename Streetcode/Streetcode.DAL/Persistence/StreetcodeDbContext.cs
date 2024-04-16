@@ -31,6 +31,7 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    public DbSet<UserAdditionalInfo> UsersAdditionalInfo { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Art>? Arts { get; set; }
     public DbSet<Audio>? Audios { get; set; }

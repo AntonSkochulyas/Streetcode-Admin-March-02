@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Create;
 using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Delete;
@@ -18,6 +19,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLin
         /// </summary>
         /// <param name="authorHyperLink">The author hyperlink DTO.</param>
         /// <returns>The result of the create operation.</returns>
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AuthorShipHyperLinkDto authorHyperLink)
         {
@@ -29,6 +31,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLin
         /// </summary>
         /// <param name="id">The ID of the author hyperlink to delete.</param>
         /// <returns>The result of the delete operation.</returns>
+        [Authorize("Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -61,6 +64,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLin
         /// </summary>
         /// <param name="authorHyperLink">The updated author hyperlink DTO.</param>
         /// <returns>The updated hyperlink.</returns>
+        [Authorize("Admin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] AuthorShipHyperLinkDto authorHyperLink)
         {

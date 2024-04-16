@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Media.Audio;
 using Streetcode.BLL.MediatR.Media.Audio.Create;
 using Streetcode.BLL.MediatR.Media.Audio.Delete;
@@ -62,6 +63,7 @@ public class AudioController : BaseApiController
     /// </summary>
     /// <param name="audio">The audio file to create.</param>
     /// <returns>The created audio file.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AudioFileBaseCreateDto audio)
     {
@@ -73,6 +75,7 @@ public class AudioController : BaseApiController
     /// </summary>
     /// <param name="id">The ID of the audio file to delete.</param>
     /// <returns>The result of the delete operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

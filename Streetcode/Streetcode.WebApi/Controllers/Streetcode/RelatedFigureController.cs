@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Create;
 using Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Delete;
@@ -39,6 +40,7 @@ public class RelatedFigureController : BaseApiController
     /// <param name="ObserverId">The ID of the observer.</param>
     /// <param name="TargetId">The ID of the target.</param>
     /// <returns>The created figure.</returns>
+    [Authorize("Admin")]
     [HttpPost("{ObserverId:int}&{TargetId:int}")]
     public async Task<IActionResult> Create([FromRoute] int ObserverId, int TargetId)
     {
@@ -51,6 +53,7 @@ public class RelatedFigureController : BaseApiController
     /// <param name="ObserverId">The ID of the observer.</param>
     /// <param name="TargetId">The ID of the target.</param>
     /// <returns>The result of the delete operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{ObserverId:int}&{TargetId:int}")]
     public async Task<IActionResult> Delete([FromRoute] int ObserverId, int TargetId)
     {

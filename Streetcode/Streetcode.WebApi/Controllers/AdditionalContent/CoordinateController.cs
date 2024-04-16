@@ -1,4 +1,5 @@
 ﻿// Necessary usings
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
 using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
@@ -29,6 +30,7 @@ public class CoordinateController : BaseApiController
     /// </summary>
     /// <param name="coordinateDto">The coordinate DTO.</param>
     /// <returns>The created coordinate.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] StreetcodeCoordinateDto coordinateDto)
     {
@@ -40,6 +42,7 @@ public class CoordinateController : BaseApiController
     /// </summary>
     /// <param name="id">The id of the coordinate to delete.</param>
     /// <returns>The result of the delete operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

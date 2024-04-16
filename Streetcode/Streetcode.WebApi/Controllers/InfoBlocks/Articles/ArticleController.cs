@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.MediatR.InfoBlocks.Articles.Create;
 using Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete;
@@ -18,6 +19,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.Articles
         /// </summary>
         /// <param name="article">The article data.</param>
         /// <returns>The created article.</returns>
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ArticleDto article)
         {
@@ -29,6 +31,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.Articles
         /// </summary>
         /// <param name="id">The ID of the article to delete.</param>
         /// <returns>The result of the delete operation.</returns>
+        [Authorize("Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -61,6 +64,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.Articles
         /// </summary>
         /// <param name="article">The updated article data.</param>
         /// <returns>The updated article.</returns>
+        [Authorize("Admin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] ArticleDto article)
         {

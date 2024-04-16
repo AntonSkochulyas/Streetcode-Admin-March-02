@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Media.Images;
 using Streetcode.BLL.MediatR.Media.ImageMain.Create;
@@ -39,6 +40,7 @@ public class ImageMainController : BaseApiController
     /// </summary>
     /// <param name="image">The image data.</param>
     /// <returns>The created image.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ImageFileBaseCreateDto image)
     {
@@ -50,6 +52,7 @@ public class ImageMainController : BaseApiController
     /// </summary>
     /// <param name="id">The ID of the image to delete.</param>
     /// <returns>The result of the delete operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {

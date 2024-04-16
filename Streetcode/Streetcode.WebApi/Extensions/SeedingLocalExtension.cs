@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Streetcode.BLL.Services.BlobStorageService;
@@ -15,6 +17,7 @@ using Streetcode.DAL.Entities.Streetcode.Types;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Transactions;
+using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Realizations.Base;
@@ -81,6 +84,59 @@ namespace Streetcode.WebApi.Extensions
                             });
 
                         await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.UsersAdditionalInfo.Any())
+                    {
+                        var userAdditionalInfo = new UserAdditionalInfo()
+                        {
+                            Age = 18,
+                            Email = "admin@gmail.com",
+                            Phone = "+380630000200",
+                            FirstName = "Admin first name",
+                            SecondName = "Admin second name",
+                            ThirdName = "Admin third name"
+                        };
+
+                        dbContext.Add(userAdditionalInfo);
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.ApplicationUsers.Any())
+                    {
+                        // Получаем UserAdditionalInfo из базы данных
+                        var userAdditionalInfo = await dbContext.UsersAdditionalInfo.FirstOrDefaultAsync();
+
+                        var adminUser = new ApplicationUser()
+                        {
+                            UserName = "Admin1",
+                            UserAdditionalInfoId = userAdditionalInfo.Id,
+                            UserAdditionalInfo = userAdditionalInfo
+                        };
+
+                        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                        var result = await userManager.CreateAsync(adminUser, "Admin_test_1");
+
+                        if (result.Succeeded)
+                        {
+                            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                            {
+                                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                            }
+
+                            if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                            {
+                                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                            }
+
+                            await userManager.AddToRoleAsync(adminUser, UserRoles.Admin);
+
+                            await dbContext.SaveChangesAsync();
+                        }
                     }
 
                     if (!dbContext.Terms.Any())

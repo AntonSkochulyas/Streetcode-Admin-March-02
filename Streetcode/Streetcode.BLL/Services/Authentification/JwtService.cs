@@ -1,10 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Streetcode.BLL.Dto;
 using Streetcode.BLL.Interfaces.Authentification;
 using Streetcode.DAL.Entities.Users;
 
@@ -17,6 +18,7 @@ namespace Streetcode.BLL.Services.Authentification
         public JwtService(IConfiguration configuration)
         {
             _configuration = configuration;
+          
         }
 
         public JwtSecurityToken CreateToken(List<Claim> authClaims)
@@ -64,5 +66,7 @@ namespace Streetcode.BLL.Services.Authentification
 
             return principal;
         }
+
+      
     }
 }

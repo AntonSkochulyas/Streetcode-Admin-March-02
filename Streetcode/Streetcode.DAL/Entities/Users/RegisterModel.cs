@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Streetcode.DAL.Entities.Users
 {
-    public class UserRegisterModel
+    public class RegisterModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Serilog;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.Services.Instagram;
 using Streetcode.BLL.Services.Payment;
@@ -47,6 +49,23 @@ public static class ConfigureHostBuilderExtensions
         {
             loggerConfiguration
                 .ReadFrom.Configuration(builder.Configuration);
+        });
+    }
+
+    public static void ConfigurePolicy(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Default", new AuthorizationPolicyBuilder()
+         .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+         .RequireAuthenticatedUser()
+         .Build());
+
+            options.AddPolicy("Admin", new AuthorizationPolicyBuilder()
+                .RequireRole("Admin")
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build());
         });
     }
 }

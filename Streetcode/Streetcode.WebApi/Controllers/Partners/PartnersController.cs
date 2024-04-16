@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Partners;
 using Streetcode.BLL.MediatR.Partners.Create;
@@ -60,6 +61,7 @@ public class PartnersController : BaseApiController
     /// </summary>
     /// <param name="partner">The partner to create.</param>
     /// <returns>The created partner.</returns>
+    [Authorize("Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePartnerDto partner)
     {
@@ -71,6 +73,7 @@ public class PartnersController : BaseApiController
     /// </summary>
     /// <param name="partner">The partner to update.</param>
     /// <returns>The updated partner.</returns>
+    [Authorize("Admin")]
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] CreatePartnerDto partner)
     {
@@ -82,6 +85,7 @@ public class PartnersController : BaseApiController
     /// </summary>
     /// <param name="id">The ID of the partner to delete.</param>
     /// <returns>The result of the deletion operation.</returns>
+    [Authorize("Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
