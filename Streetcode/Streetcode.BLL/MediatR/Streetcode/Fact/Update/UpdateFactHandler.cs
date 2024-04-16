@@ -37,6 +37,14 @@ public class UpdateFactHandler : IRequestHandler<UpdateFactCommand, Result<FactD
             return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerImageWithIdDoesNotExistError, request.Fact.ImageId), request);
         }
 
+        if(request.Fact.OrderNumber is not null)
+        {
+            if (await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(x => x.StreetcodeId == request.Fact.StreetcodeId && x.OrderNumber == request.Fact.OrderNumber) is not null)
+            {
+                return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerOrderNumberIsNotUnique, request.Fact.ImageId), request);
+            }
+        }
+
         var fact = _mapper.Map<DAL.Entities.Streetcode.TextContent.Fact>(request.Fact);
 
         if (fact is null)

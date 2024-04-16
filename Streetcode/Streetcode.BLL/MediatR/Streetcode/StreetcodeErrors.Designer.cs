@@ -600,7 +600,18 @@ namespace Streetcode.BLL.MediatR.Streetcode {
                 return ResourceManager.GetString("UpdateFactHandlerImageWithIdDoesNotExistError", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to The image with id {0} does not exist..
+        /// </summary>
+        internal static string UpdateFactHandlerOrderNumberIsNotUnique
+        {
+            get
+            {
+                return ResourceManager.GetString("UpdateFactHandlerOrderNumberIsNotUnique", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to The streetcode with id {0} does not exist..
         /// </summary>
