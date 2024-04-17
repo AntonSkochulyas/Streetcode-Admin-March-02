@@ -9,6 +9,8 @@ namespace Streetcode.BLL.Mapping.InfoBlocks
         public InfoBlockProfile()
         {
             CreateMap<InfoBlock, InfoBlockDto>().ReverseMap();
+
+            CreateMap<InfoBlock, InfoBlockCreateDto>().ReverseMap();
         }
     }
 }

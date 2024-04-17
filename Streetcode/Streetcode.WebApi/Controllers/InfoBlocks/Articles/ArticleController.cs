@@ -21,7 +21,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.Articles
         /// <returns>The created article.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ArticleDto article)
+        public async Task<IActionResult> Create([FromBody] ArticleCreateDto article)
         {
             return HandleResult(await Mediator.Send(new CreateArticleCommand(article)));
         }

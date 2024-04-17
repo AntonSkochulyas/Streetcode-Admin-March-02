@@ -12,6 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create
     /// <param name="newInfoBlock">
     /// New infoblock.
     /// </param>
-    public record CreateInfoBlockCommand(InfoBlockDto? NewInfoBlock)
+    public record CreateInfoBlockCommand(InfoBlockCreateDto? NewInfoBlock)
         : IRequest<Result<InfoBlockDto>>;
 }

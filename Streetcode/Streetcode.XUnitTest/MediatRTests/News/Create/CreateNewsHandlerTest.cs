@@ -38,7 +38,7 @@
         {
             // Arrange
             var handler = new CreateNewsHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            NewsDto? newsDto = null;
+            NewsCreateDto? newsDto = null;
             var streetcodeCoordinate = new CreateNewsCommand(newsDto);
 
             // Act
@@ -53,9 +53,8 @@
         {
             // Arrange
             var handler = new CreateNewsHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            NewsDto? newsDto = new NewsDto()
+            NewsCreateDto? newsDto = new NewsCreateDto()
             {
-                Id = 1,
                 Text = "Text1",
                 ImageId = 1,
                 CreationDate = DateTime.Now,

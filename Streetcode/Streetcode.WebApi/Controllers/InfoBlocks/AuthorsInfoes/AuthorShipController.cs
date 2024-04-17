@@ -21,7 +21,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes
         /// <returns>The created authorship.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AuthorShipDto authorShip)
+        public async Task<IActionResult> Create([FromBody] AuthorShipCreateDto authorShip)
         {
             return HandleResult(await Mediator.Send(new CreateAuthorShipCommand(authorShip)));
         }

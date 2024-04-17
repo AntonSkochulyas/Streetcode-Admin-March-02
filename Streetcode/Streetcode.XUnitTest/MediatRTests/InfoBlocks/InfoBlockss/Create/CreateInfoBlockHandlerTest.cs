@@ -53,7 +53,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Create
             // Arrange
             var handler = new CreateInfoBlockHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            InfoBlockDto? infoBlockeDto = null;
+            InfoBlockCreateDto? infoBlockeDto = null;
 
             var newInfoBlock = new CreateInfoBlockCommand(infoBlockeDto);
 
@@ -74,9 +74,8 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Create
             // Arrange
             var handler = new CreateInfoBlockHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            InfoBlockDto? infoBlockDto = new InfoBlockDto()
+            InfoBlockCreateDto? infoBlockDto = new InfoBlockCreateDto()
             {
-                Id = 1,
                 ArticleId = 1,
                 Article = new Article { Id = 1, Text = "First Text", Title = "First Title" },
                 VideoURL = "www.youtube.com",

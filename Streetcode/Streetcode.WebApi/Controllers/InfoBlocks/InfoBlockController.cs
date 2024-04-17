@@ -21,7 +21,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks
         /// <returns>The created InfoBlock.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] InfoBlockDto infoBlock)
+        public async Task<IActionResult> Create([FromBody] InfoBlockCreateDto infoBlock)
         {
             return HandleResult(await Mediator.Send(new CreateInfoBlockCommand(infoBlock)));
         }

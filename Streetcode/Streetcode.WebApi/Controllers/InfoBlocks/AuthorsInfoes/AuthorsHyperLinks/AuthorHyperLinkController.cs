@@ -21,7 +21,7 @@ namespace Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLin
         /// <returns>The result of the create operation.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AuthorShipHyperLinkDto authorHyperLink)
+        public async Task<IActionResult> Create([FromBody] AuthorShipHyperLinkCreateDto authorHyperLink)
         {
             return HandleResult(await Mediator.Send(new CreateAuthorShipHyperLinkCommand(authorHyperLink)));
         }
