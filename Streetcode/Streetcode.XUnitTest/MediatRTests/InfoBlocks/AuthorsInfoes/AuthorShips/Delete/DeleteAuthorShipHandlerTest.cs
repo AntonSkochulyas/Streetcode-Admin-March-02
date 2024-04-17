@@ -1,73 +1,80 @@
-﻿//// <copyright file="DeleteAuthorShipHandlerTest.cs" company="PlaceholderCompany">
-//// Copyright (c) PlaceholderCompany. All rights reserved.
-//// </copyright>
+namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
+{
+    using AutoMapper;
+    using FluentAssertions;
+    using Moq;
+    using Streetcode.BLL.Interfaces.Logging;
+    using Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes;
+    using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete;
+    using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
+    using Streetcode.DAL.Repositories.Interfaces.Base;
+    using Streetcode.XUnitTest.Mocks;
+    using Xunit;
 
-//namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
-//{
-//    using FluentAssertions;
-//    using Moq;
-//    using Streetcode.BLL.Interfaces.Logging;
-//    using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Delete;
-//    using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
-//    using Streetcode.DAL.Repositories.Interfaces.Base;
-//    using Streetcode.XUnitTest.Mocks;
-//    using Xunit;
+    /// <summary>
+    /// Tested successfully.
+    /// </summary>
+    public class DeleteAuthorShipHandlerTest
+    {
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
+        private readonly IMapper _mapper;
 
-//    /// <summary>
-//    /// Tested successfully.
-//    /// </summary>
-//    public class DeleteAuthorShipHandlerTest
-//    {
-//        private readonly Mock<IRepositoryWrapper> _mockRepository;
-//        private readonly Mock<ILoggerService> _mockLogger;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteAuthorShipHandlerTest"/> class.
+        /// </summary>
+        public DeleteAuthorShipHandlerTest()
+        {
+            _mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
 
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="DeleteAuthorShipHandlerTest"/> class.
-//        /// </summary>
-//        public DeleteAuthorShipHandlerTest()
-//        {
-//            _mockRepository = RepositoryMocker.GetAuthorShipRepositoryMock();
-//            _mockLogger = new Mock<ILoggerService>();
-//        }
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<AuthorShipProfile>();
+            });
 
-//        /// <summary>
-//        /// Delete WrongId IsFailed Should Be True test.
-//        /// </summary>
-//        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-//        [Fact]
-//        public async Task HandlerWrongIdIsFailedShouldBeTrue()
-//        {
-//            // Arrange
-//            var handler = new DeleteAuthorShipHandler(_mockRepository.Object, _mockLogger.Object);
+            _mapper = mapperConfig.CreateMapper();
 
-//            int wrongId = 10;
-//            var request = new DeleteAuthorShipCommand(wrongId);
+            _mockLogger = new Mock<ILoggerService>();
+        }
 
-//            // Act
-//            var result = await handler.Handle(request, CancellationToken.None);
+        /// <summary>
+        /// Delete WrongId IsFailed Should Be True test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task HandlerWrongIdIsFailedShouldBeTrue()
+        {
+            // Arrange
+            var handler = new DeleteAuthorShipHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
-//            // Assert
-//            result.IsFailed.Should().BeTrue();
-//        }
+            int wrongId = 10;
+            var request = new DeleteAuthorShipCommand(wrongId);
 
-//        /// <summary>
-//        /// Correct Id Delete Should Be Called test.
-//        /// </summary>
-//        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-//        [Fact]
-//        public async Task HandlerCorrectIdDeleteShouldBeCalled()
-//        {
-//            // Arrange
-//            var handler = new DeleteAuthorShipHandler(_mockRepository.Object, _mockLogger.Object);
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
 
-//            int correctId = 1;
-//            var request = new DeleteAuthorShipCommand(correctId);
+            // Assert
+            result.IsFailed.Should().BeTrue();
+        }
 
-//            // Act
-//            var result = await handler.Handle(request, CancellationToken.None);
+        /// <summary>
+        /// Correct Id Delete Should Be Called test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task HandlerCorrectIdDeleteShouldBeCalled()
+        {
+            // Arrange
+            var handler = new DeleteAuthorShipHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
-//            // Assert
-//            _mockRepository.Verify(x => x.AuthorShipRepository.Delete(It.IsAny<AuthorShip>()), Times.Once);
-//        }
-//    }
-//}
+            int correctId = 1;
+            var request = new DeleteAuthorShipCommand(correctId);
+
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert
+            _mockRepository.Verify(x => x.AuthorShipRepository.Delete(It.IsAny<AuthorShip>()), Times.Once);
+        }
+    }
+}

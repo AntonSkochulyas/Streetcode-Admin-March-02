@@ -33,15 +33,15 @@
         {
             // Arrange
             var handler = new CreateCoordinateHandler(_mockRepository.Object, _mapper);
-            StreetcodeCoordinateDto? streetcodeCoordinateDTO = null;
 
-            // var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
-
+            CreateStreetcodeCoordinateDto? streetcodeCoordinateDTO = null;
+            var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
+          
             // Act
-            // var result = await handler.Handle(streetcodeCoordinate, CancellationToken.None);
+            var result = await handler.Handle(streetcodeCoordinate, CancellationToken.None);
 
             // Assert
-            // result.IsFailed.Should().BeTrue();
+            result.IsFailed.Should().BeTrue();
         }
 
         [Fact]
@@ -49,21 +49,20 @@
         {
             // Arrange
             var handler = new CreateCoordinateHandler(_mockRepository.Object, _mapper);
-            var streetcodeCoordinateDTO = new StreetcodeCoordinateDto()
+            var streetcodeCoordinateDTO = new CreateStreetcodeCoordinateDto()
             {
                 StreetcodeId = 1,
-                Id = 1,
                 Latitude = 1,
                 Longtitude = 1,
             };
 
-            //var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
+            var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
 
             // Act
-            //var result = await handler.Handle(streetcodeCoordinate, CancellationToken.None);
+            var result = await handler.Handle(streetcodeCoordinate, CancellationToken.None);
 
             // Assert
-            //result.IsSuccess.Should().BeTrue();
+            result.IsSuccess.Should().BeTrue();
         }
     }
 }
