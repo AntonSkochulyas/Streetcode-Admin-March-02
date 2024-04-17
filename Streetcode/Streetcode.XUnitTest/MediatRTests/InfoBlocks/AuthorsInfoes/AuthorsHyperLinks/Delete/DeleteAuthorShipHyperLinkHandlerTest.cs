@@ -4,9 +4,12 @@
 
 namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Delete
 {
+    using AutoMapper;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.Logging;
+    using Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes;
+    using Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
     using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Delete;
     using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
     using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -20,6 +23,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteAuthorShipHyperLinkHandlerTest"/> class.
@@ -27,6 +31,13 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public DeleteAuthorShipHyperLinkHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetAuthorShipHyperLinkRepositoryMock();
+
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<AuthorShipHyperLinkProfile>();
+            });
+
+            _mapper = mapperConfig.CreateMapper();
 
             _mockLogger = new Mock<ILoggerService>();
         }
@@ -39,7 +50,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteAuthorShipHyperLinkHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteAuthorShipHyperLinkHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int wrongId = 10;
             var request = new DeleteAuthorShipHyperLinkCommand(wrongId);
@@ -59,7 +70,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteAuthorShipHyperLinkHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteAuthorShipHyperLinkHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int correctId = 1;
             var request = new DeleteAuthorShipHyperLinkCommand(correctId);
