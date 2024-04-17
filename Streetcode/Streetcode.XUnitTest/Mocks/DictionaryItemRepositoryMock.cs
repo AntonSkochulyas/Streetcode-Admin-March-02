@@ -22,10 +22,10 @@ internal partial class RepositoryMocker
 
         var dictionaryItems = new List<DictionaryItem>()
             {
-                new DictionaryItem { Id = 1, Name = "First Dictionary", Description = "First Description"},
-                new DictionaryItem { Id = 2, Name = "Second Dictionary", Description = "Second Description"},
-                new DictionaryItem { Id = 3, Name = "Third Dictionary", Description = "Third Description"},
-                new DictionaryItem { Id = 4, Name = "Fourth Dictionary", Description = "Fourth Description"},
+                new DictionaryItem { Id = 1, Word = "First Dictionary", Description = "First Description"},
+                new DictionaryItem { Id = 2, Word = "Second Dictionary", Description = "Second Description"},
+                new DictionaryItem { Id = 3, Word = "Third Dictionary", Description = "Third Description"},
+                new DictionaryItem { Id = 4, Word = "Fourth Dictionary", Description = "Fourth Description"},
             };
 
         mockRepo.Setup(x => x.DictionaryItemRepository.GetAllAsync(It.IsAny<Expression<Func<DictionaryItem, bool>>>(), It.IsAny<Func<IQueryable<DictionaryItem>, IIncludableQueryable<DictionaryItem, object>>>()))

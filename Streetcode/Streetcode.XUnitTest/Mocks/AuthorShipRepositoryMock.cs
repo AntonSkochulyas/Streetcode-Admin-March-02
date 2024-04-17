@@ -7,7 +7,6 @@ namespace Streetcode.XUnitTest.Mocks;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
-using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 
@@ -28,28 +27,24 @@ internal partial class RepositoryMocker
                     Id = 1,
                     Text = "First Text",
                     AuthorShipHyperLinkId = 1,
-                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL"},
                 },
                 new AuthorShip
                 {
                     Id = 2,
                     Text = "Second Text",
                     AuthorShipHyperLinkId = 2,
-                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 2, Title = "Second Title", URL = "Second URL"},
                 },
                 new AuthorShip
                 {
                     Id = 3,
                     Text = "Third Text",
                     AuthorShipHyperLinkId = 3,
-                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 3, Title = "Third Title", URL = "Third URL"},
                 },
                 new AuthorShip
                 {
                     Id = 4,
                     Text = "Fourth Text",
                     AuthorShipHyperLinkId = 4,
-                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 4, Title = "Fourth Title", URL = "Fourth URL"},
                 },
             };
 

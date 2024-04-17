@@ -14,7 +14,7 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Create
             int maxNameLength = 50;
             int maxDescriptionLength = 500;
 
-            RuleFor(command => command.CreateDictionaryItemDto.Name)
+            RuleFor(command => command.CreateDictionaryItemDto.Word)
                 .MaximumLength(maxNameLength)
                 .WithMessage("Name length of dictionary item must not be longer than 50 symbols.");
 
