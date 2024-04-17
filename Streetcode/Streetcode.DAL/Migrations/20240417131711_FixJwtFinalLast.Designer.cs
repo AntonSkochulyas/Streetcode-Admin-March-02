@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Streetcode.DAL.Persistence;
 
@@ -11,9 +12,10 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    partial class StreetcodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417131711_FixJwtFinalLast")]
+    partial class FixJwtFinalLast
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,27 +273,6 @@ namespace Streetcode.DAL.Migrations
                     b.ToTable("qr_coordinates", "coordinates");
                 });
 
-            modelBuilder.Entity("Streetcode.DAL.Entities.Dictionaries.DictionaryItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Word")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DictionaryItems");
-                });
-
             modelBuilder.Entity("Streetcode.DAL.Entities.Feedback.Response", b =>
                 {
                     b.Property<int>("Id")
@@ -316,107 +297,6 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("responses", "feedback");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.Articles.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Text")
-                        .HasMaxLength(15000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorShip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AuthorShipHyperLinkId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthorShips");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorShipHyperLink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AuthorShipId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorShipId");
-
-                    b.ToTable("AuthorShipHyperLinks");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.InfoBlock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AuthorShipId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TermId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VideoURL")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId")
-                        .IsUnique();
-
-                    b.HasIndex("AuthorShipId");
-
-                    b.HasIndex("TermId")
-                        .IsUnique();
-
-                    b.ToTable("InfoBlocks");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Media.Audio", b =>
@@ -1268,12 +1148,6 @@ namespace Streetcode.DAL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AccessToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("AccessTokenExpiryTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -1537,43 +1411,6 @@ namespace Streetcode.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("StreetcodeCoordinate");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorShipHyperLink", b =>
-                {
-                    b.HasOne("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorShip", "AuthorShip")
-                        .WithMany("AuthorShipHyperLinks")
-                        .HasForeignKey("AuthorShipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AuthorShip");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.InfoBlock", b =>
-                {
-                    b.HasOne("Streetcode.DAL.Entities.InfoBlocks.Articles.Article", "Article")
-                        .WithOne("InfoBlock")
-                        .HasForeignKey("Streetcode.DAL.Entities.InfoBlocks.InfoBlock", "ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorShip", "AuthorShip")
-                        .WithMany("InfoBlocks")
-                        .HasForeignKey("AuthorShipId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Streetcode.DAL.Entities.Streetcode.TextContent.Term", "Term")
-                        .WithOne("InfoBlock")
-                        .HasForeignKey("Streetcode.DAL.Entities.InfoBlocks.InfoBlock", "TermId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("AuthorShip");
-
-                    b.Navigation("Term");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Media.Images.Art", b =>
@@ -1956,18 +1793,6 @@ namespace Streetcode.DAL.Migrations
                     b.Navigation("StreetcodeTagIndices");
                 });
 
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.Articles.Article", b =>
-                {
-                    b.Navigation("InfoBlock");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorShip", b =>
-                {
-                    b.Navigation("AuthorShipHyperLinks");
-
-                    b.Navigation("InfoBlocks");
-                });
-
             modelBuilder.Entity("Streetcode.DAL.Entities.Media.Audio", b =>
                 {
                     b.Navigation("Streetcode");
@@ -2036,8 +1861,6 @@ namespace Streetcode.DAL.Migrations
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Streetcode.TextContent.Term", b =>
                 {
-                    b.Navigation("InfoBlock");
-
                     b.Navigation("RelatedTerms");
                 });
 

@@ -22,6 +22,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Revoke.RevokeByUsername
                 return Result.Fail("Invalid user name.");
             }
 
+            user.AccessToken = null;
             user.RefreshToken = null;
             await _userManager.UpdateAsync(user);
 

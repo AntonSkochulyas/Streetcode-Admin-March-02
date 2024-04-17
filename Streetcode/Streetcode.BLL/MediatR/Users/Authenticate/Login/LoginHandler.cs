@@ -42,9 +42,13 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
 
-                var token = _jwtService.CreateToken(authClaims);
+                var accessToken = _jwtService.CreateToken(authClaims);
                 var refreshToken = _jwtService.GenerateRefreshToken();
                 _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInDays"], out int refreshTokenValidityInDays);
+                _ = int.TryParse(_configuration["JWT:AccessTokenValidityInMinutes"], out int accessTokenValidityInMinutes);
+
+                user.AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken);
+                user.AccessTokenExpiryTime = DateTime.Now.AddMinutes(accessTokenValidityInMinutes);
 
                 user.RefreshToken = refreshToken;
                 user.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenValidityInDays);
@@ -53,9 +57,9 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
 
                 return Result.Ok(new Response
                 {
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
                     RefreshToken = refreshToken,
-                    Expiration = token.ValidTo,
+                    Expiration = accessToken.ValidTo,
                 });
             }
 

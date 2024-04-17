@@ -8,8 +8,8 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
 {
     public class Response
     {
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
+        public string? AccessToken { get; set; }
+        public string? RefreshToken { get; set; }
         public DateTime Expiration { get; set; }
     }
 }

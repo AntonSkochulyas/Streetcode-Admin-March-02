@@ -66,14 +66,6 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllers();
 
-// To-DO: uncomment to require authorization for all controllers except marked with [AllowAnonymous]
-
-/*builder.Services.AddControllers(options =>
-{
-    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-    options.Filters.Add(new AuthorizeFilter(policy));
-});*/
-
 var app = builder.Build();
 
 if (app.Environment.EnvironmentName == "Local")
