@@ -44,7 +44,7 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetByStreetcodeId
             var subtitle = await _repositoryWrapper.SubtitleRepository
                 .GetFirstOrDefaultAsync(Subtitle => Subtitle.StreetcodeId == request.StreetcodeId);
 
-            NullResult<SubtitleDto> result = new();
+            NullResult<SubtitleDto> result = new NullResult<SubtitleDto>();
             result.WithValue(_mapper.Map<SubtitleDto>(subtitle));
             return result;
         }
