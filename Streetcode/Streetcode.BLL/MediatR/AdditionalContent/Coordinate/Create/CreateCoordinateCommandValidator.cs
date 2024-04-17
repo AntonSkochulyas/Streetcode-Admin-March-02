@@ -11,11 +11,11 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create
     {
         public CreateCoordinateCommandValidator()
         {
-            RuleFor(command => command.StreetcodeCoordinate.Latitude)
+            RuleFor(command => command.CreateStreetcodeCoordinateDto.Latitude)
                 .NotEmpty()
                 .WithMessage(CoordinateErrors.CreateCoordinateCommandValidatorLatitudeIsRequiredError);
 
-            RuleFor(command => command.StreetcodeCoordinate.Longtitude)
+            RuleFor(command => command.CreateStreetcodeCoordinateDto.Longtitude)
                 .NotEmpty()
                 .WithMessage(CoordinateErrors.CreateCoordinateCommandValidatorLongtitudeIsRequiredError);
         }

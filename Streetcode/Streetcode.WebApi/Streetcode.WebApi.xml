@@ -16,11 +16,11 @@
             <param name="streetcodeId">The id of the streetcode to find.</param>
             <returns>Coordinates.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController.Create(Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types.StreetcodeCoordinateDto)">
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController.Create(Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types.CreateStreetcodeCoordinateDto)">
             <summary>
             Create a new coordinate.
             </summary>
-            <param name="coordinateDto">The coordinate DTO.</param>
+            <param name="createStreetcodeCoordinateDto">The create coordinate DTO.</param>
             <returns>The created coordinate.</returns>
         </member>
         <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController.Delete(System.Int32)">
@@ -184,11 +184,11 @@
             Represents a controller for managing dictionary items.
             </summary>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.Create(Streetcode.BLL.Dto.Dictionaries.DictionaryItemDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.Create(Streetcode.BLL.Dto.Dictionaries.CreateDictionaryItemDto)">
             <summary>
             Creates a new dictionary item.
             </summary>
-            <param name="dictionaryItem">The dictionary item to create.</param>
+            <param name="createDictionaryItemDto">The dictionary item to create.</param>
             <returns>Dictionary item.</returns>
         </member>
         <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.Delete(System.Int32)">

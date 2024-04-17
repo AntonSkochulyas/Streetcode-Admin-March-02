@@ -15,7 +15,6 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Update
     using Streetcode.DAL.Entities.InfoBlocks;
     using Streetcode.DAL.Entities.InfoBlocks.Articles;
     using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
-    using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;
@@ -92,7 +91,6 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Update
                     Id = 1,
                     Text = "First Text",
                     AuthorShipHyperLinkId = 1,
-                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
                 },
             };
 
@@ -127,7 +125,6 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Update
                     Id = 1,
                     Text = "First Text",
                     AuthorShipHyperLinkId = 1,
-                    AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
                 },
             };
 

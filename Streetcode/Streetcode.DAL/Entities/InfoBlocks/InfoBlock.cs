@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Streetcode.DAL.Entities.InfoBlocks.Articles;
 using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Entities.Streetcode.TextContent;
 
 namespace Streetcode.DAL.Entities.InfoBlocks
 {
@@ -14,8 +15,10 @@ namespace Streetcode.DAL.Entities.InfoBlocks
         public int Id { get; set; }
         public int ArticleId { get; set; }
         public Article? Article { get; set; }
-        public string? VideoURL { get; set; }
         public int? AuthorShipId { get; set; }
+        public string? VideoURL { get; set; }
+        public int TermId { get; set; }
+        public Term? Term { get; set; }
 
         public AuthorShip? AuthorShip
         {

@@ -31,7 +31,7 @@ public class CreateCoordinateHandler : IRequestHandler<CreateCoordinateCommand, 
     public async Task<Result<StreetcodeCoordinateDto>> Handle(CreateCoordinateCommand request, CancellationToken cancellationToken)
     {
         // Map entity from request to DAL StreetcodeCoordinate
-        var mappedStreetcodeCoordinate = _mapper.Map<StreetcodeCoordinate>(request.StreetcodeCoordinate);
+        var mappedStreetcodeCoordinate = _mapper.Map<StreetcodeCoordinate>(request.CreateStreetcodeCoordinateDto);
 
         // If can not map entity from request - > return Result.Fail with error from resource file
         if (mappedStreetcodeCoordinate is null)

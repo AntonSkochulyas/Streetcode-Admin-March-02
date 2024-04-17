@@ -11,7 +11,6 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes;
     using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Create;
-    using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;
@@ -78,12 +77,6 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
                 Id = 1,
                 Text = "First Text",
                 AuthorShipHyperLinkId = 1,
-                AuthorShipHyperLink = new AuthorShipHyperLink
-                {
-                    Id = 1,
-                    Title = "First Title",
-                    URL = "First URL",
-                },
             };
 
             var newAuthorShip = new CreateAuthorShipCommand(authorShipDto);

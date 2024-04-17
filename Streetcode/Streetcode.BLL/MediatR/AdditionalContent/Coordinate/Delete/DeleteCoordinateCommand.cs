@@ -1,6 +1,7 @@
 ﻿// Necessary usings
 using FluentResults;
 using MediatR;
+using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
 
 // Necessary namespaces
@@ -11,4 +12,4 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Delete;
 /// </summary>
 /// <param name="Id"></param>
 public record DeleteCoordinateCommand(int Id)
-    : IRequest<Result<StreetcodeCoordinate>>;
+    : IRequest<Result<StreetcodeCoordinateDto>>;

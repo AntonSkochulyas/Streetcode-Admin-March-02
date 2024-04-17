@@ -33,9 +33,10 @@
         {
             // Arrange
             var handler = new CreateCoordinateHandler(_mockRepository.Object, _mapper);
-            StreetcodeCoordinateDto? streetcodeCoordinateDTO = null;
-            var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
 
+            CreateStreetcodeCoordinateDto? streetcodeCoordinateDTO = null;
+            var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
+          
             // Act
             var result = await handler.Handle(streetcodeCoordinate, CancellationToken.None);
 
@@ -48,10 +49,9 @@
         {
             // Arrange
             var handler = new CreateCoordinateHandler(_mockRepository.Object, _mapper);
-            var streetcodeCoordinateDTO = new StreetcodeCoordinateDto()
+            var streetcodeCoordinateDTO = new CreateStreetcodeCoordinateDto()
             {
                 StreetcodeId = 1,
-                Id = 1,
                 Latitude = 1,
                 Longtitude = 1,
             };

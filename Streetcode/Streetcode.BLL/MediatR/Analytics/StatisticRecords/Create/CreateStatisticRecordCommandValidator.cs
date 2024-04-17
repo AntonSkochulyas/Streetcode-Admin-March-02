@@ -15,7 +15,7 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.Create
         // Constructor
         public CreateStatisticRecordCommandValidator()
         {
-            RuleFor(command => command.StatisticRecordDto.Address).NotEmpty()
+            RuleFor(command => command.CreateStatisticRecordDto.Address).NotEmpty()
                 .MaximumLength(_addressMaxLength).WithMessage(string.Format(StatisticRecordsErrors.CreateStatisticRecordCommandValidatorAddressMaxLengthError, _addressMaxLength));
         }
     }

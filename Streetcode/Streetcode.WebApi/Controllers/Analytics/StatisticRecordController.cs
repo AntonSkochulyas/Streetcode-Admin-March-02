@@ -19,9 +19,9 @@ namespace Streetcode.WebApi.Controllers.Analytics
         // Create statistic record
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] StatisticRecordDto statisticRecordDto)
+        public async Task<IActionResult> Create([FromBody] CreateStatisticRecordDto createStatisticRecordDto)
         {
-            return HandleResult(await Mediator.Send(new CreateStatisticRecordCommand(statisticRecordDto)));
+            return HandleResult(await Mediator.Send(new CreateStatisticRecordCommand(createStatisticRecordDto)));
         }
 
         // Get all statistic records

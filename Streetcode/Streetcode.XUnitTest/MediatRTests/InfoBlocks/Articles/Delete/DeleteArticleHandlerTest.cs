@@ -1,12 +1,10 @@
-﻿// <copyright file="DeleteArticleHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
 {
+    using AutoMapper;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.Logging;
+    using Streetcode.BLL.Mapping.InfoBlocks.Articles;
     using Streetcode.BLL.MediatR.InfoBlocks.Articles.Delete;
     using Streetcode.DAL.Entities.InfoBlocks.Articles;
     using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -20,6 +18,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteArticleHandlerTest"/> class.
@@ -27,6 +26,14 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
         public DeleteArticleHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetArticleRepositoryMock();
+
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<ArticleProfile>();
+            });
+
+            _mapper = mapperConfig.CreateMapper();
+
             _mockLogger = new Mock<ILoggerService>();
         }
 
@@ -38,7 +45,8 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
+
 
             int wrongId = 10;
             var request = new DeleteArticleCommand(wrongId);
@@ -58,7 +66,8 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
+
 
             int correctId = 1;
             var request = new DeleteArticleCommand(correctId);

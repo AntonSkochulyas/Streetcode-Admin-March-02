@@ -41,17 +41,22 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.Create
         /// </returns>
         public async Task<Result<StatisticRecordDto>> Handle(CreateStatisticRecordCommand request, CancellationToken cancellationToken)
         {
-            var streetcodeId = request.StatisticRecordDto.StreetcodeId;
             var statisticRecords = await _repositoryWrapper.StatisticRecordRepository.GetAllAsync();
 
-            var isUniqueQrId = statisticRecords.FirstOrDefault(x => x.StreetcodeId == streetcodeId);
+            var isUniqueQrId = statisticRecords.FirstOrDefault(x => x.QrId == request.CreateStatisticRecordDto.QrId);
+            var isUniqueStreetcodeCoordinate = statisticRecords.FirstOrDefault(x => x.StreetcodeCoordinateId == request.CreateStatisticRecordDto.StreetcodeCoordinateId);
 
             if (isUniqueQrId != null)
             {
                 return Result.Fail(new Error(StatisticRecordsErrors.CreateStatisticRecordHandlerQrIdShoulBeUniqueError));
             }
 
-            var mappedStatisticRecord = _mapper.Map<StatisticRecord>(request.StatisticRecordDto);
+            if(isUniqueStreetcodeCoordinate != null)
+            {
+                return Result.Fail(new Error("Statistic record should be unique per one streetcode coordinate."));
+            }
+
+            var mappedStatisticRecord = _mapper.Map<StatisticRecord>(request.CreateStatisticRecordDto);
 
             if (mappedStatisticRecord is null)
             {

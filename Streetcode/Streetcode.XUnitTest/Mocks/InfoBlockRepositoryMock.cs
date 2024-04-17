@@ -9,7 +9,6 @@ using Moq;
 using Streetcode.DAL.Entities.InfoBlocks.Articles;
 using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
 using Streetcode.DAL.Entities.InfoBlocks;
-using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 
@@ -35,7 +34,6 @@ internal partial class RepositoryMocker
                 Id = 1,
                 Text = "First Text",
                 AuthorShipHyperLinkId = 1,
-                AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL" },
             },
         };
 
@@ -53,7 +51,6 @@ internal partial class RepositoryMocker
                         Id = 1,
                         Text = "First Text",
                         AuthorShipHyperLinkId = 1,
-                        AuthorShipHyperLink = new AuthorShipHyperLink { Id = 1, Title = "First Title", URL = "First URL"},
                     },
                 },
                 new InfoBlock
@@ -68,7 +65,6 @@ internal partial class RepositoryMocker
                         Id = 2,
                         Text = "Second Text",
                         AuthorShipHyperLinkId = 2,
-                        AuthorShipHyperLink = new AuthorShipHyperLink { Id = 2, Title = "Second Title", URL = "Second URL"},
                     },
                 },
                 new InfoBlock
@@ -83,7 +79,6 @@ internal partial class RepositoryMocker
                         Id = 3,
                         Text = "Third Text",
                         AuthorShipHyperLinkId = 3,
-                        AuthorShipHyperLink = new AuthorShipHyperLink { Id = 3, Title = "Third Title", URL = "Third URL"},
                     },
                 },
                 new InfoBlock
@@ -98,7 +93,6 @@ internal partial class RepositoryMocker
                         Id = 4,
                         Text = "Fourth Text",
                         AuthorShipHyperLinkId = 4,
-                        AuthorShipHyperLink = new AuthorShipHyperLink { Id = 4, Title = "Fourth Title", URL = "Fourth URL"},
                     },
                 },
             };

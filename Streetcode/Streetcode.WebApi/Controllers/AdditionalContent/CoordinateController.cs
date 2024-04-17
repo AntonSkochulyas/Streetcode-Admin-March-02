@@ -28,13 +28,13 @@ public class CoordinateController : BaseApiController
     /// <summary>
     /// Create a new coordinate.
     /// </summary>
-    /// <param name="coordinateDto">The coordinate DTO.</param>
+    /// <param name="createStreetcodeCoordinateDto">The create coordinate DTO.</param>
     /// <returns>The created coordinate.</returns>
     [Authorize("Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] StreetcodeCoordinateDto coordinateDto)
+    public async Task<IActionResult> Create([FromBody] CreateStreetcodeCoordinateDto createStreetcodeCoordinateDto)
     {
-        return HandleResult(await Mediator.Send(new CreateCoordinateCommand(coordinateDto)));
+        return HandleResult(await Mediator.Send(new CreateCoordinateCommand(createStreetcodeCoordinateDto)));
     }
 
     /// <summary>

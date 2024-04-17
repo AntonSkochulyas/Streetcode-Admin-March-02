@@ -11,6 +11,7 @@ namespace Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes
         public int Id { get; set; }
         public string Text { get; set; } = "Текст підготовлений спільно з ";
         public int AuthorShipHyperLinkId { get; set; }
-        public AuthorShipHyperLink? AuthorShipHyperLink { get; set; }
+        public List<AuthorShipHyperLink>? AuthorShipHyperLinks { get; set; }
+        public List<InfoBlock>? InfoBlocks { get; set; }
     }
 }

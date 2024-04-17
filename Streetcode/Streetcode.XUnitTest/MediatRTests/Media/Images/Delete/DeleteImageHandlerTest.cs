@@ -1,13 +1,11 @@
-﻿// <copyright file="DeleteImageHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.Media.Images.Delete
 {
+    using AutoMapper;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
+    using Streetcode.BLL.Mapping.Media.Images;
     using Streetcode.BLL.MediatR.Media.Image.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
@@ -21,6 +19,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.Delete
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
         private readonly Mock<IBlobService> _mockBlob;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteImageHandlerTest"/> class.
@@ -30,6 +29,13 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.Delete
             _mockRepository = RepositoryMocker.GetImagesRepositoryMock();
 
             _mockLogger = new Mock<ILoggerService>();
+
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<ImageProfile>();
+            });
+
+            _mapper = mapperConfig.CreateMapper();
 
             _mockBlob = new Mock<IBlobService>();
         }
@@ -42,7 +48,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images.Delete
         public async Task DeleteWithFirstIdShouldNotBeNull()
         {
             // Arrange
-            var handler = new DeleteImageHandler(_mockRepository.Object, _mockBlob.Object, _mockLogger.Object);
+            var handler = new DeleteImageHandler(_mockRepository.Object, _mockBlob.Object, _mockLogger.Object, _mapper);
 
             // Act
             var result = await handler.Handle(new DeleteImageCommand(1), CancellationToken.None);
