@@ -12,5 +12,5 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
 /// <param name="StreetcodeCoordinate">
 /// Data transfer object of streetcode coordinate.
 /// </param>
-public record CreateCoordinateCommand(StreetcodeCoordinateDto StreetcodeCoordinate)
+public record CreateCoordinateCommand(CreateStreetcodeCoordinateDto CreateStreetcodeCoordinateDto)
     : IRequest<Result<StreetcodeCoordinateDto>>;
