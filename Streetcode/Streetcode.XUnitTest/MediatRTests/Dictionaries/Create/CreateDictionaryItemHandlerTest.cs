@@ -74,7 +74,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Create
 
             CreateDictionaryItemDto? dictionaryItemDto = new CreateDictionaryItemDto()
             {
-                Name = "First Name",
+                Word = "First Word",
                 Description = "First Description",
             };
 

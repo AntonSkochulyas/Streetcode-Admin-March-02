@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Streetcode.DAL.Persistence;
 
@@ -11,9 +12,10 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    partial class StreetcodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417130033_AddInfoBlock")]
+    partial class AddInfoBlock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,20 +255,24 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("QrId")
+                    b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StreetcodeContentId")
+                    b.Property<int>("QrId")
                         .HasColumnType("int");
 
                     b.Property<int>("StreetcodeCoordinateId")
                         .HasColumnType("int");
 
+                    b.Property<int>("StreetcodeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("StreetcodeContentId");
+                    b.HasIndex("StreetcodeCoordinateId")
+                        .IsUnique();
 
-                    b.HasIndex("StreetcodeCoordinateId");
+                    b.HasIndex("StreetcodeId");
 
                     b.ToTable("qr_coordinates", "coordinates");
                 });
@@ -1520,15 +1526,19 @@ namespace Streetcode.DAL.Migrations
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Analytics.StatisticRecord", b =>
                 {
-                    b.HasOne("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", null)
-                        .WithMany("StatisticRecords")
-                        .HasForeignKey("StreetcodeContentId");
-
                     b.HasOne("Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types.StreetcodeCoordinate", "StreetcodeCoordinate")
-                        .WithMany()
-                        .HasForeignKey("StreetcodeCoordinateId")
+                        .WithOne("StatisticRecord")
+                        .HasForeignKey("Streetcode.DAL.Entities.Analytics.StatisticRecord", "StreetcodeCoordinateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "Streetcode")
+                        .WithMany("StatisticRecords")
+                        .HasForeignKey("StreetcodeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Streetcode");
 
                     b.Navigation("StreetcodeCoordinate");
                 });
@@ -2053,6 +2063,11 @@ namespace Streetcode.DAL.Migrations
             modelBuilder.Entity("Streetcode.DAL.Entities.Toponyms.Toponym", b =>
                 {
                     b.Navigation("Coordinate");
+                });
+
+            modelBuilder.Entity("Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types.StreetcodeCoordinate", b =>
+                {
+                    b.Navigation("StatisticRecord");
                 });
 #pragma warning restore 612, 618
         }

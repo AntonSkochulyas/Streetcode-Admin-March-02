@@ -3,7 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
 using Streetcode.DAL.Entities.Analytics;
+using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Entities.Feedback;
+using Streetcode.DAL.Entities.InfoBlocks;
+using Streetcode.DAL.Entities.InfoBlocks.Articles;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Entities.Media;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.News;
@@ -17,6 +22,7 @@ using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Entities.Transactions;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Persistence.Configurations;
+using System.Reflection.Emit;
 
 namespace Streetcode.DAL.Persistence;
 
@@ -35,6 +41,11 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Art>? Arts { get; set; }
     public DbSet<Audio>? Audios { get; set; }
+    public DbSet<DictionaryItem> DictionaryItems { get; set; }
+    public DbSet<InfoBlock> InfoBlocks { get; set; }
+    public DbSet<Article> Articles { get; set; }
+    public DbSet<AuthorShip> AuthorShips { get; set; }
+    public DbSet<AuthorShipHyperLink> AuthorShipHyperLinks { get; set; }
     public DbSet<ToponymCoordinate>? ToponymCoordinates { get; set; }
     public DbSet<StreetcodeCoordinate>? StreetcodeCoordinates { get; set; }
     public DbSet<Fact>? Facts { get; set; }
@@ -142,5 +153,15 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new UserEntityConfiguration());
 
         builder.ApplyConfiguration(new VideoEntityConfiguration());
+
+        builder.ApplyConfiguration(new DictionaryItemConfiguration());
+
+        builder.ApplyConfiguration(new InfoBlockConfiguration());
+
+        builder.ApplyConfiguration(new ArticleConfiguration());
+
+        builder.ApplyConfiguration(new AuthorShipConfiguration());
+
+        builder.ApplyConfiguration(new AuthorShipHyperLinkConfiguration());
     }
 }

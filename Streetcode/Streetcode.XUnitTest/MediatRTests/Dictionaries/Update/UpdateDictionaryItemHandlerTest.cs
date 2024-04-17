@@ -80,7 +80,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
             DictionaryItemDto? dictionaryItemDto = new DictionaryItemDto()
             {
                 Id = 1,
-                Name = "First Name",
+                Word = "First Word",
                 Description = "First Description",
             };
 
@@ -106,7 +106,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Update
             DictionaryItemDto? dictionaryItemDto = new DictionaryItemDto()
             {
                 Id = 1,
-                Name = "First Name",
+                Word = "First Word",
                 Description = "First Description",
             };
 

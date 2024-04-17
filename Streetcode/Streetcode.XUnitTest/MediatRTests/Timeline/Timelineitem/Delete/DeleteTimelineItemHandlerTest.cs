@@ -26,8 +26,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Timeline.Timelineitem.Delete
         public DeleteTimelineItemHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetTimelineRepositoryMock();
-          
-           var mapperConfig = new MapperConfiguration(c =>
+
+            var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<TimelineItemProfile>();
             });
