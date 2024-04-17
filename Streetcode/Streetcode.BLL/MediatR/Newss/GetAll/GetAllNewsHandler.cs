@@ -52,7 +52,7 @@ namespace Streetcode.BLL.MediatR.Newss.GetAll
         public async Task<Result<IEnumerable<NewsDto>>> Handle(GetAllNewsQuery request, CancellationToken cancellationToken)
         {
             var news = await _repositoryWrapper.NewsRepository.GetAllAsync(
-                include: cat => cat.Include(img => img.Image));
+                include: cat => cat.Include(img => img.Image ?? new DAL.Entities.Media.Images.Image()));
             if (news == null)
             {
                 string errorMsg = NewsErrors.GetAllNewsHandlerCanNotFindAnyNewsError;
@@ -66,7 +66,7 @@ namespace Streetcode.BLL.MediatR.Newss.GetAll
             {
                 if (dto.Image is not null)
                 {
-                    dto.Image.Base64 = _blobService.FindFileInStorageAsBase64(dto.Image.BlobName);
+                    dto.Image.Base64 = _blobService.FindFileInStorageAsBase64(dto.Image.BlobName ?? "");
                 }
             }
 

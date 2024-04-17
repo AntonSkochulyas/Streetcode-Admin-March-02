@@ -38,7 +38,7 @@ public class GetAllImagesMainHandler : IRequestHandler<GetAllImagesMainQuery, Re
 
         foreach (var image in imageMainDtos)
         {
-            image.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName);
+            image.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName ?? "");
         }
 
         return Result.Ok(imageMainDtos);

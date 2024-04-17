@@ -53,7 +53,7 @@ public class GetImageByIdHandler : IRequestHandler<GetImageByIdQuery, Result<Ima
     {
         var image = await _repositoryWrapper.ImageRepository.GetFirstOrDefaultAsync(
             f => f.Id == request.Id,
-            include: q => q.Include(i => i.ImageDetails) !);
+            include: q => q.Include(i => i.ImageDetails)!);
 
         if (image is null)
         {
@@ -63,9 +63,9 @@ public class GetImageByIdHandler : IRequestHandler<GetImageByIdQuery, Result<Ima
         }
 
         var imageDto = _mapper.Map<ImageDto>(image);
-        if(imageDto.BlobName != null)
+        if (imageDto.BlobName != null)
         {
-            imageDto.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName);
+            imageDto.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName ?? "");
         }
 
         return Result.Ok(imageDto);

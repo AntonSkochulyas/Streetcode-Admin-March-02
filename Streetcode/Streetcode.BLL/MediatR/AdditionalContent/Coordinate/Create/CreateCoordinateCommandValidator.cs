@@ -11,6 +11,10 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create
     {
         public CreateCoordinateCommandValidator()
         {
+            RuleFor(command => command.CreateStreetcodeCoordinateDto.StreetcodeId)
+                .NotEmpty()
+                .WithMessage("Streetcode id is required.");
+
             RuleFor(command => command.CreateStreetcodeCoordinateDto.Latitude)
                 .NotEmpty()
                 .WithMessage(CoordinateErrors.CreateCoordinateCommandValidatorLatitudeIsRequiredError);

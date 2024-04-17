@@ -69,7 +69,7 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Ima
 
         if (resultIsSuccess)
         {
-            _blobService.DeleteFileInStorage(image.BlobName);
+            _blobService.DeleteFileInStorage(image.BlobName ?? "");
         }
 
         if (resultIsSuccess)

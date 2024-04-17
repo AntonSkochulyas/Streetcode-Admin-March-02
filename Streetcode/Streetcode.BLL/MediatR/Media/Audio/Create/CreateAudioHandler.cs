@@ -55,9 +55,9 @@ public class CreateAudioHandler : IRequestHandler<CreateAudioCommand, Result<Aud
     public async Task<Result<AudioDto>> Handle(CreateAudioCommand request, CancellationToken cancellationToken)
     {
         string hashBlobStorageName = _blobService.SaveFileInStorage(
-            request.Audio.BaseFormat,
-            request.Audio.Title,
-            request.Audio.Extension);
+            request.Audio.BaseFormat ?? "",
+            request.Audio.Title ?? "",
+            request.Audio.Extension ?? "");
 
         var audio = _mapper.Map<DAL.Entities.Media.Audio>(request.Audio);
 
@@ -69,7 +69,7 @@ public class CreateAudioHandler : IRequestHandler<CreateAudioCommand, Result<Aud
 
         var createdAudio = _mapper.Map<AudioDto>(audio);
 
-        if(resultIsSuccess)
+        if (resultIsSuccess)
         {
             return Result.Ok(createdAudio);
         }
