@@ -117,8 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-
   <data name="CreateFactCommandValidatorTitleIsRequiredError" xml:space="preserve">
     <value>Title is required.</value>
   </data>
@@ -143,7 +141,7 @@
   <data name="CreateFactHandlerFailedToCreateFactError" xml:space="preserve">
     <value>Failed to create a fact.</value>
   </data>
-    <data name="DeleteFactHandlerNoFactFoundByEnteredIdError" xml:space="preserve">
+  <data name="DeleteFactHandlerNoFactFoundByEnteredIdError" xml:space="preserve">
     <value>No fact found by entered Id - {0}.</value>
   </data>
   <data name="DeleteFactHandlerFailedToDeleteError" xml:space="preserve">
@@ -155,25 +153,18 @@
   <data name="GetFactByIdCannotFindAnyFactWithCorrespondingIdError" xml:space="preserve">
     <value>"Cannot find any fact with corresponding id: {0}.</value>
   </data>
-
-
   <data name="GetFactByStreetcodeHandlerCanNotFindFactWithGivenStreetcodeError" xml:space="preserve">
     <value>Cannot find any fact by the streetcode id: {0}.</value>
   </data>
-
-
-
-   <data name="ResetFactOrderHandlerCannotFindAnyFactByStreetcodeIdError" xml:space="preserve">
+  <data name="ResetFactOrderHandlerCannotFindAnyFactByStreetcodeIdError" xml:space="preserve">
     <value>Cannot find any fact by the streetcode id: {0}.</value>
   </data>
   <data name="ResetFactOrderHandlerFailedToResetOrderNumbersError" xml:space="preserve">
     <value>Failed to reset order numbers.</value>
   </data>
-    <data name="ResetFactOrderHandlerFailedToSetOrderNumbersError" xml:space="preserve">
+  <data name="ResetFactOrderHandlerFailedToSetOrderNumbersError" xml:space="preserve">
     <value>Failed to set order numbers.</value>
   </data>
-
-
   <data name="UpdateFactCommandValidatorTitleIsRequiredError" xml:space="preserve">
     <value>Title is required.</value>
   </data>
@@ -186,10 +177,10 @@
   <data name="UpdateFactCommandValidatorFactContentMaxLengthError" xml:space="preserve">
     <value>Fact Content length should not be longer than {0} symbols.</value>
   </data>
-   <data name="UpdateFactHandlerFactWithIdDoesNotExistError" xml:space="preserve">
+  <data name="UpdateFactHandlerFactWithIdDoesNotExistError" xml:space="preserve">
     <value>The fact with id {request.Fact.Id} does not exist.</value>
   </data>
-    <data name="UpdateFactHandlerStreetcodeWithIdDoesNotExistError" xml:space="preserve">
+  <data name="UpdateFactHandlerStreetcodeWithIdDoesNotExistError" xml:space="preserve">
     <value>The streetcode with id {0} does not exist.</value>
   </data>
   <data name="UpdateFactHandlerImageWithIdDoesNotExistError" xml:space="preserve">
@@ -201,26 +192,18 @@
   <data name="UpdateFactHandlerFailedToUpdateError" xml:space="preserve">
     <value>Failed to update fact.</value>
   </data>
-
-
   <data name="DeleteRelatedFigureHandlerFailedToDeleteError" xml:space="preserve">
     <value>Failed to delete a relation.</value>
   </data>
   <data name="DeleteRelatedFigureHandlerCannotFindRelationBetweenStreetcodesWithCorrespondingIdsError" xml:space="preserve">
     <value>Cannot find a relation between streetcodes with corresponding ids: {0} {1}.</value>
   </data>
-
-
   <data name="GetRelatedFigureByStreetcodeIdHandlerCannotFindAnyRelatedFigureByStreetcodeIdError" xml:space="preserve">
     <value>Cannot find any related figures by a streetcode id: {0}.</value>
   </data>
-
-
-   <data name="GetRelatedFigureByTagIdHandlerCannotFindAnyStreetcodeWithcorrespondingTagIdError" xml:space="preserve">
+  <data name="GetRelatedFigureByTagIdHandlerCannotFindAnyStreetcodeWithcorrespondingTagIdError" xml:space="preserve">
     <value>Cannot find any streetcode with corresponding tagid: {0}</value>
   </data>
-
-
   <data name="CreateRelatedFigureValidatorObserverIdIsRequiredError" xml:space="preserve">
     <value>Observer Id is required.</value>
   </data>
@@ -233,8 +216,6 @@
   <data name="CreateRelatedFigureHandlerFailedToCreateRelationError" xml:space="preserve">
     <value>Failed to create a relation.</value>
   </data>
-
-
   <data name="CreateRelatedTermHandlerWordIsRequiredError" xml:space="preserve">
     <value>Word is required.</value>
   </data>
@@ -256,24 +237,18 @@
   <data name="CreateRelatedTermHandlerCannotMapEntityError" xml:space="preserve">
     <value>Cannot map entity!</value>
   </data>
-
-
   <data name="DeleteRelatedTermHandlerCannotFindRelatedTermError" xml:space="preserve">
     <value>Cannot find a related term: {0}.</value>
   </data>
   <data name="DeleteRelatedTermHandlerFailedToDeleteRelatedTermError" xml:space="preserve">
     <value>Failed to delete a related term.</value>
   </data>
-
-
   <data name="GetAllRelatedTermsByTermIdHandlerCannotGetWordsByTermIdError" xml:space="preserve">
     <value>Cannot get words by term id.</value>
   </data>
   <data name="GetAllRelatedTermsByTermIdHandlerCannotCreateDtosForRelatedWordsError" xml:space="preserve">
     <value>Cannot create DTOs for related words!</value>
   </data>
-
-
   <data name="UpdateRelatedTermHandlerWordIsRequiredError" xml:space="preserve">
     <value>Word is required.</value>
   </data>
@@ -283,78 +258,58 @@
   <data name="UpdateRelatedTermHandlerTermIdIsRequiredError" xml:space="preserve">
     <value>Term Id is required.</value>
   </data>
-
   <data name="DeleteSoftStreetcodeHandlerCannotFindStreetcodeWithCorrespondingIdError" xml:space="preserve">
     <value>Cannot find a streetcode with corresponding categoryId: {0}.</value>
   </data>
   <data name="DeleteSoftStreetcodeHandlerFailedToChangeStatusOfStreetcodeToDeletedError" xml:space="preserve">
     <value>Failed to change status of streetcode to deleted.</value>
   </data>
-
-
   <data name="GetAllStreetcodesCatalogHandlerCannotFindAnySubtitlesError" xml:space="preserve">
     <value>Cannot find any subtitles.</value>
   </data>
-
-
   <data name="GetAllStreetcodesMainPageHandlerNoStreetcodesExistNowError" xml:space="preserve">
     <value>No streetcodes exist now.</value>
   </data>
-
-
   <data name="GetAllStreetcodesShortHandlerNoStreetcodesExistNowError" xml:space="preserve">
     <value>No streetcodes exist now.</value>
   </data>
-
-
   <data name="GetStreetcodeByIdHandlerCannotFindAnyStreetcodeWithCorrespondingIdError" xml:space="preserve">
     <value>Cannot find any streetcode with corresponding id: {0}</value>
   </data>
-
   <data name="GetStreetcodeByIndexHandlerCannotFindAnyStreetcodeWithCorrespondingIndexError" xml:space="preserve">
     <value>Cannot find any streetcode with corresponding index: {0}</value>
   </data>
-
-
   <data name="GetStreetcodeByTransliterationUrlHandlerCannotFindStreetcodeByTransliterationUrlError" xml:space="preserve">
     <value>Cannot find streetcode by transliteration url: {0}</value>
   </data>
-
-
   <data name="GetStreetcodesCountHandlerNoStreetcodesExistNowError" xml:space="preserve">
     <value>No streetcodes exist now.</value>
   </data>
-
-
   <data name="GetStreetcodeShortByIdHandlerCannotFindStreetcodeByIdError" xml:space="preserve">
     <value>Cannot find streetcode by id.</value>
   </data>
   <data name="GetStreetcodeShortByIdHandlerCannotMapStreetcodeToShortDtoError" xml:space="preserve">
     <value>Cannot map streetcode to shortDTO.</value>
   </data>
-
   <data name="GetAllTermsHandlerCannotFindAnyTermError" xml:space="preserve">
     <value>Cannot find any term.</value>
   </data>
-
   <data name="GetTermByIdHandlerCannotFindAnyTermWithCorrespondingIdError" xml:space="preserve">
     <value>Cannot find any term with corresponding id: {0}</value>
   </data>
-
-
   <data name="GetAllTextsHandlerCannotFindAnyTextError" xml:space="preserve">
     <value>Cannot find any text.</value>
   </data>
-
-    <data name="GetTextByIdHandlerCannotFindAnyTextWithCorrespondingIdError" xml:space="preserve">
+  <data name="GetTextByIdHandlerCannotFindAnyTextWithCorrespondingIdError" xml:space="preserve">
     <value>Cannot find any text with corresponding id: {0}</value>
   </data>
-
-    <data name="GetTextByStreetcodeIdHandlerCannotFindTransactionLinkByStreetcodeThisStreetcodeDoesNotExistError" xml:space="preserve">
+  <data name="GetTextByStreetcodeIdHandlerCannotFindTransactionLinkByStreetcodeThisStreetcodeDoesNotExistError" xml:space="preserve">
     <value>Cannot find a transaction link by a streetcode id: {0}, because such streetcode doesn`t exist</value>
   </data>
-
-    <data name="GetParsedTextAdminPreviewHandlerTextWasNotParsedSuccessfullyError" xml:space="preserve">
+  <data name="GetParsedTextAdminPreviewHandlerTextWasNotParsedSuccessfullyError" xml:space="preserve">
     <value>Text was not parsed successfully.</value>
+  </data>
+  <data name="UpdateFactHandlerOrderNumberIsNotUnique" xml:space="preserve">
+    <value>The order number can not repeat with the same streetcode id</value>
   </data>
 </root>
