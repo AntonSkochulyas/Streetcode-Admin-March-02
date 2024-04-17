@@ -17,13 +17,13 @@ namespace Streetcode.WebApi.Controllers.Dictionaries
         /// <summary>
         /// Creates a new dictionary item.
         /// </summary>
-        /// <param name="dictionaryItem">The dictionary item to create.</param>
+        /// <param name="createDictionaryItemDto">The dictionary item to create.</param>
         /// <returns>Dictionary item.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] DictionaryItemDto dictionaryItem)
+        public async Task<IActionResult> Create([FromBody] CreateDictionaryItemDto createDictionaryItemDto)
         {
-            return HandleResult(await Mediator.Send(new CreateDictionaryItemCommand(dictionaryItem)));
+            return HandleResult(await Mediator.Send(new CreateDictionaryItemCommand(createDictionaryItemDto)));
         }
 
         /// <summary>

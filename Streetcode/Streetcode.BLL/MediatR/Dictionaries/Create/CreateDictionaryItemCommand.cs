@@ -12,6 +12,6 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Create
     /// <param name="newDictionaryItem">
     /// New dictionary item to add in database.
     /// </param>
-    public record CreateDictionaryItemCommand(DictionaryItemDto? NewDictionaryItem)
+    public record CreateDictionaryItemCommand(CreateDictionaryItemDto CreateDictionaryItemDto)
         : IRequest<Result<DictionaryItemDto>>;
 }
