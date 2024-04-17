@@ -1,7 +1,3 @@
-﻿// <copyright file="DeleteAuthorShipHyperLinkHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Delete
 {
     using AutoMapper;
@@ -25,7 +21,8 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         private readonly Mock<ILoggerService> _mockLogger;
         private readonly IMapper _mapper;
 
-        /// <summary>
+
+       /// <summary>
         /// Initializes a new instance of the <see cref="DeleteAuthorShipHyperLinkHandlerTest"/> class.
         /// </summary>
         public DeleteAuthorShipHyperLinkHandlerTest()
@@ -50,6 +47,19 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
+            var handler = new DeleteAuthorShipHyperLinkHandler(_mockRepository.Object, _mockLogger.Object);
+          
+           
+        }
+
+        /// <summary>
+        /// Delete WrongId IsFailed Should Be True test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task HandlerWrongIdIsFailedShouldBeTrue()
+        {
+            // Arrange
             var handler = new DeleteAuthorShipHyperLinkHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int wrongId = 10;
@@ -61,7 +71,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorsHype
             // Assert
             result.IsFailed.Should().BeTrue();
         }
-
+          
         /// <summary>
         /// Correct Id Delete Should Be Called test.
         /// </summary>

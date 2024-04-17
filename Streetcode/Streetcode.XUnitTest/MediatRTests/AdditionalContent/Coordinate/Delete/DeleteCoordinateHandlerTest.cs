@@ -1,4 +1,4 @@
-﻿namespace Streetcode.XUnitTest.MediatRTests.AdditionalContent.Coordinate.Delete
+namespace Streetcode.XUnitTest.MediatRTests.AdditionalContent.Coordinate.Delete
 {
     using System.Threading.Tasks;
     using AutoMapper;

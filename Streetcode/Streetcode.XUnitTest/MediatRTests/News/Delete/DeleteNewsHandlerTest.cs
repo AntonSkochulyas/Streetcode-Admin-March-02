@@ -1,4 +1,4 @@
-﻿namespace Streetcode.XUnitTest.MediatRTests.News.Delete
+namespace Streetcode.XUnitTest.MediatRTests.News.Delete
 {
     using System.Threading.Tasks;
     using AutoMapper;
