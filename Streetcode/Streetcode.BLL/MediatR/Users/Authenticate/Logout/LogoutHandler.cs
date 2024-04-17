@@ -5,7 +5,7 @@ using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Logout
 {
-    public class LogoutHandler : IRequestHandler<LogoutCommand,Result<string>>
+    public class LogoutHandler : IRequestHandler<LogoutCommand, Result<string>>
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
 
