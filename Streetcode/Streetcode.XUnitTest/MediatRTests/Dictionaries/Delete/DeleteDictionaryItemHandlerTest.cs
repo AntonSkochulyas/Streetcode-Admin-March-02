@@ -1,7 +1,6 @@
 ﻿// <copyright file="DeleteDictionaryItemHandlerTest.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
 {
     using AutoMapper;
