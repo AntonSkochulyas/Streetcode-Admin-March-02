@@ -51,7 +51,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
             // Arrange
             var handler = new CreateAuthorShipHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            AuthorShipDto? authorShipDto = null;
+            AuthorShipCreateDto? authorShipDto = null;
 
             var newAuthorShip = new CreateAuthorShipCommand(authorShipDto);
 
@@ -72,9 +72,8 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips
             // Arrange
             var handler = new CreateAuthorShipHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            AuthorShipDto? authorShipDto = new AuthorShipDto()
+            AuthorShipCreateDto? authorShipDto = new AuthorShipCreateDto()
             {
-                Id = 1,
                 Text = "First Text",
                 AuthorShipHyperLinkId = 1,
             };

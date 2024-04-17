@@ -235,7 +235,7 @@
             Controller for managing articles.
             </summary>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.Create(Streetcode.BLL.Dto.InfoBlocks.Articles.ArticleDto)">
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.Create(Streetcode.BLL.Dto.InfoBlocks.Articles.ArticleCreateDto)">
             <summary>
             Creates a new article.
             </summary>
@@ -274,7 +274,7 @@
             Controller for managing authorship information.
             </summary>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.Create(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorShipDto)">
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.Create(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorShipCreateDto)">
             <summary>
             Creates a new authorship.
             </summary>
@@ -313,7 +313,7 @@
             Controller for managing author hyperlinks.
             </summary>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.Create(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorShipHyperLinkDto)">
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.Create(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorShipHyperLinkCreateDto)">
             <summary>
             Creates a new author hyperlink.
             </summary>
@@ -352,7 +352,7 @@
             Controller for managing InfoBlocks.
             </summary>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.Create(Streetcode.BLL.Dto.InfoBlocks.InfoBlockDto)">
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.Create(Streetcode.BLL.Dto.InfoBlocks.InfoBlockCreateDto)">
             <summary>
             Creates a new InfoBlock.
             </summary>

@@ -9,6 +9,8 @@ namespace Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks
         public AuthorShipHyperLinkProfile()
         {
             CreateMap<AuthorShipHyperLink, AuthorShipHyperLinkDto>().ReverseMap();
+
+            CreateMap<AuthorShipHyperLinkCreateDto, AuthorShipHyperLink>();
         }
     }
 }

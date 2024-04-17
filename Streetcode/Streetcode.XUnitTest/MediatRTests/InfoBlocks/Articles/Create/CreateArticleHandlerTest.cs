@@ -51,7 +51,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Create
             // Arrange
             var handler = new CreateArticleHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            ArticleDto? articleDto = null;
+            ArticleCreateDto? articleDto = null;
 
             var newArticle = new CreateArticleCommand(articleDto);
 
@@ -72,9 +72,8 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Create
             // Arrange
             var handler = new CreateArticleHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            ArticleDto? articleDto = new ArticleDto()
+            ArticleCreateDto? articleDto = new ArticleCreateDto()
             {
-                Id = 1,
                 Title = "First Title",
                 Text = "First Text",
             };

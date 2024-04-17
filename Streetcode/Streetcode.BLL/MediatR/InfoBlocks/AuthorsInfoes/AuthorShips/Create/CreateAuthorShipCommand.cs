@@ -12,6 +12,6 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.Create
     /// <param name="newAuthorShip">
     /// Authorship to create.
     /// </param>
-    public record CreateAuthorShipCommand(AuthorShipDto? NewAuthorShip)
+    public record CreateAuthorShipCommand(AuthorShipCreateDto? NewAuthorShip)
         : IRequest<Result<AuthorShipDto>>;
 }

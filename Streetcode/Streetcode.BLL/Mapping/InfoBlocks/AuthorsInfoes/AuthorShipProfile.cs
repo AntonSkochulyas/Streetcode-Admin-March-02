@@ -9,6 +9,8 @@ namespace Streetcode.BLL.Mapping.InfoBlocks.AuthorsInfoes
         public AuthorShipProfile()
         {
             CreateMap<AuthorShip, AuthorShipDto>().ReverseMap();
+
+            CreateMap<AuthorShip, AuthorShipCreateDto>().ReverseMap();
         }
     }
 }
