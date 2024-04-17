@@ -5,10 +5,12 @@
 namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.Delete
 {
     using System.Threading.Tasks;
+    using AutoMapper;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.BlobStorage;
     using Streetcode.BLL.Interfaces.Logging;
+    using Streetcode.BLL.Mapping.Media;
     using Streetcode.BLL.MediatR.Media.Audio.Delete;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
@@ -22,6 +24,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.Delete
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
         private readonly Mock<IBlobService> _mockBlob;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteAudioHandlerTest"/> class.
@@ -29,6 +32,13 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.Delete
         public DeleteAudioHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetAudiosRepositoryMock();
+
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<AudioProfile>();
+            });
+
+            _mapper = mapperConfig.CreateMapper();
 
             _mockLogger = new Mock<ILoggerService>();
 
@@ -43,7 +53,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.Delete
         public async Task DeleteWithFirstIdShouldNotBeNull()
         {
             // Arrange
-            var handler = new DeleteAudioHandler(_mockRepository.Object, _mockBlob.Object, _mockLogger.Object);
+            var handler = new DeleteAudioHandler(_mockRepository.Object, _mockBlob.Object, _mockLogger.Object, _mapper);
 
             // Act
             var result = await handler.Handle(new DeleteAudioCommand(1), CancellationToken.None);

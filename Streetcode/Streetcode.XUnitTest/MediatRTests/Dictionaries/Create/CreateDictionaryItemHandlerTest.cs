@@ -51,7 +51,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Create
             // Arrange
             var handler = new CreateDictionaryItemHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            DictionaryItemDto? dictionaryItemDto = null;
+            CreateDictionaryItemDto? dictionaryItemDto = null;
 
             var newDictionaryItem = new CreateDictionaryItemCommand(dictionaryItemDto);
 
@@ -72,9 +72,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Create
             // Arrange
             var handler = new CreateDictionaryItemHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
 
-            DictionaryItemDto? dictionaryItemDto = new DictionaryItemDto()
+            CreateDictionaryItemDto? dictionaryItemDto = new CreateDictionaryItemDto()
             {
-                Id = 1,
                 Name = "First Name",
                 Description = "First Description",
             };

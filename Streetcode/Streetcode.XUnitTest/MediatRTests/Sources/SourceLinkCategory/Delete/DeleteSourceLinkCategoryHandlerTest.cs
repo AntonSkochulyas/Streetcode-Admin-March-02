@@ -14,6 +14,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Delete
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
+        private readonly IMapper _mapper;
 
         public DeleteSourceLinkCategoryHandlerTest()
         {
@@ -26,6 +27,8 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Delete
                 c.AddProfile<StreetcodeCategoryContentProfile>();
             });
 
+            _mapper = mapperConfig.CreateMapper();
+
             _mockLogger = new Mock<ILoggerService>();
         }
 
@@ -33,7 +36,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Delete
         public async Task Handler_DeleteSourceLinkWithWrongId_IsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteSourceLinkCategoryHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteSourceLinkCategoryHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int wrongId = 10;
             var request = new DeleteSourceLinkCategoryCommand(wrongId);
@@ -49,7 +52,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Delete
         public async Task Handler_DeleteSourceLinkCategoryWithCorrectId_DeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteSourceLinkCategoryHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteSourceLinkCategoryHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int correctId = 1;
             var request = new DeleteSourceLinkCategoryCommand(correctId);
@@ -67,7 +70,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Delete
         public async Task Handler_DeleteSourceLinkWithCorrectId_IsSuccessShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteSourceLinkCategoryHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteSourceLinkCategoryHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int correctId = 1;
             var request = new DeleteSourceLinkCategoryCommand(correctId);

@@ -22,6 +22,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
     {
         private readonly Mock<IRepositoryWrapper> _mockRepository;
         private readonly Mock<ILoggerService> _mockLogger;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteDictionaryItemHandlerTest"/> class.
@@ -29,6 +30,13 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
         public DeleteDictionaryItemHandlerTest()
         {
             _mockRepository = RepositoryMocker.GetDictionaryItemRepositoryMock();
+
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<DictionaryItemProfile>();
+            });
+
+            _mapper = mapperConfig.CreateMapper();
 
             _mockLogger = new Mock<ILoggerService>();
         }
@@ -41,7 +49,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
         public async Task HandlerWrongIdIsFailedShouldBeTrue()
         {
             // Arrange
-            var handler = new DeleteDictionaryItemHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteDictionaryItemHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int wrongId = 10;
             var request = new DeleteDictionaryItemCommand(wrongId);
@@ -61,7 +69,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.Delete
         public async Task HandlerCorrectIdDeleteShouldBeCalled()
         {
             // Arrange
-            var handler = new DeleteDictionaryItemHandler(_mockRepository.Object, _mockLogger.Object);
+            var handler = new DeleteDictionaryItemHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
             int correctId = 1;
             var request = new DeleteDictionaryItemCommand(correctId);
