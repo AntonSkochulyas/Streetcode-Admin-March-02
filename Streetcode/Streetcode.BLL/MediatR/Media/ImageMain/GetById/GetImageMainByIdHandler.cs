@@ -38,7 +38,7 @@ public class GetImageMainByIdHandler : IRequestHandler<GetImageMainByIdQuery, Re
         var imageMainDto = _mapper.Map<ImageMainDto>(image);
         if(imageMainDto.BlobName != null)
         {
-            imageMainDto.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName ?? "");
+            imageMainDto.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName);
         }
 
         return Result.Ok(imageMainDto);

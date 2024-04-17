@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorShips.GetAll
         // Logger
         private readonly ILoggerService _logger;
 
-        // Parametric constructor
+        // Parametric constructor 
         public GetAllAuthorShipsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;

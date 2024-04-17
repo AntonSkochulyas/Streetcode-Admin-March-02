@@ -16,7 +16,7 @@ namespace Streetcode.BLL.Mapping.Timeline
                     src.HistoricalContextTimelines.Select(x => new HistoricalContextDto
                     {
                         Id = x.HistoricalContextId,
-                        Title = x.HistoricalContext != null ? x.HistoricalContext.Title : ""
+                        Title = x.HistoricalContext.Title
                     }).ToList() :
                     null));
         }

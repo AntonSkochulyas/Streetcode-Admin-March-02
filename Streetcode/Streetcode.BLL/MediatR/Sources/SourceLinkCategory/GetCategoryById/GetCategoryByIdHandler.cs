@@ -47,10 +47,7 @@ public class GetCategoryByIdHandler : IRequestHandler<GetCategoryByIdQuery, Resu
 
         var mappedSrcCategories = _mapper.Map<SourceLinkCategoryDto>(srcCategories);
 
-        if (mappedSrcCategories.Image != null)
-        {
-            mappedSrcCategories.Image.Base64 = _blobService.FindFileInStorageAsBase64(mappedSrcCategories.Image.BlobName ?? "");
-        }
+        mappedSrcCategories.Image.Base64 = _blobService.FindFileInStorageAsBase64(mappedSrcCategories.Image.BlobName);
 
         return Result.Ok(mappedSrcCategories);
     }

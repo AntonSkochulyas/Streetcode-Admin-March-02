@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Media.Images;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 // Necessary namespaces.
@@ -55,9 +54,9 @@ public class GetImageByStreetcodeIdHandler : IRequestHandler<GetImageByStreetcod
         var images = (await _repositoryWrapper.ImageRepository
             .GetAllAsync(
             f => f.Streetcodes.Any(s => s.Id == request.StreetcodeId),
-            include: q => q.Include(img => img.ImageDetails ?? new ImageDetails()))).OrderBy(img => img.ImageDetails?.Alt);
+            include: q => q.Include(img => img.ImageDetails))).OrderBy(img => img.ImageDetails?.Alt);
 
-        if (images is null || !images.Any())
+        if (images is null || images.Count() == 0)
         {
             string errorMsg = string.Format(MediaErrors.GetImageByStreetcodeIdHandlerCanNotFindAnImageWithGivenStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
@@ -68,7 +67,7 @@ public class GetImageByStreetcodeIdHandler : IRequestHandler<GetImageByStreetcod
 
         foreach (var image in imageDtos)
         {
-            image.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName ?? "");
+            image.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName);
         }
 
         return Result.Ok(imageDtos);
