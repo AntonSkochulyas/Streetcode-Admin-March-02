@@ -1,7 +1,3 @@
-﻿// <copyright file="DeleteImageHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.Media.Images.Delete
 {
     using AutoMapper;

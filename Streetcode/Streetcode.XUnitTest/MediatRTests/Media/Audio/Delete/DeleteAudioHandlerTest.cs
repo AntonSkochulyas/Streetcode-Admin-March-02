@@ -1,7 +1,3 @@
-﻿// <copyright file="DeleteAudioHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.Delete
 {
     using System.Threading.Tasks;

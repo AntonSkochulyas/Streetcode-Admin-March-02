@@ -92,10 +92,10 @@ namespace Streetcode.DAL.Persistence.Configurations
                     .HasForeignKey<TransactionLink>(d => d.StreetcodeId)
                     .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(d => d.StatisticRecords)
-                    .WithOne(t => t.Streetcode)
-                    .HasForeignKey(t => t.StreetcodeId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            //builder.HasMany(d => d.StatisticRecords)
+            //        .WithOne(t => t.StreetcodeCoordinate)
+            //        .HasForeignKey(t => t)
+            //        .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .Property(s => s.Title)

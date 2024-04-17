@@ -8,9 +8,9 @@ namespace Streetcode.DAL.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<StatisticRecord> builder)
         {
-            builder.HasOne(sr => sr.StreetcodeCoordinate)
-                 .WithOne(sc => sc.StatisticRecord)
-                 .HasForeignKey<StatisticRecord>(sr => sr.StreetcodeCoordinateId);
+            //builder.HasOne(sr => sr.StreetcodeCoordinate)
+            //     .WithOne(sc => sc.StatisticRecord)
+            //     .HasForeignKey<StatisticRecord>(sr => sr.StreetcodeCoordinateId);
 
             builder
                 .Property(s => s.Address)
