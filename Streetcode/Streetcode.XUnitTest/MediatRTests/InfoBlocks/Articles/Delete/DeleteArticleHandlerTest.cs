@@ -1,7 +1,3 @@
-﻿// <copyright file="DeleteArticleHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
 {
     using AutoMapper;
@@ -51,6 +47,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
             // Arrange
             var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
 
+
             int wrongId = 10;
             var request = new DeleteArticleCommand(wrongId);
 
@@ -70,6 +67,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Delete
         {
             // Arrange
             var handler = new DeleteArticleHandler(_mockRepository.Object, _mockLogger.Object, _mapper);
+
 
             int correctId = 1;
             var request = new DeleteArticleCommand(correctId);

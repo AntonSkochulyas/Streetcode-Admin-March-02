@@ -1,7 +1,3 @@
-﻿// <copyright file="DeleteAuthorShipHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.AuthorsInfoes.AuthorShips.Delete
 {
     using AutoMapper;

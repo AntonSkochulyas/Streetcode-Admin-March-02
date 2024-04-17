@@ -1,7 +1,3 @@
-﻿// <copyright file="DeleteInfoBlockHandlerTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.InfoBlockss.Delete
 {
     using AutoMapper;

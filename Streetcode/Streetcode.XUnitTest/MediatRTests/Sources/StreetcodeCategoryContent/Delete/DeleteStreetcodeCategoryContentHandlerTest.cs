@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentAssertions;
 using Moq;
 using Streetcode.BLL.Interfaces.Logging;
@@ -86,4 +86,3 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.StreetcodeCategoryContent.De
         }
     }
 }
-
