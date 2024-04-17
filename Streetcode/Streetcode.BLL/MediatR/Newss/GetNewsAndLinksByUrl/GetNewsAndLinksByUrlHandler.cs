@@ -55,7 +55,7 @@ namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
             var newsDTO = _mapper.Map<NewsDto>(await _repositoryWrapper.NewsRepository.GetFirstOrDefaultAsync(
                 predicate: sc => sc.URL == url,
                 include: scl => scl
-                    .Include(sc => sc.Image)));
+                    .Include(sc => sc.Image ?? new DAL.Entities.Media.Images.Image())));
 
             if (newsDTO is null)
             {

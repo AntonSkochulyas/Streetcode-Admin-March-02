@@ -46,7 +46,7 @@ public class GetTagByStreetcodeIdHandler : IRequestHandler<GetTagByStreetcodeIdQ
         var tagIndexed = await _repositoryWrapper.StreetcodeTagIndexRepository
             .GetAllAsync(
                 t => t.StreetcodeId == request.StreetcodeId,
-                include: q => q.Include(t => t.Tag));
+                include: q => q.Include(t => t.Tag != null ? t.Tag : new DAL.Entities.AdditionalContent.Tag()));
 
         if (tagIndexed is null)
         {

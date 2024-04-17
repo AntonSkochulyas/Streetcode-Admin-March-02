@@ -56,7 +56,7 @@ public class GetSortedTagsByStartTitleHandler : IRequestHandler<GetSortedTagsByS
 
         var sortExpression = new Dictionary<Expression<Func<DAL.Entities.AdditionalContent.Tag, object>>, SortDirection>
         {
-            { t => t.Title, SortDirection.Ascending }
+            { t => t.Title ?? "", SortDirection.Ascending }
         };
 
         IQueryable<DAL.Entities.AdditionalContent.Tag>? tags = null;

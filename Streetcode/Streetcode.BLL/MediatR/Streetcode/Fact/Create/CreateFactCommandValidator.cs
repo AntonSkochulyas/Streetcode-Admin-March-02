@@ -1,26 +1,28 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Fact.Create
 {
-	public class CreateFactCommandValidator : AbstractValidator<CreateFactCommand>
+    public class CreateFactCommandValidator : AbstractValidator<CreateFactCommand>
     {
-		public CreateFactCommandValidator()
-		{
-			int maxTitleLength = 100;
-			int maxFactContent = 600;
+        private readonly ushort _maxTitleLength;
+        private readonly ushort _maxFactContent;
 
-			RuleFor(command => command.Fact.Title)
+        public CreateFactCommandValidator()
+        {
+            _maxTitleLength = 100;
+            _maxFactContent = 600;
+
+            RuleFor(command => command.Fact.Title)
                 .NotEmpty()
                 .WithMessage(StreetcodeErrors.CreateFactCommandValidatorTitleIsRequiredError)
-                .MaximumLength(maxTitleLength)
-                .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorTitleMaxLengthError, maxTitleLength));
+                .MaximumLength(_maxTitleLength)
+                .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorTitleMaxLengthError, _maxTitleLength));
 
-			RuleFor(command => command.Fact.FactContent)
+            RuleFor(command => command.Fact.FactContent)
                 .NotEmpty()
                 .WithMessage(StreetcodeErrors.CreateFactCommandValidatorFactIsRequiredError)
-                .MaximumLength(maxFactContent)
-                .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorFactContentMaxLengthError, maxFactContent));
+                .MaximumLength(_maxFactContent)
+                .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorFactContentMaxLengthError, _maxFactContent));
         }
-	}
+    }
 }

@@ -61,7 +61,7 @@ namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
                 predicate: s => s.StreetcodeId == request.StreetcodeId,
                 include: art => art
                     .Include(a => a.Art)
-                    .Include(i => i.Art.Image) !);
+                    .Include(i => i.Art != null ? i.Art.Image : new DAL.Entities.Media.Images.Image()) !);
 
             if (art is null)
             {
@@ -74,7 +74,10 @@ namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
 
             foreach (var artDto in artsDto)
             {
-                artDto.Art.Image.Base64 = _blobService.FindFileInStorageAsBase64(artDto.Art.Image.BlobName);
+                if (artDto != null && artDto.Art != null && artDto.Art.Image != null)
+                {
+                    artDto.Art.Image.Base64 = _blobService.FindFileInStorageAsBase64(artDto.Art.Image.BlobName ?? "");
+                }
             }
 
             return Result.Ok(artsDto);
