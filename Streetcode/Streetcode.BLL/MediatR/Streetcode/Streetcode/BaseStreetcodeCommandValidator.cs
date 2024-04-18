@@ -15,6 +15,8 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<CreateStreetcode
         int maxAliasLength = 50;
         int maxTitleLength = 100;
         int maxNumberOfTags = 50;
+        int maxInstagramARLinkLength = 255;
+        int maxRollingLineLength = 255;
 
         RuleFor(command => command.Streetcode.Teaser)
             .Custom((teaser, context) =>
@@ -63,5 +65,13 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<CreateStreetcode
         RuleFor(command => command.Streetcode.Tags)
             .Must(t => t.Count() <= maxNumberOfTags)
             .WithMessage($"Number of tags must not be more than {maxNumberOfTags}.");
+
+        RuleFor(command => command.Streetcode.InstagramARLink)
+            .MaximumLength(maxInstagramARLinkLength)
+            .WithMessage($"The length of Instagram AR link should not be more than {maxInstagramARLinkLength}.");
+
+        RuleFor(command => command.Streetcode.RollingLine)
+            .MaximumLength(maxRollingLineLength)
+            .WithMessage($"The length of the rolling line should not be more than {maxRollingLineLength}.");
     }
 }
