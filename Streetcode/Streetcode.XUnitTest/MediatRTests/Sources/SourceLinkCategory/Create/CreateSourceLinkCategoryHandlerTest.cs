@@ -41,7 +41,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         {
             // Arrange
             var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            CreateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = null;
+            CreateSourceLinkDto? sourceLinkCategoryContentDto = null;
             var request = new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto);
 
             // Act
@@ -56,7 +56,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         {
             // Arrange
             var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            CreateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = new CreateSourceLinkCategoryContentDto()
+            CreateSourceLinkDto? sourceLinkCategoryContentDto = new CreateSourceLinkDto()
             {
                 ImageId = 1,
                 Title = "Test1",
@@ -75,7 +75,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.SourceLinkCategory.Create
         {
             // Arrange
             var handler = new CreateSourceLinkCategoryHandler(_mapper, _mockRepository.Object, _mockLogger.Object);
-            CreateSourceLinkCategoryContentDto? sourceLinkCategoryContentDto = new CreateSourceLinkCategoryContentDto()
+            CreateSourceLinkDto? sourceLinkCategoryContentDto = new CreateSourceLinkDto()
             {
                 ImageId = 0,
                 Title = "Test1"

@@ -7,7 +7,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
 {
-    public class DeleteSourceLinkCategoryHandler : IRequestHandler<DeleteSourceLinkCategoryCommand, Result<SourceLinkCategoryDto>>
+    public class DeleteSourceLinkCategoryHandler : IRequestHandler<DeleteSourceLinkCategoryCommand, Result<SourceLinkResponseDto>>
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly ILoggerService _logger;
@@ -19,7 +19,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
             _mapper = mapper;
         }
 
-        public async Task<Result<SourceLinkCategoryDto>> Handle(DeleteSourceLinkCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Result<SourceLinkResponseDto>> Handle(DeleteSourceLinkCategoryCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;
             var sourceLinkCategory = await _repositoryWrapper.SourceCategoryRepository.GetFirstOrDefaultAsync(sc => sc.Id == id);
@@ -35,7 +35,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
 
             if (resultIsSuccess)
             {
-                return Result.Ok(_mapper.Map<SourceLinkCategoryDto>(sourceLinkCategory));
+                return Result.Ok(_mapper.Map<SourceLinkResponseDto>(sourceLinkCategory));
             }
             else
             {

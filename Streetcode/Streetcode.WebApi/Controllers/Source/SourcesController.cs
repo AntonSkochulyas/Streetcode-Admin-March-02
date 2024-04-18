@@ -80,7 +80,7 @@ namespace Streetcode.WebApi.Controllers.Source
         /// <returns>The created source link category.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateSourceLink([FromBody] CreateSourceLinkCategoryContentDto sourceLinkCategoryContentDto)
+        public async Task<IActionResult> CreateSourceLink([FromBody] CreateSourceLinkDto sourceLinkCategoryContentDto)
         {
             return HandleResult(await Mediator.Send(new CreateSourceLinkCategoryCommand(sourceLinkCategoryContentDto)));
         }
