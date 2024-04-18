@@ -26,6 +26,12 @@ namespace Streetcode.DAL.Persistence.Configurations
             builder.Property(s => s.ViewCount)
                 .HasDefaultValue(0);
 
+            builder.Property(s => s.InstagramARLink)
+                .HasMaxLength(255);
+
+            builder.Property(s => s.InvolvedPeople)
+                .HasMaxLength(255);
+
             builder.HasDiscriminator<string>(StreetcodeTypeDiscriminators.DiscriminatorName)
                 .HasValue<StreetcodeContent>(StreetcodeTypeDiscriminators.StreetcodeBaseType)
                 .HasValue<PersonStreetcode>(StreetcodeTypeDiscriminators.StreetcodePersonType)
