@@ -70,8 +70,8 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<CreateStreetcode
             .MaximumLength(maxInstagramARLinkLength)
             .WithMessage($"The length of Instagram AR link should not be more than {maxInstagramARLinkLength}.");
 
-        RuleFor(command => command.Streetcode.RollingLine)
+        RuleFor(command => command.Streetcode.InvolvedPeople)
             .MaximumLength(maxRollingLineLength)
-            .WithMessage($"The length of the rolling line should not be more than {maxRollingLineLength}.");
+            .WithMessage($"The length of the involved people should not be more than {maxRollingLineLength}.");
     }
 }

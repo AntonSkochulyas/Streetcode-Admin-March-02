@@ -15,7 +15,7 @@ public class BaseStreetcodeDto
     public int ImageAnimatedId { get; set; }
     public int ImageForLinkId { get; set; }
     public string? InstagramARLink { get; set; }
-    public string? RollingLine { get; set; }
+    public string? InvolvedPeople { get; set; }
     public StreetcodeStatus Status { get; set; }
     public DateTime EventStartOrPersonBirthDate { get; set; }
     public DateTime? EventEndOrPersonDeathDate { get; set; }

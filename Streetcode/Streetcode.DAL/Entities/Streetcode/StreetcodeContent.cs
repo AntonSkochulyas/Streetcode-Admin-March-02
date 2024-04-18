@@ -58,7 +58,7 @@ public class StreetcodeContent
 
     public string? InstagramARLink { get; set; }
 
-    public string? RollingLine { get; set; }
+    public string? InvolvedPeople { get; set; }
 
     public int? AudioId { get; set; }
 
