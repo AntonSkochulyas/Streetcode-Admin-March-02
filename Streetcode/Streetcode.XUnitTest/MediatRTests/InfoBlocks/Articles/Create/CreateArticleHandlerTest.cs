@@ -34,6 +34,7 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.Create
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<ArticleProfile>();
+                c.AddProfile<ArticleProfile>();
             });
 
             _mapper = mapperConfig.CreateMapper();
