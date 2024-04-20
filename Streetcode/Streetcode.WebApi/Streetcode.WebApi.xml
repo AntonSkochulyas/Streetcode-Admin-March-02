@@ -693,7 +693,7 @@
             <param name="streetcodeId">The ID of the streetcode.</param>
             <returns>The list of categories.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.CreateSourceLink(Streetcode.BLL.Dto.Sources.CreateSourceLinkCategoryContentDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.CreateSourceLink(Streetcode.BLL.Dto.Sources.CreateSourceLinkDto)">
             <summary>
             Create a new source link category.
             </summary>

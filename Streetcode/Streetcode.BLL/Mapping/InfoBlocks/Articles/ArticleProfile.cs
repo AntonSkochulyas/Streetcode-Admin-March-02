@@ -10,7 +10,7 @@ namespace Streetcode.BLL.Mapping.InfoBlocks.Articles
         {
             CreateMap<Article, ArticleDto>().ReverseMap();
 
-            CreateMap<ArticleCreateDto, ArticleDto>().ReverseMap();
+            CreateMap<ArticleCreateDto, Article>().ReverseMap();
         }
     }
 }

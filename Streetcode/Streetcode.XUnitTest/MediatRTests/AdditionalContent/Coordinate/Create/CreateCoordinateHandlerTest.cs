@@ -23,6 +23,7 @@
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<BLL.Mapping.AdditionalContent.Coordinates.StreetcodeCoordinateProfile>();
+                c.AddProfile<BLL.Mapping.AdditionalContent.Coordinates.CreateStreetcodeCoordinateProfile>();
             });
 
             _mapper = mapperConfig.CreateMapper();
@@ -36,7 +37,7 @@
 
             CreateStreetcodeCoordinateDto? streetcodeCoordinateDTO = null;
             var streetcodeCoordinate = new CreateCoordinateCommand(streetcodeCoordinateDTO);
-          
+
             // Act
             var result = await handler.Handle(streetcodeCoordinate, CancellationToken.None);
 
