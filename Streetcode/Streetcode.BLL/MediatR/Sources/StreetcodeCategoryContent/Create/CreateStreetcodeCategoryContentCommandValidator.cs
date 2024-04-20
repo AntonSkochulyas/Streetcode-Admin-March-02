@@ -1,12 +1,19 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreateStreetcodeCategoryContentCommand.
+    /// </summary>
     public sealed class CreateStreetcodeCategoryContentCommandValidator : AbstractValidator<CreateStreetcodeCategoryContentCommand>
     {
+        // Constructor
         public CreateStreetcodeCategoryContentCommandValidator()
         {
+            // Text max length
             ushort maxTextLength = 4000;
 
             RuleFor(command => command.StreetcodeCategoryContentDto.Text)

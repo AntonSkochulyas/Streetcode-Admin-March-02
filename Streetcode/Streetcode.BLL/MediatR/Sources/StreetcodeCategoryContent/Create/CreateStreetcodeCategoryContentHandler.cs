@@ -1,17 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
 {
+    /// <summary>
+    /// Handler, that handles a process of creating a new streetcode category content.
+    /// </summary>
     public class CreateStreetcodeCategoryContentHandler : IRequestHandler<CreateStreetcodeCategoryContentCommand, Result<CategoryContentCreatedDto>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public CreateStreetcodeCategoryContentHandler(IMapper mapper, IRepositoryWrapper repositoryWrapper, ILoggerService logger)
         {
             _mapper = mapper;
@@ -19,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method, that creates a new streetcode category content.
+        /// </summary>
+        /// <param name="request">
+        /// Request with a new streetcode category content.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A CategoryContentCreatedDto, or error, if it was while creating process.
+        /// </returns>
         public async Task<Result<CategoryContentCreatedDto>> Handle(CreateStreetcodeCategoryContentCommand request, CancellationToken cancellationToken)
         {
             var newStreetcodeCategoryContent = _mapper.Map<DAL.Entities.Sources.StreetcodeCategoryContent>(request.StreetcodeCategoryContentDto);
