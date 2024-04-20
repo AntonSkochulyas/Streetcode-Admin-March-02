@@ -1,7 +1,16 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
 
-namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Create;
-
-public record CreateRelatedFigureCommand(int ObserverId, int TargetId)
-    : IRequest<Result<Unit>>;
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Create
+{
+    /// <summary>
+    /// Command, that requests a handler to create a new related figure.
+    /// </summary>
+    /// <param name="newRelatedFigure">
+    /// New related figure.
+    /// </param>
+    public record CreateRelatedFigureCommand(int ObserverId, int TargetId)
+        : IRequest<Result<Unit>>;
+}
