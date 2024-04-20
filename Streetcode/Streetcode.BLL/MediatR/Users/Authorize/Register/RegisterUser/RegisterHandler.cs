@@ -1,6 +1,8 @@
 ﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.BLL.Interfaces.Authentification;
+using Streetcode.BLL.MediatR.Users.Authorize;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
@@ -8,12 +10,12 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
     public class RegisterHandler : IRequestHandler<RegisterCommand, Result<Response>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IJwtService _jwtService;
 
-        public RegisterHandler(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public RegisterHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
+            _jwtService = jwtService;
         }
 
         public async Task<Result<Response>> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -38,9 +40,14 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
                 return Result.Fail(new Error("User creation failed! Please check user details and try again."));
             }
 
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            await _jwtService.AuthorizeUserAsync(user);
 
-            return Result.Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Result.Ok(new Response
+            {
+                AccessToken = user.AccessToken,
+                RefreshToken = user.RefreshToken,
+                Expiration = (DateTime)user.AccessTokenExpiryTime,
+            });
         }
     }
 }

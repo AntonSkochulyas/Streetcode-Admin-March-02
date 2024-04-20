@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.BLL.Dto.Users;
 using Streetcode.BLL.MediatR.Users.Authenticate.Login;
-using Streetcode.BLL.MediatR.Users.Authenticate.Logout;
 using Streetcode.BLL.MediatR.Users.Authenticate.Refresh;
 using Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin;
 using Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser;
@@ -24,7 +23,7 @@ namespace Streetcode.WebApi.Controllers.Auth
     /// - RevokeAll.
     /// </summary>
     [AllowAnonymous]
-    public class AuthenticateController : BaseApiController
+    public class AuthorizeController : BaseApiController
     {
         /// <summary>
         /// Login endpoint.
@@ -34,17 +33,6 @@ namespace Streetcode.WebApi.Controllers.Auth
         public async Task<IActionResult> Login([FromBody] LoginModelDto loginModelDto)
         {
             return HandleResult(await Mediator.Send(new LoginCommand(loginModelDto)));
-        }
-
-        /// <summary>
-        /// Logout endpoint.
-        /// </summary>
-        /// <returns>A message, that user logout successfully.</returns>
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Logout()
-        {
-            return HandleResult(await Mediator.Send(new LogoutCommand()));
         }
 
         /// <summary>

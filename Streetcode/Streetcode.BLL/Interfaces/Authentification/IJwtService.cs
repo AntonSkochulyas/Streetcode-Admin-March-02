@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Streetcode.BLL.Dto;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.Interfaces.Authentification
@@ -12,5 +11,11 @@ namespace Streetcode.BLL.Interfaces.Authentification
         string GenerateRefreshToken();
 
         ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token);
+
+        int GetAccessTokenValidityInMinutes();
+
+        int GetRefreshTokenValidityInDays();
+
+        Task AuthorizeUserAsync(ApplicationUser user);
     }
 }
