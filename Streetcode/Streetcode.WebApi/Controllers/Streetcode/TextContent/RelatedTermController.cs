@@ -4,7 +4,6 @@ using Streetcode.BLL.Dto.Streetcode.TextContent;
 using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create;
 using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete;
 using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.GetAllByTermId;
-using Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Update;
 
 namespace Streetcode.WebApi.Controllers.Streetcode.TextContent
 {
@@ -34,19 +33,6 @@ namespace Streetcode.WebApi.Controllers.Streetcode.TextContent
         public async Task<IActionResult> Create([FromBody] RelatedTermDto relatedTerm)
         {
             return HandleResult(await Mediator.Send(new CreateRelatedTermCommand(relatedTerm)));
-        }
-
-        /// <summary>
-        /// Update an existing related term.
-        /// </summary>
-        /// <param name="id">The ID of the related term to update.</param>
-        /// <param name="relatedTerm">The related term to update.</param>
-        /// <returns>The updated related term.</returns>
-        [Authorize("Admin")]
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] RelatedTermDto relatedTerm)
-        {
-            return HandleResult(await Mediator.Send(new UpdateRelatedTermCommand(id, relatedTerm)));
         }
 
         /// <summary>

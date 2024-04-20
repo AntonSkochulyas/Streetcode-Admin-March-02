@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
+namespace Streetcode.BLL.MediatR.Users.Authorize
 {
     public class Response
     {

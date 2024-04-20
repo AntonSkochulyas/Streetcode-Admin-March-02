@@ -49,6 +49,20 @@ namespace Streetcode.DAL.Migrations
                 name: "Users");
 
             migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", maxLength: 15000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -76,6 +90,34 @@ namespace Streetcode.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_audios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuthorShips",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    AuthorShipHyperLinkId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorShips", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DictionaryItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Word = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DictionaryItems", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,6 +279,27 @@ namespace Streetcode.DAL.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuthorShipHyperLinks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuthorShipId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorShipHyperLinks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuthorShipHyperLinks_AuthorShips_AuthorShipId",
+                        column: x => x.AuthorShipId,
+                        principalTable: "AuthorShips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -448,6 +511,41 @@ namespace Streetcode.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InfoBlocks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    AuthorShipId = table.Column<int>(type: "int", nullable: true),
+                    VideoURL = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    TermId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InfoBlocks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InfoBlocks_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InfoBlocks_AuthorShips_AuthorShipId",
+                        column: x => x.AuthorShipId,
+                        principalTable: "AuthorShips",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_InfoBlocks_terms_TermId",
+                        column: x => x.TermId,
+                        principalSchema: "streetcode",
+                        principalTable: "terms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "related_terms",
                 schema: "streetcode",
                 columns: table => new
@@ -474,6 +572,8 @@ namespace Streetcode.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AccessToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccessTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserAdditionalInfoId = table.Column<int>(type: "int", nullable: false),
@@ -1046,10 +1146,9 @@ namespace Streetcode.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QrId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    StreetcodeId = table.Column<int>(type: "int", nullable: false),
-                    StreetcodeCoordinateId = table.Column<int>(type: "int", nullable: false)
+                    StreetcodeCoordinateId = table.Column<int>(type: "int", nullable: false),
+                    StreetcodeContentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1062,8 +1161,8 @@ namespace Streetcode.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_qr_coordinates_streetcodes_StreetcodeId",
-                        column: x => x.StreetcodeId,
+                        name: "FK_qr_coordinates_streetcodes_StreetcodeContentId",
+                        column: x => x.StreetcodeContentId,
                         principalSchema: "streetcode",
                         principalTable: "streetcodes",
                         principalColumn: "Id");
@@ -1147,6 +1246,11 @@ namespace Streetcode.DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuthorShipHyperLinks_AuthorShipId",
+                table: "AuthorShipHyperLinks",
+                column: "AuthorShipId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_coordinates_StreetcodeId",
                 schema: "add_content",
                 table: "coordinates",
@@ -1187,6 +1291,23 @@ namespace Streetcode.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_InfoBlocks_ArticleId",
+                table: "InfoBlocks",
+                column: "ArticleId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InfoBlocks_AuthorShipId",
+                table: "InfoBlocks",
+                column: "AuthorShipId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InfoBlocks_TermId",
+                table: "InfoBlocks",
+                column: "TermId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_news_ImageId",
                 schema: "news",
                 table: "news",
@@ -1216,17 +1337,16 @@ namespace Streetcode.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_qr_coordinates_StreetcodeContentId",
+                schema: "coordinates",
+                table: "qr_coordinates",
+                column: "StreetcodeContentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_qr_coordinates_StreetcodeCoordinateId",
                 schema: "coordinates",
                 table: "qr_coordinates",
-                column: "StreetcodeCoordinateId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_qr_coordinates_StreetcodeId",
-                schema: "coordinates",
-                table: "qr_coordinates",
-                column: "StreetcodeId");
+                column: "StreetcodeCoordinateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_related_figures_TargetId",
@@ -1404,6 +1524,12 @@ namespace Streetcode.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuthorShipHyperLinks");
+
+            migrationBuilder.DropTable(
+                name: "DictionaryItems");
+
+            migrationBuilder.DropTable(
                 name: "facts",
                 schema: "streetcode");
 
@@ -1413,6 +1539,9 @@ namespace Streetcode.DAL.Migrations
             migrationBuilder.DropTable(
                 name: "image_details",
                 schema: "media");
+
+            migrationBuilder.DropTable(
+                name: "InfoBlocks");
 
             migrationBuilder.DropTable(
                 name: "news",
@@ -1499,6 +1628,12 @@ namespace Streetcode.DAL.Migrations
             migrationBuilder.DropTable(
                 name: "timeline_items",
                 schema: "timeline");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
+
+            migrationBuilder.DropTable(
+                name: "AuthorShips");
 
             migrationBuilder.DropTable(
                 name: "coordinates",

@@ -1,6 +1,8 @@
 ﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.BLL.Interfaces.Authentification;
+using Streetcode.BLL.MediatR.Users.Authorize;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
@@ -9,11 +11,13 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IJwtService _jwtService;
 
-        public RegisterAdminHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public RegisterAdminHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtService jwtService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _jwtService = jwtService;
         }
 
         public async Task<Result<Response>> Handle(RegisterAdminCommand request, CancellationToken cancellationToken)
@@ -58,7 +62,14 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
 
-            return Result.Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            await _jwtService.AuthorizeUserAsync(user);
+
+            return Result.Ok(new Response
+            {
+                AccessToken = user.AccessToken,
+                RefreshToken = user.RefreshToken,
+                Expiration = (DateTime)user.AccessTokenExpiryTime,
+            });
         }
     }
 }
