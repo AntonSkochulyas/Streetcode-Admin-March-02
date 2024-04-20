@@ -12,7 +12,7 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    [Migration("20240418062430_ARLinkAndInvolvedPeople")]
+    [Migration("20240420203714_ARLinkAndInvolvedPeople")]
     partial class ARLinkAndInvolvedPeople
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
