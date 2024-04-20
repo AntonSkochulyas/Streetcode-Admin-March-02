@@ -1,19 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
 {
+    /// <summary>
+    /// Handler, that handles a process of deleting a streetcode category content.
+    /// </summary>
     public class DeleteStreetcodeCategoryContentHandler : IRequestHandler<DeleteStreetcodeCategoryContentCommand, Result<StreetcodeCategoryContentDto>>
     {
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Parametric constructor
         public DeleteStreetcodeCategoryContentHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -21,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Method, that deletes a streetcode category content.
+        /// </summary>
+        /// <param name="request">
+        /// Request with streetcode category content id to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A StreetcodeCategoryContentDto, or error, if it was while deleting process.
+        /// </returns>
         public async Task<Result<StreetcodeCategoryContentDto>> Handle(DeleteStreetcodeCategoryContentCommand request, CancellationToken cancellationToken)
         {
             int sourceLinkCategoryId = request.sourceLinkCategoryId;

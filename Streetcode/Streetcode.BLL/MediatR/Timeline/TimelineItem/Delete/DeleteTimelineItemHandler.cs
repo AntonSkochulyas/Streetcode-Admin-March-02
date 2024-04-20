@@ -1,18 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
 {
+    /// <summary>
+    /// Handler, that handles a process of deleting a timeline item.
+    /// </summary>
     public class DeleteTimelineItemHandler : IRequestHandler<DeleteTimelineItemCommand, Result<TimelineItemDto>>
     {
-        private readonly IRepositoryWrapper _repositoryWrapper;
-        private readonly ILoggerService _logger;
+        // Mapper
         private readonly IMapper _mapper;
 
+        // Repository wrapper
+        private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public DeleteTimelineItemHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -20,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Method, that deletes a timeline item.
+        /// </summary>
+        /// <param name="request">
+        /// Request with timeline item id to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A TimelineItemDto, or error, if it was while deleting process.
+        /// </returns>
         public async Task<Result<TimelineItemDto>> Handle(DeleteTimelineItemCommand request, CancellationToken cancellationToken)
         {
             var timelineToDelete = await _repositoryWrapper.TimelineRepository.GetFirstOrDefaultAsync(x => x.Id == request.Id);
