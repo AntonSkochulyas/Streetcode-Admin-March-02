@@ -1,18 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Users;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.GetAll
 {
+    /// <summary>
+    /// Handler, that handles a process of getting all users additional info from database.
+    /// </summary>
     internal class GetAllUserAdditionalInfoHandler : IRequestHandler<GetAllUserAdditionalInfoQuery, Result<IEnumerable<UserAdditionalInfoDto>>>
     {
+        // Mapper
         private readonly IMapper _mapper;
-        private readonly ILoggerService _logger;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
 
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public GetAllUserAdditionalInfoHandler(IMapper mapper, ILoggerService logger, IRepositoryWrapper repositoryWrapper)
         {
             _mapper = mapper;
@@ -20,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.GetAll
             _repositoryWrapper = repositoryWrapper;
         }
 
+        /// <summary>
+        /// Method, that get all users additional info from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all users additional info from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of UserAdditionalInfoDto, or error, if it was while getting process.
+        /// </returns>
         public async Task<Result<IEnumerable<UserAdditionalInfoDto>>> Handle(GetAllUserAdditionalInfoQuery request, CancellationToken cancellationToken)
         {
             var userAdditionalInfoes = await _repositoryWrapper.UserAdditionalInfoRepository.GetAllAsync();

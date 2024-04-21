@@ -1,18 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Users.UserRegisterModel;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.User.GetAll
 {
+    /// <summary>
+    /// Handler, that handles a process of getting all application user from database.
+    /// </summary>
     public class GetAllApplicationUserHandler : IRequestHandler<GetAllApplicationUserQuery, Result<IEnumerable<ApplicationUserDto>>>
     {
+        // Mapper
         private readonly IMapper _mapper;
-        private readonly ILoggerService _logger;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
 
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public GetAllApplicationUserHandler(IMapper mapper, ILoggerService logger, IRepositoryWrapper repositoryWrapper)
         {
             _mapper = mapper;
@@ -20,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Users.User.GetAll
             _repositoryWrapper = repositoryWrapper;
         }
 
+        /// <summary>
+        /// Method, that get all application user from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all application user from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of ApplicationUserDto, or error, if it was while getting process.
+        /// </returns>
         public async Task<Result<IEnumerable<ApplicationUserDto>>> Handle(GetAllApplicationUserQuery request, CancellationToken cancellationToken)
         {
             var users = await _repositoryWrapper.ApplicationUserRepository.GetAllAsync();
