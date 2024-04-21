@@ -1,12 +1,21 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreateTimelineItemCommand.
+    /// </summary>
     internal class CreateTimelineItemCommandValidator : AbstractValidator<CreateTimelineItemCommand>
     {
+        // Constructor
         public CreateTimelineItemCommandValidator()
         {
+            // Title max length
             int titleMaxLength = 100;
+
+            // Description max length
             int descriptionMaxLength = 600;
 
             RuleFor(command => command.TimelineItem.Date)

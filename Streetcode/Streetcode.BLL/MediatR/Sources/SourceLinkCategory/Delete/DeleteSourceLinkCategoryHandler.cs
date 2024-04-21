@@ -1,17 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
 {
+    /// <summary>
+    /// Handler, that handles a process of deleting a source link category.
+    /// </summary>
     public class DeleteSourceLinkCategoryHandler : IRequestHandler<DeleteSourceLinkCategoryCommand, Result<SourceLinkResponseDto>>
     {
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Parametric constructor
         public DeleteSourceLinkCategoryHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -19,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Method, that deletes a source link category.
+        /// </summary>
+        /// <param name="request">
+        /// Request with source link category id to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A SourceLinkResponseDto, or error, if it was while deleting process.
+        /// </returns>
         public async Task<Result<SourceLinkResponseDto>> Handle(DeleteSourceLinkCategoryCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;

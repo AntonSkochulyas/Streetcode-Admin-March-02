@@ -1,39 +1,75 @@
-﻿using FluentValidation;
+﻿// Necessary usings.
+using FluentValidation;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreateUserAdditionalInfoCommand.
+    /// </summary>
     public class CreateUserAdditionalInfoCommandValidator : AbstractValidator<CreateUserAdditionalInfoCommand>
     {
+        // Minimum length allowed for the first name.
         private readonly ushort _firstNameMinLength;
+
+        // Maximum length allowed for the first name.
         private readonly ushort _firstNameMaxLength;
 
+        // Minimum length allowed for the second name.
         private readonly ushort _secondNameMinLength;
+
+        // Maximum length allowed for the second name.
         private readonly ushort _secondNameMaxLength;
 
+        // Minimum length allowed for the third name.
         private readonly ushort _thirdNameMinLength;
+
+        // Maximum length allowed for the third name.
         private readonly ushort _thirdNameMaxLength;
 
+        // Minimum length allowed for the email address.
         private readonly ushort _emailMinLength;
+
+        // Maximum length allowed for the email address.
         private readonly ushort _emailMaxLength;
 
+        // Minimum age allowed for the user.
         private readonly ushort _minAge;
+
+        // Maximum age allowed for the user.
         private readonly ushort _maxAge;
 
+        // Constructor
         public CreateUserAdditionalInfoCommandValidator()
         {
+            // First Name min length
             _firstNameMinLength = 2;
+
+            // First Name max length
             _firstNameMaxLength = 32;
 
+            // Second Name min length
             _secondNameMinLength = 5;
+
+            // Second Name max length
             _secondNameMaxLength = 32;
 
+            // Third Name min length
             _thirdNameMinLength = 5;
+
+            // Third Name max length
             _thirdNameMaxLength = 32;
 
+            // Email min length
             _emailMinLength = 3;
+
+            // Email max length
             _emailMaxLength = 32;
 
+            // Age min
             _minAge = 14;
+
+            // Age max
             _maxAge = 99;
 
             RuleFor(command => command.UserAdditionalInfoDto.Phone)

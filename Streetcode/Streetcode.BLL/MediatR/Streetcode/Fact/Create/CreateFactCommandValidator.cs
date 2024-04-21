@@ -1,22 +1,30 @@
-﻿using System;
+﻿// Necessary usings.
 using FluentValidation;
 
+// Necessaru namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.Fact.Create
 {
+    /// <summary>
+    /// Validator, that validates a model inside CreateFactCommand.
+    /// </summary>
 	public class CreateFactCommandValidator : AbstractValidator<CreateFactCommand>
     {
-		public CreateFactCommandValidator()
+        // Constructor
+        public CreateFactCommandValidator()
 		{
-			int maxTitleLength = 100;
-			int maxFactContent = 600;
+            // Title max length
+            int maxTitleLength = 100;
 
-			RuleFor(command => command.Fact.Title)
+            // Fact max Content
+            int maxFactContent = 600;
+
+            RuleFor(command => command.Fact.Title)
                 .NotEmpty()
                 .WithMessage(StreetcodeErrors.CreateFactCommandValidatorTitleIsRequiredError)
                 .MaximumLength(maxTitleLength)
                 .WithMessage(string.Format(StreetcodeErrors.CreateFactCommandValidatorTitleMaxLengthError, maxTitleLength));
 
-			RuleFor(command => command.Fact.FactContent)
+            RuleFor(command => command.Fact.FactContent)
                 .NotEmpty()
                 .WithMessage(StreetcodeErrors.CreateFactCommandValidatorFactIsRequiredError)
                 .MaximumLength(maxFactContent)

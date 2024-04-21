@@ -1,18 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Users;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.Delete
 {
+    /// <summary>
+    /// Handler, that handles a process of deleting a user additional info.
+    /// </summary>
     public class DeleteUserAdditionalInfoHandler : IRequestHandler<DeleteUserAdditionalInfoCommand, Result<UserAdditionalInfoDto>>
     {
+        // Mapper
         private readonly IMapper _mapper;
-        private readonly ILoggerService _logger;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
 
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
         public DeleteUserAdditionalInfoHandler(IMapper mapper, ILoggerService logger, IRepositoryWrapper repositoryWrapper)
         {
             _mapper = mapper;
@@ -20,6 +31,18 @@ namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.Delete
             _repositoryWrapper = repositoryWrapper;
         }
 
+        /// <summary>
+        /// Method, that deletes a user additional info.
+        /// </summary>
+        /// <param name="request">
+        /// Request with user additional info id to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A UserAdditionalInfoDto, or error, if it was while deleting process.
+        /// </returns>
         public async Task<Result<UserAdditionalInfoDto>> Handle(DeleteUserAdditionalInfoCommand request, CancellationToken cancellationToken)
         {
             var foundUserAdditionalInfo = await _repositoryWrapper.UserAdditionalInfoRepository.GetFirstOrDefaultAsync(x => x.Id == request.Id);

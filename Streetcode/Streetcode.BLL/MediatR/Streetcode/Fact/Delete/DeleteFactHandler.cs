@@ -1,50 +1,74 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
-namespace Streetcode.BLL.MediatR.Streetcode.Fact.Delete;
-
-public class DeleteFactHandler : IRequestHandler<DeleteFactCommand, Result<FactDto>>
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Streetcode.Fact.Delete
 {
-    private readonly IRepositoryWrapper _repositoryWrapper;
-    private readonly ILoggerService _logger;
-    private readonly IMapper _mapper;
-
-    public DeleteFactHandler(
-        IRepositoryWrapper repositoryWrapper,
-        ILoggerService logger,
-        IMapper mapper)
+    /// <summary>
+    /// Handler, that handles a process of deleting a fact.
+    /// </summary>
+    public class DeleteFactHandler : IRequestHandler<DeleteFactCommand, Result<FactDto>>
     {
-        _repositoryWrapper = repositoryWrapper;
-        _logger = logger;
-        _mapper = mapper;
-    }
+        // Mapper
+        private readonly IMapper _mapper;
 
-    public async Task<Result<FactDto>> Handle(DeleteFactCommand request, CancellationToken cancellationToken)
-    {
-        int id = request.Id;
-        var fact = await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(n => n.Id == id);
-        if (fact == null)
+        // Repository wrapper
+        private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
+        public DeleteFactHandler(
+            IRepositoryWrapper repositoryWrapper,
+            ILoggerService logger,
+            IMapper mapper)
         {
-            string errorMsg = string.Format(StreetcodeErrors.DeleteFactHandlerNoFactFoundByEnteredIdError, id);
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(errorMsg);
+            _repositoryWrapper = repositoryWrapper;
+            _logger = logger;
+            _mapper = mapper;
         }
 
-        _repositoryWrapper.FactRepository.Delete(fact);
-        var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
-        if (resultIsSuccess)
+        /// <summary>
+        /// Method, that deletes a fact.
+        /// </summary>
+        /// <param name="request">
+        /// Request with fact id to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A FactDto, or error, if it was while deleting process.
+        /// </returns>
+        public async Task<Result<FactDto>> Handle(DeleteFactCommand request, CancellationToken cancellationToken)
         {
-            return Result.Ok(_mapper.Map<FactDto>(fact));
-        }
-        else
-        {
-            string errorMsg = StreetcodeErrors.DeleteFactHandlerFailedToDeleteError;
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            int id = request.Id;
+            var fact = await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(n => n.Id == id);
+            if (fact == null)
+            {
+                string errorMsg = string.Format(StreetcodeErrors.DeleteFactHandlerNoFactFoundByEnteredIdError, id);
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
+            }
+
+            _repositoryWrapper.FactRepository.Delete(fact);
+            var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
+            if (resultIsSuccess)
+            {
+                return Result.Ok(_mapper.Map<FactDto>(fact));
+            }
+            else
+            {
+                string errorMsg = StreetcodeErrors.DeleteFactHandlerFailedToDeleteError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
         }
     }
 }
