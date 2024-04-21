@@ -6,7 +6,7 @@ using Streetcode.DAL.Entities.Media.Images;
 namespace Streetcode.DAL.Entities.News
 {
     [Table("news", Schema = "news")]
-    [Index(nameof(URL), IsUnique = true)]
+    [Microsoft.EntityFrameworkCore.Index(nameof(URL), IsUnique = true)]
     public class News
     {
         [Key]

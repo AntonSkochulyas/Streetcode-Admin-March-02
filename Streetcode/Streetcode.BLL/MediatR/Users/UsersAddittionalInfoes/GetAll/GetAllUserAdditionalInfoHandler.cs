@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Users;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Users.UserAdditionalInfoes;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.GetAll
@@ -45,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.GetAll
         /// </returns>
         public async Task<Result<IEnumerable<UserAdditionalInfoDto>>> Handle(GetAllUserAdditionalInfoQuery request, CancellationToken cancellationToken)
         {
-            var userAdditionalInfoes = await _repositoryWrapper.UserAdditionalInfoRepository.GetAllAsync();
+            var userAdditionalInfoes = await _repositoryWrapper.UserAdditionalInfoRepository.GetItemsBySpecAsync(new GetAllUserAdditionalInfoesSpec());
 
             if (userAdditionalInfoes == null)
             {

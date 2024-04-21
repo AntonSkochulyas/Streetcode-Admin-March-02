@@ -1,10 +1,10 @@
 using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.GetById;
 
@@ -24,11 +24,7 @@ public class GetTimelineItemByIdHandler : IRequestHandler<GetTimelineItemByIdQue
     public async Task<Result<TimelineItemDto>> Handle(GetTimelineItemByIdQuery request, CancellationToken cancellationToken)
     {
         var timelineItem = await _repositoryWrapper.TimelineRepository
-            .GetFirstOrDefaultAsync(
-                predicate: ti => ti.Id == request.Id,
-                include: ti => ti
-                    .Include(til => til.HistoricalContextTimelines)
-                        .ThenInclude(x => x.HistoricalContext)!);
+          .GetItemBySpecAsync(new GetByIdTimelineItemIncludeSpec(request.Id));
 
         if (timelineItem is null)
         {

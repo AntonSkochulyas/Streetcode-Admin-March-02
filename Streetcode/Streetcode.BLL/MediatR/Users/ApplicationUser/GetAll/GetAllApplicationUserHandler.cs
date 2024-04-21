@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Users.UserRegisterModel;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Users.ApplicationUser;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.User.GetAll
@@ -45,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Users.User.GetAll
         /// </returns>
         public async Task<Result<IEnumerable<ApplicationUserDto>>> Handle(GetAllApplicationUserQuery request, CancellationToken cancellationToken)
         {
-            var users = await _repositoryWrapper.ApplicationUserRepository.GetAllAsync();
+            var users = await _repositoryWrapper.ApplicationUserRepository.GetItemsBySpecAsync(new GetAllApplicationUsersSpec());
 
             if (users == null)
             {

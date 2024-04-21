@@ -1,10 +1,10 @@
 using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Toponyms;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Toponyms;
 
 namespace Streetcode.BLL.MediatR.Toponyms.GetByStreetcodeId;
 
@@ -25,10 +25,7 @@ public class GetToponymsByStreetcodeIdHandler : IRequestHandler<GetToponymsByStr
     {
         var toponyms = await _repositoryWrapper
             .ToponymRepository
-            .GetAllAsync(
-                predicate: sc => sc.Streetcodes.Any(s => s.Id == request.StreetcodeId),
-                include: scl => scl
-                    .Include(sc => sc.Coordinate));
+            .GetItemsBySpecAsync(new GetByStreetcodeIdToponymSpec(request.StreetcodeId));
 
         if (toponyms is null)
         {

@@ -1,4 +1,6 @@
 using System.Linq.Expressions;
+using Ardalis.Specification.EntityFramework6;
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
@@ -8,7 +10,7 @@ using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.DAL.Repositories.Realizations.Base;
 
-public abstract class RepositoryBase<T> : IRepositoryBase<T>
+public abstract class RepositoryBase<T> : Interfaces.Base.IRepositoryBase<T>
     where T : class
 {
     private readonly StreetcodeDbContext _dbContext;
@@ -172,10 +174,26 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T>
         return query;
     }
 
+    public async Task<T?> GetItemBySpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<T>?> GetItemsBySpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).ToListAsync();
+    }
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+    {
+        var evaluator = new SpecificationEvaluator();
+        return evaluator.GetQuery(_dbContext.Set<T>(), specification);
+    }
+
     private IQueryable<T> GetQueryable(
-        Expression<Func<T, bool>>? predicate = default,
-        Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default,
-        Expression<Func<T, T>>? selector = default)
+       Expression<Func<T, bool>>? predicate = default,
+       Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default,
+       Expression<Func<T, T>>? selector = default)
     {
         var query = _dbContext.Set<T>().AsNoTracking();
 

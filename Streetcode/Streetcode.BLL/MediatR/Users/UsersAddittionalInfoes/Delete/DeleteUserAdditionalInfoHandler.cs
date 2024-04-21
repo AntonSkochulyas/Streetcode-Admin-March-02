@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Users;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Users.UserAdditionalInfoes;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.Delete
@@ -45,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Users.UsersAddittionalInfoes.Delete
         /// </returns>
         public async Task<Result<UserAdditionalInfoDto>> Handle(DeleteUserAdditionalInfoCommand request, CancellationToken cancellationToken)
         {
-            var foundUserAdditionalInfo = await _repositoryWrapper.UserAdditionalInfoRepository.GetFirstOrDefaultAsync(x => x.Id == request.Id);
+            var foundUserAdditionalInfo = await _repositoryWrapper.UserAdditionalInfoRepository.GetItemBySpecAsync(new GetByIdUserAdditionalInfoSpec(request.Id));
 
             if (foundUserAdditionalInfo == null)
             {

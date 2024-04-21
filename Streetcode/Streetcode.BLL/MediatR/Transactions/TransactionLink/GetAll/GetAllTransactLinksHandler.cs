@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Transactions;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Transactions.TransactionLink;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Transactions.TransactionLink.GetAll
@@ -45,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Transactions.TransactionLink.GetAll
         /// </returns>
         public async Task<Result<IEnumerable<TransactLinkDto>>> Handle(GetAllTransactLinksQuery request, CancellationToken cancellationToken)
         {
-            var transactLinks = await _repositoryWrapper.TransactLinksRepository.GetAllAsync();
+            var transactLinks = await _repositoryWrapper.TransactLinksRepository.GetItemsBySpecAsync(new GetAllTransactionLinkSpec());
 
             if (transactLinks is null)
             {

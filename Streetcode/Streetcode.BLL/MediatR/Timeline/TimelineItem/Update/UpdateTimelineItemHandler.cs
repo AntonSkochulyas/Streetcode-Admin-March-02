@@ -2,10 +2,10 @@
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Timeline;
-using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
 {
@@ -28,11 +28,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
             if (request.TimelineItem is not null)
             {
                 timelineToUpdate = await _repositoryWrapper.TimelineRepository
-                .GetFirstOrDefaultAsync(
-                    ti => ti.Id == request.TimelineItem.Id,
-                    ti => ti
-                        .Include(til => til.HistoricalContextTimelines)
-                            .ThenInclude(x => x.HistoricalContext)!);
+                .GetItemBySpecAsync(new GetByIdTimelineItemIncludeSpec(request.TimelineItem.Id));
             }
 
             if (timelineToUpdate == null)

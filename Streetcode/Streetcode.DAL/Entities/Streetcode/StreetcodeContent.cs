@@ -17,8 +17,8 @@ using Streetcode.DAL.Enums;
 namespace Streetcode.DAL.Entities.Streetcode;
 
 [Table("streetcodes", Schema = "streetcode")]
-[Index(nameof(TransliterationUrl), IsUnique = true)]
-[Index(nameof(Index), IsUnique = true)]
+[Microsoft.EntityFrameworkCore.Index(nameof(TransliterationUrl), IsUnique = true)]
+[Microsoft.EntityFrameworkCore.Index(nameof(Index), IsUnique = true)]
 public class StreetcodeContent
 {
     [Key]

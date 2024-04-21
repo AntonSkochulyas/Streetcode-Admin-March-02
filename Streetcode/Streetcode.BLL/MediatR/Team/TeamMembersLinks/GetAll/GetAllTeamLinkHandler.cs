@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Team;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team.TeamMemberLinks;
 
 namespace Streetcode.BLL.MediatR.Team.TeamMembersLinks.GetAll
 {
@@ -24,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Team.TeamMembersLinks.GetAll
         {
             var teamLinks = await _repositoryWrapper
                 .TeamLinkRepository
-                .GetAllAsync();
+                .GetItemsBySpecAsync(new GetAllTeamMemberLinksSpec());
 
             if (teamLinks is null)
             {

@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Toponyms;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Toponyms;
 
 namespace Streetcode.BLL.MediatR.Toponyms.GetById;
 
@@ -23,7 +24,7 @@ public class GetToponymByIdHandler : IRequestHandler<GetToponymByIdQuery, Result
     public async Task<Result<ToponymDto>> Handle(GetToponymByIdQuery request, CancellationToken cancellationToken)
     {
         var toponym = await _repositoryWrapper.ToponymRepository
-            .GetFirstOrDefaultAsync(f => f.Id == request.Id);
+           .GetItemBySpecAsync(new GetByIdToponymSpec(request.Id));
 
         if (toponym is null)
         {
