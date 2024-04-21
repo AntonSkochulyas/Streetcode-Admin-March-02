@@ -1,38 +1,60 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Text;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.AdditionalContent.Coordinates;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
-namespace Streetcode.BLL.MediatR.Streetcode.Text.GetAll;
-
-public class GetAllTextsHandler : IRequestHandler<GetAllTextsQuery, Result<IEnumerable<TextDto>>>
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Streetcode.Text.GetAll
 {
-    private readonly IMapper _mapper;
-    private readonly IRepositoryWrapper _repositoryWrapper;
-    private readonly ILoggerService _logger;
-
-    public GetAllTextsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
+    /// <summary>
+    /// Handler, that handles a process of getting all texts from database.
+    /// </summary>
+    public class GetAllTextsHandler : IRequestHandler<GetAllTextsQuery, Result<IEnumerable<TextDto>>>
     {
-        _repositoryWrapper = repositoryWrapper;
-        _mapper = mapper;
-        _logger = logger;
-    }
+        // Mapper
+        private readonly IMapper _mapper;
 
-    public async Task<Result<IEnumerable<TextDto>>> Handle(GetAllTextsQuery request, CancellationToken cancellationToken)
-    {
-        var texts = await _repositoryWrapper.TextRepository.GetAllAsync();
+        // Repository wrapper
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        if (texts is null)
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
+        public GetAllTextsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
-            string errorMsg = StreetcodeErrors.GetAllTextsHandlerCannotFindAnyTextError;
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
+            _logger = logger;
         }
 
-        return Result.Ok(_mapper.Map<IEnumerable<TextDto>>(texts));
+        /// <summary>
+        /// Method, that get all texts from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all texts from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of TextDto, or error, if it was while getting process.
+        /// </returns>
+        public async Task<Result<IEnumerable<TextDto>>> Handle(GetAllTextsQuery request, CancellationToken cancellationToken)
+        {
+            var texts = await _repositoryWrapper.TextRepository.GetAllAsync();
+
+            if (texts is null)
+            {
+                string errorMsg = StreetcodeErrors.GetAllTextsHandlerCannotFindAnyTextError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
+
+            return Result.Ok(_mapper.Map<IEnumerable<TextDto>>(texts));
+        }
     }
 }
