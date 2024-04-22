@@ -77,5 +77,14 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Subtitle {
                 return ResourceManager.GetString("GetSubtitleByIdHandlerCanNotFindByIdError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find a subtitle with corresponding streetcode id: {0}..
+        /// </summary>
+        internal static string GetSubtitleByStreetcodeIdHandlerCanNotFindByIdError {
+            get {
+                return ResourceManager.GetString("GetSubtitleByStreetcodeIdHandlerCanNotFindByIdError", resourceCulture);
+            }
+        }
     }
 }

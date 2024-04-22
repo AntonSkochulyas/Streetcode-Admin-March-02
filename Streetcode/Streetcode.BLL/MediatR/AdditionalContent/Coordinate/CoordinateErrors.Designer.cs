@@ -70,11 +70,29 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latitude should be in range from -90 to 90.
+        /// </summary>
+        internal static string CreateCoordinateCommandValidatorLatitudeRange {
+            get {
+                return ResourceManager.GetString("CreateCoordinateCommandValidatorLatitudeRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Longtitude is required field..
         /// </summary>
         internal static string CreateCoordinateCommandValidatorLongtitudeIsRequiredError {
             get {
                 return ResourceManager.GetString("CreateCoordinateCommandValidatorLongtitudeIsRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longtitude should be in range from -180 to 180.
+        /// </summary>
+        internal static string CreateCoordinateCommandValidatorLongtitudeRange {
+            get {
+                return ResourceManager.GetString("CreateCoordinateCommandValidatorLongtitudeRange", resourceCulture);
             }
         }
         
