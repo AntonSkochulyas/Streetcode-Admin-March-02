@@ -19,7 +19,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Revoke.RevokeByUsername
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
             {
-                return Result.Fail("Invalid user name.");
+                return Result.Fail(UsersErrors.InvalidUsernameError);
             }
 
             user.AccessToken = null;

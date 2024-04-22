@@ -118,6 +118,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="MediatR\Users\UsersErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UsersErrors.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -176,6 +181,10 @@
     <EmbeddedResource Update="MediatR\Media\MediaErrors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MediaErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Users\UsersErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

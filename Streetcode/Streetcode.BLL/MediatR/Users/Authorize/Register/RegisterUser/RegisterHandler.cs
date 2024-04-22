@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
             var userExists = await _userManager.FindByNameAsync(request.RegisterModelDto.Username);
             if (userExists != null)
             {
-                return Result.Fail(new Error("User already exists."));
+                return Result.Fail(new Error(UsersErrors.UserAlreadyExistsError));
             }
 
             ApplicationUser user = new ApplicationUser()
@@ -37,7 +37,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
 
             if (!result.Succeeded)
             {
-                return Result.Fail(new Error("User creation failed! Please check user details and try again."));
+                return Result.Fail(new Error(UsersErrors.UserCreationFailureError));
             }
 
             await _jwtService.AuthorizeUserAsync(user);

@@ -34,7 +34,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
                 });
             }
 
-            return Result.Fail("Can not login to the system.");
+            return Result.Fail(UsersErrors.CanNotLoginError);
         }
     }
 }
