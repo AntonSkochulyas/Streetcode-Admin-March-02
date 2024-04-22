@@ -15,5 +15,9 @@ internal class TimelineItemEntityConfiguration : IEntityTypeConfiguration<Timeli
         builder
             .Property(s => s.Title)
             .HasMaxLength(100);
+
+        builder
+            .Property(s => s.Context)
+            .HasMaxLength(50);
     }
 }
