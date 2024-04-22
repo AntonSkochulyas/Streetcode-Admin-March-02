@@ -6,13 +6,19 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.GetAll
 {
     using AutoMapper;
     using FluentAssertions;
+    using Microsoft.EntityFrameworkCore.Query;
     using Moq;
     using Streetcode.BLL.Dto.InfoBlocks.Articles;
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.InfoBlocks.Articles;
     using Streetcode.BLL.MediatR.InfoBlocks.Articles.GetAll;
+    using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
+    using Streetcode.DAL.Entities.InfoBlocks.Articles;
+    using Streetcode.DAL.Entities.Streetcode;
     using Streetcode.DAL.Repositories.Interfaces.Base;
     using Streetcode.XUnitTest.Mocks;
+    using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
     using Xunit;
 
     /// <summary>
@@ -58,6 +64,20 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.GetAll
             result.Value.Should().NotBeNullOrEmpty();
         }
 
+        [Fact]
+        public async Task GetAll_EmptyRepo_IsFailedShouldBeTrue()
+        {
+            // Arrange
+            SetupRepository(new List<Article>());
+            var handler = new GetAllArticlesHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetAllArticlesQuery(), CancellationToken.None);
+
+            // Assert
+            result.IsFailed.Should().BeTrue();
+        }
+
         /// <summary>
         /// Get all list count shoul be four.
         /// </summary>
@@ -90,6 +110,14 @@ namespace Streetcode.XUnitTest.MediatRTests.InfoBlocks.Articles.GetAll
 
             // Assert
             result.Value.Should().BeOfType<List<ArticleDto>>();
+        }
+
+        private void SetupRepository(List<Article> articles)
+        {
+            _mockRepository.Setup(x => x.ArticleRepository.GetAllAsync(
+                It.IsAny<Expression<Func<Article, bool>>>(),
+                It.IsAny<Func<IQueryable<Article>,
+                IIncludableQueryable<Article, object>>>())).ReturnsAsync(articles);
         }
     }
 }
