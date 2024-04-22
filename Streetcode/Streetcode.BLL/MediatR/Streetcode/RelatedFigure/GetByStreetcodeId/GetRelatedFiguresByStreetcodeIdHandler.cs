@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Streetcode.RelatedFigure;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.RelatedFigure;
 
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.GetByStreetcodeId;
 
@@ -33,10 +33,7 @@ public class GetRelatedFiguresByStreetcodeIdHandler : IRequestHandler<GetRelated
             return Result.Fail(new Error(errorMsg));
         }
 
-        var relatedFigures = await _repositoryWrapper.StreetcodeRepository.GetAllAsync(
-          predicate: sc => relatedFigureIds.Any(id => id == sc.Id) && sc.Status == DAL.Enums.StreetcodeStatus.Published,
-          include: scl => scl.Include(sc => sc.Images).ThenInclude(img => img.ImageDetails)
-                             .Include(sc => sc.Tags));
+        var relatedFigures = await _repositoryWrapper.StreetcodeRepository.GetItemsBySpecAsync(new GetAllPublishedRelatedFigureSpec(relatedFigureIds));
 
         if (relatedFigures is null)
         {

@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
@@ -48,7 +49,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete
             int sourceLinkCategoryId = request.sourceLinkCategoryId;
             int streetcodeId = request.streetcodeId;
             var streetcodeCategoryContent = await _repositoryWrapper.StreetcodeCategoryContentRepository
-                .GetFirstOrDefaultAsync(sc => sc.SourceLinkCategoryId == sourceLinkCategoryId && sc.StreetcodeId == streetcodeId);
+                .GetItemBySpecAsync(new GetByStreetcodeIdStreetcodeCategoryContentSpec(streetcodeId, sourceLinkCategoryId));
             if (streetcodeCategoryContent == null)
             {
                 string errorMsg = string.Format(

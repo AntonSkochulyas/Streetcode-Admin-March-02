@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetById;
 
@@ -22,7 +23,7 @@ public class GetFactByIdHandler : IRequestHandler<GetFactByIdQuery, Result<FactD
 
     public async Task<Result<FactDto>> Handle(GetFactByIdQuery request, CancellationToken cancellationToken)
     {
-        var facts = await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(f => f.Id == request.Id);
+        var facts = await _repositoryWrapper.FactRepository.GetItemBySpecAsync(new GetByIdFactSpec(request.Id));
 
         if (facts is null)
         {

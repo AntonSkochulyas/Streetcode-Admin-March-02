@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Streetcode.RelatedFigure;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.RelatedFigure;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Delete
@@ -46,9 +47,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Delete
         public async Task<Result<RelatedFigureDto>> Handle(DeleteRelatedFigureCommand request, CancellationToken cancellationToken)
         {
             var relation = await _repositoryWrapper.RelatedFigureRepository
-                                    .GetFirstOrDefaultAsync(rel =>
-                                    rel.ObserverId == request.ObserverId &&
-                                    rel.TargetId == request.TargetId);
+                                    .GetItemBySpecAsync(new GetByObserverAndTargetIdRelatedFigureSpec(request.ObserverId, request.TargetId));
 
             if (relation is null)
             {

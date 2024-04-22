@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.Fact.Delete
@@ -49,7 +50,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Fact.Delete
         public async Task<Result<FactDto>> Handle(DeleteFactCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;
-            var fact = await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(n => n.Id == id);
+            var fact = await _repositoryWrapper.FactRepository.GetItemBySpecAsync(new GetByIdFactSpec(request.Id));
             if (fact == null)
             {
                 string errorMsg = string.Format(StreetcodeErrors.DeleteFactHandlerNoFactFoundByEnteredIdError, id);
