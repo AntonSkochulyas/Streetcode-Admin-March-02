@@ -61,33 +61,6 @@ namespace Streetcode.BLL.MediatR.Timeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title length of historical context must not be longer than {0} symbols..
-        /// </summary>
-        internal static string CreateHistoricalContextCommandValidatorMaxTitleLengthError {
-            get {
-                return ResourceManager.GetString("CreateHistoricalContextCommandValidatorMaxTitleLengthError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot convert null to historical context..
-        /// </summary>
-        internal static string CreateHistoricalContextHandlerCanNotConvertFromNullError {
-            get {
-                return ResourceManager.GetString("CreateHistoricalContextHandlerCanNotConvertFromNullError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to create a historical context..
-        /// </summary>
-        internal static string CreateHistoricalContextHandlerFailedToCreateError {
-            get {
-                return ResourceManager.GetString("CreateHistoricalContextHandlerFailedToCreateError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to DataViewPattern is required..
         /// </summary>
         internal static string CreateTimelineItemCommandValidatorDataViewPatternIsRequiredError {
@@ -174,15 +147,6 @@ namespace Streetcode.BLL.MediatR.Timeline {
         internal static string DeleteTimelineItemHandlerFailedToDeleteError {
             get {
                 return ResourceManager.GetString("DeleteTimelineItemHandlerFailedToDeleteError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot find any historical contexts..
-        /// </summary>
-        internal static string GetAllHistoricalContextHandlerCanNotFindAnyError {
-            get {
-                return ResourceManager.GetString("GetAllHistoricalContextHandlerCanNotFindAnyError", resourceCulture);
             }
         }
         
