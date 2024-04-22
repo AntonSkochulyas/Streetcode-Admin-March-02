@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll
@@ -47,10 +48,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.GetAll
         public async Task<Result<IEnumerable<TimelineItemDto>>> Handle(GetAllTimelineItemsQuery request, CancellationToken cancellationToken)
         {
             var timelineItems = await _repositoryWrapper
-                .TimelineRepository.GetAllAsync(
-                    include: ti => ti
-                      .Include(til => til.HistoricalContextTimelines)
-                        .ThenInclude(x => x.HistoricalContext)!);
+                .TimelineRepository.GetItemsBySpecAsync(new GetAllTimelineItemSpec());
 
             if (timelineItems is null)
             {

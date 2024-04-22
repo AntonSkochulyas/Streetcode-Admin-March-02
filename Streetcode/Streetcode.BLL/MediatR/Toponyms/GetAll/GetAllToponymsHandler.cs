@@ -6,6 +6,7 @@ using Streetcode.BLL.Dto.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.BLL.Interfaces.Logging;
+using Streetcode.DAL.Specification.Toponyms;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Toponyms.GetAll
@@ -45,8 +46,8 @@ namespace Streetcode.BLL.MediatR.Toponyms.GetAll
         {
             var filterRequest = query.request;
 
-            var toponyms = _repositoryWrapper.ToponymRepository
-                 .FindAll();
+            var toponyms = await _repositoryWrapper.ToponymRepository
+                 .GetItemsBySpecAsync(new GetAllToponymsSpec());
 
             if (filterRequest.Title is not null)
             {
@@ -65,7 +66,7 @@ namespace Streetcode.BLL.MediatR.Toponyms.GetAll
         }
 
         private void FindStreetcodesWithMatchTitle(
-            ref IQueryable<Toponym> toponyms,
+            ref IEnumerable<Toponym> toponyms,
             string title)
         {
             toponyms = toponyms.Where(s => s.StreetName

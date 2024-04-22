@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Team;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team.Positions;
 
 namespace Streetcode.BLL.MediatR.Team.Position.GetAll
 {
@@ -24,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Team.Position.GetAll
         {
             var positions = await _repositoryWrapper
                 .PositionRepository
-                .GetAllAsync();
+                .GetItemsBySpecAsync(new GetAllPositionsSpec());
 
             if (positions is null)
             {

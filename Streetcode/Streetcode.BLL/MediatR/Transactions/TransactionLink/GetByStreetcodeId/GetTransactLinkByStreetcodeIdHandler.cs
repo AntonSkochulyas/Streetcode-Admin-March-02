@@ -5,6 +5,7 @@ using Streetcode.BLL.Dto.Transactions;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.ResultVariations;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Transactions.TransactionLink;
 
 namespace Streetcode.BLL.MediatR.Transactions.TransactionLink.GetByStreetcodeId;
 
@@ -23,7 +24,7 @@ public class GetTransactLinkByStreetcodeIdHandler : IRequestHandler<GetTransactL
     public async Task<Result<TransactLinkDto?>> Handle(GetTransactLinkByStreetcodeIdQuery request, CancellationToken cancellationToken)
     {
         var transactLink = await _repositoryWrapper.TransactLinksRepository
-            .GetFirstOrDefaultAsync(f => f.StreetcodeId == request.StreetcodeId);
+          .GetItemBySpecAsync(new GetByStreetcodeIdTransactionLinkSpec(request.StreetcodeId));
 
         if (transactLink is null)
         {

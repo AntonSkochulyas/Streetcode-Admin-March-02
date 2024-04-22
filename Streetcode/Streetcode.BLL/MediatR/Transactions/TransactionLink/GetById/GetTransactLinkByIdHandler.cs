@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Transactions;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Transactions.TransactionLink;
 
 namespace Streetcode.BLL.MediatR.Transactions.TransactionLink.GetById;
 
@@ -23,7 +24,7 @@ public class GetTransactLinkByIdHandler : IRequestHandler<GetTransactLinkByIdQue
     public async Task<Result<TransactLinkDto>> Handle(GetTransactLinkByIdQuery request, CancellationToken cancellationToken)
     {
         var transactLink = await _repositoryWrapper.TransactLinksRepository
-            .GetFirstOrDefaultAsync(f => f.Id == request.Id);
+            .GetItemBySpecAsync(new GetByIdTransactionLinkSpec(request.Id));
 
         if (transactLink is null)
         {

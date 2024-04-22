@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
@@ -45,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Delete
         /// </returns>
         public async Task<Result<TimelineItemDto>> Handle(DeleteTimelineItemCommand request, CancellationToken cancellationToken)
         {
-            var timelineToDelete = await _repositoryWrapper.TimelineRepository.GetFirstOrDefaultAsync(x => x.Id == request.Id);
+            var timelineToDelete = await _repositoryWrapper.TimelineRepository.GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.Id));
 
             if (timelineToDelete == null)
             {

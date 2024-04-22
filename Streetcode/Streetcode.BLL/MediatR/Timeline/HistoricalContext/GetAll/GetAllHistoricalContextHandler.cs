@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Timeline.HistoricalContext;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Timeline.HistoricalContext.GetAll
@@ -47,7 +48,7 @@ namespace Streetcode.BLL.MediatR.Timeline.HistoricalContext.GetAll
         {
             var historicalContextItems = await _repositoryWrapper
                 .HistoricalContextRepository
-                .GetAllAsync();
+                .GetItemsBySpecAsync(new GetAllHistoricalContextSpec());
 
             if (historicalContextItems is null)
             {

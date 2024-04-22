@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using Streetcode.DAL.Enums;
@@ -63,4 +64,8 @@ public interface IRepositoryBase<T>
         int skip = 0,
         int take = 0,
         Dictionary<Expression<Func<T, object>>, SortDirection>? orderBy = null);
+
+    Task<T?> GetItemBySpecAsync(ISpecification<T> spec);
+
+    Task<IEnumerable<T>?> GetItemsBySpecAsync(ISpecification<T> spec);
 }
