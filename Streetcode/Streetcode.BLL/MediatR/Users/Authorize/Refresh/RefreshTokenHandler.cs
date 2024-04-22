@@ -23,7 +23,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
         {
             if (request.TokenModelDto == null)
             {
-                return Result.Fail("Invalid client request.");
+                return Result.Fail(UsersErrors.InvalidClientRequestError);
             }
 
             string? accessToken = request.TokenModelDto.AccessToken;
@@ -32,7 +32,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
             var principal = _jwtService.GetPrincipalFromExpiredToken(accessToken);
             if (principal == null)
             {
-                return Result.Fail("Invalid access token or refresh token.");
+                return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
             }
 
             string username = principal.Identity.Name;
@@ -41,7 +41,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
 
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
-                return Result.Fail("Invalid access token or refresh token.");
+                return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
             }
 
             var newAccessToken = _jwtService.CreateToken(principal.Claims.ToList());

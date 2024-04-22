@@ -25,7 +25,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
             var userExists = await _userManager.FindByNameAsync(request.RegisterModelDto.Username);
             if (userExists != null)
             {
-                return Result.Fail(new Error("User already exists."));
+                return Result.Fail(new Error(""));
             }
 
             ApplicationUser user = new ApplicationUser()
@@ -39,7 +39,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
 
             if (!result.Succeeded)
             {
-                return Result.Fail(new Error("User creation failed! Please check user details and try again."));
+                return Result.Fail(new Error(UsersErrors.UserCreationFailureError));
             }
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
