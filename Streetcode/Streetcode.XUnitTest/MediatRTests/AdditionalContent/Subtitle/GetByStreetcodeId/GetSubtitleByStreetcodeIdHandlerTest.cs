@@ -58,7 +58,7 @@
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            result.IsFailed.Should().BeTrue();
+            result.Value.Should().BeNull();
         }
     }
 }

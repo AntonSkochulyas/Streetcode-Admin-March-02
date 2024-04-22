@@ -46,16 +46,12 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetByStreetcodeId
         /// </returns>
         public async Task<Result<SubtitleDto>> Handle(GetSubtitlesByStreetcodeIdQuery request, CancellationToken cancellationToken)
         {
-            var subtitle = await _repositoryWrapper.SubtitleRepository.GetFirstOrDefaultAsync(f => f.StreetcodeId == request.StreetcodeId);
+            var subtitle = await _repositoryWrapper.SubtitleRepository
+                .GetFirstOrDefaultAsync(Subtitle => Subtitle.StreetcodeId == request.StreetcodeId);
 
-            if (subtitle is null)
-            {
-                string errorMsg = SubtitleErrors.GetSubtitleByStreetcodeIdHandlerCanNotFindByIdError;
-                _logger.LogError(request.StreetcodeId, errorMsg);
-                return Result.Fail(new Error(errorMsg));
-            }
-
-            return Result.Ok(_mapper.Map<SubtitleDto>(subtitle));
+            NullResult<SubtitleDto> result = new NullResult<SubtitleDto>();
+            result.WithValue(_mapper.Map<SubtitleDto>(subtitle));
+            return result;
         }
     }
 }
