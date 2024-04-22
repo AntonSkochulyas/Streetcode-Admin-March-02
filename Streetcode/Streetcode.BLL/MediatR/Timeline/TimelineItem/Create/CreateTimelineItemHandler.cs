@@ -46,7 +46,8 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
         /// </returns>
         public async Task<Result<TimelineItemDto>> Handle(CreateTimelineItemCommand request, CancellationToken cancellationToken)
         {
-            if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
+            // if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
+            if (await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.TimelineItem.StreetcodeId) == null)
             {
                 string errorMsg = TimelineErrors.CreateTimelineItemHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);

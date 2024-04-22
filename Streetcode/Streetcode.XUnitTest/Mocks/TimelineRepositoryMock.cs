@@ -6,6 +6,7 @@ using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 internal partial class RepositoryMocker
 {
@@ -39,7 +40,7 @@ internal partial class RepositoryMocker
             }
         };
 
-        var mockRepo = new Mock<IRepositoryWrapper>();
+        var mockRepo = GetStreetcodeRepositoryMock();
 
         mockRepo.Setup(repo => repo.TimelineRepository.GetAllAsync(It.IsAny<Expression<Func<TimelineItem, bool>>>(), It.IsAny<Func<IQueryable<TimelineItem>,
             IIncludableQueryable<TimelineItem, object>>>())).ReturnsAsync(timelineItems);

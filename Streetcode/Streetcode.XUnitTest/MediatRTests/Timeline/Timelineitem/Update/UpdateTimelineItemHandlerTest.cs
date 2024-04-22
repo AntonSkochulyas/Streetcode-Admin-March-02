@@ -43,6 +43,7 @@
         {
             // Arrange
             var handler = new UpdateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
             TimelineItemDto? timeline = null;
             var request = new UpdateTimelineItemCommand(timeline);
 
@@ -63,6 +64,7 @@
             {
                Id = 1,
                Title = "BEBEBBEBE",
+               StreetcodeId = 1,
             };
 
             var updatedTimeline = new UpdateTimelineItemCommand(timeline);

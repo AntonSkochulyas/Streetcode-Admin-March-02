@@ -52,9 +52,10 @@
             // Act
             var result = await handler.Handle(
                 new CreateTimelineItemCommand(
-                new BLL.Dto.Timeline.TimelineItemDto()
+                new BLL.Dto.Timeline.TimelineItemCreateDto()
                 {
                     Title = "TEST",
+                    StreetcodeId = 1,
                 }), CancellationToken.None);
 
             // Assert
@@ -74,8 +75,9 @@
             // Act
             var result = await handler.Handle(
                 new CreateTimelineItemCommand(
-                new BLL.Dto.Timeline.TimelineItemDto()
+                new BLL.Dto.Timeline.TimelineItemCreateDto()
                 {
+                    StreetcodeId = 1,
                     Title = "TEST",
                 }), CancellationToken.None);
 

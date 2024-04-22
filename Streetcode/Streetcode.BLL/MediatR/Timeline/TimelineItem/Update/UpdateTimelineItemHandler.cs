@@ -24,15 +24,26 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
 
         public async Task<Result<TimelineItemDto>> Handle(UpdateTimelineItemCommand request, CancellationToken cancellationToken)
         {
-            if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
+            if(request.TimelineItem == null)
+            {
+                string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
+
+            // if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
+            if (await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.TimelineItem.StreetcodeId) == null)
             {
                 string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
 
+            // DAL.Entities.Timeline.TimelineItem? timelineToUpdate = await _repositoryWrapper.TimelineRepository
+            //        .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.TimelineItem.Id));
+
             DAL.Entities.Timeline.TimelineItem? timelineToUpdate = await _repositoryWrapper.TimelineRepository
-                    .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.TimelineItem.Id));
+                    .GetFirstOrDefaultAsync(t => t.Id == request.TimelineItem.Id);
 
             if (timelineToUpdate == null)
             {
