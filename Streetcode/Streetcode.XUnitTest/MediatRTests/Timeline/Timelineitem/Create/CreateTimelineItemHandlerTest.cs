@@ -47,22 +47,6 @@
         public async Task CreatedTimelineItemShouldNotBeNull()
         {
             // Arrange
-            var historicalTimelines = new List<HistoricalContextDto>()
-            {
-                new HistoricalContextDto()
-                {
-                    Id = 1,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 2,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 3,
-                },
-            };
-
             var handler = new CreateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
@@ -71,7 +55,6 @@
                 new BLL.Dto.Timeline.TimelineItemDto()
                 {
                     Title = "TEST",
-                    HistoricalContexts = historicalTimelines,
                 }), CancellationToken.None);
 
             // Assert
@@ -86,22 +69,6 @@
         public async Task CreatedTimelineItemTitleShouldBeTest()
         {
             // Arrange
-            var historicalTimelines = new List<HistoricalContextDto>()
-            {
-                new HistoricalContextDto()
-                {
-                    Id = 1,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 2,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 3,
-                },
-            };
-
             var handler = new CreateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
@@ -110,7 +77,6 @@
                 new BLL.Dto.Timeline.TimelineItemDto()
                 {
                     Title = "TEST",
-                    HistoricalContexts = historicalTimelines,
                 }), CancellationToken.None);
 
             // Assert
