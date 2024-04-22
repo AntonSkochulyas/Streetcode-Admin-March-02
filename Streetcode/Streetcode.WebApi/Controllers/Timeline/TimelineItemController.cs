@@ -54,7 +54,7 @@ public class TimelineItemController : BaseApiController
     /// <returns>The created timeline item.</returns>
     [Authorize("Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] TimelineItemDto timelineItem)
+    public async Task<IActionResult> Create([FromBody] TimelineItemCreateDto timelineItem)
     {
         return HandleResult(await Mediator.Send(new CreateTimelineItemCommand(timelineItem)));
     }

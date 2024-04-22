@@ -12,6 +12,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
     /// <param name="newTimelineItem">
     /// New timeline item.
     /// </param>
-    public record CreateTimelineItemCommand(TimelineItemDto TimelineItem)
+    public record CreateTimelineItemCommand(TimelineItemCreateDto TimelineItem)
         : IRequest<Result<TimelineItemDto>>;
 }

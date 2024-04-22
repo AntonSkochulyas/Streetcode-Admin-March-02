@@ -9,6 +9,8 @@ namespace Streetcode.BLL.Mapping.Timeline
         public TimelineItemProfile()
         {
             CreateMap<TimelineItem, TimelineItemDto>().ReverseMap();
+
+            CreateMap<TimelineItem, TimelineItemCreateDto>().ReverseMap();
         }
     }
 }

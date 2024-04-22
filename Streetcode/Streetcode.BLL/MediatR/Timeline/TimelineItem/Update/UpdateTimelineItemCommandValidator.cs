@@ -8,6 +8,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
         {
             int titleMaxLength = 100;
             int descriptionMaxLength = 600;
+            int descriptionContextLength = 50;
 
             RuleFor(command => command.TimelineItem.Date)
                 .NotEmpty()
@@ -26,6 +27,10 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
             RuleFor(command => command.TimelineItem.Description)
                 .MaximumLength(descriptionMaxLength)
                 .WithMessage(string.Format(TimelineErrors.UpdateTimelineItemCommandValidatorDescriptionMaxLengthError, descriptionMaxLength));
+
+            RuleFor(command => command.TimelineItem.Context)
+                .MaximumLength(descriptionContextLength)
+                .WithMessage(string.Format(TimelineErrors.CreateTimelineItemCommandValidatorDescriptionMaxLengthError, descriptionContextLength));
         }
     }
 }

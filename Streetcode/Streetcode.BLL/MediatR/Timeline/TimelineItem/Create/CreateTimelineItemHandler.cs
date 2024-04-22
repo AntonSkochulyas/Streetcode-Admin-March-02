@@ -4,8 +4,8 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
@@ -46,12 +46,14 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
         /// </returns>
         public async Task<Result<TimelineItemDto>> Handle(CreateTimelineItemCommand request, CancellationToken cancellationToken)
         {
-            DAL.Entities.Timeline.TimelineItem? newTimelineItem = null;
-
-            if (request.TimelineItem is not null)
+            if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
             {
-                newTimelineItem = _mapper.Map<DAL.Entities.Timeline.TimelineItem>(request.TimelineItem);
+                string errorMsg = TimelineErrors.CreateTimelineItemHandlerCanNotConvertFromNullError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
             }
+
+            DAL.Entities.Timeline.TimelineItem? newTimelineItem = _mapper.Map<DAL.Entities.Timeline.TimelineItem>(request.TimelineItem);
 
             if (newTimelineItem == null)
             {
@@ -61,6 +63,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
             }
 
             var createdTimeline = _repositoryWrapper.TimelineRepository.Create(newTimelineItem);
+
             var isCreatedSuccessfully = await _repositoryWrapper.SaveChangesAsync() > 0;
 
             if (isCreatedSuccessfully)

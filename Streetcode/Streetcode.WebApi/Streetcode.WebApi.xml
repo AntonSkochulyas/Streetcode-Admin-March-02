@@ -1059,7 +1059,7 @@
             <param name="streetcodeId">The ID of the streetcode.</param>
             <returns>The collection of timeline items associated with the specified streetcode ID.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Create(Streetcode.BLL.Dto.Timeline.TimelineItemDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Create(Streetcode.BLL.Dto.Timeline.TimelineItemCreateDto)">
             <summary>
             Creates a new timeline item.
             </summary>

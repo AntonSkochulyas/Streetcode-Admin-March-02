@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team;
 using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
@@ -23,12 +24,15 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
 
         public async Task<Result<TimelineItemDto>> Handle(UpdateTimelineItemCommand request, CancellationToken cancellationToken)
         {
-            DAL.Entities.Timeline.TimelineItem? timelineToUpdate = null;
-            if (request.TimelineItem is not null)
+            if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
             {
-                timelineToUpdate = await _repositoryWrapper.TimelineRepository
-                .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.TimelineItem.Id));
+                string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
             }
+
+            DAL.Entities.Timeline.TimelineItem? timelineToUpdate = await _repositoryWrapper.TimelineRepository
+                    .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.TimelineItem.Id));
 
             if (timelineToUpdate == null)
             {
