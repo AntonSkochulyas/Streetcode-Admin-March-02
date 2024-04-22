@@ -30,9 +30,8 @@ namespace Streetcode.XUnitTest.ValidationTests.AdditionalContent.Coordinate
         [Theory]
         [InlineData(-91)]
         [InlineData(91)]
-        [InlineData(MINLATITUDE - 10000)]
-        [InlineData(MAXLATITUDE + 10000)]
-        public void CreateStreetcodeCommand_LatitudeIsLessOrGraterThanAllowed_ShouldHaveErrors(int latitude)
+        [InlineData(MAXLATITUDE + 100)]
+        public void CreateCoordinateCommand_LatitudeIsLessOrGraterThanAllowed_ShouldHaveErrors(int latitude)
         {
             // Arrange
             var dto = new CreateStreetcodeCoordinateDto()
@@ -50,8 +49,30 @@ namespace Streetcode.XUnitTest.ValidationTests.AdditionalContent.Coordinate
             validationResult.ShouldHaveValidationErrorFor(x => x.CreateStreetcodeCoordinateDto.Latitude);
         }
 
+        [Theory]
+        [InlineData(-181)]
+        [InlineData(181)]
+        [InlineData(MAXLONGTITUDE + 100)]
+        public void CreateCoordinateCommand_LongtitudeIsLessOrGraterThanAllowed_ShouldHaveErrors(int longtitude)
+        {
+            // Arrange
+            var dto = new CreateStreetcodeCoordinateDto()
+            {
+                Latitude = MAXLATITUDE,
+                Longtitude = longtitude,
+                StreetcodeId = MINSTREETCODEID
+            };
+            var request = new CreateCoordinateCommand(dto);
+
+            // Act
+            var validationResult = _validator.TestValidate(request);
+
+            // Assert
+            validationResult.ShouldHaveValidationErrorFor(x => x.CreateStreetcodeCoordinateDto.Longtitude);
+        }
+
         [Fact]
-        public void CreateStreetcodeCommand_ValidData_ShouldNotHaveErrors()
+        public void CreateCoordinateCommand_ValidData_ShouldNotHaveErrors()
         {
             var dto = new CreateStreetcodeCoordinateDto()
             {
