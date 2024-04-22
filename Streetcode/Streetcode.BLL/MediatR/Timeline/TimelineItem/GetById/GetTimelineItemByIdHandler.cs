@@ -24,7 +24,7 @@ public class GetTimelineItemByIdHandler : IRequestHandler<GetTimelineItemByIdQue
     public async Task<Result<TimelineItemDto>> Handle(GetTimelineItemByIdQuery request, CancellationToken cancellationToken)
     {
         var timelineItem = await _repositoryWrapper.TimelineRepository
-          .GetItemBySpecAsync(new GetByIdTimelineItemIncludeSpec(request.Id));
+          .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.Id));
 
         if (timelineItem is null)
         {

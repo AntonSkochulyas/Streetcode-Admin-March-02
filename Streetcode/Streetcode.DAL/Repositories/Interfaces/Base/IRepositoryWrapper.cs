@@ -49,13 +49,11 @@ public interface IRepositoryWrapper
     ITimelineRepository TimelineRepository { get; }
     IToponymRepository ToponymRepository { get; }
     ITransactLinksRepository TransactLinksRepository { get; }
-    IHistoricalContextRepository HistoricalContextRepository { get; }
     IPartnerSourceLinkRepository PartnerSourceLinkRepository { get; }
     IStreetcodeTagIndexRepository StreetcodeTagIndexRepository { get; }
     IPartnerStreetcodeRepository PartnerStreetcodeRepository { get;  }
     INewsRepository NewsRepository { get; }
     IPositionRepository PositionRepository { get; }
-    IHistoricalContextTimelineRepository HistoricalContextTimelineRepository { get; }
     IStreetcodeToponymRepository StreetcodeToponymRepository { get; }
     IStreetcodeImageRepository StreetcodeImageRepository { get; }
     IDictionaryItemRepository DictionaryItemRepository { get; }

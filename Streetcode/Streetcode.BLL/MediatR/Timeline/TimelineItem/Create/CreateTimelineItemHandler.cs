@@ -60,24 +60,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
                 return Result.Fail(errorMsg);
             }
 
-            if (request.TimelineItem?.HistoricalContexts is null)
-            {
-                string errorMsg = TimelineErrors.CreateTimelineItemHandlerHistoricalContextsIsNullError;
-                _logger.LogError(request, errorMsg);
-                return Result.Fail(errorMsg);
-            }
-
-            var newHistoricalContextTimeline = new HistoricalContextTimeline()
-            {
-                HistoricalContextId = request.TimelineItem.HistoricalContexts.First().Id,
-                TimelineId = newTimelineItem.Id
-            };
-
-            await _repositoryWrapper.HistoricalContextTimelineRepository.CreateAsync(newHistoricalContextTimeline);
-
-            newTimelineItem.HistoricalContextTimelines.Add(newHistoricalContextTimeline);
-            newTimelineItem.StreetcodeId = 1;
-
             var createdTimeline = _repositoryWrapper.TimelineRepository.Create(newTimelineItem);
             var isCreatedSuccessfully = await _repositoryWrapper.SaveChangesAsync() > 0;
 

@@ -3,7 +3,6 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
@@ -28,7 +27,7 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
             if (request.TimelineItem is not null)
             {
                 timelineToUpdate = await _repositoryWrapper.TimelineRepository
-                .GetItemBySpecAsync(new GetByIdTimelineItemIncludeSpec(request.TimelineItem.Id));
+                .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.TimelineItem.Id));
             }
 
             if (timelineToUpdate == null)
@@ -37,8 +36,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
-
-            await UpdateTimeline(timelineToUpdate, request.TimelineItem!);
 
             _repositoryWrapper.TimelineRepository.Update(timelineToUpdate);
 
@@ -53,34 +50,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
                 string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
-            }
-        }
-
-        private async Task UpdateTimeline(DAL.Entities.Timeline.TimelineItem timelineToUpdate, TimelineItemDto timelineThatUpdate)
-        {
-            timelineToUpdate.Title = timelineThatUpdate.Title;
-            timelineToUpdate.Description = timelineThatUpdate.Description;
-            timelineToUpdate.Date = timelineThatUpdate.Date;
-            timelineToUpdate.DateViewPattern = timelineThatUpdate.DateViewPattern;
-
-            var oldHistoricalContextTimeline = timelineToUpdate.HistoricalContextTimelines.FirstOrDefault(x => x.TimelineId == timelineToUpdate.Id);
-
-            if (oldHistoricalContextTimeline != null)
-            {
-                // Break many-to-many relationship
-                _repositoryWrapper.HistoricalContextTimelineRepository.Delete(oldHistoricalContextTimeline);
-
-                var newHistoricalContext = timelineThatUpdate.HistoricalContexts.FirstOrDefault();
-
-                if (newHistoricalContext != null)
-                {
-                    var newHistoricalContextTimeline = new HistoricalContextTimeline() { TimelineId = timelineToUpdate.Id, HistoricalContextId = newHistoricalContext.Id };
-
-                    await _repositoryWrapper.HistoricalContextTimelineRepository.CreateAsync(newHistoricalContextTimeline);
-
-                    timelineToUpdate.HistoricalContextTimelines.Clear();
-                    timelineToUpdate.HistoricalContextTimelines.Add(newHistoricalContextTimeline);
-                }
             }
         }
     }

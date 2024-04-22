@@ -9,16 +9,6 @@ namespace Streetcode.BLL.Mapping.Timeline
         public TimelineItemProfile()
         {
             CreateMap<TimelineItem, TimelineItemDto>().ReverseMap();
-
-            CreateMap<TimelineItem, TimelineItemDto>()
-                .ForMember(dest => dest.HistoricalContexts, opt => opt.MapFrom(src =>
-                    src.HistoricalContextTimelines != null ?
-                    src.HistoricalContextTimelines.Select(x => new HistoricalContextDto
-                    {
-                        Id = x.HistoricalContextId,
-                        Title = x.HistoricalContext.Title
-                    }).ToList() :
-                    null));
         }
     }
 }

@@ -24,11 +24,7 @@ public class GetTimelineItemsByStreetcodeIdHandler : IRequestHandler<GetTimeline
     public async Task<Result<IEnumerable<TimelineItemDto>>> Handle(GetTimelineItemsByStreetcodeIdQuery request, CancellationToken cancellationToken)
     {
         var timelineItems = await _repositoryWrapper.TimelineRepository
-            .GetAllAsync(
-                predicate: f => f.StreetcodeId == request.StreetcodeId,
-                include: ti => ti
-                    .Include(til => til.HistoricalContextTimelines)
-                        .ThenInclude(x => x.HistoricalContext)!);
+            .GetAllAsync();
 
         if (timelineItems is null)
         {

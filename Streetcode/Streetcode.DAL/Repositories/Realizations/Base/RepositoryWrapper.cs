@@ -96,8 +96,6 @@ public class RepositoryWrapper : IRepositoryWrapper
 
     private ITransactLinksRepository? _transactLinksRepository;
 
-    private IHistoricalContextRepository? _historyContextRepository;
-
     private IPartnerSourceLinkRepository? _partnerSourceLinkRepository;
 
     private IStreetcodeTagIndexRepository? _streetcodeTagIndexRepository;
@@ -109,8 +107,6 @@ public class RepositoryWrapper : IRepositoryWrapper
     private ITeamLinkRepository? _teamLinkRepository;
 
     private ITeamPositionRepository? _teamPositionRepository;
-
-    private IHistoricalContextTimelineRepository? _historicalContextTimelineRepository;
 
     private IStreetcodeToponymRepository? _streetcodeToponymRepository;
 
@@ -472,19 +468,6 @@ public class RepositoryWrapper : IRepositoryWrapper
         }
     }
 
-    public IHistoricalContextRepository HistoricalContextRepository
-    {
-        get
-        {
-            if (_historyContextRepository is null)
-            {
-                _historyContextRepository = new HistoricalContextRepository(_streetcodeDbContext);
-            }
-
-            return _historyContextRepository;
-        }
-    }
-
     public IPartnerSourceLinkRepository PartnerSourceLinkRepository
     {
         get
@@ -564,19 +547,6 @@ public class RepositoryWrapper : IRepositoryWrapper
     }
 
     public IImageDetailsRepository ImageDetailsRepository => _imageDetailsRepository??=new ImageDetailsRepository(_streetcodeDbContext);
-
-    public IHistoricalContextTimelineRepository HistoricalContextTimelineRepository
-    {
-        get
-        {
-            if (_historicalContextTimelineRepository is null)
-            {
-                _historicalContextTimelineRepository = new HistoricalContextTimelineRepository(_streetcodeDbContext);
-            }
-
-            return _historicalContextTimelineRepository;
-        }
-    }
 
     public IStreetcodeToponymRepository StreetcodeToponymRepository
 	{
