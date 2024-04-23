@@ -43,6 +43,7 @@
         {
             // Arrange
             var handler = new UpdateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
             TimelineItemDto? timeline = null;
             var request = new UpdateTimelineItemCommand(timeline);
 
@@ -58,23 +59,12 @@
         {
             // Arrange
             var handler = new UpdateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-            var historicalContexts = new List<HistoricalContextDto>()
-            {
-                new HistoricalContextDto()
-                {
-                    Id = 1,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 2,
-                },
-            };
 
             var timeline = new TimelineItemDto()
             {
                Id = 1,
                Title = "BEBEBBEBE",
-               HistoricalContexts = historicalContexts,
+               StreetcodeId = 1,
             };
 
             var updatedTimeline = new UpdateTimelineItemCommand(timeline);

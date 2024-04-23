@@ -2,9 +2,8 @@ using Streetcode.DAL.Enums;
 
 namespace Streetcode.BLL.Dto.Timeline;
 
-public class TimelineItemDto
+public class TimelineItemCreateDto
 {
-    public int Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
     public string? Context { get; set; }

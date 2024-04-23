@@ -45,7 +45,13 @@ namespace Streetcode.DAL.Persistence.Configurations
 
             builder.HasMany(d => d.Facts)
                 .WithOne(f => f.Streetcode)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey(f => f.StreetcodeId);
+
+            builder.HasMany(d => d.TimelineItems)
+                .WithOne(f => f.Streetcode)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey(f => f.StreetcodeId);
 
             builder.HasMany(d => d.Images)
                 .WithMany(i => i.Streetcodes)

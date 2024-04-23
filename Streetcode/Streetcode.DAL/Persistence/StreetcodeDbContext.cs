@@ -49,7 +49,6 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ToponymCoordinate>? ToponymCoordinates { get; set; }
     public DbSet<StreetcodeCoordinate>? StreetcodeCoordinates { get; set; }
     public DbSet<Fact>? Facts { get; set; }
-    public DbSet<HistoricalContext>? HistoricalContexts { get; set; }
     public DbSet<Image>? Images { get; set; }
     public DbSet<ImageDetails>? ImageDetailses { get; set; }
     public DbSet<Partner>? Partners { get; set; }
@@ -76,7 +75,6 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<News>? News { get; set; }
     public DbSet<SourceLinkCategory>? SourceLinks { get; set; }
     public DbSet<StreetcodeImage>? StreetcodeImages { get; set; }
-    public DbSet<HistoricalContextTimeline>? HistoricalContextsTimelines { get; set; }
     public DbSet<StreetcodePartner>? StreetcodePartners { get; set; }
     public DbSet<TeamMemberPositions>? TeamMemberPosition { get; set; }
 
@@ -93,10 +91,6 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new CoordinateEntityConfiguration());
 
         builder.ApplyConfiguration(new FactEntityConfiguration());
-
-        builder.ApplyConfiguration(new HistoricalContextEntityConfiguration());
-
-        builder.ApplyConfiguration(new HistoricalContextTimelineEntityConfiguration());
 
         builder.ApplyConfiguration(new ImageDetailsEntityConfiguration());
 

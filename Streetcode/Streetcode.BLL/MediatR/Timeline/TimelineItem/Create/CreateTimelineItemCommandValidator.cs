@@ -18,6 +18,8 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
             // Description max length
             int descriptionMaxLength = 600;
 
+            int descriptionContextLength = 50;
+
             RuleFor(command => command.TimelineItem.Date)
                 .NotEmpty()
                 .WithMessage(TimelineErrors.CreateTimelineItemCommandValidatorDateIsRequiredError);
@@ -35,6 +37,10 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Create
             RuleFor(command => command.TimelineItem.Description)
                 .MaximumLength(descriptionMaxLength)
                 .WithMessage(string.Format(TimelineErrors.CreateTimelineItemCommandValidatorDescriptionMaxLengthError, descriptionMaxLength));
+
+            RuleFor(command => command.TimelineItem.Context)
+                .MaximumLength(descriptionContextLength)
+                .WithMessage(string.Format(TimelineErrors.CreateTimelineItemCommandValidatorDescriptionMaxLengthError, descriptionContextLength));
         }
     }
 }

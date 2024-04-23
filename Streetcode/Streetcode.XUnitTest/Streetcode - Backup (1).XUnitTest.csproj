@@ -1,0 +1,92 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<CodeAnalysisRuleSet>../settings.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Repositories\Mocks\**" />
+	  <EmbeddedResource Remove="Repositories\Mocks\**" />
+	  <None Remove="Repositories\Mocks\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Ardalis.Specification" Version="8.0.0" />
+		<PackageReference Include="Ardalis.Specification.EntityFramework6" Version="8.0.0" />
+		<PackageReference Include="AutoMapper" Version="12.0.0" />
+		<PackageReference Include="coverlet.collector" Version="3.2.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.msbuild" Version="6.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="FluentAssertions.AspNetCore.Mvc" Version="4.2.0" />
+		<PackageReference Include="Ical.Net" Version="4.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.11" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Abstractions" Version="6.30.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
+		<PackageReference Include="Moq" Version="4.18.3" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="xunit" Version="2.4.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Streetcode.BLL\Streetcode.BLL.csproj" />
+		<ProjectReference Include="..\Streetcode.DAL\Streetcode.DAL.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\Delete\" />
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\GetAll\" />
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\GetById\" />
+	  <Folder Include="MediatRTests\InfoBlocks\Articles\Update\" />
+	  <Folder Include="MediatRTests\InfoBlocks\AuthorsInfoes\AuthorShips\" />
+	  <Folder Include="MediatRTests\InfoBlocks\AuthorsInfoes\AuthorsHyperLinks\" />
+	  <Folder Include="MediatRTests\InfoBlocks\InfoBlockss\" />
+	  <Folder Include="MediatRTests\Media\Audio\Create\" />
+	  <Folder Include="MediatRTests\Media\Audio\Delete\" />
+	  <Folder Include="MediatRTests\Media\Audio\GetAll\" />
+	  <Folder Include="MediatRTests\Media\Audio\GetById\" />
+	  <Folder Include="MediatRTests\Media\Audio\GetByStreetcodeId\" />
+	  <Folder Include="MediatRTests\Toponyms\GetByStreetcodeId\" />
+	  <Folder Include="MediatRTests\Payment\" />
+	  <Folder Include="MediatRTests\Email\" />
+	  <Folder Include="Repositories\Team\" />
+	  <Folder Include="Repositories\HistoryEvent\" />
+	  <Folder Include="Repositories\Streetcode\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="MediatRTests\HistoryEvent\" />
+	  <None Remove="MediatRTests\Streetcode\HistoryEventitem\GetAll\" />
+	  <None Remove="MediatRTests\Streetcode\HistoryEventitem\GetById\" />
+	  <None Remove="MediatRTests\Streetcode\HistoryEventitem\GetByStreetCodeId\" />
+	  <None Remove="MediatRTests\Payment\" />
+	  <None Remove="MediatRTests\Email\" />
+	  <None Remove="Repositories\Users\" />
+	  <None Remove="Repositories\Team\" />
+	  <None Remove="Repositories\HistoryEvent\" />
+	  <None Remove="Repositories\Streetcode\" />
+	</ItemGroup>
+</Project>

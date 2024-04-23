@@ -1034,24 +1034,6 @@
             <param name="teamMemberLink">The team member link to create.</param>
             <returns>The created team link.</returns>
         </member>
-        <member name="T:Streetcode.WebApi.Controllers.Timeline.HistoricalContextController">
-            <summary>
-            Controller for managing historical context data.
-            </summary>
-        </member>
-        <member name="M:Streetcode.WebApi.Controllers.Timeline.HistoricalContextController.GetAll">
-            <summary>
-            Retrieves all historical context data.
-            </summary>
-            <returns>All historical context data.</returns>
-        </member>
-        <member name="M:Streetcode.WebApi.Controllers.Timeline.HistoricalContextController.Create(Streetcode.BLL.Dto.Timeline.HistoricalContextDto)">
-            <summary>
-            Creates a new historical context.
-            </summary>
-            <param name="historicalContext">The historical context to create.</param>
-            <returns>The created historical context.</returns>
-        </member>
         <member name="T:Streetcode.WebApi.Controllers.Timeline.TimelineItemController">
             <summary>
             Represents a controller for managing timeline items.
@@ -1077,7 +1059,7 @@
             <param name="streetcodeId">The ID of the streetcode.</param>
             <returns>The collection of timeline items associated with the specified streetcode ID.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Create(Streetcode.BLL.Dto.Timeline.TimelineItemDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Create(Streetcode.BLL.Dto.Timeline.TimelineItemCreateDto)">
             <summary>
             Creates a new timeline item.
             </summary>

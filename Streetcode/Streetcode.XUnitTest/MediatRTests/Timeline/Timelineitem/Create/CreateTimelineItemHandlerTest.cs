@@ -47,31 +47,15 @@
         public async Task CreatedTimelineItemShouldNotBeNull()
         {
             // Arrange
-            var historicalTimelines = new List<HistoricalContextDto>()
-            {
-                new HistoricalContextDto()
-                {
-                    Id = 1,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 2,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 3,
-                },
-            };
-
             var handler = new CreateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
             var result = await handler.Handle(
                 new CreateTimelineItemCommand(
-                new BLL.Dto.Timeline.TimelineItemDto()
+                new BLL.Dto.Timeline.TimelineItemCreateDto()
                 {
                     Title = "TEST",
-                    HistoricalContexts = historicalTimelines,
+                    StreetcodeId = 1,
                 }), CancellationToken.None);
 
             // Assert
@@ -86,31 +70,15 @@
         public async Task CreatedTimelineItemTitleShouldBeTest()
         {
             // Arrange
-            var historicalTimelines = new List<HistoricalContextDto>()
-            {
-                new HistoricalContextDto()
-                {
-                    Id = 1,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 2,
-                },
-                new HistoricalContextDto()
-                {
-                    Id = 3,
-                },
-            };
-
             var handler = new CreateTimelineItemHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
             // Act
             var result = await handler.Handle(
                 new CreateTimelineItemCommand(
-                new BLL.Dto.Timeline.TimelineItemDto()
+                new BLL.Dto.Timeline.TimelineItemCreateDto()
                 {
+                    StreetcodeId = 1,
                     Title = "TEST",
-                    HistoricalContexts = historicalTimelines,
                 }), CancellationToken.None);
 
             // Assert

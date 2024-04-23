@@ -6,30 +6,12 @@ using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 internal partial class RepositoryMocker
 {
     public static Mock<IRepositoryWrapper> GetTimelineRepositoryMock()
     {
-        var historicalTimelines = new List<HistoricalContextTimeline>()
-            {
-                new HistoricalContextTimeline()
-                {
-                    HistoricalContextId = 1,
-                    TimelineId = 1,
-                },
-                new HistoricalContextTimeline()
-                {
-                    HistoricalContextId = 2,
-                    TimelineId = 1,
-                },
-                new HistoricalContextTimeline()
-                {
-                    HistoricalContextId = 3,
-                    TimelineId = 2,
-                },
-            };
-
         var timelineItems = new List<TimelineItem>()
         {
             new TimelineItem
@@ -39,7 +21,6 @@ internal partial class RepositoryMocker
                 Description = "First description",
                 Date = DateTime.Now,
                 DateViewPattern = DateViewPattern.DateMonthYear,
-                HistoricalContextTimelines = historicalTimelines
             },
             new TimelineItem
             {
@@ -48,7 +29,6 @@ internal partial class RepositoryMocker
                 Description = "Second description",
                 Date = DateTime.Now.AddDays(1),
                 DateViewPattern = DateViewPattern.DateMonthYear,
-                HistoricalContextTimelines = historicalTimelines
             },
             new TimelineItem
             {
@@ -57,11 +37,10 @@ internal partial class RepositoryMocker
                 Description = "Third description",
                 Date = DateTime.Now,
                 DateViewPattern = DateViewPattern.DateMonthYear,
-                HistoricalContextTimelines = historicalTimelines
             }
         };
 
-        var mockRepo = new Mock<IRepositoryWrapper>();
+        var mockRepo = GetStreetcodeRepositoryMock();
 
         mockRepo.Setup(repo => repo.TimelineRepository.GetAllAsync(It.IsAny<Expression<Func<TimelineItem, bool>>>(), It.IsAny<Func<IQueryable<TimelineItem>,
             IIncludableQueryable<TimelineItem, object>>>())).ReturnsAsync(timelineItems);
@@ -75,8 +54,6 @@ internal partial class RepositoryMocker
                  return timelineItems.FirstOrDefault(predicate.Compile());
              });
 
-        mockRepo.Setup(x => x.HistoricalContextTimelineRepository.CreateAsync(It.IsAny<HistoricalContextTimeline>())).ReturnsAsync(historicalTimelines[0]);
-
         mockRepo.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
         mockRepo.Setup(x => x.TimelineRepository.Create(It.IsAny<TimelineItem>()))
@@ -87,14 +64,14 @@ internal partial class RepositoryMocker
              });
 
         mockRepo.Setup(x => x.TimelineRepository.Delete(It.IsAny<TimelineItem>()))
-        .Callback((TimelineItem timelineItem) =>
-        {
-            timelineItem = timelineItems.FirstOrDefault(x => x.Id == timelineItem.Id);
-            if(timelineItem != null)
+            .Callback((TimelineItem timelineItem) =>
             {
-                timelineItems.Remove(timelineItem);
-            }
-        });
+                timelineItem = timelineItems.FirstOrDefault(x => x.Id == timelineItem.Id);
+                if(timelineItem != null)
+                {
+                    timelineItems.Remove(timelineItem);
+                }
+            });
 
         return mockRepo;
     }

@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateHistoricalContextCommandValidatorMaxTitleLengthError" xml:space="preserve">
-    <value>Title length of historical context must not be longer than {0} symbols.</value>
-  </data>
-  <data name="CreateHistoricalContextHandlerCanNotConvertFromNullError" xml:space="preserve">
-    <value>Cannot convert null to historical context.</value>
-  </data>
-  <data name="CreateHistoricalContextHandlerFailedToCreateError" xml:space="preserve">
-    <value>Failed to create a historical context.</value>
-  </data>
   <data name="CreateTimelineItemCommandValidatorDataViewPatternIsRequiredError" xml:space="preserve">
     <value>DataViewPattern is required.</value>
   </data>
@@ -155,9 +146,6 @@
   </data>
   <data name="DeleteTimelineItemHandlerFailedToDeleteError" xml:space="preserve">
     <value>Failed to delete a timeline.</value>
-  </data>
-  <data name="GetAllHistoricalContextHandlerCanNotFindAnyError" xml:space="preserve">
-    <value>Cannot find any historical contexts.</value>
   </data>
   <data name="GetAllTimelineItemsHandlerCanNotFindAnyError" xml:space="preserve">
     <value>Cannot find any timelineItem.</value>

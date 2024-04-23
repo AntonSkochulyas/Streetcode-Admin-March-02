@@ -6,7 +6,6 @@ namespace Streetcode.DAL.Specification.Timeline.TimelineItem
     {
         public GetAllTimelineItemSpec()
         {
-            Query.Include(hct => hct.HistoricalContextTimelines).ThenInclude(ht => ht.HistoricalContext);
         }
     }
 }

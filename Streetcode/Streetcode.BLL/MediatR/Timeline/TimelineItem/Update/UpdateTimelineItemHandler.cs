@@ -3,8 +3,8 @@ using FluentResults;
 using MediatR;
 using Streetcode.BLL.Dto.Timeline;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team;
 using Streetcode.DAL.Specification.Timeline.TimelineItem;
 
 namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
@@ -24,12 +24,26 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
 
         public async Task<Result<TimelineItemDto>> Handle(UpdateTimelineItemCommand request, CancellationToken cancellationToken)
         {
-            DAL.Entities.Timeline.TimelineItem? timelineToUpdate = null;
-            if (request.TimelineItem is not null)
+            if(request.TimelineItem == null)
             {
-                timelineToUpdate = await _repositoryWrapper.TimelineRepository
-                .GetItemBySpecAsync(new GetByIdTimelineItemIncludeSpec(request.TimelineItem.Id));
+                string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
             }
+
+            // if (await _repositoryWrapper.StreetcodeRepository.GetItemBySpecAsync(new GetByIdStreetcodeSpec(request.TimelineItem.StreetcodeId)) == null)
+            if (await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.TimelineItem.StreetcodeId) == null)
+            {
+                string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(errorMsg);
+            }
+
+            // DAL.Entities.Timeline.TimelineItem? timelineToUpdate = await _repositoryWrapper.TimelineRepository
+            //        .GetItemBySpecAsync(new GetByIdTimelineItemSpec(request.TimelineItem.Id));
+
+            DAL.Entities.Timeline.TimelineItem? timelineToUpdate = await _repositoryWrapper.TimelineRepository
+                    .GetFirstOrDefaultAsync(t => t.Id == request.TimelineItem.Id);
 
             if (timelineToUpdate == null)
             {
@@ -37,8 +51,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
-
-            await UpdateTimeline(timelineToUpdate, request.TimelineItem!);
 
             _repositoryWrapper.TimelineRepository.Update(timelineToUpdate);
 
@@ -53,34 +65,6 @@ namespace Streetcode.BLL.MediatR.Timeline.TimelineItem.Update
                 string errorMsg = TimelineErrors.UpdateTimelineItemHandlerFailedToUpdateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
-            }
-        }
-
-        private async Task UpdateTimeline(DAL.Entities.Timeline.TimelineItem timelineToUpdate, TimelineItemDto timelineThatUpdate)
-        {
-            timelineToUpdate.Title = timelineThatUpdate.Title;
-            timelineToUpdate.Description = timelineThatUpdate.Description;
-            timelineToUpdate.Date = timelineThatUpdate.Date;
-            timelineToUpdate.DateViewPattern = timelineThatUpdate.DateViewPattern;
-
-            var oldHistoricalContextTimeline = timelineToUpdate.HistoricalContextTimelines.FirstOrDefault(x => x.TimelineId == timelineToUpdate.Id);
-
-            if (oldHistoricalContextTimeline != null)
-            {
-                // Break many-to-many relationship
-                _repositoryWrapper.HistoricalContextTimelineRepository.Delete(oldHistoricalContextTimeline);
-
-                var newHistoricalContext = timelineThatUpdate.HistoricalContexts.FirstOrDefault();
-
-                if (newHistoricalContext != null)
-                {
-                    var newHistoricalContextTimeline = new HistoricalContextTimeline() { TimelineId = timelineToUpdate.Id, HistoricalContextId = newHistoricalContext.Id };
-
-                    await _repositoryWrapper.HistoricalContextTimelineRepository.CreateAsync(newHistoricalContextTimeline);
-
-                    timelineToUpdate.HistoricalContextTimelines.Clear();
-                    timelineToUpdate.HistoricalContextTimelines.Add(newHistoricalContextTimeline);
-                }
             }
         }
     }
