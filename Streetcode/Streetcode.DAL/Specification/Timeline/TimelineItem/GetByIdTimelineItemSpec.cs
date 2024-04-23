@@ -2,7 +2,7 @@
 
 namespace Streetcode.DAL.Specification.Timeline.TimelineItem
 {
-    public class GetByIdTimelineItemSpec : Specification<Streetcode.DAL.Entities.Timeline.TimelineItem>, ISingleResultSpecification<Streetcode.DAL.Entities.Timeline.TimelineItem>
+    public class GetByIdTimelineItemSpec : Specification<Entities.Timeline.TimelineItem>, ISingleResultSpecification<Entities.Timeline.TimelineItem>
     {
         public GetByIdTimelineItemSpec(int id)
         {

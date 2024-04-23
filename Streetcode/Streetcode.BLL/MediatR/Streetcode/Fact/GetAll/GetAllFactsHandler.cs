@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetAll
@@ -45,7 +46,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetAll
         /// </returns>
         public async Task<Result<IEnumerable<FactDto>>> Handle(GetAllFactsQuery request, CancellationToken cancellationToken)
         {
-            var facts = await _repositoryWrapper.FactRepository.GetAllAsync();
+            var facts = await _repositoryWrapper.FactRepository.GetItemsBySpecAsync(new GetAllFactsSpec());
 
             if (facts is null)
             {

@@ -5,6 +5,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
@@ -46,7 +47,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Delete
         public async Task<Result<SourceLinkResponseDto>> Handle(DeleteSourceLinkCategoryCommand request, CancellationToken cancellationToken)
         {
             int id = request.Id;
-            var sourceLinkCategory = await _repositoryWrapper.SourceCategoryRepository.GetFirstOrDefaultAsync(sc => sc.Id == id);
+            var sourceLinkCategory = await _repositoryWrapper.SourceCategoryRepository.GetItemBySpecAsync(new GetByIdSourceLinkCategorySpec(request.Id));
             if (sourceLinkCategory == null)
             {
                 string errorMsg = string.Format(SourceErrors.DeleteSourceLinkCategoryHandlerCanNotFindSourceLinkCategoryWithGivenIdError, id);

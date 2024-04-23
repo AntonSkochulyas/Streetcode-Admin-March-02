@@ -7,6 +7,7 @@ using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
 
 // Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll
@@ -51,8 +52,7 @@ namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll
         /// </returns>
         public async Task<Result<IEnumerable<SourceLinkCategoryDto>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var allCategories = await _repositoryWrapper.SourceCategoryRepository.GetAllAsync(
-                include: cat => cat.Include(img => img.Image) !);
+            var allCategories = await _repositoryWrapper.SourceCategoryRepository.GetItemsBySpecAsync(new GetAllSourceLinkCategoryIncludeSpec());
             if (allCategories == null)
             {
                 string errorMsg = SourceErrors.GetAllCategoriesHandlerCategoriesAreNullError;

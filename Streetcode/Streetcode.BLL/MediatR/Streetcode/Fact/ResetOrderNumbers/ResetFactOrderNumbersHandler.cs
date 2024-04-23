@@ -5,6 +5,7 @@ using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 
 namespace Streetcode.BLL.MediatR.Fact.ResetOrderNumbers;
 
@@ -27,7 +28,7 @@ public class ResetFactOrderNumbersHandler : IRequestHandler<ResetFactOrderNumber
     {
         var facts =
             await _repositoryWrapper.FactRepository
-                .GetAllAsync(f => f.StreetcodeId == request.StreetcodeId);
+               .GetItemsBySpecAsync(new GetAllByStreetcodeIdFactSpec(request.StreetcodeId));
 
         if (facts is null)
         {

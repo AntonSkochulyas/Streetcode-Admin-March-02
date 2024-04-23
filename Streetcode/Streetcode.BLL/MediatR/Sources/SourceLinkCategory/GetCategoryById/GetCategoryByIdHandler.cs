@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
 
 namespace Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoryById;
 
@@ -32,11 +32,7 @@ public class GetCategoryByIdHandler : IRequestHandler<GetCategoryByIdQuery, Resu
     {
         var srcCategories = await _repositoryWrapper
             .SourceCategoryRepository
-            .GetFirstOrDefaultAsync(
-                predicate: sc => sc.Id == request.Id,
-                include: scl => scl
-                    .Include(sc => sc.StreetcodeCategoryContents)
-                    .Include(sc => sc.Image) !);
+            .GetItemBySpecAsync(new GetByIdSourceLinkCategoryIncludeSpec(request.Id));
 
         if (srcCategories is null)
         {

@@ -5,6 +5,7 @@ using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 
 namespace Streetcode.BLL.MediatR.Fact.Update;
 
@@ -37,9 +38,9 @@ public class UpdateFactHandler : IRequestHandler<UpdateFactCommand, Result<FactD
             return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerImageWithIdDoesNotExistError, request.Fact.ImageId), request);
         }
 
-        if(request.Fact.OrderNumber is not null)
+        if (request.Fact.OrderNumber is not null)
         {
-            if (await _repositoryWrapper.FactRepository.GetFirstOrDefaultAsync(x => x.StreetcodeId == request.Fact.StreetcodeId && x.OrderNumber == request.Fact.OrderNumber) is not null)
+            if (await _repositoryWrapper.FactRepository.GetItemBySpecAsync(new GetByStreetcodeIdAndOrderNumberFactSpec(request.Fact.StreetcodeId, (int)request.Fact.OrderNumber)) is not null)
             {
                 return LogAndReturnError(string.Format(StreetcodeErrors.UpdateFactHandlerOrderNumberIsNotUnique, request.Fact.ImageId), request);
             }

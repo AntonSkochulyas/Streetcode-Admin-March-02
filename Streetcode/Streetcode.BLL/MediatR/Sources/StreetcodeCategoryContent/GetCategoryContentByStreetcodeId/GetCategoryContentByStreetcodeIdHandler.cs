@@ -4,6 +4,7 @@ using MediatR;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
 
 namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryContentByStreetcodeId
 {
@@ -31,8 +32,7 @@ namespace Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.GetCategoryCo
             }
 
             var streetcodeContent = await _repositoryWrapper.StreetcodeCategoryContentRepository
-                .GetFirstOrDefaultAsync(
-                    sc => sc.StreetcodeId == request.StreetcodeId && sc.SourceLinkCategoryId == request.CategoryId);
+              .GetItemBySpecAsync(new GetByStreetcodeIdStreetcodeCategoryContentSpec(request.StreetcodeId, request.CategoryId));
 
             if (streetcodeContent == null)
             {
