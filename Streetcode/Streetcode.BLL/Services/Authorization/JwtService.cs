@@ -72,6 +72,11 @@ namespace Streetcode.BLL.Services.Authentification
             return refreshTokenValidityInDays;
         }
 
+        public DateTime GetRefreshTokenExpiryTimeFromNow()
+        {
+            return DateTime.Now.AddDays(GetRefreshTokenValidityInDays());
+        }
+
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[64];

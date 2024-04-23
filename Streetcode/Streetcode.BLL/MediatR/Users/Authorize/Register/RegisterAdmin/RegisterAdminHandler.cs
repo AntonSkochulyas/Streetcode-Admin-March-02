@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
 using Streetcode.DAL.Entities.Users;
 
@@ -11,15 +12,17 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtService _jwtService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public RegisterAdminHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtService jwtService)
+        public RegisterAdminHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtService jwtService, IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtService = jwtService;
+            _refreshTokenService = refreshTokenService;
         }
 
-        public async Task<Result<Dto.Authentication.TokenDto>> Handle(RegisterAdminCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TokenDto>> Handle(RegisterAdminCommand request, CancellationToken cancellationToken)
         {
             var userExists = await _userManager.FindByNameAsync(request.RegisterModelDto.Username);
             if (userExists != null)
@@ -61,16 +64,21 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
 
-            string accessToken = await _jwtService.GenerateAcessTokenAsync(user);
-            string refreshToken = _jwtService.GenerateRefreshToken();
+            string accessTokenStr = await _jwtService.GenerateAcessTokenAsync(user);
+            string refreshTokenStr = _jwtService.GenerateRefreshToken();
 
-            // TODO: Implement refresh token storage
+            var refreshToken = await _refreshTokenService.SaveRefreshToken(refreshTokenStr, user.Id);
 
-            return Result.Ok(new Dto.Authentication.TokenDto
+            if (refreshToken == null)
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                RefreshTokenExpiration = DateTime.Now // Fix
+                return Result.Fail(UsersErrors.CanNotLoginError);
+            }
+
+            return Result.Ok(new TokenDto
+            {
+                AccessToken = accessTokenStr,
+                RefreshToken = refreshToken.RefreshTokens,
+                RefreshTokenExpiration = refreshToken.RefreshTokenExpiryTime
             });
         }
     }

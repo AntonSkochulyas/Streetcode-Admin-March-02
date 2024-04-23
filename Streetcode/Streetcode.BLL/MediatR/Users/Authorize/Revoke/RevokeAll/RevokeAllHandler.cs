@@ -1,24 +1,21 @@
 ﻿using FluentResults;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Streetcode.DAL.Entities.Users;
+using Streetcode.BLL.Interfaces.Authentification;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Revoke.RevokeAll
 {
     public class RevokeAllHandler : IRequestHandler<RevokeAllCommand, Result<string>>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public RevokeAllHandler(UserManager<ApplicationUser> userManager)
+        public RevokeAllHandler(IRefreshTokenService refreshTokenService)
         {
-            _userManager = userManager;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<string>> Handle(RevokeAllCommand request, CancellationToken cancellationToken)
         {
-            var users = _userManager.Users.ToList();
-
-            // TODO: Implement refresh token delete
+            await _refreshTokenService.DeleteAllRefreshTokens();
 
             return Result.Ok("Revoked successfully.");
         }

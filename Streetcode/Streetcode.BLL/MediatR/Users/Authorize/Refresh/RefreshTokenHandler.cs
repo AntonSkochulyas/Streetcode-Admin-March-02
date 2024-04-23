@@ -11,11 +11,13 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public RefreshTokenHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService)
+        public RefreshTokenHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService, IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _jwtService = jwtService;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<TokenDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
@@ -25,10 +27,10 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
                 return Result.Fail(UsersErrors.InvalidClientRequestError);
             }
 
-            string? accessToken = request.TokenModelDto.AccessToken;
-            string? refreshToken = request.TokenModelDto.RefreshToken;
+            string? accessTokenStr = request.TokenModelDto.AccessToken;
+            string? refreshTokenStr = request.TokenModelDto.RefreshToken;
 
-            var principal = _jwtService.GetPrincipalFromExpiredToken(accessToken);
+            var principal = _jwtService.GetPrincipalFromExpiredToken(accessTokenStr);
             if (principal == null)
             {
                 return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
@@ -38,23 +40,33 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
 
             var user = await _userManager.FindByNameAsync(username);
 
-            // TODO: Implement refresh tokens check
-
             if (user == null)
             {
                 return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
             }
 
-            var newAccessToken = _jwtService.CreateToken(principal.Claims.ToList());
+            var refreshToken = await _refreshTokenService.FindRefreshToken(refreshTokenStr, user.Id);
+
+            if(refreshToken == null)
+            {
+                return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
+            }
+
+            string newAccessToken = await _jwtService.GenerateAcessTokenAsync(user);
             var newRefreshToken = _jwtService.GenerateRefreshToken();
 
-            // TODO: Implement refresh token storage
+            refreshToken = await _refreshTokenService.UpdateRefreshToken(refreshTokenStr, newRefreshToken, user.Id);
+
+            if(refreshToken == null)
+            {
+                return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
+            }
 
             return Result.Ok(new TokenDto
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                RefreshTokenExpiration = DateTime.Now // Fix
+                AccessToken = newAccessToken,
+                RefreshToken = refreshToken.RefreshTokens,
+                RefreshTokenExpiration = refreshToken.RefreshTokenExpiryTime
             });
         }
     }

@@ -11,11 +11,13 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public LoginHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService)
+        public LoginHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService, IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _jwtService = jwtService;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<TokenDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -24,16 +26,21 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
 
             if (user != null && await _userManager.CheckPasswordAsync(user, request.LoginModelDto.Password))
             {
-                string accessToken = await _jwtService.GenerateAcessTokenAsync(user);
-                string refreshToken = _jwtService.GenerateRefreshToken();
+                string accessTokenStr = await _jwtService.GenerateAcessTokenAsync(user);
+                string refreshTokenStr = _jwtService.GenerateRefreshToken();
 
-                // TODO: Implement refresh token storage
+                var refreshToken = await _refreshTokenService.SaveRefreshToken(refreshTokenStr, user.Id);
+
+                if(refreshToken == null)
+                {
+                    return Result.Fail(UsersErrors.CanNotLoginError);
+                }
 
                 return Result.Ok(new TokenDto
                 {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken,
-                    RefreshTokenExpiration = DateTime.Now // Fix
+                    AccessToken = accessTokenStr,
+                    RefreshToken = refreshToken.RefreshTokens,
+                    RefreshTokenExpiration = refreshToken.RefreshTokenExpiryTime
                 });
             }
 

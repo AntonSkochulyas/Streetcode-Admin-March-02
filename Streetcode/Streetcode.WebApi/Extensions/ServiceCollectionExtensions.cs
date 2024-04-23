@@ -12,6 +12,7 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Interfaces.Payment;
 using Streetcode.BLL.Interfaces.Text;
 using Streetcode.BLL.Services.Authentification;
+using Streetcode.BLL.Services.Authorization;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.Services.Email;
 using Streetcode.BLL.Services.Instagram;
@@ -21,6 +22,7 @@ using Streetcode.BLL.Services.Text;
 using Streetcode.DAL.Entities.AdditionalContent.Email;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Repositories.Realizations.Authentication;
 using Streetcode.DAL.Repositories.Realizations.Base;
 
 namespace Streetcode.WebApi.Extensions;
@@ -47,6 +49,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IInstagramService, InstagramService>();
         services.AddScoped<ITextService, AddTermsToTextService>();
         services.AddTransient<IJwtService, JwtService>();
+        services.AddTransient<IRefreshTokenService, RefreshTokenService>();
     }
 
     public static void AddApplicationServices(this IServiceCollection services, ConfigurationManager configuration)
