@@ -22,9 +22,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Revoke.RevokeByUsername
                 return Result.Fail(UsersErrors.InvalidUsernameError);
             }
 
-            user.AccessToken = null;
-            user.RefreshToken = null;
-            await _userManager.UpdateAsync(user);
+            // TODO: Implement refresh token delete
 
             return Result.Ok("Revoked successfully.");
         }

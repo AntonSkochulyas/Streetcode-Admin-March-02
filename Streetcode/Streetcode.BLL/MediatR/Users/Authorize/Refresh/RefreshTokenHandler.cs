@@ -1,14 +1,13 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using FluentResults;
+﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Streetcode.BLL.Dto.Users;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
 {
-    public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, Result<TokenModelDto>>
+    public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, Result<TokenDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
@@ -19,7 +18,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
             _jwtService = jwtService;
         }
 
-        public async Task<Result<TokenModelDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TokenDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
             if (request.TokenModelDto == null)
             {
@@ -39,7 +38,9 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
 
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            // TODO: Implement refresh tokens check
+
+            if (user == null)
             {
                 return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
             }
@@ -47,14 +48,14 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
             var newAccessToken = _jwtService.CreateToken(principal.Claims.ToList());
             var newRefreshToken = _jwtService.GenerateRefreshToken();
 
-            user.RefreshToken = newRefreshToken;
-            await _userManager.UpdateAsync(user);
+            // TODO: Implement refresh token storage
 
-            return new TokenModelDto()
+            return Result.Ok(new TokenDto
             {
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
-                RefreshToken = newRefreshToken,
-            };
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                RefreshTokenExpiration = DateTime.Now // Fix
+            });
         }
     }
 }

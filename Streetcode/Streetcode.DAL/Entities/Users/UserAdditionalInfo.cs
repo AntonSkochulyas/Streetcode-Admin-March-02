@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Streetcode.DAL.Entities.Users
 {
-    [Table("UserAdditionalInfo", Schema = "Users")]
+    [Table("user_Additional_info", Schema = "users")]
     public class UserAdditionalInfo
     {
         [Key]

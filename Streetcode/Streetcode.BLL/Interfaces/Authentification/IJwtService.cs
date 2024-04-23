@@ -16,6 +16,6 @@ namespace Streetcode.BLL.Interfaces.Authentification
 
         int GetRefreshTokenValidityInDays();
 
-        Task AuthorizeUserAsync(ApplicationUser user);
+        Task<string> GenerateAcessTokenAsync(ApplicationUser user);
     }
 }

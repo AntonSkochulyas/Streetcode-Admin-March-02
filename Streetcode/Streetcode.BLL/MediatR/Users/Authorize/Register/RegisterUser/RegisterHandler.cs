@@ -2,12 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Streetcode.BLL.Interfaces.Authentification;
-using Streetcode.BLL.MediatR.Users.Authorize;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
 {
-    public class RegisterHandler : IRequestHandler<RegisterCommand, Result<Response>>
+    public class RegisterHandler : IRequestHandler<RegisterCommand, Result<Dto.Authentication.TokenDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
@@ -18,7 +17,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
             _jwtService = jwtService;
         }
 
-        public async Task<Result<Response>> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Dto.Authentication.TokenDto>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             var userExists = await _userManager.FindByNameAsync(request.RegisterModelDto.Username);
             if (userExists != null)
@@ -40,13 +39,16 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterUser
                 return Result.Fail(new Error(UsersErrors.UserCreationFailureError));
             }
 
-            await _jwtService.AuthorizeUserAsync(user);
+            string accessToken = await _jwtService.GenerateAcessTokenAsync(user);
+            string refreshToken = _jwtService.GenerateRefreshToken();
 
-            return Result.Ok(new Response
+            // TODO: Implement refresh token storage
+
+            return Result.Ok(new Dto.Authentication.TokenDto
             {
-                AccessToken = user.AccessToken,
-                RefreshToken = user.RefreshToken,
-                Expiration = (DateTime)user.AccessTokenExpiryTime,
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                RefreshTokenExpiration = DateTime.Now // Fix
             });
         }
     }

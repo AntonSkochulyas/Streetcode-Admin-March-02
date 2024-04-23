@@ -17,11 +17,8 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Revoke.RevokeAll
         public async Task<Result<string>> Handle(RevokeAllCommand request, CancellationToken cancellationToken)
         {
             var users = _userManager.Users.ToList();
-            foreach (var user in users)
-            {
-                user.RefreshToken = null;
-                await _userManager.UpdateAsync(user);
-            }
+
+            // TODO: Implement refresh token delete
 
             return Result.Ok("Revoked successfully.");
         }

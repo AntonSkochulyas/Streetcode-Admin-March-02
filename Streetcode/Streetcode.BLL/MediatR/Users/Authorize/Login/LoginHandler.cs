@@ -1,13 +1,13 @@
 ﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
-using Streetcode.BLL.MediatR.Users.Authorize;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
 {
-    public class LoginHandler : IRequestHandler<LoginCommand, Result<Response>>
+    public class LoginHandler : IRequestHandler<LoginCommand, Result<TokenDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
@@ -18,19 +18,22 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
             _jwtService = jwtService;
         }
 
-        public async Task<Result<Response>> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TokenDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(request.LoginModelDto.Username);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, request.LoginModelDto.Password))
             {
-                await _jwtService.AuthorizeUserAsync(user);
+                string accessToken = await _jwtService.GenerateAcessTokenAsync(user);
+                string refreshToken = _jwtService.GenerateRefreshToken();
 
-                return Result.Ok(new Response
+                // TODO: Implement refresh token storage
+
+                return Result.Ok(new TokenDto
                 {
-                    AccessToken = user.AccessToken,
-                    RefreshToken = user.RefreshToken,
-                    Expiration = (DateTime)user.AccessTokenExpiryTime,
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    RefreshTokenExpiration = DateTime.Now // Fix
                 });
             }
 
