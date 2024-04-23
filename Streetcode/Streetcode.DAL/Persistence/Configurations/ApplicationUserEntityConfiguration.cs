@@ -11,6 +11,7 @@ internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<App
         builder.HasMany(d => d.RefreshTokens)
             .WithOne(p => p.ApplicationUser)
             .HasForeignKey(d => d.ApplicationUserId)
+            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
