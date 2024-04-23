@@ -10,14 +10,11 @@ public class RefreshTokenService : IRefreshTokenService
 {
     private readonly IRepositoryWrapper _repositoryWrapper;
 
-    private readonly UserManager<ApplicationUser> _userManager;
-
     private readonly IJwtService _jwtService;
 
-    public RefreshTokenService(IRepositoryWrapper repositoryWrapper, UserManager<ApplicationUser> userManager, IJwtService jwtService)
+    public RefreshTokenService(IRepositoryWrapper repositoryWrapper, IJwtService jwtService)
     {
         _repositoryWrapper = repositoryWrapper;
-        _userManager = userManager;
         _jwtService = jwtService;
     }
 
@@ -100,5 +97,12 @@ public class RefreshTokenService : IRefreshTokenService
     public async Task DeleteAllRefreshTokens()
     {
         _repositoryWrapper.RefreshTokenRepository.DeleteRange(await _repositoryWrapper.RefreshTokenRepository.GetAllAsync());
+    }
+
+    public async Task DeleteExpiredRefreshTokens()
+    {
+        _repositoryWrapper.RefreshTokenRepository
+            .DeleteRange(
+                await _repositoryWrapper.RefreshTokenRepository.GetAllAsync(r => r.RefreshTokenExpiryTime > DateTime.Now));
     }
 }

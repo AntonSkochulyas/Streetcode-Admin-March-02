@@ -13,4 +13,6 @@ public interface IRefreshTokenService
     public Task<RefreshToken?> DeleteRefreshToken(string token, string userId);
 
     public Task DeleteAllRefreshTokens();
+
+    public Task DeleteExpiredRefreshTokens();
 }
