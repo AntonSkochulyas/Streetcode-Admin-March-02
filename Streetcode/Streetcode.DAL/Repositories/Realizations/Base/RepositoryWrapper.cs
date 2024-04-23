@@ -3,6 +3,7 @@ using Repositories.Interfaces;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Interfaces.AdditionalContent;
 using Streetcode.DAL.Repositories.Interfaces.Analytics;
+using Streetcode.DAL.Repositories.Interfaces.Authentication;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Repositories.Interfaces.Dictionaries;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks;
@@ -22,6 +23,7 @@ using Streetcode.DAL.Repositories.Interfaces.Transactions;
 using Streetcode.DAL.Repositories.Interfaces.Users;
 using Streetcode.DAL.Repositories.Realizations.AdditionalContent;
 using Streetcode.DAL.Repositories.Realizations.Analytics;
+using Streetcode.DAL.Repositories.Realizations.Authentication;
 using Streetcode.DAL.Repositories.Realizations.Dictionaries;
 using Streetcode.DAL.Repositories.Realizations.InfoBlocks;
 using Streetcode.DAL.Repositories.Realizations.InfoBlocks.Articles;
@@ -127,7 +129,10 @@ public class RepositoryWrapper : IRepositoryWrapper
     private IAuthorHyperLinkRepository? _authorHyperLinkRepository;
 
     private IUserAdditionalInfoRepository? _userAdditionalInfoRepository;
+
     private IApplicationUserRepository? _applicationUserRepository;
+
+    private IRefreshTokenRepository? _refreshTokenRepository;
 
     public RepositoryWrapper(StreetcodeDbContext streetcodeDbContext)
     {
@@ -157,6 +162,19 @@ public class RepositoryWrapper : IRepositoryWrapper
             }
 
             return _userAdditionalInfoRepository;
+        }
+    }
+
+    public IRefreshTokenRepository RefreshTokenRepository
+    {
+        get
+        {
+            if (_refreshTokenRepository is null)
+            {
+                _refreshTokenRepository = new RefreshTokenRepository(_streetcodeDbContext);
+            }
+
+            return _refreshTokenRepository;
         }
     }
 
@@ -206,7 +224,7 @@ public class RepositoryWrapper : IRepositoryWrapper
             if (_imageMainRepository is null)
             {
                 _imageMainRepository = new ImageMainRepository(_streetcodeDbContext);
-}
+            }
 
             return _imageMainRepository;
         }

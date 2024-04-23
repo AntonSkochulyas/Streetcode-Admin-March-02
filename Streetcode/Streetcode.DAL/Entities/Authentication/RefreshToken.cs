@@ -3,7 +3,6 @@ using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.DAL.Entities.Authentication
 {
-    // TODO: Develop configuration
     [Table("refresh_tokens", Schema = "users")]
     public class RefreshToken
     {

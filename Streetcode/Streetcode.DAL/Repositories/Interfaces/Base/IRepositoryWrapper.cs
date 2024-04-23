@@ -2,6 +2,7 @@ using System.Transactions;
 using Repositories.Interfaces;
 using Streetcode.DAL.Repositories.Interfaces.AdditionalContent;
 using Streetcode.DAL.Repositories.Interfaces.Analytics;
+using Streetcode.DAL.Repositories.Interfaces.Authentication;
 using Streetcode.DAL.Repositories.Interfaces.Dictionaries;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks;
 using Streetcode.DAL.Repositories.Interfaces.InfoBlocks.Articles;
@@ -23,6 +24,7 @@ namespace Streetcode.DAL.Repositories.Interfaces.Base;
 public interface IRepositoryWrapper
 {
     IApplicationUserRepository ApplicationUserRepository { get; }
+    IRefreshTokenRepository RefreshTokenRepository { get; }
     IFactRepository FactRepository { get; }
     IArtRepository ArtRepository { get; }
     IStreetcodeArtRepository StreetcodeArtRepository { get; }

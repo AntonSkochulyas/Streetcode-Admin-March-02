@@ -134,7 +134,7 @@
             </summary>
             <returns>A response, that contains status and message for admin registration operation.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RefreshToken(Streetcode.BLL.Dto.Users.TokenModelDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RefreshToken(Streetcode.BLL.Dto.Authentication.TokenDto)">
             <summary>
             Refresh token endpoint.
             </summary>
