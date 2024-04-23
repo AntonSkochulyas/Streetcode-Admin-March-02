@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using AutoMapper;
+    using Castle.Core.Logging;
     using FluentAssertions;
     using Moq;
     using Streetcode.BLL.Interfaces.Logging;
@@ -15,6 +16,7 @@
     {
         private readonly IMapper _mapper;
         private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _logger;
 
         public GetSubtitleByStreetcodeIdHandlerTest()
         {
@@ -26,14 +28,14 @@
             });
 
             _mapper = mapperConfig.CreateMapper();
-
+            _logger = new Mock<ILoggerService>();
         }
 
         [Fact]
         public async Task Handler_GetByStreetcodeValidId_ResultShouldNotBeNull()
         {
             // Arrange
-            var handler = new GetSubtitlesByStreetcodeIdHandler(_mockRepository.Object, _mapper);
+            var handler = new GetSubtitlesByStreetcodeIdHandler(_mockRepository.Object, _mapper, _logger.Object);
             int validId = 1;
             var request = new GetSubtitlesByStreetcodeIdQuery(validId);
 
@@ -48,7 +50,7 @@
         public async Task Handler_GetByStreetcodeInvalidId_ResultShouldBeNull()
         {
             // Arrange
-            var handler = new GetSubtitlesByStreetcodeIdHandler(_mockRepository.Object, _mapper);
+            var handler = new GetSubtitlesByStreetcodeIdHandler(_mockRepository.Object, _mapper, _logger.Object);
             int invalidId = 10;
             var request = new GetSubtitlesByStreetcodeIdQuery(invalidId);
 

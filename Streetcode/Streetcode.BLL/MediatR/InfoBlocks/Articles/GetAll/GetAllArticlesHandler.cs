@@ -45,9 +45,9 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.GetAll
         /// </returns>
         public async Task<Result<IEnumerable<ArticleDto>>> Handle(GetAllArticlesQuery request, CancellationToken cancellationToken)
         {
-            var article = await _repositoryWrapper.ArticleRepository.GetAllAsync();
+            var articles = await _repositoryWrapper.ArticleRepository.GetAllAsync();
 
-            if (article is null)
+            if (!articles.Any())
             {
                 const string errorMsg = $"Cannot find any article";
 
@@ -56,7 +56,7 @@ namespace Streetcode.BLL.MediatR.InfoBlocks.Articles.GetAll
                 return Result.Fail(new Error(errorMsg));
             }
 
-            return Result.Ok(_mapper.Map<IEnumerable<ArticleDto>>(article));
+            return Result.Ok(_mapper.Map<IEnumerable<ArticleDto>>(articles));
         }
     }
 }

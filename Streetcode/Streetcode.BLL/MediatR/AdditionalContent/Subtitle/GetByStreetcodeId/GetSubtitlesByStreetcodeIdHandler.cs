@@ -2,7 +2,9 @@
 using AutoMapper;
 using FluentResults;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
+using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.MediatR.ResultVariations;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -20,11 +22,14 @@ namespace Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetByStreetcodeId
         // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
 
+        private readonly ILoggerService _logger;
+
         // Parametric constructor
-        public GetSubtitlesByStreetcodeIdHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper)
+        public GetSubtitlesByStreetcodeIdHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
