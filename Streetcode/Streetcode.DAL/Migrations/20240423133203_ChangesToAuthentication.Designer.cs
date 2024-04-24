@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Streetcode.DAL.Persistence;
 
@@ -11,9 +12,10 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    partial class StreetcodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423133203_ChangesToAuthentication")]
+    partial class ChangesToAuthentication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1143,7 +1145,7 @@ namespace Streetcode.DAL.Migrations
                     b.ToTable("team_member_positions", "team");
                 });
 
-            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
+            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContext", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1151,9 +1153,37 @@ namespace Streetcode.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Context")
+                    b.Property<string>("Title")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("historical_contexts", "timeline");
+                });
+
+            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContextTimeline", b =>
+                {
+                    b.Property<int>("TimelineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HistoricalContextId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TimelineId", "HistoricalContextId");
+
+                    b.HasIndex("HistoricalContextId");
+
+                    b.ToTable("HistoricalContextsTimelines");
+                });
+
+            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -1176,7 +1206,7 @@ namespace Streetcode.DAL.Migrations
 
                     b.HasIndex("StreetcodeId");
 
-                    b.ToTable("timeline_items", "streetcode");
+                    b.ToTable("timeline_items", "timeline");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Toponyms.StreetcodeToponym", b =>
@@ -1862,6 +1892,25 @@ namespace Streetcode.DAL.Migrations
                     b.Navigation("TeamMember");
                 });
 
+            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContextTimeline", b =>
+                {
+                    b.HasOne("Streetcode.DAL.Entities.Timeline.HistoricalContext", "HistoricalContext")
+                        .WithMany("HistoricalContextTimelines")
+                        .HasForeignKey("HistoricalContextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Streetcode.DAL.Entities.Timeline.TimelineItem", "Timeline")
+                        .WithMany("HistoricalContextTimelines")
+                        .HasForeignKey("TimelineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HistoricalContext");
+
+                    b.Navigation("Timeline");
+                });
+
             modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
                 {
                     b.HasOne("Streetcode.DAL.Entities.Streetcode.StreetcodeContent", "Streetcode")
@@ -2029,6 +2078,16 @@ namespace Streetcode.DAL.Migrations
             modelBuilder.Entity("Streetcode.DAL.Entities.Team.TeamMember", b =>
                 {
                     b.Navigation("TeamMemberLinks");
+                });
+
+            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContext", b =>
+                {
+                    b.Navigation("HistoricalContextTimelines");
+                });
+
+            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
+                {
+                    b.Navigation("HistoricalContextTimelines");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Toponyms.Toponym", b =>

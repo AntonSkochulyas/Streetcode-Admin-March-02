@@ -37,15 +37,6 @@ namespace Streetcode.BLL.Services.Authentification
             return token;
         }
 
-        public string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomNumber);
-
-            return Convert.ToBase64String(randomNumber);
-        }
-
         public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
         {
             var tokenValidationParameters = new TokenValidationParameters()
@@ -81,15 +72,29 @@ namespace Streetcode.BLL.Services.Authentification
             return refreshTokenValidityInDays;
         }
 
-        public async Task AuthorizeUserAsync(ApplicationUser user)
+        public DateTime GetRefreshTokenExpiryTimeFromNow()
+        {
+            return DateTime.Now.AddDays(GetRefreshTokenValidityInDays());
+        }
+
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        public async Task<string> GenerateAcessTokenAsync(ApplicationUser user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var authClaims = new List<Claim>
-                {
-                    new(ClaimTypes.Name, user.UserName),
-                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
+            {
+                new(ClaimTypes.Name, user.UserName),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
             foreach (var userRole in userRoles)
             {
@@ -97,18 +102,9 @@ namespace Streetcode.BLL.Services.Authentification
             }
 
             var accessToken = CreateToken(authClaims);
-            int accessTokenValidityInMinutes = GetAccessTokenValidityInMinutes();
+            var accessTokenStr = new JwtSecurityTokenHandler().WriteToken(accessToken);
 
-            var refreshToken = GenerateRefreshToken();
-            int refreshTokenValidityInDays = GetRefreshTokenValidityInDays();
-
-            user.AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken);
-            user.AccessTokenExpiryTime = DateTime.Now.AddMinutes(accessTokenValidityInMinutes);
-
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenValidityInDays);
-
-            await _userManager.UpdateAsync(user);
+            return accessTokenStr;
         }
     }
 }

@@ -1,36 +1,46 @@
 ﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
-using Streetcode.BLL.MediatR.Users.Authorize;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Login
 {
-    public class LoginHandler : IRequestHandler<LoginCommand, Result<Response>>
+    public class LoginHandler : IRequestHandler<LoginCommand, Result<TokenDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public LoginHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService)
+        public LoginHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService, IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _jwtService = jwtService;
+            _refreshTokenService = refreshTokenService;
         }
 
-        public async Task<Result<Response>> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TokenDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(request.LoginModelDto.Username);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, request.LoginModelDto.Password))
             {
-                await _jwtService.AuthorizeUserAsync(user);
+                string accessTokenStr = await _jwtService.GenerateAcessTokenAsync(user);
+                string refreshTokenStr = _jwtService.GenerateRefreshToken();
 
-                return Result.Ok(new Response
+                var refreshToken = await _refreshTokenService.SaveRefreshToken(refreshTokenStr, user.Id);
+
+                if(refreshToken == null)
                 {
-                    AccessToken = user.AccessToken,
-                    RefreshToken = user.RefreshToken,
-                    Expiration = (DateTime)user.AccessTokenExpiryTime,
+                    return Result.Fail(UsersErrors.CanNotLoginError);
+                }
+
+                return Result.Ok(new TokenDto
+                {
+                    AccessToken = accessTokenStr,
+                    RefreshToken = refreshToken.RefreshTokens,
+                    RefreshTokenExpiration = refreshToken.RefreshTokenExpiryTime
                 });
             }
 

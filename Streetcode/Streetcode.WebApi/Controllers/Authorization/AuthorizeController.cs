@@ -1,6 +1,7 @@
 ﻿// Necessary usings
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Dto.Users;
 using Streetcode.BLL.MediatR.Users.Authenticate.Login;
 using Streetcode.BLL.MediatR.Users.Authenticate.Refresh;
@@ -61,7 +62,7 @@ namespace Streetcode.WebApi.Controllers.Auth
         /// </summary>
         /// <returns>A response, that contains a new access and refresh token.</returns>
         [HttpPost]
-        public async Task<IActionResult> RefreshToken([FromBody] TokenModelDto tokenModelDto)
+        public async Task<IActionResult> RefreshToken([FromBody] TokenDto tokenModelDto)
         {
             return HandleResult(await Mediator.Send(new RefreshTokenCommand(tokenModelDto)));
         }
@@ -72,9 +73,9 @@ namespace Streetcode.WebApi.Controllers.Auth
         /// <returns>A message, that token revoked successfully or eror, if it was.</returns>
         [Authorize("Admin")]
         [HttpPost]
-        public async Task<IActionResult> RevokeByUsername([FromBody] string username)
+        public async Task<IActionResult> Revoke([FromBody] TokenDto tokenModelDto)
         {
-            return HandleResult(await Mediator.Send(new RevokeByUsernameCommand(username)));
+            return HandleResult(await Mediator.Send(new RevokeByToken(tokenModelDto)));
         }
 
         /// <summary>
