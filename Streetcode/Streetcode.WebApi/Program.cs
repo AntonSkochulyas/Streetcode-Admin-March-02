@@ -100,8 +100,8 @@ if (app.Environment.EnvironmentName != "Local")
         wp => wp.ParseZipFileFromWebAsync(httpClientFactory), TimeSpan.FromMinutes(1));
     RecurringJob.AddOrUpdate<WebParsingUtils>(
         wp => wp.ParseZipFileFromWebAsync(httpClientFactory), Cron.Monthly);
-    RecurringJob.AddOrUpdate<BlobService>(
-        b => b.CleanBlobStorage(), Cron.Monthly);
+    RecurringJob.AddOrUpdate<AzureBlobService>(
+       b => b.CleanBlobStorageAsync(default), Cron.Monthly);
 }
 
 app.MapControllers();

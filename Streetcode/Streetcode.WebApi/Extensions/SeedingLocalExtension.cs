@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Streetcode.BLL.Interfaces.BlobStorage;
+using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
@@ -20,6 +22,7 @@ using Streetcode.DAL.Entities.Transactions;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Persistence;
+using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Repositories.Realizations.Base;
 
 namespace Streetcode.WebApi.Extensions
@@ -34,8 +37,9 @@ namespace Streetcode.WebApi.Extensions
                 var dbContext = scope.ServiceProvider.GetRequiredService<StreetcodeDbContext>();
                 var blobOptions = app.Services.GetRequiredService<IOptions<BlobEnvironmentVariables>>();
                 string blobPath = app.Configuration.GetValue<string>("Blob:BlobStorePath");
-                var repo = new RepositoryWrapper(dbContext);
-                var blobService = new BlobService(blobOptions, repo);
+                var repo = app.Services.GetRequiredService<IRepositoryWrapper>();
+                var logger = app.Services.GetRequiredService<ILoggerService>();
+                var blobService = app.Services.GetRequiredService<IBlobService>();
                 string initialDataImagePath = "../Streetcode.DAL/InitialData/images.json";
                 string initialDataAudioPath = "../Streetcode.DAL/InitialData/audios.json";
                 if (!dbContext.Images.Any())
@@ -50,7 +54,7 @@ namespace Streetcode.WebApi.Extensions
                         string filePath = Path.Combine(blobPath, img.BlobName);
                         if (!File.Exists(filePath))
                         {
-                            blobService.SaveFileInStorageBase64(img.Base64, img.BlobName.Split('.')[0], img.BlobName.Split('.')[1]);
+                            img.BlobName = blobService.SaveFileInStorage(img.Base64, img.BlobName.Split('.')[0], img.BlobName.Split('.')[1]);
                         }
                     }
 
@@ -59,7 +63,7 @@ namespace Streetcode.WebApi.Extensions
                         string filePath = Path.Combine(blobPath, audio.BlobName);
                         if (!File.Exists(filePath))
                         {
-                            blobService.SaveFileInStorageBase64(audio.Base64, audio.BlobName.Split('.')[0], audio.BlobName.Split('.')[1]);
+                            audio.BlobName = blobService.SaveFileInStorage(audio.Base64, audio.BlobName.Trim(), audio.BlobName.Split(".")[1]);
                         }
                     }
 
@@ -189,7 +193,7 @@ namespace Streetcode.WebApi.Extensions
                             {
                                 FirstName = "Inna",
                                 LastName = "Krupnyk",
-                                ImageId = 25,
+                                ImageId = default,
                                 Description = "У 1894 році Грушевський за рекомендацією Володимира Антоновича призначений\r\nна посаду ординарного професора",
                                 IsMain = true
                             },
@@ -197,7 +201,7 @@ namespace Streetcode.WebApi.Extensions
                             {
                                 FirstName = "Danyil",
                                 LastName = "Terentiev",
-                                ImageId = 26,
+                                ImageId = default,
                                 Description = "У 1894 році Грушевський за рекомендацією Володимира Антоновича призначений\r\nна посаду ординарного професора",
                                 IsMain = true
                             },
@@ -205,7 +209,7 @@ namespace Streetcode.WebApi.Extensions
                             {
                                 FirstName = "Nadia",
                                 LastName = "Kischchuk",
-                                ImageId = 27,
+                                ImageId = default,
                                 Description = "У 1894 році Грушевський за рекомендацією Володимира Антоновича призначений\r\nна посаду ординарного професора",
                                 IsMain = true
                             });
