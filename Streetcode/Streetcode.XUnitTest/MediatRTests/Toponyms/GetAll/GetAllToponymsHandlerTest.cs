@@ -70,5 +70,107 @@ namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetAll
             // Assert
             result.Value.Toponyms.Should().BeOfType<List<ToponymDto>>();
         }
+
+        /// <summary>
+        /// Get all list should not contain unexpected items.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllShouldNotContainUnexpectedItems()
+        {
+            // Arrange
+            var unexpectedTitle = "Unexpected streetname";
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
+
+            // Act
+            var result = await handler.Handle(new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Title = unexpectedTitle }), CancellationToken.None);
+
+            // Assert
+            result.Value.Toponyms.Should().NotContain(dto => dto.StreetName == unexpectedTitle);
+        }
+
+        /// <summary>
+        /// Get all list should contain items.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllShouldContainItems()
+        {
+            // Arrange
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
+
+            // Act
+            var result = await handler.Handle(new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Title = "First streetname" }), CancellationToken.None);
+
+            // Assert
+            result.Value.Toponyms.Should().NotBeEmpty();
+        }
+
+        /// <summary>
+        /// Tests the functionality of retrieving a paginated list of toponyms.
+        /// </summary>
+        /// <remarks>
+        /// This test ensures that the GetAllWithPagination method in the GetAllToponymsHandler class
+        /// correctly returns a paginated list of toponyms based on the provided query parameters.
+        /// </remarks>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllWithPaginationTest()
+        {
+            // Arrange
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
+            var request = new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Page = 1, Amount = 10 });
+
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert
+            result.Value.Toponyms.Should().HaveCount(4);
+            result.Value.Pages.Should().Be(1);
+        }
+
+        /// <summary>
+        /// Tests the behavior of retrieving toponyms with an invalid filter.
+        /// </summary>
+        /// <remarks>
+        /// This test ensures that the GetAllWithInvalidFilter method in the GetAllToponymsHandler class
+        /// returns an empty list when an invalid filter is provided in the query parameters.
+        /// </remarks>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllWithInvalidFilterTest()
+        {
+            // Arrange
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
+            var request = new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Title = "InvalidFilter" });
+
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert
+            result.Value.Toponyms.Should().BeEmpty();
+        }
+
+        /// <summary>
+        /// Tests the behavior of retrieving toponyms with a null filter.
+        /// </summary>
+        /// <remarks>
+        /// This test ensures that the GetAllWithNullFilter method in the GetAllToponymsHandler class
+        /// returns a non-empty list when a null filter is provided in the query parameters.
+        /// </remarks>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllWithNullFilterTest()
+        {
+            // Arrange
+            var handler = new GetAllToponymsHandler(_mockRepository.Object, _mapper);
+            var request = new GetAllToponymsQuery(new GetAllToponymsRequestDto() { Title = null });
+
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert
+            result.Value.Toponyms.Should().NotBeEmpty();
+        }
     }
 }
