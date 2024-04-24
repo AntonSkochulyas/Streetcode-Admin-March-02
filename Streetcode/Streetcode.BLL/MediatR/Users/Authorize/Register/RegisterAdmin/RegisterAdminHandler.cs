@@ -1,26 +1,28 @@
 ﻿using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.BLL.Dto.Authentication;
 using Streetcode.BLL.Interfaces.Authentification;
-using Streetcode.BLL.MediatR.Users.Authorize;
 using Streetcode.DAL.Entities.Users;
 
 namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
 {
-    public class RegisterAdminHandler : IRequestHandler<RegisterAdminCommand, Result<Response>>
+    public class RegisterAdminHandler : IRequestHandler<RegisterAdminCommand, Result<Dto.Authentication.TokenDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtService _jwtService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public RegisterAdminHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtService jwtService)
+        public RegisterAdminHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtService jwtService, IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtService = jwtService;
+            _refreshTokenService = refreshTokenService;
         }
 
-        public async Task<Result<Response>> Handle(RegisterAdminCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TokenDto>> Handle(RegisterAdminCommand request, CancellationToken cancellationToken)
         {
             var userExists = await _userManager.FindByNameAsync(request.RegisterModelDto.Username);
             if (userExists != null)
@@ -62,13 +64,21 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Register.RegisterAdmin
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
 
-            await _jwtService.AuthorizeUserAsync(user);
+            string accessTokenStr = await _jwtService.GenerateAcessTokenAsync(user);
+            string refreshTokenStr = _jwtService.GenerateRefreshToken();
 
-            return Result.Ok(new Response
+            var refreshToken = await _refreshTokenService.SaveRefreshToken(refreshTokenStr, user.Id);
+
+            if (refreshToken == null)
             {
-                AccessToken = user.AccessToken,
-                RefreshToken = user.RefreshToken,
-                Expiration = (DateTime)user.AccessTokenExpiryTime,
+                return Result.Fail(UsersErrors.CanNotLoginError);
+            }
+
+            return Result.Ok(new TokenDto
+            {
+                AccessToken = accessTokenStr,
+                RefreshToken = refreshToken.RefreshTokens,
+                RefreshTokenExpiration = refreshToken.RefreshTokenExpiryTime
             });
         }
     }

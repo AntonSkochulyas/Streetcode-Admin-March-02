@@ -120,8 +120,14 @@
   <data name="CreateCoordinateCommandValidatorLatitudeIsRequiredError" xml:space="preserve">
     <value>Latitude is required field.</value>
   </data>
+  <data name="CreateCoordinateCommandValidatorLatitudeRange" xml:space="preserve">
+    <value>Latitude should be in range from -90 to 90</value>
+  </data>
   <data name="CreateCoordinateCommandValidatorLongtitudeIsRequiredError" xml:space="preserve">
     <value>Longtitude is required field.</value>
+  </data>
+  <data name="CreateCoordinateCommandValidatorLongtitudeRange" xml:space="preserve">
+    <value>Longtitude should be in range from -180 to 180</value>
   </data>
   <data name="CreateCoordinateHandlerCanNotConvertFromNullError" xml:space="preserve">
     <value>Cannot convert null to streetcodeCoordinate.</value>

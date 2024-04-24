@@ -1,16 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using Streetcode.DAL.Entities.Authentication;
 
 namespace Streetcode.DAL.Entities.Users
 {
-    [Table("ApplicationUser", Schema = "Users")]
+    [Table("application_users", Schema = "users")]
     public class ApplicationUser : IdentityUser
     {
-        public string? AccessToken { get; set; }
-        public DateTime? AccessTokenExpiryTime { get; set; }
-        public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
         public int UserAdditionalInfoId { get; set; }
         public UserAdditionalInfo? UserAdditionalInfo { get; set; }
+        public List<RefreshToken> RefreshTokens { get; set; } = new();
     }
 }

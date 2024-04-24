@@ -7,7 +7,7 @@ namespace Streetcode.BLL.MediatR.Dictionaries.Update
     /// <summary>
     /// Validator, that validates a model inside UpdateDictionaryItemCommand.
     /// </summary>
-    internal class UpdateDictionaryItemCommandValidator : AbstractValidator<UpdateDictionaryItemCommand>
+    public class UpdateDictionaryItemCommandValidator : AbstractValidator<UpdateDictionaryItemCommand>
     {
         // Constructor.
         public UpdateDictionaryItemCommandValidator()

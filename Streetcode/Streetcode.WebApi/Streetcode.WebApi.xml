@@ -134,13 +134,13 @@
             </summary>
             <returns>A response, that contains status and message for admin registration operation.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RefreshToken(Streetcode.BLL.Dto.Users.TokenModelDto)">
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RefreshToken(Streetcode.BLL.Dto.Authentication.TokenDto)">
             <summary>
             Refresh token endpoint.
             </summary>
             <returns>A response, that contains a new access and refresh token.</returns>
         </member>
-        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RevokeByUsername(System.String)">
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.Revoke(Streetcode.BLL.Dto.Authentication.TokenDto)">
             <summary>
             Revoke by username endpoint.
             </summary>

@@ -123,4 +123,7 @@
   <data name="GetSubtitleByIdHandlerCanNotFindByIdError" xml:space="preserve">
     <value>Cannot find a subtitle with corresponding id: {0}.</value>
   </data>
+  <data name="GetSubtitleByStreetcodeIdHandlerCanNotFindByIdError" xml:space="preserve">
+    <value>Cannot find a subtitle with corresponding streetcode id: {0}.</value>
+  </data>
 </root>

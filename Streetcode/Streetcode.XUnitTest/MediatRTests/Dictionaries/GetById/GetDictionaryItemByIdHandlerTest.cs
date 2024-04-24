@@ -57,6 +57,20 @@ namespace Streetcode.XUnitTest.MediatRTests.Dictionaries.GetById
             result.Value.Should().NotBeNull();
         }
 
+        [Fact]
+        public async Task GetById_InvalidId_IsFailedShouldBeTrue()
+        {
+            // Arrange
+            var handler = new GetDictionaryItemByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+            int invalidId = 10;
+
+            // Act
+            var result = await handler.Handle(new GetDictionaryItemByIdQuery(invalidId), CancellationToken.None);
+
+            // Assert
+            result.IsFailed.Should().BeTrue();
+        }
+
         /// <summary>
         /// Get by id first item description type should be "First Description".
         /// </summary>
