@@ -15,8 +15,7 @@ public class SourceLinkCategory
     [Required]
     public string? Title { get; set; }
 
-    [Required]
-    public int ImageId { get; set; }
+    public int? ImageId { get; set; }
 
     public Image? Image { get; set; }
 

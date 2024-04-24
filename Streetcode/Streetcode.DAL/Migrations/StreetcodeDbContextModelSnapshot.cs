@@ -483,7 +483,7 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -493,7 +493,8 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("arts", "media");
                 });
@@ -533,7 +534,7 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -543,7 +544,8 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("image_details", "media");
                 });
@@ -573,7 +575,7 @@ namespace Streetcode.DAL.Migrations
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Media.Images.StreetcodeImage", b =>
                 {
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<int>("StreetcodeId")
@@ -745,7 +747,7 @@ namespace Streetcode.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -1085,7 +1087,7 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsMain")
@@ -1098,7 +1100,8 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("team_members", "team");
                 });
@@ -1585,8 +1588,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithOne("Art")
                         .HasForeignKey("Streetcode.DAL.Entities.Media.Images.Art", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Image");
                 });
@@ -1596,8 +1598,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithOne("ImageDetails")
                         .HasForeignKey("Streetcode.DAL.Entities.Media.Images.ImageDetails", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Image");
                 });
@@ -1687,8 +1688,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithMany("SourceLinkCategories")
                         .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Image");
                 });
@@ -1825,9 +1825,7 @@ namespace Streetcode.DAL.Migrations
                 {
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithOne("TeamMember")
-                        .HasForeignKey("Streetcode.DAL.Entities.Team.TeamMember", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Streetcode.DAL.Entities.Team.TeamMember", "ImageId");
 
                     b.Navigation("Image");
                 });
