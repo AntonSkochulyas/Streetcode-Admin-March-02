@@ -1,58 +1,104 @@
-﻿using AutoMapper;
-using FluentAssertions;
-using Moq;
-using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.Mapping.Toponyms;
-using Streetcode.BLL.MediatR.Toponyms.GetById;
-using Streetcode.DAL.Repositories.Interfaces.Base;
-using Streetcode.XUnitTest.Mocks;
-using Xunit;
-
-namespace Streetcode.XUnitTest.MediatRTests.StreetcodeTests.Toponym;
-public class GetByIdHandlerTest
+﻿namespace Streetcode.XUnitTest.MediatRTests.Toponyms.GetById
 {
-    private readonly IMapper _mapper;
-    private readonly Mock<IRepositoryWrapper> _mockRepository;
-    private readonly Mock<ILoggerService> _mockLogger;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using FluentAssertions;
+    using Moq;
+    using Streetcode.BLL.Interfaces.Logging;
+    using Streetcode.BLL.Mapping.Toponyms;
+    using Streetcode.BLL.MediatR.Toponyms.GetById;
+    using Streetcode.DAL.Repositories.Interfaces.Base;
+    using Streetcode.XUnitTest.Mocks;
+    using Xunit;
 
-    public GetByIdHandlerTest()
+    /// <summary>
+    /// Tested successfully.
+    /// </summary>
+    public class GetToponymByIdHandlerTest
     {
-        _mockRepository = RepositoryMocker.GetToponymsRepositoryMock();
+        private readonly IMapper _mapper;
+        private readonly Mock<IRepositoryWrapper> _mockRepository;
+        private readonly Mock<ILoggerService> _mockLogger;
 
-        var mapperConfig = new MapperConfiguration(c =>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetToponymByIdHandlerTest"/> class.
+        /// </summary>
+        public GetToponymByIdHandlerTest()
         {
-            c.AddProfile<ToponymProfile>();
-        });
+            _mockRepository = RepositoryMocker.GetToponymsRepositoryMock();
 
-        _mapper = mapperConfig.CreateMapper();
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<ToponymProfile>();
+            });
 
-        _mockLogger = new Mock<ILoggerService>();
-    }
+            _mapper = mapperConfig.CreateMapper();
 
-    [Fact]
-    public async Task WithExistingId_ShouldReturnToponymDto()
-    {
-        // Arrange
-        var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+            _mockLogger = new Mock<ILoggerService>();
+        }
 
-        // Act
-        var result = await handler.Handle(new GetToponymByIdQuery(3), CancellationToken.None);
+        /// <summary>
+        /// Get by id not null test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetByIdNotNullTest()
+        {
+            // Arrange
+            var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-        // Assert
-        result.Value.Should().NotBeNull();
-        result.Value.StreetName.Should().Be("First streetname"); // Перевірка, чи повертається правильний ідентифікатор
-    }
+            // Act
+            var result = await handler.Handle(new GetToponymByIdQuery(1), CancellationToken.None);
 
-    [Fact]
-    public async Task WithNotExistingId10_ShouldReturnNull()
-    {
-        // Arrange
-        var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+            // Assert
+            result.Value.Should().NotBeNull();
+        }
 
-        // Act
-        var result = await handler.Handle(new GetToponymByIdQuery(10), CancellationToken.None);
+        /// <summary>
+        /// Get by id first item should be first item.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetByIdFirstShouldBeFirstTest()
+        {
+            // Arrange
+            var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
 
-        // Assert
-        result.IsFailed.Should().BeTrue();
+            // Act
+            var result = await handler.Handle(new GetToponymByIdQuery(1), CancellationToken.None);
+
+            // Assert
+            result.Value.StreetName.Should().Be("First streetname");
+        }
+
+        /// <summary>
+        /// Get by id second item streetname should not be fourth item description test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetByIdSecondShouldNotBeFourthTest()
+        {
+            // Arrange
+            var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetToponymByIdQuery(2), CancellationToken.None);
+
+            // Assert
+            result.Value.StreetName.Should().NotBe("Fourth streetname");
+        }
+
+        [Fact]
+        public async Task WithNotExistingId10_ShouldReturnNull()
+        {
+            // Arrange
+            var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetToponymByIdQuery(10), CancellationToken.None);
+
+            // Assert
+            result.IsFailed.Should().BeTrue();
+        }
     }
 }
