@@ -29,8 +29,7 @@ namespace Streetcode.DAL.Entities.Team
 
         public List<Positions>? Positions { get; set; }
 
-        [Required]
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
 
         public Image? Image { get; set; }
     }

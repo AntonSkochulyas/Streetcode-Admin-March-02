@@ -12,8 +12,8 @@ using Streetcode.DAL.Persistence;
 namespace Streetcode.DAL.Migrations
 {
     [DbContext(typeof(StreetcodeDbContext))]
-    [Migration("20240423133203_ChangesToAuthentication")]
-    partial class ChangesToAuthentication
+    [Migration("20240424194753_M1")]
+    partial class M1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -485,7 +485,7 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -495,7 +495,8 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("arts", "media");
                 });
@@ -535,7 +536,7 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -545,7 +546,8 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("image_details", "media");
                 });
@@ -575,7 +577,7 @@ namespace Streetcode.DAL.Migrations
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Media.Images.StreetcodeImage", b =>
                 {
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<int>("StreetcodeId")
@@ -747,7 +749,7 @@ namespace Streetcode.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -1087,7 +1089,7 @@ namespace Streetcode.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsMain")
@@ -1100,7 +1102,8 @@ namespace Streetcode.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("team_members", "team");
                 });
@@ -1145,38 +1148,6 @@ namespace Streetcode.DAL.Migrations
                     b.ToTable("team_member_positions", "team");
                 });
 
-            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContext", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("historical_contexts", "timeline");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContextTimeline", b =>
-                {
-                    b.Property<int>("TimelineId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HistoricalContextId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TimelineId", "HistoricalContextId");
-
-                    b.HasIndex("HistoricalContextId");
-
-                    b.ToTable("HistoricalContextsTimelines");
-                });
-
             modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
                 {
                     b.Property<int>("Id")
@@ -1184,6 +1155,10 @@ namespace Streetcode.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Context")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -1206,7 +1181,7 @@ namespace Streetcode.DAL.Migrations
 
                     b.HasIndex("StreetcodeId");
 
-                    b.ToTable("timeline_items", "timeline");
+                    b.ToTable("timeline_items", "streetcode");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Toponyms.StreetcodeToponym", b =>
@@ -1615,8 +1590,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithOne("Art")
                         .HasForeignKey("Streetcode.DAL.Entities.Media.Images.Art", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Image");
                 });
@@ -1626,8 +1600,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithOne("ImageDetails")
                         .HasForeignKey("Streetcode.DAL.Entities.Media.Images.ImageDetails", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Image");
                 });
@@ -1717,8 +1690,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithMany("SourceLinkCategories")
                         .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Image");
                 });
@@ -1855,9 +1827,7 @@ namespace Streetcode.DAL.Migrations
                 {
                     b.HasOne("Streetcode.DAL.Entities.Media.Images.Image", "Image")
                         .WithOne("TeamMember")
-                        .HasForeignKey("Streetcode.DAL.Entities.Team.TeamMember", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Streetcode.DAL.Entities.Team.TeamMember", "ImageId");
 
                     b.Navigation("Image");
                 });
@@ -1890,25 +1860,6 @@ namespace Streetcode.DAL.Migrations
                     b.Navigation("Positions");
 
                     b.Navigation("TeamMember");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContextTimeline", b =>
-                {
-                    b.HasOne("Streetcode.DAL.Entities.Timeline.HistoricalContext", "HistoricalContext")
-                        .WithMany("HistoricalContextTimelines")
-                        .HasForeignKey("HistoricalContextId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Streetcode.DAL.Entities.Timeline.TimelineItem", "Timeline")
-                        .WithMany("HistoricalContextTimelines")
-                        .HasForeignKey("TimelineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HistoricalContext");
-
-                    b.Navigation("Timeline");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
@@ -2078,16 +2029,6 @@ namespace Streetcode.DAL.Migrations
             modelBuilder.Entity("Streetcode.DAL.Entities.Team.TeamMember", b =>
                 {
                     b.Navigation("TeamMemberLinks");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.HistoricalContext", b =>
-                {
-                    b.Navigation("HistoricalContextTimelines");
-                });
-
-            modelBuilder.Entity("Streetcode.DAL.Entities.Timeline.TimelineItem", b =>
-                {
-                    b.Navigation("HistoricalContextTimelines");
                 });
 
             modelBuilder.Entity("Streetcode.DAL.Entities.Toponyms.Toponym", b =>
