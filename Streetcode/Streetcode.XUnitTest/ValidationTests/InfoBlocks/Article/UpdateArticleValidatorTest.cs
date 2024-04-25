@@ -28,7 +28,7 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
         [Theory]
         [InlineData(60)]
         [InlineData(MAXTITLELENGTH + 100)]
-        public void CreateArticleCommand_TitleIsGreaterThanAllowed_ShouldHaveErrors(int length)
+        public void UpdateArticleCommand_TitleIsGreaterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
             var dto = new ArticleDto()
@@ -49,7 +49,7 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
         [Theory]
         [InlineData(15001)]
         [InlineData(MAXTEXTLENGTH + 100)]
-        public void CreateArticleCommand_TextIsGreaterThanAllowed_ShouldHaveErrors(int length)
+        public void UpdateArticleCommand_TextIsGreaterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
             var dto = new ArticleDto()
@@ -67,7 +67,7 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
         }
 
         [Fact]
-        public void CreateArticleCommand_ValidData_ShouldNotHaveErrors()
+        public void UpdateArticleCommand_ValidData_ShouldNotHaveErrors()
         {
             // Arrange
             var dto = new ArticleDto()

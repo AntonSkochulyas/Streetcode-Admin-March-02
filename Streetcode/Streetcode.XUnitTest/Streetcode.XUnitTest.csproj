@@ -74,8 +74,6 @@
 	  <Folder Include="Repositories\Timeline\" />
 	  <Folder Include="Repositories\Streetcode\" />
 	  <Folder Include="ValidationTests\InfoBlocks\AuthorInfo\AuthorShips\" />
-	  <Folder Include="ValidationTests\InfoBlocks\AuthorInfo\AuthorHyperLinks\" />
-	  <Folder Include="ValidationTests\InfoBlocks\InfoBlock\" />
 	</ItemGroup>
 
 	<ItemGroup>
