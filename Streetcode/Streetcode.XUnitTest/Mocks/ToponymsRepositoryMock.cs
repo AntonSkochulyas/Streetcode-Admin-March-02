@@ -1,12 +1,14 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Ardalis.Specification;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
-using Streetcode.BLL.Dto.Toponyms;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
+using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
 using Streetcode.DAL.Specification.Toponyms;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -106,15 +108,17 @@ internal partial class RepositoryMocker
                 return null;
             });
 
-        mockRepo.Setup(r => r.ToponymRepository.GetItemsBySpecAsync(It.IsAny<GetAllToponymsSpec>()))
-               .ReturnsAsync(toponyms);
+        mockRepo.Setup(repo => repo.ToponymRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<Toponym>>()))
+        .ReturnsAsync((GetByIdToponymSpec spec) =>
+        {
+            int id = spec.Id;
 
-        mapperMock.Setup(m => m.Map<IEnumerable<ToponymDto>>(It.IsAny<IEnumerable<Toponym>>()))
-            .Returns((IEnumerable<Toponym> source) =>
-                source.Select(t => new ToponymDto { StreetName = t.StreetName }));
+            var topns = toponyms.FirstOrDefault(s => s.Id == id);
 
-        mockRepo.Setup(x => x.ToponymRepository.GetItemsBySpecAsync(It.IsAny<GetByStreetcodeIdToponymSpec>()))
-                           .ReturnsAsync(toponyms);
+            return topns;
+        });
+
         return mockRepo;
     }
 }
