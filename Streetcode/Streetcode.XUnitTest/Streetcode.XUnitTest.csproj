@@ -75,6 +75,7 @@
 	  <Folder Include="Repositories\Team\" />
 	  <Folder Include="Repositories\Timeline\" />
 	  <Folder Include="Repositories\Streetcode\" />
+	  <Folder Include="ValidationTests\InfoBlocks\AuthorInfo\AuthorShips\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -65,6 +65,26 @@ namespace Streetcode.XUnitTest.ValidationTests.Dictionaries
             validationResult.ShouldHaveValidationErrorFor(x => x.dictionaryItem.Description);
         }
 
+        [Fact]
+        public void CreateDictionaryItemCommand_ValidData_ShouldNotHaveErrors()
+        {
+            // Arrange
+            var dto = new DictionaryItemDto()
+            {
+                Id = 1,
+                Word = CreateStringWithSpecificLength(MAXNAMELENGTH),
+                Description = CreateStringWithSpecificLength(MAXDESCRIPTIONLENGTH)
+            };
+            var request = new UpdateDictionaryItemCommand(dto);
+
+            // Act
+            var validationResult = _validator.TestValidate(request);
+
+            // Assert
+            validationResult.ShouldNotHaveValidationErrorFor(x => x.dictionaryItem.Word);
+            validationResult.ShouldNotHaveValidationErrorFor(x => x.dictionaryItem.Description);
+        }
+
         private string CreateStringWithSpecificLength(int length)
         {
             string character = "A";
