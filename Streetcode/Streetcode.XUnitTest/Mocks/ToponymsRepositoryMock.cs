@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
+using Streetcode.BLL.MediatR.Toponyms.GetAll;
 using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
@@ -118,6 +119,13 @@ internal partial class RepositoryMocker
             var topns = toponyms.FirstOrDefault(s => s.Id == id);
 
             return topns;
+        });
+
+        mockRepo.Setup(repo => repo.ToponymRepository.GetItemsBySpecAsync(
+        It.IsAny<ISpecification<Toponym>>()))
+        .ReturnsAsync((GetAllToponymsSpec spec) =>
+        {
+            return toponyms;
         });
 
         return mockRepo;
