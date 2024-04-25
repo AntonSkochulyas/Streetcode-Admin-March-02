@@ -8,7 +8,11 @@ using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
+using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Entities.Feedback;
+using Streetcode.DAL.Entities.InfoBlocks.Articles;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Entities.Media;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.Partners;
@@ -103,6 +107,35 @@ namespace Streetcode.WebApi.Extensions
                         };
 
                         dbContext.Add(userAdditionalInfo);
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.AuthorShipHyperLinks.Any())
+                    {
+                        dbContext.AuthorShipHyperLinks.AddRange(new AuthorShipHyperLink { Title = "Test 1", URL = "Test 1 authorship YAROSLAV BEST PYPSIK" },
+                            new AuthorShipHyperLink { Title = "Test 2", URL = "Test 2 authorship NASTYA SMALL PYPSIK" });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.Articles.Any())
+                    {
+                        dbContext.Articles.AddRange(new Article() { Text = "Article text 1 test", Title = "Articel test 1 text super womba bomba" }, new Article() { Text = "Article text 2 test", Title = "Articel test 2 text super womba bomba" });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.AuthorShips.Any())
+                    {
+                        dbContext.AuthorShips.AddRange(new AuthorShip() { Text = "BIbabumba authorship text 1", }, new AuthorShip() { Text = "BIbabumba authorship text 2", });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.DictionaryItems.Any())
+                    {
+                        dbContext.DictionaryItems.AddRange(new DictionaryItem() { Word = "NASTYA", Description = "PYPSIK" }, new DictionaryItem() { Word = "YAROSLAV", Description = "BEST PYPSIK" });
 
                         await dbContext.SaveChangesAsync();
                     }
