@@ -36,7 +36,7 @@ namespace Streetcode.BLL.MediatR.Users.Authenticate.Refresh
                 return Result.Fail(UsersErrors.InvalidAccessOrRefreshTokenError);
             }
 
-            string username = principal.Identity.Name;
+            string? username = principal.Identity?.Name;
 
             var user = await _userManager.FindByNameAsync(username);
 

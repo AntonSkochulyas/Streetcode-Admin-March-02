@@ -65,7 +65,7 @@ public class GetAllImagesHandler : IRequestHandler<GetAllImagesQuery, Result<IEn
         {
             try
             {
-                image.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName);
+                image.Base64 = _blobService.FindFileInStorageAsBase64(image.BlobName ?? "");
             }
             catch (Azure.RequestFailedException ex)
             {

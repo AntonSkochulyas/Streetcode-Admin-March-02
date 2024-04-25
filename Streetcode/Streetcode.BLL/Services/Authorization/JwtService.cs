@@ -23,7 +23,7 @@ namespace Streetcode.BLL.Services.Authentification
 
         public JwtSecurityToken CreateToken(List<Claim> authClaims)
         {
-            var authSignKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+            var authSignKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] ?? ""));
 
             int tokenValidityInMinutes = GetAccessTokenValidityInMinutes();
 
@@ -44,7 +44,7 @@ namespace Streetcode.BLL.Services.Authentification
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] ?? "")),
                 ValidateLifetime = false,
             };
 
