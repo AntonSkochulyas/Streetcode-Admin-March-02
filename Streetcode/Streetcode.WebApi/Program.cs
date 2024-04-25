@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Streetcode.BLL.Services.BlobStorageService;
+using Streetcode.BLL.Util;
 using Streetcode.BLL.ValidationBehaviors;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Persistence;
@@ -100,8 +101,10 @@ if (app.Environment.EnvironmentName != "Local")
         wp => wp.ParseZipFileFromWebAsync(httpClientFactory), TimeSpan.FromMinutes(1));
     RecurringJob.AddOrUpdate<WebParsingUtils>(
         wp => wp.ParseZipFileFromWebAsync(httpClientFactory), Cron.Monthly);
-    RecurringJob.AddOrUpdate<BlobService>(
-        b => b.CleanBlobStorage(), Cron.Monthly);
+    RecurringJob.AddOrUpdate<AzureBlobService>(
+       b => b.CleanBlobStorageAsync(default), Cron.Monthly);
+    RecurringJob.AddOrUpdate<RefreshTokenCleanerUtil>(
+       "CleanExpiredRefreshTokens", r => r.CleanExpiredRefreshTokens(), Cron.Weekly);
 }
 
 app.MapControllers();

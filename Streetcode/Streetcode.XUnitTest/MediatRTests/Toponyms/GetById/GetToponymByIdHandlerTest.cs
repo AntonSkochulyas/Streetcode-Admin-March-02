@@ -87,5 +87,18 @@
             // Assert
             result.Value.StreetName.Should().NotBe("Fourth streetname");
         }
+
+        [Fact]
+        public async Task WithNotExistingId10_ShouldReturnNull()
+        {
+            // Arrange
+            var handler = new GetToponymByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetToponymByIdQuery(10), CancellationToken.None);
+
+            // Assert
+            result.IsFailed.Should().BeTrue();
+        }
     }
 }

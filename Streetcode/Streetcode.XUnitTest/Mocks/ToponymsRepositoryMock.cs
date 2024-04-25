@@ -11,6 +11,8 @@ using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
 using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
 using Streetcode.DAL.Specification.Toponyms;
 using System.Linq.Expressions;
+using System.Reflection;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 internal partial class RepositoryMocker
 {
@@ -29,7 +31,7 @@ internal partial class RepositoryMocker
                     AdminRegionNew = "First region new",
                     AdminRegionOld = "First region old",
                     Oblast = "First",
-                    StreetName = "First streetname"
+                    StreetName = "First streetname",
                 },
                 new Toponym()
                 {
@@ -61,6 +63,7 @@ internal partial class RepositoryMocker
             };
 
         var mockRepo = new Mock<IRepositoryWrapper>();
+        var mapperMock = new Mock<IMapper>();
 
         mockRepo.Setup(x => x.ToponymRepository
             .GetAllAsync(

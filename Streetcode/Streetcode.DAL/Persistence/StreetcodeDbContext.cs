@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
 using Streetcode.DAL.Entities.Analytics;
+using Streetcode.DAL.Entities.Authentication;
 using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Entities.Feedback;
 using Streetcode.DAL.Entities.InfoBlocks;
@@ -22,7 +23,6 @@ using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Entities.Transactions;
 using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Persistence.Configurations;
-using System.Reflection.Emit;
 
 namespace Streetcode.DAL.Persistence;
 
@@ -39,6 +39,7 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<UserAdditionalInfo> UsersAdditionalInfo { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Art>? Arts { get; set; }
     public DbSet<Audio>? Audios { get; set; }
     public DbSet<DictionaryItem> DictionaryItems { get; set; }
@@ -145,6 +146,8 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new TransactionLinkEntityConfiguration());
 
         builder.ApplyConfiguration(new UserEntityConfiguration());
+
+        builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
 
         builder.ApplyConfiguration(new VideoEntityConfiguration());
 
