@@ -1,6 +1,7 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
 using Ardalis.Specification;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
