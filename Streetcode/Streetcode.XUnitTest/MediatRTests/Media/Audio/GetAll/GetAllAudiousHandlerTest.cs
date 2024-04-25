@@ -76,6 +76,24 @@
             result.Value.Count().Should().Be(4);
         }
 
+
+        /// <summary>
+        /// Get all list count should not be five.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllCountShouldNotBeFive()
+        {
+            // Arrange
+            var handler = new GetAllAudiosHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
+
+            // Assert
+            result.Value.Count().Should().NotBe(5);
+        }
+
         /// <summary>
         /// Get all list should be type AudioDTO.
         /// </summary>

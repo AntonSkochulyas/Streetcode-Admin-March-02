@@ -79,5 +79,19 @@
             // Assert
             result.Value.Count().Should().Be(4);
         }
+
+        [Fact]
+        public async Task Handler_GetAll_Count_Should_NotBe_Five()
+        {
+            // Arrange
+            var handler = new GetAllNewsHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
+            var request = new GetAllNewsQuery();
+
+            // Act
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert
+            result.Value.Count().Should().NotBe(5);
+        }
     }
 }
