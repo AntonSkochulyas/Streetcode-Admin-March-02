@@ -1,9 +1,14 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Streetcode.TextContent;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 using System.Linq.Expressions;
 
 internal partial class RepositoryMocker
@@ -49,6 +54,24 @@ internal partial class RepositoryMocker
             {
                 return facts.FirstOrDefault(predicate.Compile());
             });
+
+        mockRepo.Setup(repo => repo.FactRepository.GetItemsBySpecAsync(
+        It.IsAny<ISpecification<Fact>>()))
+        .ReturnsAsync((GetAllFactsSpec spec) =>
+        {
+            return facts;
+        });
+
+        mockRepo.Setup(repo => repo.FactRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<Fact>>()))
+        .ReturnsAsync((GetByIdFactSpec spec) =>
+        {
+            int id = spec.Id;
+
+            var fact = facts.FirstOrDefault(s => s.Id == id);
+
+            return fact;
+        });
 
         return mockRepo;
     }

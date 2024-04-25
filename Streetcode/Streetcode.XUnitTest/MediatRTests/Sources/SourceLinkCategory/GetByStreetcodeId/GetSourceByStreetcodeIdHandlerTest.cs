@@ -82,5 +82,18 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetByStreetcodeId
             // Assert
             result.Value.ElementAt(1).Title.Should().Be("Second title");
         }
+
+        [Fact]
+        public async Task GetByIdCountShouldBeShouldBeEqualToThree()
+        {
+            // Arrange
+            var handler = new GetCategoriesByStreetcodeIdHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetCategoriesByStreetcodeIdQuery(1), CancellationToken.None);
+
+            // Assert
+            result.Value.Count().Should().Be(3);
+        }
     }
 }

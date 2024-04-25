@@ -4,8 +4,10 @@
 
 namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
 {
+    using Ardalis.Specification;
     using AutoMapper;
     using FluentAssertions;
+    using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
     using Moq;
     using Streetcode.BLL.Dto.Media.Images;
     using Streetcode.BLL.Dto.Sources;
@@ -15,7 +17,9 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
     using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoryById;
     using Streetcode.DAL.Entities.Media.Images;
     using Streetcode.DAL.Entities.Sources;
+    using Streetcode.DAL.Entities.Streetcode;
     using Streetcode.DAL.Repositories.Interfaces.Base;
+    using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
@@ -62,6 +66,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
         public async Task GetByIdNotNullTest()
         {
             // Arrange
+            SetupRepository();
             var handler = new GetCategoryByIdHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
 
             // Act
@@ -79,6 +84,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
         public async Task GetByIdFirstShouldBeFirstTest()
         {
             // Arrange
+            SetupRepository();
             string base64 = "base64Test";
             _mockBlob.Setup(x => x.FindFileInStorageAsBase64(It.IsAny<string>())).Returns(base64);
 
@@ -99,6 +105,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
         public async Task GetByIdSecondShouldNotBeFourthTest()
         {
             // Arrange
+            SetupRepository();
             var handler = new GetCategoryByIdHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
 
             // Act
@@ -106,6 +113,54 @@ namespace Streetcode.XUnitTest.MediatRTests.Sources.GetById
 
             // Assert
             result.Value.Title.Should().NotBe("Fourth title");
+        }
+
+        private void SetupRepository()
+        {
+            var images = new List<Image>()
+            {
+                new Image() { Id = 1, Base64 = "TestBlob1" },
+                new Image() { Id = 2, Base64 = "TestBlob2" },
+                new Image() { Id = 3, Base64 = "TestBlob3" },
+                new Image() { Id = 4, Base64 = "TestBlob4" }
+            };
+
+            var streetcodeContents = new List<StreetcodeContent>()
+            {
+               new StreetcodeContent()
+               {
+                   Id = 1,
+               },
+               new StreetcodeContent()
+               {
+                   Id = 1,
+               },
+            };
+
+            var sources = new List<SourceLinkCategory>()
+            {
+                new SourceLinkCategory { Id = 1, Title = "First title", ImageId = 1, Image = images[0], Streetcodes = streetcodeContents },
+                new SourceLinkCategory { Id = 2, Title = "Second title", ImageId = 2, Image = images[1], Streetcodes = streetcodeContents },
+                new SourceLinkCategory { Id = 3, Title = "Third title", ImageId = 3, Image = images[2], Streetcodes = streetcodeContents },
+                new SourceLinkCategory { Id = 4, Title = "Fourth title", ImageId = 4, Image = images[3] },
+            };
+
+            var streetcodeCategoryContents = new List<StreetcodeCategoryContent>()
+            {
+                new StreetcodeCategoryContent() { SourceLinkCategoryId = 1, StreetcodeId = 1, Text = "Test1" },
+                new StreetcodeCategoryContent() { SourceLinkCategoryId = 2, StreetcodeId = 1, Text = "Test2" },
+            };
+
+            _mockRepository.Setup(repo => repo.SourceCategoryRepository.GetItemBySpecAsync(
+            It.IsAny<ISpecification<SourceLinkCategory>>()))
+            .ReturnsAsync((GetByIdSourceLinkCategoryIncludeSpec spec) =>
+            {
+                int id = spec.Id;
+
+                var category = sources.FirstOrDefault(s => s.Id == id);
+
+                return category;
+            });
         }
     }
 }

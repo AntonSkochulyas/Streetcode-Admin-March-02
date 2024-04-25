@@ -1,9 +1,15 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
+using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
+using Streetcode.DAL.Specification.Toponyms;
 using System.Linq.Expressions;
 
 internal partial class RepositoryMocker
@@ -98,6 +104,17 @@ internal partial class RepositoryMocker
 
                 return null;
             });
+
+        mockRepo.Setup(repo => repo.ToponymRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<Toponym>>()))
+        .ReturnsAsync((GetByIdToponymSpec spec) =>
+        {
+            int id = spec.Id;
+
+            var topns = toponyms.FirstOrDefault(s => s.Id == id);
+
+            return topns;
+        });
 
         return mockRepo;
     }

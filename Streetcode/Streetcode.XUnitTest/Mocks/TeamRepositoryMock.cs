@@ -1,9 +1,14 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Moq;
+using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
+using Streetcode.DAL.Specification.Team;
 using System.Linq.Expressions;
 
 internal partial class RepositoryMocker
@@ -80,6 +85,24 @@ internal partial class RepositoryMocker
         .Callback((TeamMember teamMember) =>
         {
             members.Remove(teamMember);
+        });
+
+        mockRepo.Setup(repo => repo.TeamRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<TeamMember>>()))
+        .ReturnsAsync((GetByIdSourceLinkCategorySpec spec) =>
+        {
+            int id = spec.Id;
+
+            var category = members.FirstOrDefault(s => s.Id == id);
+
+            return category;
+        });
+
+        mockRepo.Setup(repo => repo.TeamRepository.GetItemsBySpecAsync(
+        It.IsAny<ISpecification<TeamMember>>()))
+        .ReturnsAsync((GetAllTeamSpec spec) =>
+        {
+            return members;
         });
 
         return mockRepo;

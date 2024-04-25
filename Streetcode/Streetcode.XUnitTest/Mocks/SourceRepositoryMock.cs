@@ -1,7 +1,9 @@
 ﻿namespace Streetcode.XUnitTest.Mocks;
 
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Streetcode.BLL.MediatR.Sources.SourceLink.GetCategoriesByStreetcodeId;
 using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.News;
@@ -9,6 +11,8 @@ using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Repositories.Realizations.Source;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
+using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
 using System.Linq.Expressions;
 
 internal partial class RepositoryMocker
@@ -23,20 +27,6 @@ internal partial class RepositoryMocker
             new Image() { Id = 4, Base64 = "TestBlob4" }
         };
 
-        var sources = new List<SourceLinkCategory>()
-        {
-            new SourceLinkCategory { Id = 1, Title = "First title", ImageId = 1, Image = images[0] },
-            new SourceLinkCategory { Id = 2, Title = "Second title", ImageId = 2, Image = images[1] },
-            new SourceLinkCategory { Id = 3, Title = "Third title", ImageId = 3, Image = images[2] },
-            new SourceLinkCategory { Id = 4, Title = "Fourth title", ImageId = 4, Image = images[3] },
-        };
-
-        var streetcodeCategoryContents = new List<StreetcodeCategoryContent>()
-        {
-            new StreetcodeCategoryContent() { SourceLinkCategoryId = 1, StreetcodeId = 1, Text = "Test1" },
-            new StreetcodeCategoryContent() { SourceLinkCategoryId = 2, StreetcodeId = 1, Text = "Test2" },
-        };
-
         var streetcodeContents = new List<StreetcodeContent>()
         {
            new StreetcodeContent()
@@ -47,6 +37,20 @@ internal partial class RepositoryMocker
            {
                Id = 1,
            },
+        };
+
+        var sources = new List<SourceLinkCategory>()
+        {
+            new SourceLinkCategory { Id = 1, Title = "First title", ImageId = 1, Image = images[0], Streetcodes = streetcodeContents },
+            new SourceLinkCategory { Id = 2, Title = "Second title", ImageId = 2, Image = images[1], Streetcodes = streetcodeContents },
+            new SourceLinkCategory { Id = 3, Title = "Third title", ImageId = 3, Image = images[2], Streetcodes = streetcodeContents },
+            new SourceLinkCategory { Id = 4, Title = "Fourth title", ImageId = 4, Image = images[3] },
+        };
+
+        var streetcodeCategoryContents = new List<StreetcodeCategoryContent>()
+        {
+            new StreetcodeCategoryContent() { SourceLinkCategoryId = 1, StreetcodeId = 1, Text = "Test1" },
+            new StreetcodeCategoryContent() { SourceLinkCategoryId = 2, StreetcodeId = 1, Text = "Test2" },
         };
 
         var mockRepo = new Mock<IRepositoryWrapper>();
@@ -72,6 +76,40 @@ internal partial class RepositoryMocker
             {
                 return sources.FirstOrDefault(predicate.Compile());
             });
+
+        mockRepo.Setup(repo => repo.SourceCategoryRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<SourceLinkCategory>>()))
+        .ReturnsAsync((GetByIdSourceLinkCategorySpec spec) =>
+        {
+            int id = spec.Id;
+
+            var category = sources.FirstOrDefault(s => s.Id == id);
+
+            return category;
+        });
+
+        mockRepo.Setup(repo => repo.SourceCategoryRepository.GetItemsBySpecAsync(
+        It.IsAny<ISpecification<SourceLinkCategory>>()))
+        .ReturnsAsync((GetByStreetcodeIdSourceLinkCategorySpec spec) =>
+        {
+            int streetcodeId = spec.StreetcodeId;
+
+            var category = sources.Where(s => s.Streetcodes.Any(s => s.Id == streetcodeId));
+
+            return category;
+        });
+
+        mockRepo.Setup(repo => repo.StreetcodeCategoryContentRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<StreetcodeCategoryContent>>()))
+        .ReturnsAsync((GetByStreetcodeIdStreetcodeCategoryContentSpec spec) =>
+        {
+            int sourceLinkId = spec.SourceLinkId;
+            int streetcodeId = spec.StreetcodeId;
+
+            var categoryContent = streetcodeCategoryContents.FirstOrDefault(s => s.SourceLinkCategoryId == sourceLinkId && s.StreetcodeId == streetcodeId);
+
+            return categoryContent;
+        });
 
         mockRepo.Setup(repo => repo.StreetcodeCategoryContentRepository.GetFirstOrDefaultAsync(
             It.IsAny<Expression<Func<StreetcodeCategoryContent, bool>>>(),

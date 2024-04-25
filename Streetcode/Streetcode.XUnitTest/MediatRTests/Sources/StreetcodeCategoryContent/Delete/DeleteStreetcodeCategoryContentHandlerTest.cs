@@ -1,10 +1,15 @@
+using Ardalis.Specification;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Mapping.Sources;
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Delete;
+using Streetcode.DAL.Entities.Media.Images;
+using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Sources.SourceLinkCategory;
+using Streetcode.DAL.Specification.Sources.StreetcodeCategoryContent;
 using Streetcode.XUnitTest.Mocks;
 using Xunit;
 
