@@ -12,9 +12,9 @@ namespace Streetcode.BLL.Services.Payment.Exceptions
         }
 
         [JsonProperty("errCode")]
-        public string Code { get; }
+        public string? Code { get; }
 
         [JsonProperty("errText")]
-        public string Text { get; }
+        public string? Text { get; }
     }
 }

@@ -53,6 +53,6 @@ public class GetBaseImageHandler : IRequestHandler<GetBaseImageQuery, Result<Mem
             return Result.Fail(new Error(errorMsg));
         }
 
-        return _blobStorage.FindFileInStorageAsMemoryStream(image.BlobName);
+        return _blobStorage.FindFileInStorageAsMemoryStream(image.BlobName ?? "");
     }
 }

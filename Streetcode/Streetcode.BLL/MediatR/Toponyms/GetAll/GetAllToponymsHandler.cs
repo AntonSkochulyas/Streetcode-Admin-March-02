@@ -54,7 +54,7 @@ namespace Streetcode.BLL.MediatR.Toponyms.GetAll
                 FindStreetcodesWithMatchTitle(ref toponyms, filterRequest.Title);
             }
 
-            var toponymDtos = _mapper.Map<IEnumerable<ToponymDto>>(toponyms.AsEnumerable());
+            var toponymDtos = _mapper.Map<IEnumerable<ToponymDto>>(toponyms?.AsEnumerable());
 
             var response = new GetAllToponymsResponseDto
             {
