@@ -35,7 +35,7 @@ public class Toponym
     [MaxLength(50)]
     public string? StreetType { get; set; }
 
-    public List<StreetcodeContent> Streetcodes { get; set; } = new ();
+    public List<StreetcodeContent>? Streetcodes { get; set; } = new ();
 
     public ToponymCoordinate? Coordinate { get; set; }
 }

@@ -75,6 +75,83 @@ namespace Streetcode.WebApi.Extensions
 
                     await dbContext.SaveChangesAsync();
 
+                    if (!dbContext.Toponyms.Any())
+                    {
+                        dbContext.Toponyms.AddRange(
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Lvivska",
+                                AdminRegionOld = "Lvivska",
+                                AdminRegionNew = "Dniprovska",
+                                Gromada = "Dnipro",
+                                Community = "Sample Community 1",
+                                StreetName = "Sample Street 1",
+                                StreetType = "Avenue"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {                     
+                                Oblast = "Kiev",
+                                AdminRegionOld = "Kiev",
+                                AdminRegionNew = "Kyiv",
+                                Gromada = "Kyiv",
+                                Community = "Sample Community 2",
+                                StreetName = "Sample Street 2",
+                                StreetType = "Road"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Odessa",
+                                AdminRegionOld = "Odessa",
+                                AdminRegionNew = "Odesa",
+                                Gromada = "Odesa",
+                                Community = "Sample Community 3",
+                                StreetName = "Sample Street 3",
+                                StreetType = "Boulevard"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Kharkiv",
+                                AdminRegionOld = "Kharkiv",
+                                AdminRegionNew = "Kharkiv",
+                                Gromada = "Kharkiv",
+                                Community = "Sample Community 4",
+                                StreetName = "Sample Street 4",
+                                StreetType = "Lane"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Dnipropetrovsk",
+                                AdminRegionOld = "Dnipropetrovsk",
+                                AdminRegionNew = "Dnipro",
+                                Gromada = "Dnipro",
+                                Community = "Sample Community 5",
+                                StreetName = "Sample Street 5",
+                                StreetType = "Street"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Zaporizhia",
+                                AdminRegionOld = "Zaporizhia",
+                                AdminRegionNew = "Zaporizhzhia",
+                                Gromada = "Zaporizhzhia",
+                                Community = "Sample Community 6",
+                                StreetName = "Sample Street 6",
+                                StreetType = "Avenue"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Vinnytsia",
+                                AdminRegionOld = "Vinnytsia",
+                                AdminRegionNew = "Vinnytsia",
+                                Gromada = "Vinnytsia",
+                                Community = "Sample Community 7",
+                                StreetName = "Sample Street 7",
+                                StreetType = "Boulevard"
+                            });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
                     if (!dbContext.Responses.Any())
                     {
                         dbContext.Responses.AddRange(
