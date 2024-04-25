@@ -77,6 +77,23 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Art.GetById
         }
 
         /// <summary>
+        /// Get by id third item should not be first item.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetByIdThirdShouldNotBeFirstTest()
+        {
+            // Arrange
+            var handler = new GetArtByIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetArtByIdQuery(3), CancellationToken.None);
+
+            // Assert
+            result.Value.Description.Should().NotBe("First description");
+        }
+
+        /// <summary>
         /// Get by id second item description should not be fourth item description test.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>

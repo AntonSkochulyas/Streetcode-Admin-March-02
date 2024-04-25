@@ -79,6 +79,23 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Art.GetAll
         }
 
         /// <summary>
+        /// Get all count should be not five.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllCountShouldBeNotFive()
+        {
+            // Arrange
+            var handler = new GetAllArtsHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetAllArtsQuery(), CancellationToken.None);
+
+            // Assert
+            result.Value.Count().Should().NotBe(5);
+        }
+
+        /// <summary>
         /// Get all list should be type ArtDTO.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>

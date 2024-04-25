@@ -76,6 +76,23 @@ namespace Streetcode.XUnitTest.MediatRTests.Partners.GetAll
         }
 
         /// <summary>
+        /// Get all list count shoul be four.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetAllCountShouldNotBeFive()
+        {
+            // Arrange
+            var handler = new GetAllPartnersHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetAllPartnersQuery(), CancellationToken.None);
+
+            // Assert
+            result.Value.Count().Should().NotBe(5);
+        }
+
+        /// <summary>
         /// Get all list should be type PartnerDTO.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>

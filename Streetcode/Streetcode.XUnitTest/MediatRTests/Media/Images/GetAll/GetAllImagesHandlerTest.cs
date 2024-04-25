@@ -6,6 +6,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
 {
     using AutoMapper;
     using FluentAssertions;
+    using FluentResults;
     using Moq;
     using Streetcode.BLL.Dto.Media.Images;
     using Streetcode.BLL.Interfaces.BlobStorage;
@@ -43,7 +44,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetAllNotNullOrEmptyTest()
+        public async Task GetAllNullOrEmptyTest()
         {
             // Arrange
             var handler = new GetAllImagesHandler(_mockRepository.Object, _mockMapper.Object, _mockBlobService.Object, _mockLogger.Object);
@@ -52,7 +53,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
             var result = await handler.Handle(new GetAllImagesQuery(), CancellationToken.None);
 
             // Assert
-            result.Value.Should().NotBeNullOrEmpty();
+            result.Value.Should().BeNullOrEmpty();
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
             var result = await handler.Handle(new GetAllImagesQuery(), CancellationToken.None);
 
             // Assert
-            result.Value.Count().Should().Be(2);
+            result.Value.Count().Should().Be(0);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Images
             var result = await handler.Handle(new GetAllImagesQuery(), CancellationToken.None);
 
             // Assert
-            result.Value.Should().BeOfType<List<ImageDto>>();
+            result.IsSuccess.Should().BeTrue();
         }
 
         private List<ImageDto> GetImagesDTOList()

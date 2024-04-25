@@ -46,7 +46,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
             // Act
             var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
 
-            // Assert        
+            // Assert
             result.Value.Should().NotBeNullOrEmpty();
         }
 
@@ -59,8 +59,21 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
             // Act
             var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
 
-            // Assert        
+            // Assert
             result.Value.Count().Should().Be(4);
+        }
+
+        [Fact]
+        public async Task Get_All_Count_Should_NotBe_Five()
+        {
+            // Arrange
+            var handler = new GetAllAudiosHandler(_mockRepository.Object, _mapper, _mockBlob.Object, _mockLogger.Object);
+
+            // Act
+            var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
+
+            // Assert
+            result.Value.Count().Should().NotBe(5);
         }
 
         [Fact]
@@ -72,7 +85,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.Audio.GetBaseAudio
             // Act
             var result = await handler.Handle(new GetAllAudiosQuery(), CancellationToken.None);
 
-            // Assert        
+            // Assert
             result.Value.Should().BeOfType<List<AudioDto>>();
         }
     }
