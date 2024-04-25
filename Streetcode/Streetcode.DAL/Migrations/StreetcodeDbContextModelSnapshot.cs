@@ -393,7 +393,7 @@ namespace Streetcode.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AuthorShipId")
+                    b.Property<int?>("AuthorShipId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -1551,8 +1551,7 @@ namespace Streetcode.DAL.Migrations
                     b.HasOne("Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorShip", "AuthorShip")
                         .WithMany("AuthorShipHyperLinks")
                         .HasForeignKey("AuthorShipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AuthorShip");
                 });

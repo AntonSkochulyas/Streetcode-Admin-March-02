@@ -274,7 +274,7 @@ namespace Streetcode.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AuthorShipId = table.Column<int>(type: "int", nullable: false)
+                    AuthorShipId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
