@@ -1,7 +1,14 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Media.Audio;
+using Streetcode.BLL.Dto.Media.Audio;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Audio.Create;
 
-public record CreateAudioCommand(AudioFileBaseCreateDTO Audio) : IRequest<Result<AudioDTO>>;
+/// <summary>
+/// Command, that request a handler to create an audio.
+/// </summary>
+/// <param name="Audio"></param>
+public record CreateAudioCommand(AudioFileBaseCreateDto Audio)
+    : IRequest<Result<AudioDto>>;

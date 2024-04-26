@@ -22,7 +22,7 @@ namespace Streetcode.DAL.Entities.Payment
         public MerchantPaymentInfo MerchantPaymentInfo { get; set; }
 
         [JsonProperty("redirectUrl")]
-        public string RedirectUrl { get; set; }
+        public string? RedirectUrl { get; set; }
 
         // [JsonProperty("webHookUrl")]
         // public string WebhookUrl { get; set; }

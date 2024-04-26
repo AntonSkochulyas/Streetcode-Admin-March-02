@@ -1,18 +1,30 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.News;
+using Streetcode.BLL.Dto.News;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Entities.News;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Create
 {
-    public class CreateNewsHandler : IRequestHandler<CreateNewsCommand, Result<NewsDTO>>
+    /// <summary>
+    /// Handler, that handles a process of creating a news.
+    /// </summary>
+    public class CreateNewsHandler : IRequestHandler<CreateNewsCommand, Result<NewsDto>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
+
+        // Parametic constructor
         public CreateNewsHandler(IMapper mapper, IRepositoryWrapper repositoryWrapper, ILoggerService logger)
         {
             _mapper = mapper;
@@ -20,12 +32,24 @@ namespace Streetcode.BLL.MediatR.Newss.Create
             _logger = logger;
         }
 
-        public async Task<Result<NewsDTO>> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Method, that creates a new news.
+        /// </summary>
+        /// <param name="request">
+        /// Request with new news.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A NewsDto, or error, if it was while creating process.
+        /// </returns>
+        public async Task<Result<NewsDto>> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
         {
-            var newNews = _mapper.Map<News>(request.newNews);
+            var newNews = _mapper.Map<News>(request.NewNews);
             if (newNews is null)
             {
-                const string errorMsg = "Cannot convert null to news";
+                string errorMsg = NewsErrors.CreateNewsHandlerCanNotConvertFromNullError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(errorMsg);
             }
@@ -37,13 +61,13 @@ namespace Streetcode.BLL.MediatR.Newss.Create
 
             var entity = _repositoryWrapper.NewsRepository.Create(newNews);
             var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
-            if(resultIsSuccess)
+            if (resultIsSuccess)
             {
-                return Result.Ok(_mapper.Map<NewsDTO>(entity));
+                return Result.Ok(_mapper.Map<NewsDto>(entity));
             }
             else
             {
-                const string errorMsg = "Failed to create a news";
+                string errorMsg = NewsErrors.CreateNewsHandlerFailedToCreateError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

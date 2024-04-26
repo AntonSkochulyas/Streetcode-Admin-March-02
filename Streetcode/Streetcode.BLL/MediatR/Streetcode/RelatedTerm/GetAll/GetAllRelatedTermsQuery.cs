@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.GetAll
 {
+    /// <summary>
+    /// Query, that requests a handler to get all related terms from database.
+    /// </summary>
     internal class GetAllRelatedTermsQuery
     {
+        public GetAllRelatedTermsQuery()
+        {
+        }
     }
 }

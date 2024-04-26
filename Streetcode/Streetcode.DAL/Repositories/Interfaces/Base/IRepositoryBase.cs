@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
-using Streetcode.DAL.Persistence;
+using Streetcode.DAL.Enums;
 
 namespace Streetcode.DAL.Repositories.Interfaces.Base;
 
@@ -56,4 +56,16 @@ public interface IRepositoryBase<T>
         Expression<Func<T, T>> selector,
         Expression<Func<T, bool>>? predicate = default,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default);
+
+    public IQueryable<T> Get(
+        Expression<Func<T, bool>>? predicate = default,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default,
+        Expression<Func<T, T>>? selector = default,
+        int skip = 0,
+        int take = 0,
+        Dictionary<Expression<Func<T, object>>, SortDirection>? orderBy = null);
+
+    Task<T?> GetItemBySpecAsync(ISpecification<T> spec);
+
+    Task<IEnumerable<T>?> GetItemsBySpecAsync(ISpecification<T> spec);
 }

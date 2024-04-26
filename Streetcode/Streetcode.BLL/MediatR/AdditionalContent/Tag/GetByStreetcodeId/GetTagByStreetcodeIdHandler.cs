@@ -1,21 +1,27 @@
+// Necessary usings
 using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
-using Streetcode.BLL.DTO.AdditionalContent.Tag;
+using Streetcode.BLL.Dto.AdditionalContent.Tag;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces
 namespace Streetcode.BLL.MediatR.AdditionalContent.Tag.GetByStreetcodeId;
 
-public class GetTagByStreetcodeIdHandler : IRequestHandler<GetTagByStreetcodeIdQuery, Result<IEnumerable<StreetcodeTagDTO>>>
+public class GetTagByStreetcodeIdHandler : IRequestHandler<GetTagByStreetcodeIdQuery, Result<IEnumerable<StreetcodeTagDto>>>
 {
+    // Mapper
     private readonly IMapper _mapper;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor
     public GetTagByStreetcodeIdHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
     {
         _repositoryWrapper = repositoryWrapper;
@@ -23,15 +29,20 @@ public class GetTagByStreetcodeIdHandler : IRequestHandler<GetTagByStreetcodeIdQ
         _logger = logger;
     }
 
-    public async Task<Result<IEnumerable<StreetcodeTagDTO>>> Handle(GetTagByStreetcodeIdQuery request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Method, that gets a collection of StreetcodeTagDto from database by requested id.
+    /// </summary>
+    /// <param name="request">
+    /// Request with id to find a streetcode tags.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token for cancelling operation.
+    /// </param>
+    /// <returns>
+    /// A IEnumerable of StreetcodeTagDto, or error, if it was while finding process.
+    /// </returns>
+    public async Task<Result<IEnumerable<StreetcodeTagDto>>> Handle(GetTagByStreetcodeIdQuery request, CancellationToken cancellationToken)
     {
-        /*
-        StreetcodeContent streetcode = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.StreetcodeId);
-        if(streetcode is null)
-        {
-            return Result.Fail(new Error($"Streetcode with id: {request.StreetcodeId} doesn`t exist"));
-        }
-        */
         var tagIndexed = await _repositoryWrapper.StreetcodeTagIndexRepository
             .GetAllAsync(
                 t => t.StreetcodeId == request.StreetcodeId,
@@ -39,11 +50,11 @@ public class GetTagByStreetcodeIdHandler : IRequestHandler<GetTagByStreetcodeIdQ
 
         if (tagIndexed is null)
         {
-            string errorMsg = $"Cannot find any tag by the streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(TagErrors.GetTagByStreetcodeIdHandlerCanNotFindByStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
 
-        return Result.Ok(_mapper.Map<IEnumerable<StreetcodeTagDTO>>(tagIndexed.OrderBy(ti => ti.Index)));
+        return Result.Ok(_mapper.Map<IEnumerable<StreetcodeTagDto>>(tagIndexed.OrderBy(ti => ti.Index)));
     }
 }

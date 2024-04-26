@@ -1,10 +1,18 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Streetcode.BLL.Interfaces.BlobStorage;
+using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.DAL.Entities.AdditionalContent;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
+using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Entities.Feedback;
+using Streetcode.DAL.Entities.InfoBlocks.Articles;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Entities.Media;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.Partners;
@@ -15,8 +23,10 @@ using Streetcode.DAL.Entities.Streetcode.Types;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Transactions;
+using Streetcode.DAL.Entities.Users;
 using Streetcode.DAL.Enums;
 using Streetcode.DAL.Persistence;
+using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Repositories.Realizations.Base;
 
 namespace Streetcode.WebApi.Extensions
@@ -31,8 +41,9 @@ namespace Streetcode.WebApi.Extensions
                 var dbContext = scope.ServiceProvider.GetRequiredService<StreetcodeDbContext>();
                 var blobOptions = app.Services.GetRequiredService<IOptions<BlobEnvironmentVariables>>();
                 string blobPath = app.Configuration.GetValue<string>("Blob:BlobStorePath");
-                var repo = new RepositoryWrapper(dbContext);
-                var blobService = new BlobService(blobOptions, repo);
+                var repo = app.Services.GetRequiredService<IRepositoryWrapper>();
+                var logger = app.Services.GetRequiredService<ILoggerService>();
+                var blobService = app.Services.GetRequiredService<IBlobService>();
                 string initialDataImagePath = "../Streetcode.DAL/InitialData/images.json";
                 string initialDataAudioPath = "../Streetcode.DAL/InitialData/audios.json";
                 if (!dbContext.Images.Any())
@@ -47,7 +58,7 @@ namespace Streetcode.WebApi.Extensions
                         string filePath = Path.Combine(blobPath, img.BlobName);
                         if (!File.Exists(filePath))
                         {
-                            blobService.SaveFileInStorageBase64(img.Base64, img.BlobName.Split('.')[0], img.BlobName.Split('.')[1]);
+                            img.BlobName = blobService.SaveFileInStorage(img.Base64, img.BlobName.Split('.')[0], img.BlobName.Split('.')[1]);
                         }
                     }
 
@@ -56,13 +67,90 @@ namespace Streetcode.WebApi.Extensions
                         string filePath = Path.Combine(blobPath, audio.BlobName);
                         if (!File.Exists(filePath))
                         {
-                            blobService.SaveFileInStorageBase64(audio.Base64, audio.BlobName.Split('.')[0], audio.BlobName.Split('.')[1]);
+                            audio.BlobName = blobService.SaveFileInStorage(audio.Base64, audio.BlobName.Trim(), audio.BlobName.Split(".")[1]);
                         }
                     }
 
                     dbContext.Images.AddRange(imgfromJson);
 
                     await dbContext.SaveChangesAsync();
+
+                    if (!dbContext.Toponyms.Any())
+                    {
+                        dbContext.Toponyms.AddRange(
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Lvivska",
+                                AdminRegionOld = "Lvivska",
+                                AdminRegionNew = "Dniprovska",
+                                Gromada = "Dnipro",
+                                Community = "Sample Community 1",
+                                StreetName = "Sample Street 1",
+                                StreetType = "Avenue"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {                     
+                                Oblast = "Kiev",
+                                AdminRegionOld = "Kiev",
+                                AdminRegionNew = "Kyiv",
+                                Gromada = "Kyiv",
+                                Community = "Sample Community 2",
+                                StreetName = "Sample Street 2",
+                                StreetType = "Road"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Odessa",
+                                AdminRegionOld = "Odessa",
+                                AdminRegionNew = "Odesa",
+                                Gromada = "Odesa",
+                                Community = "Sample Community 3",
+                                StreetName = "Sample Street 3",
+                                StreetType = "Boulevard"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Kharkiv",
+                                AdminRegionOld = "Kharkiv",
+                                AdminRegionNew = "Kharkiv",
+                                Gromada = "Kharkiv",
+                                Community = "Sample Community 4",
+                                StreetName = "Sample Street 4",
+                                StreetType = "Lane"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Dnipropetrovsk",
+                                AdminRegionOld = "Dnipropetrovsk",
+                                AdminRegionNew = "Dnipro",
+                                Gromada = "Dnipro",
+                                Community = "Sample Community 5",
+                                StreetName = "Sample Street 5",
+                                StreetType = "Street"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Zaporizhia",
+                                AdminRegionOld = "Zaporizhia",
+                                AdminRegionNew = "Zaporizhzhia",
+                                Gromada = "Zaporizhzhia",
+                                Community = "Sample Community 6",
+                                StreetName = "Sample Street 6",
+                                StreetType = "Avenue"
+                            },
+                            new DAL.Entities.Toponyms.Toponym
+                            {
+                                Oblast = "Vinnytsia",
+                                AdminRegionOld = "Vinnytsia",
+                                AdminRegionNew = "Vinnytsia",
+                                Gromada = "Vinnytsia",
+                                Community = "Sample Community 7",
+                                StreetName = "Sample Street 7",
+                                StreetType = "Boulevard"
+                            });
+
+                        await dbContext.SaveChangesAsync();
+                    }
 
                     if (!dbContext.Responses.Any())
                     {
@@ -81,6 +169,89 @@ namespace Streetcode.WebApi.Extensions
                             });
 
                         await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.UsersAdditionalInfo.Any())
+                    {
+                        var userAdditionalInfo = new UserAdditionalInfo()
+                        {
+                            Age = 18,
+                            Email = "admin@gmail.com",
+                            Phone = "+380630000200",
+                            FirstName = "Admin first name",
+                            SecondName = "Admin second name",
+                            ThirdName = "Admin third name"
+                        };
+
+                        dbContext.Add(userAdditionalInfo);
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.AuthorShipHyperLinks.Any())
+                    {
+                        dbContext.AuthorShipHyperLinks.AddRange(new AuthorShipHyperLink { Title = "Test 1", URL = "Test 1 authorship YAROSLAV BEST PYPSIK" },
+                            new AuthorShipHyperLink { Title = "Test 2", URL = "Test 2 authorship NASTYA SMALL PYPSIK" });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.Articles.Any())
+                    {
+                        dbContext.Articles.AddRange(new Article() { Text = "Article text 1 test", Title = "Articel test 1 text super womba bomba" }, new Article() { Text = "Article text 2 test", Title = "Articel test 2 text super womba bomba" });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.AuthorShips.Any())
+                    {
+                        dbContext.AuthorShips.AddRange(new AuthorShip() { Text = "BIbabumba authorship text 1", }, new AuthorShip() { Text = "BIbabumba authorship text 2", });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.DictionaryItems.Any())
+                    {
+                        dbContext.DictionaryItems.AddRange(new DictionaryItem() { Word = "NASTYA", Description = "PYPSIK" }, new DictionaryItem() { Word = "YAROSLAV", Description = "BEST PYPSIK" });
+
+                        await dbContext.SaveChangesAsync();
+                    }
+
+                    if (!dbContext.ApplicationUsers.Any())
+                    {
+                        var userAdditionalInfo = await dbContext.UsersAdditionalInfo.FirstOrDefaultAsync();
+
+                        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+                        var adminUser = new ApplicationUser()
+                        {
+                            UserName = configuration["JWT:AdminLogin"],
+                            UserAdditionalInfoId = userAdditionalInfo.Id,
+                            UserAdditionalInfo = userAdditionalInfo
+                        };
+
+                        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                        var result = await userManager.CreateAsync(adminUser, configuration["JWT:AdminPassword"]);
+
+                        if (result.Succeeded)
+                        {
+                            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                            {
+                                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                            }
+
+                            if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                            {
+                                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                            }
+
+                            await userManager.AddToRoleAsync(adminUser, UserRoles.Admin);
+
+                            await dbContext.SaveChangesAsync();
+                        }
                     }
 
                     if (!dbContext.Terms.Any())
@@ -132,7 +303,7 @@ namespace Streetcode.WebApi.Extensions
                             {
                                 FirstName = "Inna",
                                 LastName = "Krupnyk",
-                                ImageId = 25,
+                                ImageId = null,
                                 Description = "У 1894 році Грушевський за рекомендацією Володимира Антоновича призначений\r\nна посаду ординарного професора",
                                 IsMain = true
                             },
@@ -140,17 +311,18 @@ namespace Streetcode.WebApi.Extensions
                             {
                                 FirstName = "Danyil",
                                 LastName = "Terentiev",
-                                ImageId = 26,
+                                ImageId = null,
                                 Description = "У 1894 році Грушевський за рекомендацією Володимира Антоновича призначений\r\nна посаду ординарного професора",
                                 IsMain = true
                             },
                             new TeamMember
                             {
                                 FirstName = "Nadia",
+                                ImageId = null,
                                 LastName = "Kischchuk",
-                                ImageId = 27,
                                 Description = "У 1894 році Грушевський за рекомендацією Володимира Антоновича призначений\r\nна посаду ординарного професора",
                                 IsMain = true
+
                             });
 
                         await dbContext.SaveChangesAsync();
@@ -267,21 +439,22 @@ namespace Streetcode.WebApi.Extensions
                         }
                     }
 
-                    if (!dbContext.Users.Any())
-                    {
-                        dbContext.Users.AddRange(
-                            new DAL.Entities.Users.User
-                            {
-                                Email = "admin",
-                                Role = UserRole.MainAdministrator,
-                                Login = "admin",
-                                Name = "admin",
-                                Password = "admin",
-                                Surname = "admin",
-                            });
+                    // Change User to UserAdditionalInfo after JWT Authorization will be done
+                    //if (!dbContext.Users.Any())
+                    //{
+                    //    dbContext.Users.AddRange(
+                    //        new DAL.Entities.Users.User
+                    //        {
+                    //            Email = "admin",
+                    //            Role = UserRole.MainAdministrator,
+                    //            Login = "admin",
+                    //            Name = "admin",
+                    //            Password = "admin",
+                    //            Surname = "admin",
+                    //        });
 
-                        await dbContext.SaveChangesAsync();
-                    }
+                    //    await dbContext.SaveChangesAsync();
+                    //}
 
                     if (!dbContext.News.Any())
                     {
@@ -291,7 +464,7 @@ namespace Streetcode.WebApi.Extensions
                                 Title = "27 квітня встановлюємо перший стріткод!",
                                 Text = "<p>Встановлення таблички про Михайла Грушевського в м. Київ стало важливою подією для киян та гостей столиці. Вона не лише прикрашає вулицю міста, а й нагадує про значний внесок цієї визначної особистості в історію України. Це також сприяє розповсюдженню знань про Михайла Грушевського серед широкого загалу, виховує національну свідомість та гордість за власну культуру.\r\n\r\nВстановлення таблички про Михайла Грушевського в Києві є важливим кроком на шляху вшанування відомих особистостей, які внесли вагомий внесок у розвиток України. Це також показує, що в Україні дбають про збереження національної спадщини та визнання внеску видатних історичних постатей в формування національної ідентичності.\r\n\r\nУрочисте встановлення таблички про Михайла Грушевського відбулося за участі високопосадовців міста, представників наукової спільноти та громадськості. Під час церемонії відбулися промови, в яких відзначили важливість дослідницької та літературної діяльності М. Грушевського, його внесок у вивчення історії України та роль у національному відродженні.\r\n\r\nМихайло Грушевський жив і працював в Києві на початку ХХ століття. Він був визнаний одним з провідних істориків свого часу, який досліджував історію України з наукової та національної позицій. Його праці були визнані авторитетними не лише в Україні, але й у світі, і мають велике значення для розуміння минулого та формування майбутнього українського народу.\r\n\r\nТабличка з відтвореним зображенням Михайла Грушевського стала вагомим символом вшанування цієї видатної постаті. Вона стала візитівкою Києва та пам'яткою культурної спадщини України, яка привертає увагу мешканців та гостей міста. Це важливий крок на шляху до збереження національної історії, культури та національної свідомості в Україні.\r\n\r\nВстановлення таблички про Михайла Грушевського в Києві свідчить про важливість визнання історичної спадщини та внеску видатних постатей в національну свідомість. Це також є визнанням ролі М. Грушевського у формуванні української національної ідентичності та його внеску в розвиток наукової та культурної спадщини України.\r\n\r\nТабличка була встановлена на видному місці в центрі Києва, недалеко від місця, де розташовується будинок, в якому колись проживав Михайло Грушевський. Зображення на табличці передає фотографію видатного історика, а також містить кратку інформацію про його життя та діяльність.\r\n\r\nМешканці та гості Києва високо оцінюють встановлення таблички про Михайла Грушевського, яке стало ще одним кроком на шляху до вшанування історичної спадщини України. Це також важливий крок у визнанні ролі українських науковців та культурних діячів у світовому контексті.\r\n\r\nВстановлення таблички про Михайла Грушевського в Києві є однією з ініціатив, спрямованих на підтримку і розширення національної пам'яті та відтворення історичної правди. Це важливий крок на шляху до відродження національної свідомості та підкреслення значення української культурної спадщини в світовому контексті.</p>",
                                 URL = "first-streetcode",
-                                ImageId = 24,
+
                                 CreationDate = DateTime.Now,
                             },
                             new DAL.Entities.News.News
@@ -299,7 +472,7 @@ namespace Streetcode.WebApi.Extensions
                                 Title = "Новий учасник команди!",
                                 Text = "<p>Привітаймо нового учасника команди - Терентьєва Даниїла!. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque arcu orci, dictum at posuere a, tincidunt sit amet nibh. Donec pellentesque ac mauris tristique egestas. Vestibulum hendrerit eget nisi non viverra. Nullam ultricies sapien ac ipsum ullamcorper tristique. Mauris auctor, sapien vitae molestie ornare, libero orci fringilla velit, sed pharetra nibh augue id tellus. Mauris pulvinar vel felis convallis molestie. Integer mauris felis, ultrices nec vestibulum at, ullamcorper eu massa. Proin posuere consectetur facilisis. Nunc volutpat dictum massa, ac volutpat nisl malesuada nec.\r\n\r\nNulla nec felis quis metus efficitur efficitur ac nec est. Nulla eros quam, tincidunt at elit nec, iaculis eleifend sem. Pellentesque id sem id erat mollis fermentum non at ipsum. Donec justo ante, commodo a pharetra a, consectetur at urna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent porta, odio sed venenatis posuere, felis nibh finibus dui, placerat molestie dui libero at nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis nisi in nisi pulvinar ultrices.\r\n\r\nPellentesque ante nunc, mattis vitae iaculis id, sollicitudin nec tortor. Pellentesque eu lectus suscipit, sodales nunc eu, lobortis enim. Praesent tempus dolor et felis vulputate hendrerit. Nunc ut lacus.</p>",
                                 URL = "danya",
-                                ImageId = 28,
+
                                 CreationDate = DateTime.Now,
                             },
                             new DAL.Entities.News.News
@@ -307,7 +480,7 @@ namespace Streetcode.WebApi.Extensions
                                 Title = "Новий учасник команди!",
                                 Text = "<p>Привітаймо нового учасника команди - Скам Мастера!. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque arcu orci, dictum at posuere a, tincidunt sit amet nibh. Donec pellentesque ac mauris tristique egestas. Vestibulum hendrerit eget nisi non viverra. Nullam ultricies sapien ac ipsum ullamcorper tristique. Mauris auctor, sapien vitae molestie ornare, libero orci fringilla velit, sed pharetra nibh augue id tellus. Mauris pulvinar vel felis convallis molestie. Integer mauris felis, ultrices nec vestibulum at, ullamcorper eu massa. Proin posuere consectetur facilisis. Nunc volutpat dictum massa, ac volutpat nisl malesuada nec.\r\n\r\nNulla nec felis quis metus efficitur efficitur ac nec est. Nulla eros quam, tincidunt at elit nec, iaculis eleifend sem. Pellentesque id sem id erat mollis fermentum non at ipsum. Donec justo ante, commodo a pharetra a, consectetur at urna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent porta, odio sed venenatis posuere, felis nibh finibus dui, placerat molestie dui libero at nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis nisi in nisi pulvinar ultrices.\r\n\r\nPellentesque ante nunc, mattis vitae iaculis id, sollicitudin nec tortor. Pellentesque eu lectus suscipit, sodales nunc eu, lobortis enim. Praesent tempus dolor et felis vulputate hendrerit. Nunc ut lacus.</p>",
                                 URL = "scum",
-                                ImageId = 29,
+
                                 CreationDate = DateTime.Now,
                             });
 
@@ -521,59 +694,46 @@ namespace Streetcode.WebApi.Extensions
                                 dbContext.Arts.AddRange(
                                     new Art
                                     {
-                                        ImageId = 19,
                                         Title = "Анатолій Федірко",
                                         Description = "Анатолій Федірко, «Український супрематичний політичний діяч Михайло Грушевський», 2019-2020 роки."
                                     },
                                     new Art
                                     {
-                                        ImageId = 20,
                                         Title = "Анатолій Федірко",
                                         Description = "Анатолій Федірко, «Український супрематичний політичний діяч Михайло Грушевський», 2019-2020 роки."
                                     },
                                     new Art
                                     {
-                                        ImageId = 21,
                                         Title = "Назар Дубів",
                                         Description = "Назар Дубів опублікував серію малюнків, у яких перетворив класиків української літератури та політичних діячів на сучасних модників"
                                     },
                                     new Art
                                     {
-                                        ImageId = 22
-                                    },
-                                    new Art
-                                    {
-                                        ImageId = 22,
                                         Title = "Козаки на орбіті",
                                         Description = "«Козаки на орбіті» поєднує не тільки тему козаків, а й апелює до космічної тематики."
                                     },
                                     new Art
                                     {
-                                        ImageId = 21,
                                         Title = "Січових стрільців",
                                         Description = "На вулиці Січових стрільців, 75 закінчили малювати мурал Михайла Грушевського на місці малюнка будинку з лелекою."
                                     },
                                     new Art
                                     {
-                                        ImageId = 16,
                                         Title = "Січових стрільців",
                                         Description = "Some Description"
                                     },
                                     new Art
                                     {
-                                        ImageId = 17,
                                         Title = "Січових стрільців",
                                         Description = "Some Description"
                                     },
                                     new Art
                                     {
-                                        ImageId = 18,
                                         Title = "Січових стрільців",
                                         Description = "Some Description"
                                     },
                                     new Art
                                     {
-                                        ImageId = 19,
                                         Title = "Січових стрільців",
                                         Description = "Some Description"
                                     });
@@ -886,168 +1046,6 @@ namespace Streetcode.WebApi.Extensions
                                     });
 
                                 await dbContext.SaveChangesAsync();
-
-                                if (!dbContext.HistoricalContexts.Any())
-                                {
-                                    dbContext.HistoricalContexts.AddRange(
-                                        new HistoricalContext
-                                        {
-                                            Title = "Дитинство"
-                                        },
-                                        new HistoricalContext
-                                        {
-                                            Title = "Студентство"
-                                        },
-                                        new HistoricalContext
-                                        {
-                                            Title = "Життя в Петербурзі"
-                                        },
-                                        new HistoricalContext
-                                        {
-                                            Title = "Незалежна Україна"
-                                        },
-                                        new HistoricalContext
-                                        {
-                                            Title = "Революція гідності"
-                                        },
-                                        new HistoricalContext
-                                        {
-                                            Title = "Збройна агресія Росії"
-                                        },
-                                        new HistoricalContext
-                                        {
-                                            Title = "Повномасштабне вторгнення Росії"
-                                        });
-
-                                    await dbContext.SaveChangesAsync();
-
-                                    if (!dbContext.HistoricalContextsTimelines.Any())
-                                    {
-                                        dbContext.HistoricalContextsTimelines.AddRange(
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 3,
-                                            TimelineId = 1
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 2,
-                                            TimelineId = 2,
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 3,
-                                            TimelineId = 3
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 3,
-                                            TimelineId = 4
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 3,
-                                            TimelineId = 5
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 3,
-                                            TimelineId = 6
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 3,
-                                            TimelineId = 7
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 4,
-                                            TimelineId = 8
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 4,
-                                            TimelineId = 9
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 5,
-                                            TimelineId = 10
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 5,
-                                            TimelineId = 11
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 12
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 13
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 14
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 15
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 16
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 17
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 6,
-                                            TimelineId = 18
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 7,
-                                            TimelineId = 19
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 7,
-                                            TimelineId = 20
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 7,
-                                            TimelineId = 21
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 7,
-                                            TimelineId = 22
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 7,
-                                            TimelineId = 23
-                                        },
-                                        new HistoricalContextTimeline
-                                        {
-                                            HistoricalContextId = 7,
-                                            TimelineId = 24
-                                        });
-
-                                        await dbContext.SaveChangesAsync();
-                                    }
-                                }
                             }
 
                             if (!dbContext.TransactionLinks.Any())
@@ -1078,7 +1076,7 @@ namespace Streetcode.WebApi.Extensions
                                         " намалював портрет Василя Жуковського — вихователя спадкоємця престолу Олександра Миколайовича, і портрет розіграли" +
                                         " в лотереї, у якій взяла участь імператорська родина. Лотерея відбулася 4 травня 1838 року," +
                                         " а 7 травня Шевченкові видали відпускну.",
-                                        ImageId = 6,
+
                                         StreetcodeId = 1,
                                     },
                                     new Fact
@@ -1086,105 +1084,105 @@ namespace Streetcode.WebApi.Extensions
                                         Title = "Перший Кобзар",
                                         FactContent = " Ознайомившись випадково з рукописними творами Шевченка й вражений ними, П. Мартос виявив до них великий інтерес." +
                                             " Він порадився із Є. Гребінкою і запропонував Шевченку видати їх окремою книжкою, яку згодом назвали «Кобзарем».",
-                                        ImageId = 5,
+
                                         StreetcodeId = 1,
                                     },
                                     new Fact
                                     {
                                         Title = "Премія Романа Ратушного",
                                         FactContent = "Український журналіст, публіцист і письменник Вахтанг Кіпіані від імені «Історичної правди» ініціював заснування іменної премії Романа Ратушного для молодих авторів за публікації, що стосуються історії Києва. Гроші на започаткування премії дали батьки Романа.",
-                                        ImageId = 16,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Стипендія для активістів",
                                         FactContent = "На честь Романа в Інституті права Київського національного університету імені Тараса Шевченка заснували стипендіальну програму для громадських активістів, які здобувають юридичну освіту.",
-                                        ImageId = 17,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Премія Романа Ратушного",
                                         FactContent = "Український журналіст, публіцист і письменник Вахтанг Кіпіані від імені «Історичної правди» ініціював заснування іменної премії Романа Ратушного для молодих авторів за публікації, що стосуються історії Києва. Гроші на започаткування премії дали батьки Романа.",
-                                        ImageId = 18,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Карта мафіозних зв’язків",
                                         FactContent = "Романа можна вважати «хрещеним» Державного бюро розслідувань. У 2015 році він самостійно створив карту зв’язків російської та української мафій, засновану на відкритих даних. Підтримував розслідування злочинів. За його даними, таких взаємопов’язаних осіб було близько тисячі.",
-                                        ImageId = 19,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Стати громадянином",
                                         FactContent = "За словами мами Романа, Світлани Поваляєвої, маленький громадянин Ратушний почав ходити на мітинги та протести із семи років. Першою суспільно корисною активністю стала Помаранчева революція. «Участь у політичних і соціальних процесах своєї держави має бути атрибутом життя кожного громадянина», — наголошував Роман.",
-                                        ImageId = 16,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "«У мене все добре»",
                                         FactContent = "Якось під час найзапеклішого протистояння на Євромайдані він подзвонив батькові та звично сказав: «У мене все добре, ми з друзями вже їдемо з Майдану додому, не хвилюйся і на добраніч». А через деякий час в той же вечір Роман вже коментував події у прямій телевізійній трансляції: «Ми зараз штурмуємо Український Дім, там засіли внутрішні війська, їх біля сотні, але ми їх зараз звідти викуримо…». Він завжди був там, де найгарячіше. Каску, в якій Роман був на Майдані, його мама Світлана Поваляєва згодом передала в Музей Революції Гідності.",
-                                        ImageId = 17,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Життєві плани",
                                         FactContent = "Після Революції гідності в 2014 році під час подорожі Європою тато Романа делікатно просував йому, юнакові, обпаленому Майданом, ідею навчання в одному з європейських університетів. А Роман делікатно відмовився. «На цей момент мій життєвий план такого не передбачає», — відповів.",
-                                        ImageId = 18,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Культура життя",
                                         FactContent = "Роман зростав у середовищі культурних діячів Києва. Це не могло не позначитися на його особистості, поглядах і смаках. Театри, вистави, виставки. Багато музики та читання. Цікавість до історії та права. Разом із братом Василем навчався грі на трубі в Джазовій академії. Відвідував концерти в Національній філармонії та Будинку органної і камерної музики. Друзі відзначали витончений смак Романа в одязі, але в цілому аскетичний підхід до матеріальних принад життя.",
-                                        ImageId = 19,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Громада понад усе",
                                         FactContent = "Всі знали Ратушного як щедру та безкорисливу людину. Так, компенсацію Європейського суду з прав людини, яку він отримав як потерпілий від побиття студентів «Беркутом», Роман фактично повністю витратив на громаду та боротьбу за Протасів Яр.",
-                                        ImageId = 16,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Сенека",
                                         FactContent = "На фронті Роман взяв собі позивний Сенека. Йому відгукувалися погляди давньоримського філософа на жертовність та героїзм заради суспільства. Сенека виклав їх у своїх «Листах». А Роман підтвердив свої переконання яскравим життям із героїчним запалом. Зі світоглядом Сенеки погляди Романа порівняв його батько в своєму тексті пам’яті про сина. Спецпідрозділ радіоелектронної розвідки і радіоелектронного штурму 93-ї окремої механізованої бригади ЗСУ «Холодний Яр», де служив Ратушний, назвали «Сенека». На його честь, бо він його і задумав.",
-                                        ImageId = 17,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Заповіт нам",
                                         FactContent = "20 травня 2022 року, незадовго до загибелі, Роман на своїй сторінці у фейсбуці опублікував пост — свого роду заповіт нам. «Допоки Збройні сили вбивають русню на фронті, ви нездатні вбити русню в собі. Просто запам’ятайте: чим більше росіян ми вб’ємо зараз, тим менше росіян доведеться вбивати нашим дітям. Ця війна триває більше трьох сотень років…».",
-                                        ImageId = 18,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "«Загинув за Тебе»",
                                         FactContent = "Побратими стверджують, що Роман готувався до свого останнього бойового завдання. Дав вказівку зібрати свої речі та віддати їх братові у випадку загибелі. Написав заповіт з докладними інструкціями. Описав, як саме хотів провести свій похорон. А ще написав у заповіті кілька останніх слів про любов до свого Києва: «Загинув далеко від Тебе, Києве, але загинув за Тебе…».",
-                                        ImageId = 19,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Мріяв про вільну Україну",
                                         FactContent = "У липні 2022 року в Лугано президентка Єврокомісії Урсула фон дер Ляєн під час конференції з відбудови України розпочала свій виступ словами про Романа, активіста та журналіста, який мріяв про Україну, вільну від корупції, та поклав життя за її суверенітет.",
-                                        ImageId = 16,
+
                                         StreetcodeId = 2
                                     },
                                     new Fact
                                     {
                                         Title = "Жива справа",
                                         FactContent = "За словами мами Романа Світлани Поваляєвої, він заповів фінансово підтримати музей Шевченка, Національну капелу бандуристів імені Майбороди, а також видання «Історична правда» та «Новинарня». А ще попросив донатити на добровольчий медичний батальйон «Госпітальєри» та інші волонтерські організації, що займаються екіпіруванням ЗСУ.",
-                                        ImageId = 17,
+
                                         StreetcodeId = 2
                                     });
                                 await dbContext.SaveChangesAsync();
@@ -1192,22 +1190,18 @@ namespace Streetcode.WebApi.Extensions
                                 {
                                      new ImageDetails()
                                      {
-                                         ImageId = 6,
                                          Alt = "Additional inforamtaion for  wow-fact photo 1"
                                      },
                                      new ImageDetails()
                                      {
-                                         ImageId = 16,
                                          Alt = "Additional inforamtaion for  wow-fact photo 2"
                                      },
                                      new ImageDetails()
                                      {
-                                         ImageId = 17,
                                          Alt = "Additional inforamtaion for  wow-fact photo 3"
                                      },
                                      new ImageDetails()
                                      {
-                                         ImageId = 19,
                                          Alt = "Additional inforamtaion for  wow-fact photo 3"
                                      },
                                 });
@@ -1219,17 +1213,17 @@ namespace Streetcode.WebApi.Extensions
                                     new SourceLinkCategory
                                     {
                                         Title = "Книги",
-                                        ImageId = 9,
+
                                     },
                                     new SourceLinkCategory
                                     {
                                         Title = "Фільми",
-                                        ImageId = 10,
+
                                     },
                                     new SourceLinkCategory
                                     {
                                         Title = "Цитати",
-                                        ImageId = 11,
+
                                     });
 
                                 await dbContext.SaveChangesAsync();
@@ -1288,23 +1282,8 @@ namespace Streetcode.WebApi.Extensions
                                 dbContext.StreetcodeImages.AddRange(
                                     new StreetcodeImage
                                     {
-                                        ImageId = 1,
                                         StreetcodeId = 1,
-                                    },
-                                    new StreetcodeImage
-                                    {
-                                        ImageId = 5,
-                                        StreetcodeId = 1,
-                                    },
-                                    new StreetcodeImage
-                                    {
                                         ImageId = 1,
-                                        StreetcodeId = 2,
-                                    },
-                                    new StreetcodeImage
-                                    {
-                                        ImageId = 23,
-                                        StreetcodeId = 2,
                                     });
 
                                 await dbContext.SaveChangesAsync();

@@ -1,19 +1,31 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.Team;
+using Streetcode.BLL.Dto.Team;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Team.GetAll
 {
-    public class GetAllTeamHandler : IRequestHandler<GetAllTeamQuery, Result<IEnumerable<TeamMemberDTO>>>
+    /// <summary>
+    /// Handler, that handles a process of getting all teams from database.
+    /// </summary>
+    public class GetAllTeamHandler : IRequestHandler<GetAllTeamQuery, Result<IEnumerable<TeamMemberDto>>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor
         public GetAllTeamHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -21,20 +33,32 @@ namespace Streetcode.BLL.MediatR.Team.GetAll
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<TeamMemberDTO>>> Handle(GetAllTeamQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Method, that get all partners from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all partners from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of PartnerDto, or error, if it was while getting process.
+        /// </returns>
+        public async Task<Result<IEnumerable<TeamMemberDto>>> Handle(GetAllTeamQuery request, CancellationToken cancellationToken)
         {
             var team = await _repositoryWrapper
                 .TeamRepository
-                .GetAllAsync(include: x => x.Include(x => x.Positions).Include(x => x.TeamMemberLinks));
+               .GetItemsBySpecAsync(new GetAllTeamSpec());
 
             if (team is null)
             {
-                const string errorMsg = $"Cannot find any team";
+                string errorMsg = TeamErrors.GetAllTeamHandlerCanNotFindAnyTeamError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
-            return Result.Ok(_mapper.Map<IEnumerable<TeamMemberDTO>>(team));
+            return Result.Ok(_mapper.Map<IEnumerable<TeamMemberDto>>(team));
         }
     }
 }

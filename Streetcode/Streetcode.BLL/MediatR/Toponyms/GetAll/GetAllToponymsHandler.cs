@@ -1,75 +1,80 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Toponyms;
+using Streetcode.BLL.Dto.Toponyms;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.BLL.Interfaces.Logging;
+using Streetcode.DAL.Specification.Toponyms;
 
-namespace Streetcode.BLL.MediatR.Toponyms.GetAll;
-
-public class GetAllToponymsHandler : IRequestHandler<GetAllToponymsQuery,
-    Result<GetAllToponymsResponseDTO>>
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Toponyms.GetAll
 {
-    private readonly IMapper _mapper;
-    private readonly IRepositoryWrapper _repositoryWrapper;
-    private readonly ILoggerService _logger;
-
-    public GetAllToponymsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
+    /// <summary>
+    /// Handler, that handles a process of getting all toponyms from database.
+    /// </summary>
+    public class GetAllToponymsHandler : IRequestHandler<GetAllToponymsQuery,
+        Result<GetAllToponymsResponseDto>>
     {
-        _repositoryWrapper = repositoryWrapper;
-        _mapper = mapper;
-        _logger = logger;
-    }
+        // Mapper
+        private readonly IMapper _mapper;
 
-    public async Task<Result<GetAllToponymsResponseDTO>> Handle(GetAllToponymsQuery query, CancellationToken cancellationToken)
-    {
-        var filterRequest = query.request;
+        // Repository wrapper
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        var toponyms = _repositoryWrapper.ToponymRepository
-             .FindAll();
-
-        if (filterRequest.Title is not null)
+        // Parametric constructor
+        public GetAllToponymsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
-            FindStreetcodesWithMatchTitle(ref toponyms, filterRequest.Title);
+            _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
         }
 
-        // int pagesAmount = ApplyPagination(ref toponyms, filterRequest.Amount, filterRequest.Page);
-
-        var toponymDtos = _mapper.Map<IEnumerable<ToponymDTO>>(toponyms.AsEnumerable());
-
-        var response = new GetAllToponymsResponseDTO
+        /// <summary>
+        /// Method, that get all toponyms from database.
+        /// </summary>
+        /// <param name="query">
+        /// Request to get all toponyms from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of ToponymsDto, or error, if it was while getting process.
+        /// </returns>
+        public async Task<Result<GetAllToponymsResponseDto>> Handle(GetAllToponymsQuery query, CancellationToken cancellationToken)
         {
-            Pages = 1,
-            Toponyms = toponymDtos
-        };
+            var filterRequest = query.request;
 
-        return Result.Ok(response);
+            var toponyms = await _repositoryWrapper.ToponymRepository
+                 .GetItemsBySpecAsync(new GetAllToponymsSpec());
+
+            if (filterRequest.Title is not null)
+            {
+                FindStreetcodesWithMatchTitle(ref toponyms, filterRequest.Title);
+            }
+
+            var toponymDtos = _mapper.Map<IEnumerable<ToponymDto>>(toponyms?.AsEnumerable());
+
+            var response = new GetAllToponymsResponseDto
+            {
+                Pages = 1,
+                Toponyms = toponymDtos
+            };
+
+            return Result.Ok(response);
+        }
+
+        private void FindStreetcodesWithMatchTitle(
+            ref IEnumerable<Toponym> toponyms,
+            string title)
+        {
+            toponyms = toponyms.Where(s => s.StreetName
+                .ToLower()
+                .Contains(title
+                .ToLower()))
+                .GroupBy(s => s.StreetName)
+                .Select(g => g.First());
+        }
     }
-
-    private void FindStreetcodesWithMatchTitle(
-        ref IQueryable<Toponym> toponyms,
-        string title)
-    {
-        toponyms = toponyms.Where(s => s.StreetName
-            .ToLower()
-            .Contains(title
-            .ToLower()))
-            .GroupBy(s => s.StreetName)
-            .Select(g => g.First());
-    }
-
-    // private int ApplyPagination(
-    //    ref IQueryable<Toponym> toponyms,
-    //    int amount,
-    //    int page)
-    // {
-    //    var totalPages = (int)Math.Ceiling(toponyms.Count() / (double)amount);
-
-    // toponyms = toponyms
-    //        .Skip((page - 1) * amount)
-    //        .Take(amount);
-
-    // return totalPages;
-    // }
 }

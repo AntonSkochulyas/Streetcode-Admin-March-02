@@ -1,7 +1,16 @@
-﻿using FluentResults;
+﻿// Necessary usings
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.AdditionalContent.Coordinates.Types;
+using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
 
+// Necessary namespaces
 namespace Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
 
-public record CreateCoordinateCommand(StreetcodeCoordinateDTO StreetcodeCoordinate) : IRequest<Result<Unit>>;
+/// <summary>
+/// Command, that creates a streetcode coordinate, and returns a StreetcodeCoordinateDto in json format, or error, if it was while creating process.
+/// </summary>
+/// <param name="StreetcodeCoordinate">
+/// Data transfer object of streetcode coordinate.
+/// </param>
+public record CreateCoordinateCommand(CreateStreetcodeCoordinateDto CreateStreetcodeCoordinateDto)
+    : IRequest<Result<StreetcodeCoordinateDto>>;

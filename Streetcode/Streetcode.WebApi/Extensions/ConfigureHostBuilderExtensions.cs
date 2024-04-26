@@ -1,9 +1,9 @@
-﻿using Serilog.Events;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Serilog;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.Services.Instagram;
 using Streetcode.BLL.Services.Payment;
-using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Streetcode.WebApi.Extensions;
 
@@ -21,17 +21,26 @@ public static class ConfigureHostBuilderExtensions
 
     public static void ConfigureBlob(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        services.Configure<BlobEnvironmentVariables>(builder.Configuration.GetSection("Blob"));
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Local";
+
+        if (environment == "IntegrationTests")
+        {
+            services.Configure<BlobEnvironmentVariables>(builder.Configuration.GetSection(environment).GetSection("Blob"));
+        }
+        else
+        {
+            services.Configure<BlobEnvironmentVariables>(builder.Configuration.GetSection("Blob"));
+        }
     }
 
     public static void ConfigurePayment(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        services.Configure<PaymentEnvirovmentVariables>(builder.Configuration.GetSection("Payment"));
+        services.Configure<PaymentEnvironmentVariables>(builder.Configuration.GetSection("Payment"));
     }
 
     public static void ConfigureInstagram(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        services.Configure<InstagramEnvirovmentVariables>(builder.Configuration.GetSection("Instagram"));
+        services.Configure<InstagramEnvironmentVariables>(builder.Configuration.GetSection("Instagram"));
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, WebApplicationBuilder builder)
@@ -40,6 +49,23 @@ public static class ConfigureHostBuilderExtensions
         {
             loggerConfiguration
                 .ReadFrom.Configuration(builder.Configuration);
+        });
+    }
+
+    public static void ConfigurePolicy(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Default", new AuthorizationPolicyBuilder()
+         .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+         .RequireAuthenticatedUser()
+         .Build());
+
+            options.AddPolicy("Admin", new AuthorizationPolicyBuilder()
+                .RequireRole("Admin")
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build());
         });
     }
 }

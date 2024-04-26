@@ -1,10 +1,9 @@
 ﻿using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Streetcode.TextContent;
+using Streetcode.BLL.Dto.Streetcode.TextContent;
 
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Update
 {
-    public record UpdateRelatedTermCommand(int id, RelatedTermDTO RelatedTerm) : IRequest<Result<Unit>>
-    {
-    }
+    public record UpdateRelatedTermCommand(int Id, RelatedTermDto RelatedTerm)
+        : IRequest<Result<RelatedTermDto>>;
 }

@@ -1,0 +1,1150 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Streetcode.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController">
+            <summary>
+            Controller with CRUD operations for Coordinate entity.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get coordinate by streetcode id.
+            </summary>
+            <param name="streetcodeId">The id of the streetcode to find.</param>
+            <returns>Coordinates.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController.Create(Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types.CreateStreetcodeCoordinateDto)">
+            <summary>
+            Create a new coordinate.
+            </summary>
+            <param name="createStreetcodeCoordinateDto">The create coordinate DTO.</param>
+            <returns>The created coordinate.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.CoordinateController.Delete(System.Int32)">
+            <summary>
+            Delete a coordinate by id.
+            </summary>
+            <param name="id">The id of the coordinate to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.AdditionalContent.SubtitleController">
+            <summary>
+            Controller with CRUD operations for Subtitle entity.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.SubtitleController.GetAll">
+            <summary>
+            Get all subtitles.
+            </summary>
+            <returns>Subtitles.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.SubtitleController.GetById(System.Int32)">
+            <summary>
+            Get subtitle by id.
+            </summary>
+            <param name="id">The id of the subtitle to find.</param>
+            <returns>Subtitles.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.SubtitleController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get subtitle by streetcode id.
+            </summary>
+            <param name="streetcodeId">The id of the streetcode to find.</param>
+            <returns>Subtitles.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.AdditionalContent.TagController">
+            <summary>
+            Controller with CRUD operations for Tag entity.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.TagController.GetAll">
+            <summary>
+            Get all tags.
+            </summary>
+            <returns>Tags.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.TagController.GetById(System.Int32)">
+            <summary>
+            Get tag by id.
+            </summary>
+            <param name="id">The id of the tag to find.</param>
+            <returns>Tag.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.TagController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get tag by streetcode id.
+            </summary>
+            <param name="streetcodeId">The id of the streetcode to find.</param>
+            <returns>Tags.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.TagController.GetTagByTitle(System.String)">
+            <summary>
+            Get tag by title.
+            </summary>
+            <param name="title">The title of the tag to find.</param>
+            <returns>Tag.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.AdditionalContent.TagController.GetSortedTagsByStartTitle(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Get sorted tags by start title.
+            </summary>
+            <param name="startsWithTitle">Start Title.</param>
+            <param name="take">Query Take.</param>
+            <returns>Tag.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Analytics.StatisticRecordController">
+            <summary>
+            Controller that handles endpoints for:
+            - Create statistic record;
+            - Delete statistic record;
+            - Get all statistic records.
+            </summary>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Auth.AuthorizeController">
+            <summary>
+            Controller for managing authorization.
+            Handles endpoints for:
+            - Login;
+            - Logout;
+            - Register;
+            - RegisterAdmin;
+            - RefreshToken;
+            - RevokeByUsername;
+            - RevokeAll.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.Login(Streetcode.BLL.Dto.Users.LoginModelDto)">
+            <summary>
+            Login endpoint.
+            </summary>
+            <returns>A response, that contains: access token, refresh token and refresh token expiration date.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.Register(Streetcode.BLL.Dto.Users.RegisterModelDto)">
+            <summary>
+            Register endpoint.
+            </summary>
+            <returns>A response, that contains status and message for registration operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RegisterAdmin(Streetcode.BLL.Dto.Users.RegisterModelDto)">
+            <summary>
+            Register admin endpoint.
+            </summary>
+            <returns>A response, that contains status and message for admin registration operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RefreshToken(Streetcode.BLL.Dto.Authentication.TokenDto)">
+            <summary>
+            Refresh token endpoint.
+            </summary>
+            <returns>A response, that contains a new access and refresh token.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.Revoke(Streetcode.BLL.Dto.Authentication.TokenDto)">
+            <summary>
+            Revoke by username endpoint.
+            </summary>
+            <returns>A message, that token revoked successfully or eror, if it was.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Auth.AuthorizeController.RevokeAll">
+            <summary>
+            Revoke by username endpoint.
+            </summary>
+            <returns>A message, that token revoked successfully or eror, if it was.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.BaseApiController">
+            <summary>
+            Base API controller for handling common functionality and dependencies.
+            </summary>
+        </member>
+        <member name="P:Streetcode.WebApi.Controllers.BaseApiController.Mediator">
+            <summary>
+            Gets the mediator instance for handling MediatR requests.
+            </summary>
+            <value>
+            The mediator instance for handling MediatR requests.
+            </value>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.BaseApiController.HandleResult``1(FluentResults.Result{``0})">
+            <summary>
+            Handles the result of a MediatR request and returns the appropriate ActionResult.
+            </summary>
+            <typeparam name="T">The type of the result value.</typeparam>
+            <param name="result">The result of the MediatR request.</param>
+            <returns>The ActionResult based on the result.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController">
+            <summary>
+            Represents a controller for managing dictionary items.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.Create(Streetcode.BLL.Dto.Dictionaries.CreateDictionaryItemDto)">
+            <summary>
+            Creates a new dictionary item.
+            </summary>
+            <param name="createDictionaryItemDto">The dictionary item to create.</param>
+            <returns>Dictionary item.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.Delete(System.Int32)">
+            <summary>
+            Deletes a dictionary item by its ID.
+            </summary>
+            <param name="id">The ID of the dictionary item to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.GetById(System.Int32)">
+            <summary>
+            Retrieves a dictionary item by its ID.
+            </summary>
+            <param name="id">The ID of the dictionary item to retrieve.</param>
+            <returns>Dictionary item.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.GetAll">
+            <summary>
+            Retrieves all dictionary items.
+            </summary>
+            <returns>Dictionary items.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Dictionaries.DictionaryController.Update(Streetcode.BLL.Dto.Dictionaries.DictionaryItemDto)">
+            <summary>
+            Updates a dictionary item.
+            </summary>
+            <param name="dictionaryItem">The dictionary item to update.</param>
+            <returns>Updated dictionary item.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Email.EmailController">
+            <summary>
+            Controller for handling email operations.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Email.EmailController.Send(Streetcode.BLL.Dto.Email.EmailDto)">
+            <summary>
+            Sends an email.
+            </summary>
+            <param name="email">The email data.</param>
+            <returns>The result of the email sending operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController">
+            <summary>
+            Controller for managing articles.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.Create(Streetcode.BLL.Dto.InfoBlocks.Articles.ArticleCreateDto)">
+            <summary>
+            Creates a new article.
+            </summary>
+            <param name="article">The article data.</param>
+            <returns>The created article.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.Delete(System.Int32)">
+            <summary>
+            Deletes an article by ID.
+            </summary>
+            <param name="id">The ID of the article to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.GetById(System.Int32)">
+            <summary>
+            Gets an article by ID.
+            </summary>
+            <param name="id">The ID of the article to retrieve.</param>
+            <returns>The retrieved article.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.GetAll">
+            <summary>
+            Gets all articles.
+            </summary>
+            <returns>The list of all articles.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.Articles.ArticleController.Update(Streetcode.BLL.Dto.InfoBlocks.Articles.ArticleDto)">
+            <summary>
+            Updates an existing article.
+            </summary>
+            <param name="article">The updated article data.</param>
+            <returns>The updated article.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController">
+            <summary>
+            Controller for managing authorship information.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.Create(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorShipCreateDto)">
+            <summary>
+            Creates a new authorship.
+            </summary>
+            <param name="authorShip">The authorship data.</param>
+            <returns>The created authorship.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.Delete(System.Int32)">
+            <summary>
+            Deletes an authorship by ID.
+            </summary>
+            <param name="id">The ID of the authorship to delete.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.GetById(System.Int32)">
+            <summary>
+            Gets an authorship by ID.
+            </summary>
+            <param name="id">The ID of the authorship to retrieve.</param>
+            <returns>The retrieved authorship.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.GetAll">
+            <summary>
+            Gets all authorships.
+            </summary>
+            <returns>The list of all authorships.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorShipController.Update(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorShipDto)">
+            <summary>
+            Updates an existing authorship.
+            </summary>
+            <param name="authorShip">The updated authorship data.</param>
+            <returns>The updated authorship.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController">
+            <summary>
+            Controller for managing author hyperlinks.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.Create(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorShipHyperLinkCreateDto)">
+            <summary>
+            Creates a new author hyperlink.
+            </summary>
+            <param name="authorHyperLink">The author hyperlink DTO.</param>
+            <returns>The result of the create operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.Delete(System.Int32)">
+            <summary>
+            Deletes an author hyperlink by ID.
+            </summary>
+            <param name="id">The ID of the author hyperlink to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.GetById(System.Int32)">
+            <summary>
+            Gets an author hyperlink by ID.
+            </summary>
+            <param name="id">The ID of the author hyperlink to retrieve.</param>
+            <returns>The retrieved hyperlink.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.GetAll">
+            <summary>
+            Gets all author hyperlinks.
+            </summary>
+            <returns>The list of all hyperlinks.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorHyperLinkController.Update(Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.AuthorShipHyperLinkDto)">
+            <summary>
+            Updates an existing author hyperlink.
+            </summary>
+            <param name="authorHyperLink">The updated author hyperlink DTO.</param>
+            <returns>The updated hyperlink.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController">
+            <summary>
+            Controller for managing InfoBlocks.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.Create(Streetcode.BLL.Dto.InfoBlocks.InfoBlockCreateDto)">
+            <summary>
+            Creates a new InfoBlock.
+            </summary>
+            <param name="infoBlock">The InfoBlock to create.</param>
+            <returns>The created InfoBlock.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.Delete(System.Int32)">
+            <summary>
+            Deletes an InfoBlock by ID.
+            </summary>
+            <param name="id">The ID of the InfoBlock to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.GetById(System.Int32)">
+            <summary>
+            Gets an InfoBlock by ID.
+            </summary>
+            <param name="id">The ID of the InfoBlock to get.</param>
+            <returns>The InfoBlock with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.GetAll">
+            <summary>
+            Gets all InfoBlocks.
+            </summary>
+            <returns>All InfoBlocks.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.InfoBlocks.InfoBlockController.Update(Streetcode.BLL.Dto.InfoBlocks.InfoBlockDto)">
+            <summary>
+            Updates an existing InfoBlock.
+            </summary>
+            <param name="infoBlock">The InfoBlock to update.</param>
+            <returns>The updated InfoBlock.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Instagram.InstagramController">
+            <summary>
+            Represents a controller for managing Instagram posts.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Instagram.InstagramController.GetAll">
+            <summary>
+            Retrieves all Instagram posts.
+            </summary>
+            <returns>The list of Instagram posts.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Media.AudioController">
+            <summary>
+            Controller for managing audio files.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.AudioController.GetAll">
+            <summary>
+            Get all audio files.
+            </summary>
+            <returns>The list of all audio files.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.AudioController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get audio files by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The list of audio files for the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.AudioController.GetById(System.Int32)">
+            <summary>
+            Get audio file by ID.
+            </summary>
+            <param name="id">The ID of the audio file.</param>
+            <returns>The audio file with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.AudioController.GetBaseAudio(System.Int32)">
+            <summary>
+            Get base audio file by ID.
+            </summary>
+            <param name="id">The ID of the audio file.</param>
+            <returns>The base audio file with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.AudioController.Create(Streetcode.BLL.Dto.Media.Audio.AudioFileBaseCreateDto)">
+            <summary>
+            Create a new audio file.
+            </summary>
+            <param name="audio">The audio file to create.</param>
+            <returns>The created audio file.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.AudioController.Delete(System.Int32)">
+            <summary>
+            Delete an audio file by ID.
+            </summary>
+            <param name="id">The ID of the audio file to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Media.Images.ArtController">
+            <summary>
+            Controller for managing art images.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ArtController.GetAll">
+            <summary>
+            Get all art images.
+            </summary>
+            <returns>A list of art images.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ArtController.GetById(System.Int32)">
+            <summary>
+            Get an art image by its ID.
+            </summary>
+            <param name="id">The ID of the art image.</param>
+            <returns>The art image with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ArtController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get art images by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The streetcode ID.</param>
+            <returns>A list of art images associated with the specified streetcode ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Media.Images.ImageController">
+            <summary>
+            Controller for managing image operations.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageController.GetAll">
+            <summary>
+            Get all images.
+            </summary>
+            <returns>The list of all images.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get images by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The list of images for the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageController.GetById(System.Int32)">
+            <summary>
+            Get image by ID.
+            </summary>
+            <param name="id">The ID of the image.</param>
+            <returns>The image with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageController.Create(Streetcode.BLL.Dto.Media.Images.ImageFileBaseCreateDto)">
+            <summary>
+            Create a new image.
+            </summary>
+            <param name="image">The image data.</param>
+            <returns>The created image.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageController.Delete(System.Int32)">
+            <summary>
+            Delete an image by ID.
+            </summary>
+            <param name="id">The ID of the image to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageController.GetBaseImage(System.Int32)">
+            <summary>
+            Get the base image by ID.
+            </summary>
+            <param name="id">The ID of the base image.</param>
+            <returns>The base image with the specified ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Media.Images.ImageMainController">
+            <summary>
+            Controller for managing main image operations.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageMainController.GetAll">
+            <summary>
+            Get all main images.
+            </summary>
+            <returns>The list of all images.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageMainController.GetById(System.Int32)">
+            <summary>
+            Get main image by ID.
+            </summary>
+            <param name="id">The ID of the image.</param>
+            <returns>The image with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageMainController.Create(Streetcode.BLL.Dto.Media.Images.ImageFileBaseCreateDto)">
+            <summary>
+            Create a new main image.
+            </summary>
+            <param name="image">The image data.</param>
+            <returns>The created image.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageMainController.Delete(System.Int32)">
+            <summary>
+            Delete an image by ID.
+            </summary>
+            <param name="id">The ID of the image to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.ImageMainController.GetBaseImage(System.Int32)">
+            <summary>
+            Get the base image by ID.
+            </summary>
+            <param name="id">The ID of the base image.</param>
+            <returns>The base image with the specified ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Media.Images.StreetcodeArtController">
+            <summary>
+            Controller for handling Streetcode Art related operations.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.Images.StreetcodeArtController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Retrieves Streetcode Art by Streetcode Id.
+            </summary>
+            <param name="streetcodeId">The Streetcode Id.</param>
+            <returns>The Streetcode Art.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Media.VideoController">
+            <summary>
+            Controller for handling video-related operations.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.VideoController.GetAll">
+            <summary>
+            Retrieves all videos.
+            </summary>
+            <returns>The list of all videos.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.VideoController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Retrieves a video by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The video with the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Media.VideoController.GetById(System.Int32)">
+            <summary>
+            Retrieves a video by ID.
+            </summary>
+            <param name="id">The ID of the video.</param>
+            <returns>The video with the specified ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Partners.PartnersController">
+            <summary>
+            Controller for managing partners.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.GetAll">
+            <summary>
+            Get all partners.
+            </summary>
+            <returns>The list of partners.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.GetAllShort">
+            <summary>
+            Get all partners in short format.
+            </summary>
+            <returns>The list of partners in short format.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.GetById(System.Int32)">
+            <summary>
+            Get a partner by ID.
+            </summary>
+            <param name="id">The ID of the partner.</param>
+            <returns>The partner with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get partners by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The streetcode ID.</param>
+            <returns>The list of partners with the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.Create(Streetcode.BLL.Dto.Partners.CreatePartnerDto)">
+            <summary>
+            Create a new partner.
+            </summary>
+            <param name="partner">The partner to create.</param>
+            <returns>The created partner.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.Update(Streetcode.BLL.Dto.Partners.CreatePartnerDto)">
+            <summary>
+            Update a partner.
+            </summary>
+            <param name="partner">The partner to update.</param>
+            <returns>The updated partner.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Partners.PartnersController.Delete(System.Int32)">
+            <summary>
+            Delete a partner by ID.
+            </summary>
+            <param name="id">The ID of the partner to delete.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Payment.PaymentController">
+            <summary>
+            Controller for handling payment-related operations.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Payment.PaymentController.CreateInvoice(Streetcode.BLL.Dto.Payment.PaymentDto)">
+            <summary>
+            Creates an invoice for the specified payment.
+            </summary>
+            <param name="payment">The payment details.</param>
+            <returns>The created invoice.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Source.SourcesController">
+            <summary>
+            Controller for managing sources and categories.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.GetAllNames">
+            <summary>
+            Get all category names.
+            </summary>
+            <returns>The list of category names.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.GetAllCategories">
+            <summary>
+            Get all categories.
+            </summary>
+            <returns>The list of categories.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.GetCategoryById(System.Int32)">
+            <summary>
+            Get a category by its ID.
+            </summary>
+            <param name="id">The ID of the category.</param>
+            <returns>The category with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.GetCategoryContentByStreetcodeId(System.Int32,System.Int32)">
+            <summary>
+            Get the content of a category by streetcode ID and category ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <param name="categoryId">The ID of the category.</param>
+            <returns>The content of the category.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.GetCategoriesByStreetcodeId(System.Int32)">
+            <summary>
+            Get all categories by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The list of categories.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.CreateSourceLink(Streetcode.BLL.Dto.Sources.CreateSourceLinkDto)">
+            <summary>
+            Create a new source link category.
+            </summary>
+            <param name="sourceLinkCategoryContentDto">The DTO containing the source link category data.</param>
+            <returns>The created source link category.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.CreateStreetcodeCategoryContent(Streetcode.BLL.Dto.Sources.StreetcodeCategoryContentDto)">
+            <summary>
+            Create a new streetcode category content.
+            </summary>
+            <param name="streetcodeCategoryContentDto">The DTO containing the streetcode category content data.</param>
+            <returns>The created streetcode category content.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.UpdateSourceLink(Streetcode.BLL.Dto.Sources.SourceLinkCategoryDto)">
+            <summary>
+            Update an existing source link category.
+            </summary>
+            <param name="sourceLinkCategoryContentDto">The DTO containing the updated source link category data.</param>
+            <returns>The updated source link category.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.UpdateStreetcodeCategoryContent(Streetcode.BLL.Dto.Sources.StreetcodeCategoryContentDto)">
+            <summary>
+            Update an existing streetcode category content.
+            </summary>
+            <param name="streetcodeCategoryContentDto">The DTO containing the updated streetcode category content data.</param>
+            <returns>The updated streetcode category content.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.DeleteSourceLink(System.Int32)">
+            <summary>
+            Delete a source link category by its ID.
+            </summary>
+            <param name="id">The ID of the source link category to delete.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Source.SourcesController.DeleteStreetcodeCategoryContent(System.Int32,System.Int32)">
+            <summary>
+            Delete a streetcode category content by IDs.
+            </summary>
+            <param name="sourceLinkId">The ID of the source link category to delete.</param>
+            /// <param name="streetcodeId">The ID of the streetcode to delete.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Streetcode.RelatedFigureController">
+            <summary>
+            Controller for managing related figures.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.RelatedFigureController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Retrieves related figures by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The related figures associated with the streetcode.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.RelatedFigureController.GetByTagId(System.Int32)">
+            <summary>
+            Retrieves related figures by tag ID.
+            </summary>
+            <param name="tagId">The ID of the tag.</param>
+            <returns>The related figures associated with the tag.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.RelatedFigureController.Create(System.Int32,System.Int32)">
+            <summary>
+            Creates a new related figure.
+            </summary>
+            <param name="ObserverId">The ID of the observer.</param>
+            <param name="TargetId">The ID of the target.</param>
+            <returns>The created figure.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.RelatedFigureController.Delete(System.Int32,System.Int32)">
+            <summary>
+            Deletes a related figure.
+            </summary>
+            <param name="ObserverId">The ID of the observer.</param>
+            <param name="TargetId">The ID of the target.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController">
+            <summary>
+            Represents the controller for managing streetcodes.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetAll(Streetcode.BLL.Dto.Streetcode.GetAllStreetcodesRequestDto)">
+            <summary>
+            Retrieves all streetcodes.
+            </summary>
+            <param name="request">The request parameters.</param>
+            <returns>The list of streetcodes.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetAllShort">
+            <summary>
+            Retrieves all streetcodes in a short format.
+            </summary>
+            <returns>The list of streetcodes in a short format.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetAllMainPage">
+            <summary>
+            Retrieves all streetcodes for the main page.
+            </summary>
+            <returns>The list of streetcodes for the main page.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetShortById(System.Int32)">
+            <summary>
+            Retrieves a streetcode in a short format by its ID.
+            </summary>
+            <param name="id">The ID of the streetcode.</param>
+            <returns>The streetcode in a short format.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetByFilter(Streetcode.BLL.Dto.AdditionalContent.Filter.StreetcodeFilterRequestDto)">
+            <summary>
+            Retrieves streetcodes based on the specified filter.
+            </summary>
+            <param name="request">The filter parameters.</param>
+            <returns>The list of streetcodes that match the filter.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetAllCatalog(System.Int32,System.Int32)">
+            <summary>
+            Retrieves a page of streetcodes for catalog view.
+            </summary>
+            <param name="page">The page number.</param>
+            <param name="count">The number of streetcodes per page.</param>
+            <returns>The page of streetcodes for catalog view.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetCount">
+            <summary>
+            Retrieves the total count of streetcodes.
+            </summary>
+            <returns>The total count of streetcodes.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetByTransliterationUrl(System.String)">
+            <summary>
+            Retrieves a streetcode by its transliteration URL.
+            </summary>
+            <param name="url">The transliteration URL of the streetcode.</param>
+            <returns>The streetcode.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.GetById(System.Int32)">
+            <summary>
+            Retrieves a streetcode by its ID.
+            </summary>
+            <param name="id">The ID of the streetcode.</param>
+            <returns>The streetcode.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.Create(Streetcode.BLL.Dto.Streetcode.BaseStreetcodeDto)">
+            <summary>
+            Creates a streetcode.
+            </summary>
+            <param name="streetcodeDto">Thedto of the streetcode to add.</param>
+            <returns>The created streetcode.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.StreetcodeController.Delete(System.Int32)">
+            <summary>
+            Deletes a streetcode.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController">
+            <summary>
+            Controller for managing facts.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.GetAll">
+            <summary>
+            Get all facts.
+            </summary>
+            <returns>The list of facts.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.GetById(System.Int32)">
+            <summary>
+            Get a fact by its ID.
+            </summary>
+            <param name="id">The ID of the fact.</param>
+            <returns>The fact with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get facts by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The list of facts associated with the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.Create(Streetcode.BLL.Dto.Streetcode.TextContent.Fact.FactBaseDto)">
+            <summary>
+            Create a new fact.
+            </summary>
+            <param name="position">The fact data.</param>
+            <returns>The created fact.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.Update(Streetcode.BLL.Dto.Streetcode.TextContent.Fact.FactDto)">
+            <summary>
+            Update an existing fact.
+            </summary>
+            <param name="fact">The updated fact data.</param>
+            <returns>The updated fact.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.UpdateOrderNumbers(System.Int32)">
+            <summary>
+            Reset the order numbers of facts for a specific streetcode.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The updated facts with reset order numbers.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.FactController.Delete(System.Int32)">
+            <summary>
+            Delete a fact by its ID.
+            </summary>
+            <param name="id">The ID of the fact.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Streetcode.TextContent.RelatedTermController">
+            <summary>
+            Controller for managing related terms.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.RelatedTermController.GetByTermId(System.Int32)">
+            <summary>
+            Get all related terms by term ID.
+            </summary>
+            <param name="id">The term ID.</param>
+            <returns>The related terms.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.RelatedTermController.Create(Streetcode.BLL.Dto.Streetcode.TextContent.RelatedTermDto)">
+            <summary>
+            Create a new related term.
+            </summary>
+            <param name="relatedTerm">The related term to create.</param>
+            <returns>The created related term.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.RelatedTermController.Delete(System.String)">
+            <summary>
+            Delete a related term by word.
+            </summary>
+            <param name="word">The word of the related term to delete.</param>
+            <returns>The result of the deletion.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Streetcode.TextContent.TermController">
+            <summary>
+            Controller for managing terms.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.TermController.GetAll">
+            <summary>
+            Gets all terms.
+            </summary>
+            <returns>A collection of terms.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.TermController.GetById(System.Int32)">
+            <summary>
+            Gets a term by its ID.
+            </summary>
+            <param name="id">The ID of the term.</param>
+            <returns>The term with the specified ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Streetcode.TextContent.TextController">
+            <summary>
+            Controller for managing text content.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.TextController.GetAll">
+            <summary>
+            Get all text content.
+            </summary>
+            <returns>The list of all text content.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.TextController.GetById(System.Int32)">
+            <summary>
+            Get text content by ID.
+            </summary>
+            <param name="id">The ID of the text content.</param>
+            <returns>The text content with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.TextController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Get text content by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The streetcode ID.</param>
+            <returns>The text content with the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Streetcode.TextContent.TextController.GetParsedText(System.String)">
+            <summary>
+            Get parsed text for admin preview.
+            </summary>
+            <param name="text">The text to be parsed.</param>
+            <returns>The parsed text for admin preview.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Team.PositionController">
+            <summary>
+            Controller for managing positions within a team.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.PositionController.GetAll">
+            <summary>
+            Retrieves all positions.
+            </summary>
+            <returns>A collection of all positions.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.PositionController.Create(Streetcode.BLL.Dto.Team.PositionDto)">
+            <summary>
+            Creates a new position.
+            </summary>
+            <param name="position">The position to create.</param>
+            <returns>The created position.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Team.TeamController">
+            <summary>
+            Controller for managing teams.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.TeamController.GetAll">
+            <summary>
+            Gets all teams.
+            </summary>
+            <returns>The list of all teams.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.TeamController.GetAllMain">
+            <summary>
+            Gets all main teams.
+            </summary>
+            <returns>The list of all main teams.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.TeamController.GetById(System.Int32)">
+            <summary>
+            Gets a team by its ID.
+            </summary>
+            <param name="id">The ID of the team.</param>
+            <returns>The team with the specified ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Team.TeamLinkController">
+            <summary>
+            Controller for managing team links.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.TeamLinkController.GetAll">
+            <summary>
+            Get all team links.
+            </summary>
+            <returns>A list of team links.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Team.TeamLinkController.Create(Streetcode.BLL.Dto.Team.TeamMemberLinkDto)">
+            <summary>
+            Create a new team link.
+            </summary>
+            <param name="teamMemberLink">The team member link to create.</param>
+            <returns>The created team link.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Timeline.TimelineItemController">
+            <summary>
+            Represents a controller for managing timeline items.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.GetAll">
+            <summary>
+            Retrieves all timeline items.
+            </summary>
+            <returns>The collection of timeline items.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.GetById(System.Int32)">
+            <summary>
+            Retrieves a timeline item by its ID.
+            </summary>
+            <param name="id">The ID of the timeline item.</param>
+            <returns>The timeline item with the specified ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Retrieves timeline items by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The ID of the streetcode.</param>
+            <returns>The collection of timeline items associated with the specified streetcode ID.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Create(Streetcode.BLL.Dto.Timeline.TimelineItemCreateDto)">
+            <summary>
+            Creates a new timeline item.
+            </summary>
+            <param name="timelineItem">The timeline item to create.</param>
+            <returns>The created timeline item.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Update(Streetcode.BLL.Dto.Timeline.TimelineItemDto)">
+            <summary>
+            Updates an existing timeline item.
+            </summary>
+            <param name="timelineItem">The timeline item to update.</param>
+            <returns>The updated timeline item.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Timeline.TimelineItemController.Delete(System.Int32)">
+            <summary>
+            Deletes a timeline item by its ID.
+            </summary>
+            <param name="id">The ID of the timeline item to delete.</param>
+            <returns>The result of the deletion operation.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Toponyms.ToponymController">
+            <summary>
+            Controller for handling requests related to Toponyms.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Toponyms.ToponymController.GetAll(Streetcode.BLL.Dto.Toponyms.GetAllToponymsRequestDto)">
+            <summary>
+            Retrieves all Toponyms.
+            </summary>
+            <param name="request">The request parameters.</param>
+            <returns>The result of the operation.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Toponyms.ToponymController.GetById(System.Int32)">
+            <summary>
+            Retrieves a Toponym by its ID.
+            </summary>
+            <param name="id">The ID of the Toponym.</param>
+            <returns>The retrieved toponym.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Toponyms.ToponymController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Retrieves Toponyms by Streetcode ID.
+            </summary>
+            <param name="streetcodeId">The Streetcode ID.</param>
+            <returns>The retrieved toponym with specified Streetcode ID.</returns>
+        </member>
+        <member name="T:Streetcode.WebApi.Controllers.Transactions.TransactLinksController">
+            <summary>
+            Controller for handling transaction links.
+            </summary>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Transactions.TransactLinksController.GetAll">
+            <summary>
+            Gets all transaction links.
+            </summary>
+            <returns>The list of transaction links.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Transactions.TransactLinksController.GetByStreetcodeId(System.Int32)">
+            <summary>
+            Gets a transaction link by streetcode ID.
+            </summary>
+            <param name="streetcodeId">The streetcode ID.</param>
+            <returns>The transaction link.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Controllers.Transactions.TransactLinksController.GetById(System.Int32)">
+            <summary>
+            Gets a transaction link by ID.
+            </summary>
+            <param name="id">The ID.</param>
+            <returns>The transaction link.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Utils.WebParsingUtils.FetchCoordsByAddressAsync(System.String,System.Net.Http.IHttpClientFactory)">
+            <summary>
+            Fetches the coordinates of an address using the OpenStreetMap Nominatim API.
+            </summary>
+            <param name="address">The address to fetch coordinates for.</param>
+            <returns>A tuple containing the latitude and longitude of the address.</returns>
+        </member>
+        <member name="M:Streetcode.WebApi.Utils.WebParsingUtils.GetDistinctRows(System.Collections.Generic.IEnumerable{System.String},System.Byte)">
+            <summary>
+            Returns a list of distinct rows based on the first <b>N</b> columns of the input list.
+            </summary>
+            <param name="rows">The list of rows to filter.</param>
+            <param name="beforeColumn">How many columns will be taken.</param>
+            <returns>A list of distinct rows based on the first seven columns of the input list.</returns>
+        </member>
+    </members>
+</doc>

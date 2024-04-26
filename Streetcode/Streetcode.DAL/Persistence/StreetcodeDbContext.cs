@@ -1,10 +1,15 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Streetcode.DAL.Entities.AdditionalContent;
-using Streetcode.DAL.Entities.AdditionalContent.Coordinates;
 using Streetcode.DAL.Entities.AdditionalContent.Coordinates.Types;
 using Streetcode.DAL.Entities.Analytics;
+using Streetcode.DAL.Entities.Authentication;
+using Streetcode.DAL.Entities.Dictionaries;
 using Streetcode.DAL.Entities.Feedback;
+using Streetcode.DAL.Entities.InfoBlocks;
+using Streetcode.DAL.Entities.InfoBlocks.Articles;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes;
+using Streetcode.DAL.Entities.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
 using Streetcode.DAL.Entities.Media;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.News;
@@ -12,17 +17,16 @@ using Streetcode.DAL.Entities.Partners;
 using Streetcode.DAL.Entities.Sources;
 using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Entities.Streetcode.TextContent;
-using Streetcode.DAL.Entities.Streetcode.Types;
 using Streetcode.DAL.Entities.Team;
 using Streetcode.DAL.Entities.Timeline;
 using Streetcode.DAL.Entities.Toponyms;
 using Streetcode.DAL.Entities.Transactions;
 using Streetcode.DAL.Entities.Users;
-using Streetcode.DAL.Enums;
+using Streetcode.DAL.Persistence.Configurations;
 
 namespace Streetcode.DAL.Persistence;
 
-public class StreetcodeDbContext : DbContext
+public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
 {
     public StreetcodeDbContext()
     {
@@ -33,279 +37,128 @@ public class StreetcodeDbContext : DbContext
     {
     }
 
-    public DbSet<Art> Arts { get; set; }
-    public DbSet<Audio> Audios { get; set; }
-    public DbSet<ToponymCoordinate> ToponymCoordinates { get; set; }
-    public DbSet<StreetcodeCoordinate> StreetcodeCoordinates { get; set; }
-    public DbSet<Fact> Facts { get; set; }
-    public DbSet<HistoricalContext> HistoricalContexts { get; set; }
-    public DbSet<Image> Images { get; set; }
-    public DbSet<ImageDetails> ImageDetailses { get; set; }
-    public DbSet<Partner> Partners { get; set; }
-    public DbSet<PartnerSourceLink> PartnerSourceLinks { get; set; }
-    public DbSet<RelatedFigure> RelatedFigures { get; set; }
-    public DbSet<Response> Responses { get; set; }
-    public DbSet<StreetcodeContent> Streetcodes { get; set; }
-    public DbSet<Subtitle> Subtitles { get; set; }
-    public DbSet<StatisticRecord> StatisticRecords { get; set; }
-    public DbSet<Tag> Tags { get; set; }
-    public DbSet<Term> Terms { get; set; }
-    public DbSet<RelatedTerm> RelatedTerms { get; set; }
-    public DbSet<Text> Texts { get; set; }
-    public DbSet<TimelineItem> TimelineItems { get; set; }
-    public DbSet<Toponym> Toponyms { get; set; }
-    public DbSet<TransactionLink> TransactionLinks { get; set; }
-    public DbSet<Video> Videos { get; set; }
-    public DbSet<StreetcodeCategoryContent> StreetcodeCategoryContent { get; set; }
-    public DbSet<StreetcodeArt> StreetcodeArts { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<StreetcodeTagIndex> StreetcodeTagIndices { get; set; }
-    public DbSet<TeamMember> TeamMembers { get; set; }
-    public DbSet<TeamMemberLink> TeamMemberLinks { get; set; }
-    public DbSet<Positions> Positions { get; set; }
-    public DbSet<News> News { get; set; }
-    public DbSet<SourceLinkCategory> SourceLinks { get; set; }
-    public DbSet<StreetcodeImage> StreetcodeImages { get; set; }
-    public DbSet<HistoricalContextTimeline> HistoricalContextsTimelines { get; set; }
-    public DbSet<StreetcodePartner> StreetcodePartners { get; set; }
-    public DbSet<TeamMemberPositions> TeamMemberPosition { get; set; }
+    public DbSet<UserAdditionalInfo> UsersAdditionalInfo { get; set; }
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Art>? Arts { get; set; }
+    public DbSet<Audio>? Audios { get; set; }
+    public DbSet<DictionaryItem> DictionaryItems { get; set; }
+    public DbSet<InfoBlock> InfoBlocks { get; set; }
+    public DbSet<Article> Articles { get; set; }
+    public DbSet<AuthorShip> AuthorShips { get; set; }
+    public DbSet<AuthorShipHyperLink> AuthorShipHyperLinks { get; set; }
+    public DbSet<ToponymCoordinate>? ToponymCoordinates { get; set; }
+    public DbSet<StreetcodeCoordinate>? StreetcodeCoordinates { get; set; }
+    public DbSet<Fact>? Facts { get; set; }
+    public DbSet<Image>? Images { get; set; }
+    public DbSet<ImageDetails>? ImageDetailses { get; set; }
+    public DbSet<Partner>? Partners { get; set; }
+    public DbSet<PartnerSourceLink>? PartnerSourceLinks { get; set; }
+    public DbSet<RelatedFigure>? RelatedFigures { get; set; }
+    public DbSet<Response>? Responses { get; set; }
+    public DbSet<StreetcodeContent>? Streetcodes { get; set; }
+    public DbSet<Subtitle>? Subtitles { get; set; }
+    public DbSet<StatisticRecord>? StatisticRecords { get; set; }
+    public DbSet<Tag>? Tags { get; set; }
+    public DbSet<Term>? Terms { get; set; }
+    public DbSet<RelatedTerm>? RelatedTerms { get; set; }
+    public DbSet<Text>? Texts { get; set; }
+    public DbSet<TimelineItem>? TimelineItems { get; set; }
+    public DbSet<Toponym>? Toponyms { get; set; }
+    public DbSet<TransactionLink>? TransactionLinks { get; set; }
+    public DbSet<Video>? Videos { get; set; }
+    public DbSet<StreetcodeCategoryContent>? StreetcodeCategoryContent { get; set; }
+    public DbSet<StreetcodeArt>? StreetcodeArts { get; set; }
+    public DbSet<StreetcodeTagIndex>? StreetcodeTagIndices { get; set; }
+    public DbSet<TeamMember>? TeamMembers { get; set; }
+    public DbSet<TeamMemberLink>? TeamMemberLinks { get; set; }
+    public DbSet<Positions>? Positions { get; set; }
+    public DbSet<News>? News { get; set; }
+    public DbSet<SourceLinkCategory>? SourceLinks { get; set; }
+    public DbSet<StreetcodeImage>? StreetcodeImages { get; set; }
+    public DbSet<StreetcodePartner>? StreetcodePartners { get; set; }
+    public DbSet<TeamMemberPositions>? TeamMemberPosition { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
 
-        modelBuilder.UseCollation("SQL_Ukrainian_CP1251_CI_AS");
+        builder.UseCollation("SQL_Ukrainian_CP1251_CI_AS");
 
-        modelBuilder.Entity<StatisticRecord>()
-              .HasOne(x => x.StreetcodeCoordinate)
-              .WithOne(x => x.StatisticRecord)
-              .HasForeignKey<StatisticRecord>(x => x.StreetcodeCoordinateId);
+        builder.ApplyConfiguration(new ArtEntityConfiguration());
 
-        modelBuilder.Entity<News>()
-            .HasOne(x => x.Image)
-            .WithOne(x => x.News)
-            .HasForeignKey<News>(x => x.ImageId);
+        builder.ApplyConfiguration(new AudioEntityConfiguration());
 
-        modelBuilder.Entity<TeamMember>()
-            .HasOne(x => x.Image)
-            .WithOne(x => x.TeamMember)
-            .HasForeignKey<TeamMember>(x => x.ImageId);
+        builder.ApplyConfiguration(new CoordinateEntityConfiguration());
 
-        modelBuilder.Entity<TeamMember>()
-            .HasMany(x => x.Positions)
-            .WithMany(x => x.TeamMembers)
-            .UsingEntity<TeamMemberPositions>(
-            tp => tp.HasOne(x => x.Positions).WithMany().HasForeignKey(x => x.PositionsId),
-            tp => tp.HasOne(x => x.TeamMember).WithMany().HasForeignKey(x => x.TeamMemberId));
+        builder.ApplyConfiguration(new FactEntityConfiguration());
 
-        modelBuilder.Entity<TeamMember>()
-            .HasMany(x => x.TeamMemberLinks)
-            .WithOne(x => x.TeamMember)
-            .HasForeignKey(x => x.TeamMemberId);
+        builder.ApplyConfiguration(new ImageDetailsEntityConfiguration());
 
-        modelBuilder.Entity<TeamMemberPositions>()
-            .HasKey(nameof(TeamMemberPositions.TeamMemberId), nameof(TeamMemberPositions.PositionsId));
+        builder.ApplyConfiguration(new ImageEntityConfiguration());
 
-        modelBuilder.Entity<Tag>()
-            .HasMany(t => t.Streetcodes)
-            .WithMany(s => s.Tags)
-            .UsingEntity<StreetcodeTagIndex>(
-            sp => sp.HasOne(x => x.Streetcode).WithMany(x => x.StreetcodeTagIndices).HasForeignKey(x => x.StreetcodeId),
-            sp => sp.HasOne(x => x.Tag).WithMany(x => x.StreetcodeTagIndices).HasForeignKey(x => x.TagId));
+        builder.ApplyConfiguration(new NewsEntityConfiguration());
 
-        modelBuilder.Entity<StreetcodeTagIndex>()
-           .HasKey(nameof(StreetcodeTagIndex.StreetcodeId), nameof(StreetcodeTagIndex.TagId));
+        builder.ApplyConfiguration(new PartnerEntityConfiguration());
 
-        modelBuilder.Entity<Toponym>()
-            .HasOne(d => d.Coordinate)
-            .WithOne(p => p.Toponym)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new PartnerSourceLinkEntityConfiguration());
 
-        modelBuilder.Entity<Partner>(entity =>
-        {
-            entity.HasMany(d => d.PartnerSourceLinks)
-                .WithOne(p => p.Partner)
-                .HasForeignKey(d => d.PartnerId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new PersonStreetcodeEntityConfiguration());
 
-            entity.Property(p => p.IsKeyPartner)
-                .HasDefaultValue("false");
-        });
+        builder.ApplyConfiguration(new PositionsEntityConfiguration());
 
-        modelBuilder.Entity<HistoricalContextTimeline>()
-             .HasKey(ht => new { ht.TimelineId, ht.HistoricalContextId });
-        modelBuilder.Entity<HistoricalContextTimeline>()
-            .HasOne(ht => ht.Timeline)
-            .WithMany(x => x.HistoricalContextTimelines)
-            .HasForeignKey(x => x.TimelineId);
-        modelBuilder.Entity<HistoricalContextTimeline>()
-            .HasOne(ht => ht.HistoricalContext)
-            .WithMany(x => x.HistoricalContextTimelines)
-            .HasForeignKey(x => x.HistoricalContextId);
+        builder.ApplyConfiguration(new RelatedFigureEntityConfiguration());
 
-        modelBuilder.Entity<SourceLinkCategory>()
-            .HasMany(d => d.StreetcodeCategoryContents)
-            .WithOne(p => p.SourceLinkCategory)
-            .HasForeignKey(d => d.SourceLinkCategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new RelatedTermEntityConfiguration());
 
-        modelBuilder.Entity<Image>(entity =>
-        {
-            entity.HasOne(d => d.Art)
-                .WithOne(a => a.Image)
-                .HasForeignKey<Art>(a => a.ImageId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new ResponseEntityConfiguration());
 
-            entity.HasOne(im => im.ImageDetails)
-                .WithOne(info => info.Image)
-                .HasForeignKey<ImageDetails>(a => a.ImageId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new SourceLinkCategoryEntityConfiguration());
 
-            entity.HasOne(d => d.Partner)
-                .WithOne(p => p.Logo)
-                .HasForeignKey<Partner>(d => d.LogoId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new StatisticRecordEntityConfiguration());
 
-            entity.HasMany(d => d.Facts)
-                .WithOne(p => p.Image)
-                .HasForeignKey(d => d.ImageId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new StreetcodeArtEntityConfiguration());
 
-            entity.HasMany(i => i.SourceLinkCategories)
-                .WithOne(s => s.Image)
-                .HasForeignKey(d => d.ImageId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
+        builder.ApplyConfiguration(new StreetcodeCategoryContentEntityConfiguration());
 
-        modelBuilder.Entity<RelatedFigure>(entity =>
-        {
-            entity.HasKey(d => new { d.ObserverId, d.TargetId });
+        builder.ApplyConfiguration(new StreetcodeContentEntityConfiguration());
 
-            entity.HasOne(d => d.Observer)
-                .WithMany(d => d.Observers)
-                .HasForeignKey(d => d.ObserverId)
-                .OnDelete(DeleteBehavior.Restrict);
+        builder.ApplyConfiguration(new StreetcodeTagIndexEntityConfiguration());
 
-            entity.HasOne(d => d.Target)
-                .WithMany(d => d.Targets)
-                .HasForeignKey(d => d.TargetId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
+        builder.ApplyConfiguration(new SubtitleEntityConfiguration());
 
-        modelBuilder.Entity<StreetcodeArt>(entity =>
-        {
-            entity.HasKey(d => new { d.ArtId, d.StreetcodeId });
+        builder.ApplyConfiguration(new TagEntityConfiguration());
 
-            entity.HasOne(d => d.Streetcode)
-                .WithMany(d => d.StreetcodeArts)
-                .HasForeignKey(d => d.StreetcodeId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new TeamMemberEntityConfiguration());
 
-            entity.HasOne(d => d.Art)
-                .WithMany(d => d.StreetcodeArts)
-                .HasForeignKey(d => d.ArtId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new TeamMemberLinkEntityConfiguration());
 
-            entity.Property(e => e.Index)
-                .HasDefaultValue(1);
+        builder.ApplyConfiguration(new TeamMemberPositionsEntityConfigurations());
 
-            entity
-                .HasIndex(d => new { d.ArtId, d.StreetcodeId })
-                .IsUnique(false);
-        });
+        builder.ApplyConfiguration(new TermEntityConfiguration());
 
-        modelBuilder.Entity<StreetcodeContent>(entity =>
-        {
-            entity.Property(s => s.CreatedAt)
-                .HasDefaultValueSql("GETDATE()");
+        builder.ApplyConfiguration(new TextEntityConfiguration());
 
-            entity.Property(s => s.UpdatedAt)
-                .HasDefaultValueSql("GETDATE()");
+        builder.ApplyConfiguration(new TimelineItemEntityConfiguration());
 
-            entity.Property(s => s.ViewCount)
-                .HasDefaultValue(0);
+        builder.ApplyConfiguration(new ToponymEntityConfiguration());
 
-            entity.HasDiscriminator<string>(StreetcodeTypeDiscriminators.DiscriminatorName)
-                .HasValue<StreetcodeContent>(StreetcodeTypeDiscriminators.StreetcodeBaseType)
-                .HasValue<PersonStreetcode>(StreetcodeTypeDiscriminators.StreetcodePersonType)
-                .HasValue<EventStreetcode>(StreetcodeTypeDiscriminators.StreetcodeEventType);
+        builder.ApplyConfiguration(new TransactionLinkEntityConfiguration());
 
-            entity.Property<string>("StreetcodeType").Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
+        builder.ApplyConfiguration(new UserEntityConfiguration());
 
-            entity.HasMany(d => d.Coordinates)
-                .WithOne(c => c.Streetcode)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
 
-            entity.HasMany(d => d.Facts)
-                .WithOne(f => f.Streetcode)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new VideoEntityConfiguration());
 
-            entity.HasMany(d => d.Images)
-                .WithMany(i => i.Streetcodes)
-                .UsingEntity<StreetcodeImage>(
-                    si => si.HasOne(i => i.Image).WithMany().HasForeignKey(i => i.ImageId),
-                    si => si.HasOne(i => i.Streetcode).WithMany().HasForeignKey(i => i.StreetcodeId))
-                .ToTable("streetcode_image", "streetcode");
+        builder.ApplyConfiguration(new DictionaryItemConfiguration());
 
-            entity.HasMany(d => d.TimelineItems)
-                .WithOne(t => t.Streetcode)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.ApplyConfiguration(new InfoBlockConfiguration());
 
-            entity.HasMany(d => d.Toponyms)
-                .WithMany(t => t.Streetcodes)
-                .UsingEntity<StreetcodeToponym>(
-                    st => st.HasOne(s => s.Toponym).WithMany().HasForeignKey(x => x.ToponymId),
-                    st => st.HasOne(s => s.Streetcode).WithMany().HasForeignKey(x => x.StreetcodeId))
-                .ToTable("streetcode_toponym", "streetcode");
+        builder.ApplyConfiguration(new ArticleConfiguration());
 
-            entity.HasMany(d => d.SourceLinkCategories)
-                    .WithMany(c => c.Streetcodes)
-                    .UsingEntity<StreetcodeCategoryContent>(
-                        scat => scat.HasOne(i => i.SourceLinkCategory).WithMany(s => s.StreetcodeCategoryContents).HasForeignKey(i => i.SourceLinkCategoryId),
-                        scat => scat.HasOne(i => i.Streetcode).WithMany(s => s.StreetcodeCategoryContents).HasForeignKey(i => i.StreetcodeId))
-                    .ToTable("streetcode_source_link_categories", "sources");
+        builder.ApplyConfiguration(new AuthorShipConfiguration());
 
-            entity.HasMany(d => d.Partners)
-                    .WithMany(p => p.Streetcodes)
-                    .UsingEntity<StreetcodePartner>(
-                        sp => sp.HasOne(i => i.Partner).WithMany().HasForeignKey(x => x.PartnerId),
-                        sp => sp.HasOne(i => i.Streetcode).WithMany().HasForeignKey(x => x.StreetcodeId))
-                   .ToTable("streetcode_partners", "streetcode");
-
-            entity.HasMany(d => d.Videos)
-                    .WithOne(p => p.Streetcode)
-                    .HasForeignKey(d => d.StreetcodeId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne(d => d.Audio)
-                    .WithOne(p => p.Streetcode)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne(d => d.Text)
-                    .WithOne(p => p.Streetcode)
-                    .HasForeignKey<Text>(d => d.StreetcodeId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne(d => d.TransactionLink)
-                    .WithOne(p => p.Streetcode)
-                    .HasForeignKey<TransactionLink>(d => d.StreetcodeId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasMany(d => d.StatisticRecords)
-                    .WithOne(t => t.Streetcode)
-                    .HasForeignKey(t => t.StreetcodeId)
-                    .OnDelete(DeleteBehavior.NoAction);
-        });
-
-        modelBuilder.Entity<RelatedTerm>()
-            .HasOne(rt => rt.Term)
-            .WithMany(t => t.RelatedTerms)
-            .HasForeignKey(rt => rt.TermId);
-
-        modelBuilder.Entity<Coordinate>()
-            .HasDiscriminator<string>("CoordinateType")
-            .HasValue<Coordinate>("coordinate_base")
-            .HasValue<StreetcodeCoordinate>("coordinate_streetcode")
-            .HasValue<ToponymCoordinate>("coordinate_toponym");
+        builder.ApplyConfiguration(new AuthorShipHyperLinkConfiguration());
     }
 }

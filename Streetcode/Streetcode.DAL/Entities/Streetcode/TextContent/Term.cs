@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Streetcode.DAL.Entities.InfoBlocks;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Streetcode.DAL.Entities.Streetcode.TextContent;
@@ -19,4 +20,6 @@ public class Term
     public string? Description { get; set; }
 
     public List<RelatedTerm> RelatedTerms { get; set; } = new();
+
+    public InfoBlock? InfoBlock { get; set; }
 }

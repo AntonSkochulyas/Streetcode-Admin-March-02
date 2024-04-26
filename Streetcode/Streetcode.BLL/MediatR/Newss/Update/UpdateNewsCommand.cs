@@ -1,9 +1,15 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.News;
-using Streetcode.DAL.Entities.News;
+using Streetcode.BLL.Dto.News;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.Update
 {
-    public record UpdateNewsCommand(NewsDTO news) : IRequest<Result<NewsDTO>>;
+    /// <summary>
+    /// Command, that requests a handler to 
+    /// </summary>
+    /// <param name="news"></param>
+    public record UpdateNewsCommand(NewsDto News)
+        : IRequest<Result<NewsDto>>;
 }

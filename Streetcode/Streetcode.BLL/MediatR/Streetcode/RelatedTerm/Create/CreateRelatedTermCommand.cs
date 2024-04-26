@@ -1,10 +1,19 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Streetcode.TextContent;
+using Streetcode.BLL.Dto.Streetcode.TextContent;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
 {
-    public record CreateRelatedTermCommand(RelatedTermDTO RelatedTerm) : IRequest<Result<RelatedTermDTO>>
+    /// <summary>
+    /// Command, that requests a handler to create a new related term.
+    /// </summary>
+    /// <param name="newRelatedTerm">
+    /// New related term.
+    /// </param>
+    public record CreateRelatedTermCommand(RelatedTermDto RelatedTerm)
+        : IRequest<Result<RelatedTermDto>>
     {
     }
 }

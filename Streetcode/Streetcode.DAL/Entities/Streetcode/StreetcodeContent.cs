@@ -17,8 +17,8 @@ using Streetcode.DAL.Enums;
 namespace Streetcode.DAL.Entities.Streetcode;
 
 [Table("streetcodes", Schema = "streetcode")]
-[Index(nameof(TransliterationUrl), IsUnique = true)]
-[Index(nameof(Index), IsUnique = true)]
+[Microsoft.EntityFrameworkCore.Index(nameof(TransliterationUrl), IsUnique = true)]
+[Microsoft.EntityFrameworkCore.Index(nameof(Index), IsUnique = true)]
 public class StreetcodeContent
 {
     [Key]
@@ -28,23 +28,21 @@ public class StreetcodeContent
     [Required]
     public int Index { get; set; }
 
-    [MaxLength(650)]
     public string? Teaser { get; set; }
 
     [Required]
-    [MaxLength(50)]
     public string? DateString { get; set; }
 
-    [MaxLength(50)]
+    public string? ShortDescription { get; set; }
+
     public string? Alias { get; set; }
 
     public StreetcodeStatus Status { get; set; }
 
     [Required]
-    [MaxLength(100)]
     public string? Title { get; set; }
+
     [Required]
-    [MaxLength(150)]
     public string? TransliterationUrl { get; set; }
 
     public int ViewCount { get; set; }
@@ -58,11 +56,24 @@ public class StreetcodeContent
 
     public DateTime? EventEndOrPersonDeathDate { get; set; }
 
+    public string? InstagramARLink { get; set; }
+
+    public string? InvolvedPeople { get; set; }
+
     public int? AudioId { get; set; }
 
     public Text? Text { get; set; }
 
     public Audio? Audio { get; set; }
+
+    public int? ImageBlackAndWhiteId { get; set; }
+    public ImageMain? ImageBlackAndWhite { get; set; }
+
+    public int? ImageAnimatedId { get; set; }
+    public ImageMain? ImageAnimated { get; set; }
+
+    public int? ImageForLinkId { get; set; }
+    public ImageMain? ImageForLink { get; set; }
 
     public List<StatisticRecord> StatisticRecords { get; set; } = new();
 

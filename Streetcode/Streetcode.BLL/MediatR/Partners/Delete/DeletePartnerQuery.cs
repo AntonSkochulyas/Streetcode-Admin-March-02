@@ -1,8 +1,17 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Partners;
+using Streetcode.BLL.Dto.Partners;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Partners.Delete
 {
-    public record DeletePartnerQuery(int id) : IRequest<Result<PartnerDTO>>;
+    /// <summary>
+    /// Query, that requests a handler to delete a partner by given id.
+    /// </summary>
+    /// <param name="id">
+    /// Partner id to delete.
+    /// </param>
+    public record DeletePartnerQuery(int Id)
+        : IRequest<Result<PartnerDto>>;
 }

@@ -1,14 +1,16 @@
 using System.Linq.Expressions;
+using Ardalis.Specification.EntityFramework6;
+using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
-using MimeKit;
+using Streetcode.DAL.Enums;
 using Streetcode.DAL.Persistence;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.DAL.Repositories.Realizations.Base;
 
-public abstract class RepositoryBase<T> : IRepositoryBase<T>
+public abstract class RepositoryBase<T> : Interfaces.Base.IRepositoryBase<T>
     where T : class
 {
     private readonly StreetcodeDbContext _dbContext;
@@ -133,10 +135,65 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T>
         return await GetQueryable(predicate, include, selector).FirstOrDefaultAsync();
     }
 
-    private IQueryable<T> GetQueryable(
+    public IQueryable<T> Get(
         Expression<Func<T, bool>>? predicate = default,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default,
-        Expression<Func<T, T>>? selector = default)
+        Expression<Func<T, T>>? selector = default,
+        int skip = 0,
+        int take = 0,
+        Dictionary<Expression<Func<T, object>>, SortDirection>? orderBy = null)
+    {
+        IQueryable<T> query = GetQueryable(predicate, include);
+
+        if ((orderBy != null) && orderBy.Any())
+        {
+            var orderedData = orderBy.Values.First() == SortDirection.Ascending
+                ? query.OrderBy(orderBy.Keys.First())
+                : query.OrderByDescending(orderBy.Keys.First());
+
+            foreach (var expression in orderBy.Skip(1))
+            {
+                orderedData = expression.Value == SortDirection.Ascending
+                    ? orderedData.ThenBy(expression.Key)
+                    : orderedData.ThenByDescending(expression.Key);
+            }
+
+            query = orderedData;
+        }
+
+        if (skip > 0)
+        {
+            query = query.Skip(skip);
+        }
+
+        if (take > 0)
+        {
+            query = query.Take(take);
+        }
+
+        return query;
+    }
+
+    public async Task<T?> GetItemBySpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<T>?> GetItemsBySpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).ToListAsync();
+    }
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+    {
+        var evaluator = new SpecificationEvaluator();
+        return evaluator.GetQuery(_dbContext.Set<T>(), specification);
+    }
+
+    private IQueryable<T> GetQueryable(
+       Expression<Func<T, bool>>? predicate = default,
+       Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = default,
+       Expression<Func<T, T>>? selector = default)
     {
         var query = _dbContext.Set<T>().AsNoTracking();
 

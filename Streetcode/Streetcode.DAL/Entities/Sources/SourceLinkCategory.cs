@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using Streetcode.DAL.Entities.Media.Images;
 using Streetcode.DAL.Entities.Streetcode;
 
@@ -14,11 +13,9 @@ public class SourceLinkCategory
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(100)]
     public string? Title { get; set; }
 
-    [Required]
-    public int ImageId { get; set; }
+    public int? ImageId { get; set; }
 
     public Image? Image { get; set; }
 

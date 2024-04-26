@@ -1,18 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.DTO.Streetcode.TextContent;
+using Streetcode.BLL.Dto.Streetcode.TextContent;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessaru namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete
 {
-    public class DeleteRelatedTermHandler : IRequestHandler<DeleteRelatedTermCommand, Result<RelatedTermDTO>>
+    /// <summary>
+    /// Handler, that handles a process of deleting a related term.
+    /// </summary>
+    public class DeleteRelatedTermHandler : IRequestHandler<DeleteRelatedTermCommand, Result<RelatedTermDto>>
     {
+        // Repository wrapper
         private readonly IRepositoryWrapper _repository;
+
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor
         public DeleteRelatedTermHandler(IRepositoryWrapper repository, IMapper mapper, ILoggerService logger)
         {
             _repository = repository;
@@ -20,13 +31,25 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete
             _logger = logger;
         }
 
-        public async Task<Result<RelatedTermDTO>> Handle(DeleteRelatedTermCommand request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Method, that deletes a related term.
+        /// </summary>
+        /// <param name="request">
+        /// Request with related term word to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A RelatedTermDto, or error, if it was while deleting process.
+        /// </returns>
+        public async Task<Result<RelatedTermDto>> Handle(DeleteRelatedTermCommand request, CancellationToken cancellationToken)
         {
-            var relatedTerm = await _repository.RelatedTermRepository.GetFirstOrDefaultAsync(rt => rt.Word.ToLower().Equals(request.word.ToLower()));
+            var relatedTerm = await _repository.RelatedTermRepository.GetFirstOrDefaultAsync(rt => rt.Word.ToLower().Equals(request.Word.ToLower()));
 
             if (relatedTerm is null)
             {
-                string errorMsg = $"Cannot find a related term: {request.word}";
+                string errorMsg = string.Format(StreetcodeErrors.DeleteRelatedTermHandlerCannotFindRelatedTermError, request.Word);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -34,14 +57,14 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Delete
             _repository.RelatedTermRepository.Delete(relatedTerm);
 
             var resultIsSuccess = await _repository.SaveChangesAsync() > 0;
-            var relatedTermDto = _mapper.Map<RelatedTermDTO>(relatedTerm);
+            var relatedTermDto = _mapper.Map<RelatedTermDto>(relatedTerm);
             if(resultIsSuccess && relatedTermDto != null)
             {
                 return Result.Ok(relatedTermDto);
             }
             else
             {
-                const string errorMsg = "Failed to delete a related term";
+                string errorMsg = StreetcodeErrors.DeleteRelatedTermHandlerFailedToDeleteRelatedTermError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

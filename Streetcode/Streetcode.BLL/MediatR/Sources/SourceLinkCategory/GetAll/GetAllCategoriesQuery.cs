@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Necessary usings.
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Sources;
+using Streetcode.BLL.Dto.Sources;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Sources.SourceLinkCategory.GetAll
 {
-    public record GetAllCategoriesQuery : IRequest<Result<IEnumerable<SourceLinkCategoryDTO>>>;
+    /// <summary>
+    /// Query, that requests a handler to get all categories from database.
+    /// </summary>
+    public record GetAllCategoriesQuery : IRequest<Result<IEnumerable<SourceLinkCategoryDto>>>
+    {
+        public GetAllCategoriesQuery()
+        {
+        }
+    }
 }

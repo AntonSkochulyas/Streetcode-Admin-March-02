@@ -10,12 +10,12 @@ namespace Streetcode.BLL.Services.Payment
 {
     public class PaymentService : IPaymentService
     {
-        private readonly PaymentEnvirovmentVariables _paymentEnvirovment;
+        private readonly PaymentEnvironmentVariables _paymentEnvirovment;
         private readonly HttpClient _httpClient;
-        public PaymentService(IOptions<PaymentEnvirovmentVariables> paymentEnvirovment)
+        public PaymentService(IOptions<PaymentEnvironmentVariables> paymentEnvirovment, IHttpClientFactory httpClient)
         {
             _paymentEnvirovment = paymentEnvirovment.Value;
-            _httpClient = new HttpClient();
+            _httpClient = httpClient.CreateClient();
             _httpClient.BaseAddress = new Uri(Api.Production);
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add(RequestHeaders.XToken, _paymentEnvirovment.Token);

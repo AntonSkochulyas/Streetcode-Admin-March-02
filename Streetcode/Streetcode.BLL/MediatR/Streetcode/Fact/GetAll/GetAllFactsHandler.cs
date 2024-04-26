@@ -1,37 +1,61 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
-using Streetcode.BLL.DTO.Streetcode.TextContent.Fact;
+using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.Fact;
 
-namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetAll;
-
-public class GetAllFactsHandler : IRequestHandler<GetAllFactsQuery, Result<IEnumerable<FactDto>>>
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetAll
 {
-    private readonly IMapper _mapper;
-    private readonly IRepositoryWrapper _repositoryWrapper;
-    private readonly ILoggerService _logger;
-
-    public GetAllFactsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
+    /// <summary>
+    /// Handler, that handles a process of getting all facts from database.
+    /// </summary>
+    public class GetAllFactsHandler : IRequestHandler<GetAllFactsQuery, Result<IEnumerable<FactDto>>>
     {
-        _repositoryWrapper = repositoryWrapper;
-        _mapper = mapper;
-        _logger = logger;
-    }
+        // Mapper
+        private readonly IMapper _mapper;
 
-    public async Task<Result<IEnumerable<FactDto>>> Handle(GetAllFactsQuery request, CancellationToken cancellationToken)
-    {
-        var facts = await _repositoryWrapper.FactRepository.GetAllAsync();
+        // Repository wrapper
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        if (facts is null)
+        // Logger
+        private readonly ILoggerService _logger;
+
+        // Parametric constructor
+        public GetAllFactsHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
-            const string errorMsg = $"Cannot find any fact";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
+            _logger = logger;
         }
 
-        return Result.Ok(_mapper.Map<IEnumerable<FactDto>>(facts));
+        /// <summary>
+        /// Method, that get all facts from database.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all facts from database.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of FactDto, or error, if it was while getting process.
+        /// </returns>
+        public async Task<Result<IEnumerable<FactDto>>> Handle(GetAllFactsQuery request, CancellationToken cancellationToken)
+        {
+            var facts = await _repositoryWrapper.FactRepository.GetItemsBySpecAsync(new GetAllFactsSpec());
+
+            if (facts is null)
+            {
+                string errorMsg = StreetcodeErrors.GetAllFactsHandlerCanNotFindAnyFactsError;
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
+
+            return Result.Ok(_mapper.Map<IEnumerable<FactDto>>(facts));
+        }
     }
 }
