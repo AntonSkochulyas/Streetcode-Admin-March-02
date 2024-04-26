@@ -1,7 +1,12 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
+using Streetcode.BLL.Dto.AdditionalContent.Subtitles;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.AdditionalContent.Subtitle.GetAll;
 
-public record GetAllSubtitlesQuery : IRequest<Result<IEnumerable<SubtitleDTO>>>;
+/// <summary>
+/// Query, that request handler to returns all of subtitles in database.
+/// </summary>
+public record GetAllSubtitlesQuery : IRequest<Result<IEnumerable<SubtitleDto>>>;

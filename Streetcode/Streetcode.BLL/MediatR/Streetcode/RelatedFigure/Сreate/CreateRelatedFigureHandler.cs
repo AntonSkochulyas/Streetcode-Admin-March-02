@@ -1,63 +1,80 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
 using FluentResults;
 using MediatR;
-using NLog.Targets;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Entities.Streetcode;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
-namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Create;
-
-public class CreateRelatedFigureHandler : IRequestHandler<CreateRelatedFigureCommand, Result<Unit>>
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.Create
 {
-    private readonly IMapper _mapper;
-    private readonly IRepositoryWrapper _repositoryWrapper;
-    private readonly ILoggerService _logger;
-
-    public CreateRelatedFigureHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
+    /// <summary>
+    /// Handler, that handles a process of creating a new related figure.
+    /// </summary>
+    public class CreateRelatedFigureHandler : IRequestHandler<CreateRelatedFigureCommand, Result<Unit>>
     {
-        _repositoryWrapper = repositoryWrapper;
-        _mapper = mapper;
-        _logger = logger;
-    }
+        // Repository wrapper
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-    public async Task<Result<Unit>> Handle(CreateRelatedFigureCommand request, CancellationToken cancellationToken)
-    {
-        var observerEntity = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(rel => rel.Id == request.ObserverId);
-        var targetEntity = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(rel => rel.Id == request.TargetId);
+        // Logger
+        private readonly ILoggerService _logger;
 
-        if (observerEntity is null)
+        // Parametric constructor
+        public CreateRelatedFigureHandler(IRepositoryWrapper repositoryWrapper, ILoggerService logger)
         {
-            string errorMsg = $"No existing streetcode with id: {request.ObserverId}";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            _repositoryWrapper = repositoryWrapper;
+            _logger = logger;
         }
 
-        if (targetEntity is null)
+        /// <summary>
+        /// Method, that creates a new related figure.
+        /// </summary>
+        /// <param name="request">
+        /// Request with a new related figure.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A Unit, or error, if it was while creating process.
+        /// </returns>
+        public async Task<Result<Unit>> Handle(CreateRelatedFigureCommand request, CancellationToken cancellationToken)
         {
-            string errorMsg = $"No existing streetcode with id: {request.TargetId}";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
-        }
+            var observerEntity = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(rel => rel.Id == request.ObserverId);
+            var targetEntity = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(rel => rel.Id == request.TargetId);
 
-        var relation = new DAL.Entities.Streetcode.RelatedFigure
-        {
-            ObserverId = observerEntity.Id,
-            TargetId = targetEntity.Id,
-        };
+            if (observerEntity is null)
+            {
+                string errorMsg = $"No existing streetcode with id: {request.ObserverId}";
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
 
-        _repositoryWrapper.RelatedFigureRepository.Create(relation);
+            if (targetEntity is null)
+            {
+                string errorMsg = $"No existing streetcode with id: {request.TargetId}";
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
 
-        var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
-        if(resultIsSuccess)
-        {
-            return Result.Ok(Unit.Value);
-        }
-        else
-        {
-            string errorMsg = "Failed to create a relation.";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            var relation = new DAL.Entities.Streetcode.RelatedFigure
+            {
+                ObserverId = observerEntity.Id,
+                TargetId = targetEntity.Id,
+            };
+
+            _repositoryWrapper.RelatedFigureRepository.Create(relation);
+
+            var resultIsSuccess = await _repositoryWrapper.SaveChangesAsync() > 0;
+            if (resultIsSuccess)
+            {
+                return Result.Ok(Unit.Value);
+            }
+            else
+            {
+                string errorMsg = "Failed to create a relation.";
+                _logger.LogError(request, errorMsg);
+                return Result.Fail(new Error(errorMsg));
+            }
         }
     }
 }

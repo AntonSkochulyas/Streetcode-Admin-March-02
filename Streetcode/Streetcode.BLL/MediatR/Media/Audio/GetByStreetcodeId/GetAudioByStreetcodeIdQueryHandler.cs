@@ -1,23 +1,35 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.Media.Audio;
-using Streetcode.BLL.DTO.Transactions;
+using Streetcode.BLL.Dto.Media.Audio;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.MediatR.ResultVariations;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Audio.GetByStreetcodeId;
 
-public class GetAudioByStreetcodeIdQueryHandler : IRequestHandler<GetAudioByStreetcodeIdQuery, Result<AudioDTO>>
+/// <summary>
+/// Handler, that handles a process of getting an audio by streetcode id.
+/// </summary>
+public class GetAudioByStreetcodeIdQueryHandler : IRequestHandler<GetAudioByStreetcodeIdQuery, Result<AudioDto>>
 {
+    // Mapper
     private readonly IMapper _mapper;
+
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Blob service
     private readonly IBlobService _blobService;
+
+    // Logger
     private readonly ILoggerService _logger;
 
+    // Parametric constructor 
     public GetAudioByStreetcodeIdQueryHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, IBlobService blobService, ILoggerService logger)
     {
         _repositoryWrapper = repositoryWrapper;
@@ -26,25 +38,37 @@ public class GetAudioByStreetcodeIdQueryHandler : IRequestHandler<GetAudioByStre
         _logger = logger;
     }
 
-    public async Task<Result<AudioDTO>> Handle(GetAudioByStreetcodeIdQuery request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Method, that gets an audio by given streetcode id.
+    /// </summary>
+    /// <param name="request">
+    /// Request with audio streetcode id to get.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token, for cancelling operation, if it needed.
+    /// </param>
+    /// <returns>
+    /// A AudioDto, or error, if it was while getting process.
+    /// </returns>
+    public async Task<Result<AudioDto>> Handle(GetAudioByStreetcodeIdQuery request, CancellationToken cancellationToken)
     {
         var streetcode = await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(
             s => s.Id == request.StreetcodeId,
             include: q => q.Include(s => s.Audio) !);
         if (streetcode == null)
         {
-            string errorMsg = $"Cannot find an audio with the corresponding streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(MediaErrors.GetAudioByStreetcodeIdQueryHandlerCanNotFindAnAudioWithGivenStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
 
-        NullResult<AudioDTO> result = new NullResult<AudioDTO>();
+        NullResult<AudioDto> result = new NullResult<AudioDto>();
 
         if (streetcode.Audio != null)
         {
-            AudioDTO audioDto = _mapper.Map<AudioDTO>(streetcode.Audio);
-            audioDto = _mapper.Map<AudioDTO>(streetcode.Audio);
-            audioDto.Base64 = _blobService.FindFileInStorageAsBase64(audioDto.BlobName);
+            AudioDto audioDto = _mapper.Map<AudioDto>(streetcode.Audio);
+            audioDto = _mapper.Map<AudioDto>(streetcode.Audio);
+            audioDto.Base64 = _blobService.FindFileInStorageAsBase64(audioDto.BlobName ?? "");
             result.WithValue(audioDto);
         }
 

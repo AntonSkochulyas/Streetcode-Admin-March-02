@@ -5,14 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<CodeAnalysisRuleSet>../settings.ruleset</CodeAnalysisRuleSet>
-
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Specification" Version="8.0.0" />
+    <PackageReference Include="Ardalis.Specification.EntityFramework6" Version="8.0.0" />
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageReference Include="FluentResults" Version="3.15.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.11" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
@@ -31,18 +35,163 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Streetcode.DAL\Streetcode.DAL.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Streetcode.XUnitTest</_Parameter1>
+    </AssemblyAttribute>
+</ItemGroup>
+		
   <ItemGroup>
-    <Folder Include="Mapping\Analytics\" />
-    <Folder Include="MediatR\AdditionalContent\Tag\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="DTO\Instagram\" />
-    <Folder Include="MediatR\Analytics\" />
+    <Folder Include="MediatR\Streetcode\Fact\Create\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MediatR\Analytics\StatisticRecords\StatisticRecordsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StatisticRecordsErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Newss\NewsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NewsErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Partners\PartnersErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PartnersErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Payment\PaymentErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PaymentErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Sources\SourceErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SourceErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Timeline\TimelineErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TimelineErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Toponyms\ToponymsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ToponymsErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Transactions\TransactionsErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TransactionsErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\AdditionalContent\Coordinate\CoordinateErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CoordinateErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\AdditionalContent\Subtitle\SubtitleErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SubtitleErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\AdditionalContent\Tag\TagErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TagErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Email\EmailErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmailErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="MediatR\Team\TeamErrors.Designer.cs">
+      <DependentUpon>TeamErrors.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MediatR\Media\MediaErrors.Designer.cs">
+      <DependentUpon>MediaErrors.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MediatR\Users\UsersErrors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UsersErrors.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MediatR\Analytics\StatisticRecords\StatisticRecordsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StatisticRecordsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Newss\NewsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NewsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Partners\PartnersErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PartnersErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Payment\PaymentErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PaymentErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Sources\SourceErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SourceErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Timeline\TimelineErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimelineErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Toponyms\ToponymsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ToponymsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Transactions\TransactionsErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TransactionsErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\AdditionalContent\Coordinate\CoordinateErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CoordinateErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\AdditionalContent\Subtitle\SubtitleErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubtitleErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\AdditionalContent\Tag\TagErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TagErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Email\EmailErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmailErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Team\TeamErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TeamErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Media\MediaErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MediaErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MediatR\Users\UsersErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

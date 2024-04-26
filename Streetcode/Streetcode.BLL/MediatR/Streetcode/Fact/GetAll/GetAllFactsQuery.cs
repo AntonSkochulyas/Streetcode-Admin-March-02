@@ -1,7 +1,18 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Streetcode.TextContent.Fact;
+using Streetcode.BLL.Dto.Streetcode.TextContent.Fact;
 
-namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetAll;
-
-public record GetAllFactsQuery : IRequest<Result<IEnumerable<FactDto>>>;
+// Necessary namespaces.
+namespace Streetcode.BLL.MediatR.Streetcode.Fact.GetAll
+{
+    /// <summary>
+    /// Query, that requests a handler to get all facts from database.
+    /// </summary>
+    public record GetAllFactsQuery : IRequest<Result<IEnumerable<FactDto>>>
+    {
+        public GetAllFactsQuery()
+        {
+        }
+    }
+}

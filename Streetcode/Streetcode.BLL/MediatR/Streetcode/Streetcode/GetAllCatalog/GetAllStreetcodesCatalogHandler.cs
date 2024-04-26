@@ -2,14 +2,14 @@
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.Streetcode.RelatedFigure;
+using Streetcode.BLL.Dto.Streetcode.RelatedFigure;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllCatalog
 {
   public class GetAllStreetcodesCatalogHandler : IRequestHandler<GetAllStreetcodesCatalogQuery,
-        Result<IEnumerable<RelatedFigureDTO>>>
+        Result<IEnumerable<RelatedFigureDto>>>
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
@@ -22,7 +22,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllCatalog
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<RelatedFigureDTO>>> Handle(GetAllStreetcodesCatalogQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<RelatedFigureDto>>> Handle(GetAllStreetcodesCatalogQuery request, CancellationToken cancellationToken)
         {
             var streetcodes = await _repositoryWrapper.StreetcodeRepository.GetAllAsync(
                 predicate: sc => sc.Status == DAL.Enums.StreetcodeStatus.Published,
@@ -30,11 +30,11 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetAllCatalog
 
             if (streetcodes != null)
             {
-                var skipped = streetcodes.Skip((request.page - 1) * request.count).Take(request.count);
-                return Result.Ok(_mapper.Map<IEnumerable<RelatedFigureDTO>>(skipped));
+                var skipped = streetcodes.Skip((request.Page - 1) * request.Count).Take(request.Count);
+                return Result.Ok(_mapper.Map<IEnumerable<RelatedFigureDto>>(skipped));
             }
 
-            const string errorMsg = $"Cannot find any subtitles";
+            string errorMsg = StreetcodeErrors.GetAllStreetcodesCatalogHandlerCannotFindAnySubtitlesError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(errorMsg);
         }

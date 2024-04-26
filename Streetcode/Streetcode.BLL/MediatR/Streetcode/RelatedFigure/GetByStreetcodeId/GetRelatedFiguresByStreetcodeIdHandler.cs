@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
-using Streetcode.BLL.DTO.Streetcode.RelatedFigure;
+using Streetcode.BLL.Dto.Streetcode.RelatedFigure;
 using Streetcode.DAL.Entities.Streetcode;
-using Streetcode.DAL.Enums;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Streetcode.RelatedFigure;
 
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedFigure.GetByStreetcodeId;
 
-public class GetRelatedFiguresByStreetcodeIdHandler : IRequestHandler<GetRelatedFigureByStreetcodeIdQuery, Result<IEnumerable<RelatedFigureDTO>>>
+public class GetRelatedFiguresByStreetcodeIdHandler : IRequestHandler<GetRelatedFigureByStreetcodeIdQuery, Result<IEnumerable<RelatedFigureDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IRepositoryWrapper _repositoryWrapper;
@@ -24,25 +22,22 @@ public class GetRelatedFiguresByStreetcodeIdHandler : IRequestHandler<GetRelated
         _logger = logger;
     }
 
-    public async Task<Result<IEnumerable<RelatedFigureDTO>>> Handle(GetRelatedFigureByStreetcodeIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<RelatedFigureDto>>> Handle(GetRelatedFigureByStreetcodeIdQuery request, CancellationToken cancellationToken)
     {
         var relatedFigureIds = GetRelatedFigureIdsByStreetcodeId(request.StreetcodeId);
 
         if (relatedFigureIds is null)
         {
-            string errorMsg = $"Cannot find any related figures by a streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(StreetcodeErrors.GetRelatedFigureByStreetcodeIdHandlerCannotFindAnyRelatedFigureByStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
 
-        var relatedFigures = await _repositoryWrapper.StreetcodeRepository.GetAllAsync(
-          predicate: sc => relatedFigureIds.Any(id => id == sc.Id) && sc.Status == DAL.Enums.StreetcodeStatus.Published,
-          include: scl => scl.Include(sc => sc.Images).ThenInclude(img => img.ImageDetails)
-                             .Include(sc => sc.Tags));
+        var relatedFigures = await _repositoryWrapper.StreetcodeRepository.GetItemsBySpecAsync(new GetAllPublishedRelatedFigureSpec(relatedFigureIds));
 
         if (relatedFigures is null)
         {
-            string errorMsg = $"Cannot find any related figures by a streetcode id: {request.StreetcodeId}";
+            string errorMsg = string.Format(StreetcodeErrors.GetRelatedFigureByStreetcodeIdHandlerCannotFindAnyRelatedFigureByStreetcodeIdError, request.StreetcodeId);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
@@ -55,10 +50,10 @@ public class GetRelatedFiguresByStreetcodeIdHandler : IRequestHandler<GetRelated
             }
         }
 
-        return Result.Ok(_mapper.Map<IEnumerable<RelatedFigureDTO>>(relatedFigures));
+        return Result.Ok(_mapper.Map<IEnumerable<RelatedFigureDto>>(relatedFigures));
     }
 
-    private IQueryable<int> GetRelatedFigureIdsByStreetcodeId(int StreetcodeId)
+    private IQueryable<int>? GetRelatedFigureIdsByStreetcodeId(int StreetcodeId)
     {
         try
         {

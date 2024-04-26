@@ -1,19 +1,29 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
-using Streetcode.BLL.DTO.Partners;
+using Streetcode.BLL.Dto.Partners;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Partners.GetAllPartnerShort
 {
-    internal class GetAllPartnerShortHandler : IRequestHandler<GetAllPartnersShortQuery, Result<IEnumerable<PartnerShortDTO>>>
+    /// <summary>
+    /// Handler, that handles a process of getting all partners short.
+    /// </summary>
+    internal class GetAllPartnerShortHandler : IRequestHandler<GetAllPartnersShortQuery, Result<IEnumerable<PartnerShortDto>>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor 
         public GetAllPartnerShortHandler(IRepositoryWrapper repositoryWrapper, IMapper mapper, ILoggerService logger)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -21,18 +31,30 @@ namespace Streetcode.BLL.MediatR.Partners.GetAllPartnerShort
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<PartnerShortDTO>>> Handle(GetAllPartnersShortQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Method, that gets all partners short.
+        /// </summary>
+        /// <param name="request">
+        /// Request to get all partners short.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of PartnerShortDto, or error, if it was while getting process.
+        /// </returns>
+        public async Task<Result<IEnumerable<PartnerShortDto>>> Handle(GetAllPartnersShortQuery request, CancellationToken cancellationToken)
         {
             var partners = await _repositoryWrapper.PartnersRepository.GetAllAsync();
 
             if (partners is null)
             {
-                const string errorMsg = $"Cannot find any partners";
+                string errorMsg = PartnersErrors.GetAllPartnerShortHandlerCanNotFindAnyPartnersError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
-            return Result.Ok(_mapper.Map<IEnumerable<PartnerShortDTO>>(partners));
+            return Result.Ok(_mapper.Map<IEnumerable<PartnerShortDto>>(partners));
         }
     }
 }

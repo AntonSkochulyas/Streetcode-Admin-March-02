@@ -1,7 +1,17 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Media.Video;
+using Streetcode.BLL.Dto.Media.Video;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Video.GetAll;
 
-public record GetAllVideosQuery : IRequest<Result<IEnumerable<VideoDTO>>>;
+/// <summary>
+/// Query, that requests a handler to get all videos from database.
+/// </summary>
+public record GetAllVideosQuery : IRequest<Result<IEnumerable<VideoDto>>>
+{
+    public GetAllVideosQuery()
+    {
+    }
+}

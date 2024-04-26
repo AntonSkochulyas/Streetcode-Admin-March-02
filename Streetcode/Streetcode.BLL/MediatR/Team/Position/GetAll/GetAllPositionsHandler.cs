@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
-using Streetcode.BLL.DTO.Team;
+using Streetcode.BLL.Dto.Team;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.Team.GetAll;
 using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.DAL.Specification.Team.Positions;
 
 namespace Streetcode.BLL.MediatR.Team.Position.GetAll
 {
-    public class GetAllPositionsHandler : IRequestHandler<GetAllPositionsQuery, Result<IEnumerable<PositionDTO>>>
+    public class GetAllPositionsHandler : IRequestHandler<GetAllPositionsQuery, Result<IEnumerable<PositionDto>>>
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
@@ -22,20 +21,20 @@ namespace Streetcode.BLL.MediatR.Team.Position.GetAll
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<PositionDTO>>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<PositionDto>>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
         {
             var positions = await _repositoryWrapper
                 .PositionRepository
-                .GetAllAsync();
+                .GetItemsBySpecAsync(new GetAllPositionsSpec());
 
             if (positions is null)
             {
-                const string errorMsg = $"Cannot find any positions";
+                string errorMsg = TeamErrors.GetAllPositionsHandlerCanNotFindAnyPositionsError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
-            return Result.Ok(_mapper.Map<IEnumerable<PositionDTO>>(positions));
+            return Result.Ok(_mapper.Map<IEnumerable<PositionDto>>(positions));
         }
     }
 }

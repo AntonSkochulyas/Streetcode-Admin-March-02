@@ -1,8 +1,9 @@
 ﻿using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Team;
+using Streetcode.BLL.Dto.Team;
 
 namespace Streetcode.BLL.MediatR.Team.TeamMembersLinks.Create
 {
-    public record CreateTeamLinkQuery(TeamMemberLinkDTO teamMember) : IRequest<Result<TeamMemberLinkDTO>>;
+    public record CreateTeamLinkQuery(TeamMemberLinkDto TeamMember)
+        : IRequest<Result<TeamMemberLinkDto>>;
 }

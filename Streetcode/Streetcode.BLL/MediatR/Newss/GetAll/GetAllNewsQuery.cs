@@ -1,8 +1,18 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.News;
+using Streetcode.BLL.Dto.News;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.GetAll
 {
-    public record GetAllNewsQuery() : IRequest<Result<IEnumerable<NewsDTO>>>;
+    /// <summary>
+    /// Query, that requests a handler to get all news from database.
+    /// </summary>
+    public record GetAllNewsQuery : IRequest<Result<IEnumerable<NewsDto>>>
+    {
+        public GetAllNewsQuery()
+        {
+        }
+    }
 }

@@ -1,23 +1,16 @@
-﻿using AutoMapper;
-using FluentResults;
+﻿using FluentResults;
 using MediatR;
-using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.DAL.Repositories.Interfaces.Base;
+using Streetcode.BLL.Dto.Streetcode.TextContent;
 
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Update
 {
-    public class UpdateRelatedTermHandler : IRequestHandler<UpdateRelatedTermCommand, Result<Unit>>
+    public class UpdateRelatedTermHandler : IRequestHandler<UpdateRelatedTermCommand, Result<RelatedTermDto>>
     {
-        private readonly IMapper _mapper;
-        private readonly IRepositoryWrapper _repository;
-
-        public UpdateRelatedTermHandler(IMapper mapper, IRepositoryWrapper repository)
+        public UpdateRelatedTermHandler()
         {
-            _mapper = mapper;
-            _repository = repository;
         }
 
-        public Task<Result<Unit>> Handle(UpdateRelatedTermCommand request, CancellationToken cancellationToken)
+        public Task<Result<RelatedTermDto>> Handle(UpdateRelatedTermCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

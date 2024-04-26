@@ -1,22 +1,34 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.AdditionalContent.Subtitles;
-using Streetcode.BLL.DTO.Media.Art;
+using Streetcode.BLL.Dto.Media.Art;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
 {
-  public class GetStreetcodeArtByStreetcodeIdHandler : IRequestHandler<GetStreetcodeArtByStreetcodeIdQuery, Result<IEnumerable<StreetcodeArtDTO>>>
+    /// <summary>
+    /// Handler, that handles a process of getting art by streetcode id.
+    /// </summary>
+    public class GetStreetcodeArtByStreetcodeIdHandler : IRequestHandler<GetStreetcodeArtByStreetcodeIdQuery, Result<IEnumerable<StreetcodeArtDto>>>
     {
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Repository wrapper
         private readonly IRepositoryWrapper _repositoryWrapper;
+
+        // Blob service
         private readonly IBlobService _blobService;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor
         public GetStreetcodeArtByStreetcodeIdHandler(
             IRepositoryWrapper repositoryWrapper,
             IMapper mapper,
@@ -29,16 +41,20 @@ namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<StreetcodeArtDTO>>> Handle(GetStreetcodeArtByStreetcodeIdQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Method, that gets an art by given id.
+        /// </summary>
+        /// <param name="request">
+        /// Request with art id to get.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A IEnumerable of StreetcodeArtDto, or error, if it was while getting process.
+        /// </returns>
+        public async Task<Result<IEnumerable<StreetcodeArtDto>>> Handle(GetStreetcodeArtByStreetcodeIdQuery request, CancellationToken cancellationToken)
         {
-            /*
-            if ((await _repositoryWrapper.StreetcodeRepository.GetFirstOrDefaultAsync(s => s.Id == request.StreetcodeId)) is null)
-            {
-                return Result.Fail(
-                    new Error($"Cannot find a streetcode arts by a streetcode id: {request.StreetcodeId}, because such streetcode doesn`t exist"));
-            }
-            */
-
             var art = await _repositoryWrapper
             .StreetcodeArtRepository
             .GetAllAsync(
@@ -49,16 +65,16 @@ namespace Streetcode.BLL.MediatR.Media.StreetcodeArt.GetByStreetcodeId
 
             if (art is null)
             {
-                string errorMsg = $"Cannot find an art with corresponding streetcode id: {request.StreetcodeId}";
+                string errorMsg = string.Format(MediaErrors.GetStreetcodeArtByStreetcodeIdHandlerCanNotFindAnArtWithGivenStreetcodeIdError, request.StreetcodeId);
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
-            var artsDto = _mapper.Map<IEnumerable<StreetcodeArtDTO>>(art);
+            var artsDto = _mapper.Map<IEnumerable<StreetcodeArtDto>>(art);
 
             foreach (var artDto in artsDto)
             {
-                artDto.Art.Image.Base64 = _blobService.FindFileInStorageAsBase64(artDto.Art.Image.BlobName);
+                artDto.Art.Image.Base64 = _blobService.FindFileInStorageAsBase64(artDto.Art.Image.BlobName ?? "");
             }
 
             return Result.Ok(artsDto);

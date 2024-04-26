@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Streetcode.DAL.Entities.Media.Images;
 
 namespace Streetcode.DAL.Entities.Team
@@ -34,8 +29,7 @@ namespace Streetcode.DAL.Entities.Team
 
         public List<Positions>? Positions { get; set; }
 
-        [Required]
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
 
         public Image? Image { get; set; }
     }

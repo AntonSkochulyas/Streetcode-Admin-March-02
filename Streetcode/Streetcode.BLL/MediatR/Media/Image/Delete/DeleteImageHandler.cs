@@ -1,27 +1,55 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using AutoMapper;
+using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Streetcode.BLL.Dto.Media.Images;
 using Streetcode.BLL.Interfaces.BlobStorage;
 using Streetcode.BLL.Interfaces.Logging;
-using Streetcode.BLL.MediatR.Media.Audio.Delete;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Image.Delete;
 
-public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Unit>>
+/// <summary>
+/// Handler, that handles a process of deleting an image.
+/// </summary>
+public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<ImageDto>>
 {
+    // Repository wrapper
     private readonly IRepositoryWrapper _repositoryWrapper;
+
+    // Blob service
     private readonly IBlobService _blobService;
+
+    // Logger
     private readonly ILoggerService _logger;
 
-    public DeleteImageHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger)
+    // Mapper
+    private readonly IMapper _mapper;
+
+    // Parametric constructor 
+    public DeleteImageHandler(IRepositoryWrapper repositoryWrapper, IBlobService blobService, ILoggerService logger, IMapper mapper)
     {
         _repositoryWrapper = repositoryWrapper;
         _blobService = blobService;
         _logger = logger;
+        _mapper = mapper;
     }
 
-    public async Task<Result<Unit>> Handle(DeleteImageCommand request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Method, that deletes an image with given id.
+    /// </summary>
+    /// <param name="request">
+    /// Request with image id to delete.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Cancellation token, for cancelling operation, if it needed.
+    /// </param>
+    /// <returns>
+    /// A Unit, or error, if it was while deleting process.
+    /// </returns>
+    public async Task<Result<ImageDto>> Handle(DeleteImageCommand request, CancellationToken cancellationToken)
     {
         var image = await _repositoryWrapper.ImageRepository
             .GetFirstOrDefaultAsync(
@@ -30,7 +58,7 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
 
         if (image is null)
         {
-            string errorMsg = $"Cannot find an image with corresponding categoryId: {request.Id}";
+            string errorMsg = string.Format(MediaErrors.DeleteImageHandlerCanNotFindAnImageWithGivenCategoryIdError, request.Id);
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }
@@ -44,13 +72,13 @@ public class DeleteImageHandler : IRequestHandler<DeleteImageCommand, Result<Uni
             _blobService.DeleteFileInStorage(image.BlobName);
         }
 
-        if(resultIsSuccess)
+        if (resultIsSuccess)
         {
-            return Result.Ok(Unit.Value);
+            return Result.Ok(_mapper.Map<ImageDto>(image));
         }
         else
         {
-            const string errorMsg = $"Failed to delete an image";
+            string errorMsg = MediaErrors.DeleteImageHandlerFailedToDeleteAnImageError;
             _logger.LogError(request, errorMsg);
             return Result.Fail(new Error(errorMsg));
         }

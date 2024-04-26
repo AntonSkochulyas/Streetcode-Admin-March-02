@@ -1,20 +1,30 @@
-﻿using AutoMapper;
+﻿// Necessary usings.
+using AutoMapper;
 using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Streetcode.TextContent;
+using Streetcode.BLL.Dto.Streetcode.TextContent;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
-
 using Entity = Streetcode.DAL.Entities.Streetcode.TextContent.RelatedTerm;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
 {
-    public class CreateRelatedTermHandler : IRequestHandler<CreateRelatedTermCommand, Result<RelatedTermDTO>>
+    /// <summary>
+    /// Handler, that handles a process of creating a new related term.
+    /// </summary>
+    public class CreateRelatedTermHandler : IRequestHandler<CreateRelatedTermCommand, Result<RelatedTermDto>>
     {
+        // Repository wrapper
         private readonly IRepositoryWrapper _repository;
+
+        // Mapper
         private readonly IMapper _mapper;
+
+        // Logger
         private readonly ILoggerService _logger;
 
+        // Parametric constructor
         public CreateRelatedTermHandler(IRepositoryWrapper repository, IMapper mapper, ILoggerService logger)
         {
             _repository = repository;
@@ -22,13 +32,25 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
             _logger = logger;
         }
 
-        public async Task<Result<RelatedTermDTO>> Handle(CreateRelatedTermCommand request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Method, that creates a new related term.
+        /// </summary>
+        /// <param name="request">
+        /// Request with a new related term.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token, for cancelling operation, if it needed.
+        /// </param>
+        /// <returns>
+        /// A RelatedTermDto, or error, if it was while creating process.
+        /// </returns>
+        public async Task<Result<RelatedTermDto>> Handle(CreateRelatedTermCommand request, CancellationToken cancellationToken)
         {
             var relatedTerm = _mapper.Map<Entity>(request.RelatedTerm);
 
             if (relatedTerm is null)
             {
-                const string errorMsg = "Cannot create new related word for a term!";
+                string errorMsg = StreetcodeErrors.CreateRelatedTermHandlerCannotCreateNewRelatedWordForTermError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -39,7 +61,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
 
             if (existingTerms is null || existingTerms.Any())
             {
-                const string errorMsg = "Слово з цим визначенням уже існує";
+                string errorMsg = StreetcodeErrors.CreateRelatedTermHandlerWordWithThisDefinitionAlreadyExistsError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
@@ -50,12 +72,12 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
 
             if(!isSuccessResult)
             {
-                const string errorMsg = "Cannot save changes in the database after related word creation!";
+                string errorMsg = StreetcodeErrors.CreateRelatedTermHandlerCannotSaveChangesInDatabaseAfterRelatedWordCreationError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }
 
-            var createdRelatedTermDTO = _mapper.Map<RelatedTermDTO>(createdRelatedTerm);
+            var createdRelatedTermDTO = _mapper.Map<RelatedTermDto>(createdRelatedTerm);
 
             if(createdRelatedTermDTO != null)
             {
@@ -63,7 +85,7 @@ namespace Streetcode.BLL.MediatR.Streetcode.RelatedTerm.Create
             }
             else
             {
-                const string errorMsg = "Cannot map entity!";
+                string errorMsg = StreetcodeErrors.CreateRelatedTermHandlerCannotMapEntityError;
                 _logger.LogError(request, errorMsg);
                 return Result.Fail(new Error(errorMsg));
             }

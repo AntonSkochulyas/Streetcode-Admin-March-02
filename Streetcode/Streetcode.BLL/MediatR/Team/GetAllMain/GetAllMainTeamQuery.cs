@@ -1,8 +1,13 @@
 ﻿using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Team;
+using Streetcode.BLL.Dto.Team;
 
 namespace Streetcode.BLL.MediatR.Team.GetAll
 {
-    public record GetAllMainTeamQuery : IRequest<Result<IEnumerable<TeamMemberDTO>>>;
+    public record GetAllMainTeamQuery : IRequest<Result<IEnumerable<TeamMemberDto>>>
+    {
+        public GetAllMainTeamQuery()
+        {
+        }
+    }
 }

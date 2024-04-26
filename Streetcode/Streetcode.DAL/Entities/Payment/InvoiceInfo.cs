@@ -12,9 +12,9 @@ namespace Streetcode.DAL.Entities.Payment
         }
 
         [JsonProperty("invoiceId")]
-        public string InvoiceId { get; }
+        public string? InvoiceId { get; }
 
         [JsonProperty("pageUrl")]
-        public string PageUrl { get; }
+        public string? PageUrl { get; }
     }
 }

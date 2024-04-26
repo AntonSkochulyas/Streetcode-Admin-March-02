@@ -1,8 +1,15 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.News;
+using Streetcode.BLL.Dto.News;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Newss.GetNewsAndLinksByUrl
 {
-    public record GetNewsAndLinksByUrlQuery(string url) : IRequest<Result<NewsDTOWithURLs>>;
+    /// <summary>
+    /// Query, that requests a handler to get a news and links by give url from database.
+    /// </summary>
+    /// <param name="url"></param>
+    public record GetNewsAndLinksByUrlQuery(string Url)
+        : IRequest<Result<NewsDtoWithURLs>>;
 }

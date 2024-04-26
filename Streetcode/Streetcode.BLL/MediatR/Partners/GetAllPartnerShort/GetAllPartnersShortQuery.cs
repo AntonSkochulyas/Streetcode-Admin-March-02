@@ -1,8 +1,18 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Partners;
+using Streetcode.BLL.Dto.Partners;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Partners.GetAllPartnerShort
 {
-    public record GetAllPartnersShortQuery : IRequest<Result<IEnumerable<PartnerShortDTO>>>;
+    /// <summary>
+    /// Query, that requests handler to get all partners short from database.
+    /// </summary>
+    public record GetAllPartnersShortQuery : IRequest<Result<IEnumerable<PartnerShortDto>>>
+    {
+        public GetAllPartnersShortQuery()
+        {
+        }
+    }
 }

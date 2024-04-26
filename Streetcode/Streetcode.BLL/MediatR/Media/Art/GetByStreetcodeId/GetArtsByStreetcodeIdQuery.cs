@@ -1,8 +1,15 @@
-﻿using FluentResults;
+﻿// Necessary usings.
+using FluentResults;
 using MediatR;
-using Streetcode.BLL.DTO.Media.Art;
+using Streetcode.BLL.Dto.Media.Art;
 
+// Necessary namespaces.
 namespace Streetcode.BLL.MediatR.Media.Art.GetByStreetcodeId
 {
-  public record GetArtsByStreetcodeIdQuery(int StreetcodeId) : IRequest<Result<IEnumerable<ArtDTO>>>;
+    /// <summary>
+    /// Query, that requests a handler to get art from database by given streetcode id.
+    /// </summary>
+    /// <param name="StreetcodeId"></param>
+    public record GetArtsByStreetcodeIdQuery(int StreetcodeId)
+        : IRequest<Result<IEnumerable<ArtDto>>>;
 }

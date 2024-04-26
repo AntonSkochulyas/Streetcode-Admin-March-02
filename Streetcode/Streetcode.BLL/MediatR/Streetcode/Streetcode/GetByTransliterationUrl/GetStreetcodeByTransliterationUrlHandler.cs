@@ -2,14 +2,14 @@
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Streetcode.BLL.DTO.AdditionalContent.Tag;
-using Streetcode.BLL.DTO.Streetcode;
+using Streetcode.BLL.Dto.AdditionalContent.Tag;
+using Streetcode.BLL.Dto.Streetcode;
 using Streetcode.BLL.Interfaces.Logging;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 
 namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetByTransliterationUrl
 {
-  public class GetStreetcodeByTransliterationUrlHandler : IRequestHandler<GetStreetcodeByTransliterationUrlQuery, Result<StreetcodeDTO>>
+  public class GetStreetcodeByTransliterationUrlHandler : IRequestHandler<GetStreetcodeByTransliterationUrlQuery, Result<StreetcodeDto>>
     {
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
@@ -22,15 +22,15 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetByTransliterationUrl
             _logger = logger;
         }
 
-        public async Task<Result<StreetcodeDTO>> Handle(GetStreetcodeByTransliterationUrlQuery request, CancellationToken cancellationToken)
+        public async Task<Result<StreetcodeDto>> Handle(GetStreetcodeByTransliterationUrlQuery request, CancellationToken cancellationToken)
         {
             var streetcode = await _repository.StreetcodeRepository
                 .GetFirstOrDefaultAsync(
-                    predicate: st => st.TransliterationUrl == request.url);
+                    predicate: st => st.TransliterationUrl == request.Url);
 
             if (streetcode == null)
             {
-                string errorMsg = $"Cannot find streetcode by transliteration url: {request.url}";
+                string errorMsg = string.Format(StreetcodeErrors.GetStreetcodeByTransliterationUrlHandlerCannotFindStreetcodeByTransliterationUrlError, request.Url);
                 _logger.LogError(request, errorMsg);
                 return new Error(errorMsg);
             }
@@ -40,8 +40,8 @@ namespace Streetcode.BLL.MediatR.Streetcode.Streetcode.GetByTransliterationUrl
                                                 t => t.StreetcodeId == streetcode.Id,
                                                 include: q => q.Include(ti => ti.Tag));
 
-            var streetcodeDTO = _mapper.Map<StreetcodeDTO>(streetcode);
-            streetcodeDTO.Tags = _mapper.Map<List<StreetcodeTagDTO>>(tagIndexed);
+            var streetcodeDTO = _mapper.Map<StreetcodeDto>(streetcode);
+            streetcodeDTO.Tags = _mapper.Map<List<StreetcodeTagDto>>(tagIndexed);
             return Result.Ok(streetcodeDTO);
         }
     }
