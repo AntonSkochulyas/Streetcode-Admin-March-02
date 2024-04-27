@@ -43,6 +43,13 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.Create
         {
             var statisticRecords = await _repositoryWrapper.StatisticRecordRepository.GetAllAsync();
 
+            var mappedStatisticRecord = _mapper.Map<StatisticRecord>(request.CreateStatisticRecordDto);
+
+            if (mappedStatisticRecord is null)
+            {
+                return Result.Fail(new Error(StatisticRecordsErrors.CreateStatisticRecordHandlerCanNotMapError));
+            }
+
             var isUniqueQrId = statisticRecords.FirstOrDefault(x => x.QrId == request.CreateStatisticRecordDto.QrId);
             var isUniqueStreetcodeCoordinate = statisticRecords.FirstOrDefault(x => x.StreetcodeCoordinateId == request.CreateStatisticRecordDto.StreetcodeCoordinateId);
 
@@ -54,13 +61,6 @@ namespace Streetcode.BLL.MediatR.Analytics.StatisticRecords.Create
             if(isUniqueStreetcodeCoordinate != null)
             {
                 return Result.Fail(new Error("Statistic record should be unique per one streetcode coordinate."));
-            }
-
-            var mappedStatisticRecord = _mapper.Map<StatisticRecord>(request.CreateStatisticRecordDto);
-
-            if (mappedStatisticRecord is null)
-            {
-                return Result.Fail(new Error(StatisticRecordsErrors.CreateStatisticRecordHandlerCanNotMapError));
             }
 
             var createdStatisticRecord = _repositoryWrapper.StatisticRecordRepository.Create(mappedStatisticRecord);
