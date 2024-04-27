@@ -43,18 +43,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_TeaserLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(length),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(teaserLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -97,18 +86,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_ShortDescriptionLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(length),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(shortDescriptionLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -124,18 +102,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_UrlLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(length),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(urlLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -151,18 +118,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_DateStringLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(length),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(dateStringLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -178,18 +134,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_AliasLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(length),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(aliasLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -205,18 +150,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_TitleLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(length),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(titleLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -232,18 +166,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_TagsCollectionLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(length),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(tagsLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -259,18 +182,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_InstagramARLinkLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(length),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto(instagramARLinkLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -286,18 +198,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_InvolvedPeopleLengthGraterThanAllowed_ShouldHaveErrors(int length)
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(length)
-            };
+            var dto = CreateBaseStreetcodeDto(involvedPeopleLength: length);
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -311,18 +212,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         public void BaseStreetcode_ValidDto_ShouldNotHaveErrors()
         {
             // Arrange
-            var dto = new BaseStreetcodeDto()
-            {
-                Teaser = CreateStringWithSpecificLength(MAXTEASERLENGTH),
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
-            };
+            var dto = CreateBaseStreetcodeDto();
             var request = new CreateStreetcodeCommand(dto);
 
             // Act
@@ -338,6 +228,27 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
             validationResult.ShouldNotHaveValidationErrorFor(x => x.Streetcode.Tags);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.Streetcode.InstagramARLink);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.Streetcode.InvolvedPeople);
+        }
+
+        private BaseStreetcodeDto CreateBaseStreetcodeDto(int teaserLength = MAXTEASERLENGTH,
+            int shortDescriptionLength = MAXSHORTSECRIPTIONLENGTH,
+            int urlLength = MAXURLLENGTH, int dateStringLength = MAXDATESTRINGLENGTH,
+            int aliasLength = MAXALIASLENGTH,
+            int titleLength = MAXTITLELENGTH, int tagsLength = MAXNUMBEROFTAGS,
+            int instagramARLinkLength = MAXINSTAGRAMARLINKLENGTH, int involvedPeopleLength = MAXINVOLVEDPEOPLELENGTH)
+        {
+            return new BaseStreetcodeDto
+            {
+                Teaser = CreateStringWithSpecificLength(teaserLength),
+                ShortDescription = CreateStringWithSpecificLength(shortDescriptionLength),
+                TransliterationUrl = CreateStringWithSpecificLength(urlLength),
+                DateString = CreateStringWithSpecificLength(dateStringLength),
+                Alias = CreateStringWithSpecificLength(aliasLength),
+                Title = CreateStringWithSpecificLength(titleLength),
+                Tags = CreateCollectionWithSpecificLength(tagsLength),
+                InstagramARLink = CreateStringWithSpecificLength(instagramARLinkLength),
+                InvolvedPeople = CreateStringWithSpecificLength(involvedPeopleLength)
+            };
         }
 
         private string CreateStringWithSpecificLength(int length)
