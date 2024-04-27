@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO.Compression;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Text;
@@ -29,11 +30,13 @@ public class WebParsingUtils
 
     private readonly IRepositoryWrapper _repository;
     private readonly StreetcodeDbContext _streetcodeContext;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public WebParsingUtils(StreetcodeDbContext streetcodeContext)
+    public WebParsingUtils(StreetcodeDbContext streetcodeContext, IHttpClientFactory httpClientFactory)
     {
         _repository = new RepositoryWrapper(streetcodeContext);
         _streetcodeContext = streetcodeContext;
+        _httpClientFactory = httpClientFactory;
     }
 
     public static async Task DownloadAndExtractAsync(
@@ -106,7 +109,7 @@ public class WebParsingUtils
         }
     }
 
-    public async Task ParseZipFileFromWebAsync(IHttpClientFactory httpClient)
+    public async Task ParseZipFileFromWebAsync()
     {
         var projRootDirectory = Directory.GetParent(Environment.CurrentDirectory)?.FullName!;
         var zipPath = $"houses.zip";
@@ -116,7 +119,7 @@ public class WebParsingUtils
 
         try
         {
-            await DownloadAndExtractAsync(_fileToParseUrl, zipPath, extractTo, cancellationToken, httpClient);
+            await DownloadAndExtractAsync(_fileToParseUrl, zipPath, extractTo, cancellationToken, _httpClientFactory);
             Console.WriteLine("Download and extraction completed successfully.");
 
             if (File.Exists(zipPath))
@@ -124,7 +127,7 @@ public class WebParsingUtils
                 File.Delete(zipPath);
             }
 
-            await ProcessCsvFileAsync(extractTo, httpClient);
+            await ProcessCsvFileAsync(extractTo, _httpClientFactory);
         }
         catch (Exception ex)
         {

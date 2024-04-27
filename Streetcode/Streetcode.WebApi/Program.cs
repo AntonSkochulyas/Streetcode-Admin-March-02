@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Streetcode.BLL.Services.BlobStorageService;
 using Streetcode.BLL.Util;
 using Streetcode.BLL.ValidationBehaviors;
@@ -94,17 +95,14 @@ app.UseHangfireDashboard("/dash");
 
 if (app.Environment.EnvironmentName != "Local")
 {
-    var serviceProvider = app.Services;
-    var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
-
     BackgroundJob.Schedule<WebParsingUtils>(
-        wp => wp.ParseZipFileFromWebAsync(httpClientFactory), TimeSpan.FromMinutes(1));
+        wp => wp.ParseZipFileFromWebAsync(), TimeSpan.FromMinutes(1));
     RecurringJob.AddOrUpdate<WebParsingUtils>(
-        wp => wp.ParseZipFileFromWebAsync(httpClientFactory), Cron.Monthly);
+        wp => wp.ParseZipFileFromWebAsync(), Cron.Monthly);
     RecurringJob.AddOrUpdate<AzureBlobService>(
-       b => b.CleanBlobStorageAsync(default), Cron.Monthly);
+        b => b.CleanBlobStorageAsync(default), Cron.Monthly);
     RecurringJob.AddOrUpdate<RefreshTokenCleanerUtil>(
-       "CleanExpiredRefreshTokens", r => r.CleanExpiredRefreshTokens(), Cron.Weekly);
+        "CleanExpiredRefreshTokens", r => r.CleanExpiredRefreshTokens(), Cron.Weekly);
 }
 
 app.MapControllers();
