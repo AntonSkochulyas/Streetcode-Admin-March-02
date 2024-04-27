@@ -13,6 +13,7 @@ using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode;
 using Streetcode.BLL.MediatR.Streetcode.Streetcode.Create;
 using Streetcode.DAL.Entities.AdditionalContent;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.Streetcode
@@ -61,15 +62,15 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
             // Arrange
             var dto = new BaseStreetcodeDto()
             {
-                Teaser = $"{CreateStringWithSpecificLength(length / 2)}\n{CreateStringWithSpecificLength(length / 2)}",
-                ShortDescription = CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
-                TransliterationUrl = CreateStringWithSpecificLength(MAXURLLENGTH),
-                DateString = CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
-                Alias = CreateStringWithSpecificLength(MAXALIASLENGTH),
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Tags = CreateCollectionWithSpecificLength(MAXNUMBEROFTAGS),
-                InstagramARLink = CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
-                InvolvedPeople = CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
+                Teaser = $"{TestHelper.CreateStringWithSpecificLength(length / 2)}\n{TestHelper.CreateStringWithSpecificLength(length / 2)}",
+                ShortDescription = TestHelper.CreateStringWithSpecificLength(MAXSHORTSECRIPTIONLENGTH),
+                TransliterationUrl = TestHelper.CreateStringWithSpecificLength(MAXURLLENGTH),
+                DateString = TestHelper.CreateStringWithSpecificLength(MAXDATESTRINGLENGTH),
+                Alias = TestHelper.CreateStringWithSpecificLength(MAXALIASLENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Tags = TestHelper.CreateStreetcodeTagDtoCollectionWithSpecificLength(MAXNUMBEROFTAGS),
+                InstagramARLink = TestHelper.CreateStringWithSpecificLength(MAXINSTAGRAMARLINKLENGTH),
+                InvolvedPeople = TestHelper.CreateStringWithSpecificLength(MAXINVOLVEDPEOPLELENGTH)
             };
             var request = new CreateStreetcodeCommand(dto);
 
@@ -239,40 +240,16 @@ namespace Streetcode.XUnitTest.ValidationTests.Streetcode
         {
             return new BaseStreetcodeDto
             {
-                Teaser = CreateStringWithSpecificLength(teaserLength),
-                ShortDescription = CreateStringWithSpecificLength(shortDescriptionLength),
-                TransliterationUrl = CreateStringWithSpecificLength(urlLength),
-                DateString = CreateStringWithSpecificLength(dateStringLength),
-                Alias = CreateStringWithSpecificLength(aliasLength),
-                Title = CreateStringWithSpecificLength(titleLength),
-                Tags = CreateCollectionWithSpecificLength(tagsLength),
-                InstagramARLink = CreateStringWithSpecificLength(instagramARLinkLength),
-                InvolvedPeople = CreateStringWithSpecificLength(involvedPeopleLength)
+                Teaser = TestHelper.CreateStringWithSpecificLength(teaserLength),
+                ShortDescription = TestHelper.CreateStringWithSpecificLength(shortDescriptionLength),
+                TransliterationUrl = TestHelper.CreateStringWithSpecificLength(urlLength),
+                DateString = TestHelper.CreateStringWithSpecificLength(dateStringLength),
+                Alias = TestHelper.CreateStringWithSpecificLength(aliasLength),
+                Title = TestHelper.CreateStringWithSpecificLength(titleLength),
+                Tags = TestHelper.CreateStreetcodeTagDtoCollectionWithSpecificLength(tagsLength),
+                InstagramARLink = TestHelper.CreateStringWithSpecificLength(instagramARLinkLength),
+                InvolvedPeople = TestHelper.CreateStringWithSpecificLength(involvedPeopleLength)
             };
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
-        }
-
-        private IEnumerable<StreetcodeTagDto> CreateCollectionWithSpecificLength(int length)
-        {
-            var list = new List<StreetcodeTagDto>(length);
-
-            for (int i = 1; i <= length; i++)
-            {
-                list.Add(new StreetcodeTagDto { Id = i });
-            }
-
-            return list;
         }
     }
 }

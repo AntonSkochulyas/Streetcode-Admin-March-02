@@ -4,6 +4,7 @@ using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
 using Streetcode.BLL.Dto.Dictionaries;
 using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
 using Streetcode.BLL.MediatR.Dictionaries.Create;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.Dictionaries
@@ -28,8 +29,8 @@ namespace Streetcode.XUnitTest.ValidationTests.Dictionaries
             // Arrange
             var dto = new CreateDictionaryItemDto()
             {
-                Word = CreateStringWithSpecificLength(length),
-                Description = CreateStringWithSpecificLength(MAXDESCRIPTIONLENGTH)
+                Word = TestHelper.CreateStringWithSpecificLength(length),
+                Description = TestHelper.CreateStringWithSpecificLength(MAXDESCRIPTIONLENGTH)
             };
             var request = new CreateDictionaryItemCommand(dto);
 
@@ -48,8 +49,8 @@ namespace Streetcode.XUnitTest.ValidationTests.Dictionaries
             // Arrange
             var dto = new CreateDictionaryItemDto()
             {
-                Word = CreateStringWithSpecificLength(MAXNAMELENGTH),
-                Description = CreateStringWithSpecificLength(length)
+                Word = TestHelper.CreateStringWithSpecificLength(MAXNAMELENGTH),
+                Description = TestHelper.CreateStringWithSpecificLength(length)
             };
             var request = new CreateDictionaryItemCommand(dto);
 
@@ -66,8 +67,8 @@ namespace Streetcode.XUnitTest.ValidationTests.Dictionaries
             // Arrange
             var dto = new CreateDictionaryItemDto()
             {
-                Word = CreateStringWithSpecificLength(MAXNAMELENGTH),
-                Description = CreateStringWithSpecificLength(MAXDESCRIPTIONLENGTH)
+                Word = TestHelper.CreateStringWithSpecificLength(MAXNAMELENGTH),
+                Description = TestHelper.CreateStringWithSpecificLength(MAXDESCRIPTIONLENGTH)
             };
             var request = new CreateDictionaryItemCommand(dto);
 
@@ -77,18 +78,6 @@ namespace Streetcode.XUnitTest.ValidationTests.Dictionaries
             // Assert
             validationResult.ShouldNotHaveValidationErrorFor(x => x.CreateDictionaryItemDto.Word);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.CreateDictionaryItemDto.Description);
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
         }
     }
 }

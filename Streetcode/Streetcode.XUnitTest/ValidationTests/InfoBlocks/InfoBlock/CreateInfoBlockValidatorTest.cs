@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation.TestHelper;
-using Org.BouncyCastle.Asn1.Ocsp;
+﻿using FluentValidation.TestHelper;
 using Streetcode.BLL.Dto.InfoBlocks;
-using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
-using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Update;
 using Streetcode.BLL.MediatR.InfoBlocks.InfoBlockss.Create;
 using Xunit;
 

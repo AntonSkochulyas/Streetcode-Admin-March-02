@@ -9,6 +9,7 @@ using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.MediatR.InfoBlocks.Articles.Create;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
@@ -32,7 +33,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Arrange
             var dto = new CreateSourceLinkDto()
             {
-                Title = CreateStringWithSpecificLength(length),
+                Title = TestHelper.CreateStringWithSpecificLength(length),
                 ImageId = 1
             };
             var request = new CreateSourceLinkCategoryCommand(dto);
@@ -50,7 +51,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Arrange
             var dto = new CreateSourceLinkDto()
             {
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
                 ImageId = 0
             };
             var request = new CreateSourceLinkCategoryCommand(dto);
@@ -68,7 +69,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Arrange
             var dto = new CreateSourceLinkDto()
             {
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
                 ImageId = 1
             };
             var request = new CreateSourceLinkCategoryCommand(dto);
@@ -79,18 +80,6 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Assert
             validationResult.ShouldNotHaveValidationErrorFor(x => x.SourceLinkCategoryContentDto.Title);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.SourceLinkCategoryContentDto.ImageId);
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
         }
     }
 }

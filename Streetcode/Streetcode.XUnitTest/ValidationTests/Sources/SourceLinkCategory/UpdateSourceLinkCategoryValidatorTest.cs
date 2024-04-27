@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Streetcode.BLL.Dto.Sources;
-using Streetcode.BLL.MediatR.Sources.SourceLinkCategory;
-using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Create;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
-using Streetcode.DAL.Entities.Sources;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
@@ -32,7 +25,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Arrange
             var dto = new SourceLinkCategoryDto()
             {
-                Title = CreateStringWithSpecificLength(length),
+                Title = TestHelper.CreateStringWithSpecificLength(length),
                 ImageId = 1
             };
             var request = new UpdateSourceLinkCategoryCommand(dto);
@@ -50,7 +43,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Arrange
             var dto = new SourceLinkCategoryDto()
             {
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
                 ImageId = 0
             };
             var request = new UpdateSourceLinkCategoryCommand(dto);
@@ -69,7 +62,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             var dto = new SourceLinkCategoryDto()
             {
                 Id = 1,
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
                 ImageId = 1
             };
             var request = new UpdateSourceLinkCategoryCommand(dto);
@@ -80,18 +73,6 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.SourceLinkCategory
             // Assert
             validationResult.ShouldNotHaveValidationErrorFor(x => x.SourceLinkDto.Title);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.SourceLinkDto.ImageId);
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
         }
     }
 }

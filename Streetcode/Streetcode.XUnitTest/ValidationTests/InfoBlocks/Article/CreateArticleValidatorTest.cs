@@ -4,6 +4,7 @@ using Streetcode.BLL.Dto.Dictionaries;
 using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.MediatR.Dictionaries.Create;
 using Streetcode.BLL.MediatR.InfoBlocks.Articles.Create;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
@@ -28,8 +29,8 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
             // Arrange
             var dto = new ArticleCreateDto()
             {
-                Title = CreateStringWithSpecificLength(length),
-                Text = CreateStringWithSpecificLength(MAXTEXTLENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(length),
+                Text = TestHelper.CreateStringWithSpecificLength(MAXTEXTLENGTH),
             };
             var request = new CreateArticleCommand(dto);
 
@@ -48,8 +49,8 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
             // Arrange
             var dto = new ArticleCreateDto()
             {
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Text = CreateStringWithSpecificLength(length),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Text = TestHelper.CreateStringWithSpecificLength(length),
             };
             var request = new CreateArticleCommand(dto);
 
@@ -66,8 +67,8 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
             // Arrange
             var dto = new ArticleCreateDto()
             {
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH),
-                Text = CreateStringWithSpecificLength(MAXTEXTLENGTH),
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH),
+                Text = TestHelper.CreateStringWithSpecificLength(MAXTEXTLENGTH),
             };
             var request = new CreateArticleCommand(dto);
 
@@ -77,18 +78,6 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.Article
             // Assert
             validationResult.ShouldNotHaveValidationErrorFor(x => x.NewArticle.Title);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.NewArticle.Text);
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
         }
     }
 }
