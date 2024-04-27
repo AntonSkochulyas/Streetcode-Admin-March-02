@@ -25,13 +25,9 @@ public class BaseStreetcodeCommandValidator : AbstractValidator<CreateStreetcode
                 {
                     context.AddFailure($"Teaser can not be null.");
                 }
-
-                if (teaser.IndexOf('\n') != -1)
+                else if (teaser.IndexOf('\n') != -1 && teaser.Length > maxTeaserLengthWithNewLine)
                 {
-                    if (teaser.Length > maxTeaserLengthWithNewLine)
-                    {
-                        context.AddFailure($"The length of teaser with new line of must not be longer than {maxTeaserLengthWithNewLine} symbols.");
-                    }
+                    context.AddFailure($"The length of teaser with new line of must not be longer than {maxTeaserLengthWithNewLine} symbols.");
                 }
                 else
                 {
