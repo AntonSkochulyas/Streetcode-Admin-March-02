@@ -29,12 +29,19 @@ public class CreateImageMainHandler : IRequestHandler<CreateImageMainCommand, Re
 
     public async Task<Result<ImageMainDto>> Handle(CreateImageMainCommand request, CancellationToken cancellationToken)
     {
+        var imageMain = _mapper.Map<DAL.Entities.Media.Images.ImageMain>(request.Image);
+
+        if (imageMain is null)
+        {
+            string errorMsg = MediaErrors.CreateImageMainIsNullError;
+            _logger.LogError(request, errorMsg);
+            return Result.Fail(new Error(errorMsg));
+        }
+
         string hashBlobStorageName = _blobService.SaveFileInStorage(
             request.Image.BaseFormat,
             request.Image.Title,
             request.Image.Extension);
-
-        var imageMain = _mapper.Map<DAL.Entities.Media.Images.ImageMain>(request.Image);
 
         imageMain.BlobName = $"{hashBlobStorageName}.{request.Image.Extension}";
 

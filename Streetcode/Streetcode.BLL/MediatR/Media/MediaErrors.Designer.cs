@@ -151,6 +151,15 @@ namespace Streetcode.BLL.MediatR.Media {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ImageMain is null and cannot be created.
+        /// </summary>
+        internal static string CreateImageMainIsNullError {
+            get {
+                return ResourceManager.GetString("CreateImageMainIsNullError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No audio found by entered category Id - {0}..
         /// </summary>
         internal static string DeleteAudioHandlerCanNotFindAnAudioWithGivenCategoryIdError {

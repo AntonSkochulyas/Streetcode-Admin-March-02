@@ -171,7 +171,7 @@
   <data name="CreateImageCommandValidatorAltMaxLengthError" xml:space="preserve">
     <value>Alt length should not be longer than {0} symbols.</value>
   </data>
-   <data name="CreateImageHandlerFailedToCreateAnAudioError" xml:space="preserve">
+  <data name="CreateImageHandlerFailedToCreateAnAudioError" xml:space="preserve">
     <value>Failed to create an image.</value>
   </data>
   <data name="DeleteImageHandlerFailedToDeleteAnImageError" xml:space="preserve">
@@ -198,10 +198,13 @@
   <data name="GetAllVideosHandlerCanNotFindAnyVideoError" xml:space="preserve">
     <value>There are no videos in the database.</value>
   </data>
-   <data name="GetVideoByIdHandlerCanNotFindAVideoWithGivenIdError" xml:space="preserve">
+  <data name="GetVideoByIdHandlerCanNotFindAVideoWithGivenIdError" xml:space="preserve">
     <value>No video found by entered Id - {0}.</value>
   </data>
   <data name="GetVideoByStreetcodeIdHandlerDoesntExistStreetcodeWithGivenStreetcodeIdError" xml:space="preserve">
     <value>Streetcode with id - {0} doesn`t exist.</value>
+  </data>
+  <data name="CreateImageMainIsNullError" xml:space="preserve">
+    <value>ImageMain is null and cannot be created</value>
   </data>
 </root>
