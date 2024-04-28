@@ -99,8 +99,9 @@ if (app.Environment.EnvironmentName != "Local")
         wp => wp.ParseZipFileFromWebAsync(), TimeSpan.FromMinutes(1));
     RecurringJob.AddOrUpdate<WebParsingUtils>(
         wp => wp.ParseZipFileFromWebAsync(), Cron.Monthly);
-    RecurringJob.AddOrUpdate<AzureBlobService>(
-        b => b.CleanBlobStorageAsync(default), Cron.Monthly);
+
+    // RecurringJob.AddOrUpdate<AzureBlobService>(
+    //    b => b.CleanBlobStorageAsync(default), Cron.Monthly);
     RecurringJob.AddOrUpdate<RefreshTokenCleanerUtil>(
         "CleanExpiredRefreshTokens", r => r.CleanExpiredRefreshTokens(), Cron.Weekly);
 }

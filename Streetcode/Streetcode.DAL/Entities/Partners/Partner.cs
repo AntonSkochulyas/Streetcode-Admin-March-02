@@ -14,7 +14,7 @@ public class Partner
 
     public string? Title { get; set; }
 
-    public int LogoId { get; set; }
+    public int? LogoId { get; set; }
 
     public bool IsKeyPartner { get; set; }
 
