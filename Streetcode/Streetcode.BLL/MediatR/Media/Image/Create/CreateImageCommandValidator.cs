@@ -10,8 +10,8 @@ namespace Streetcode.BLL.MediatR.Media.Image.Create
     public class CreateImageCommandValidator : AbstractValidator<CreateImageCommand>
     {
         // Constructor
-		public CreateImageCommandValidator()
-		{
+        public CreateImageCommandValidator()
+        {
             // Max title length
             int maxTitleLength = 100;
 
@@ -28,13 +28,14 @@ namespace Streetcode.BLL.MediatR.Media.Image.Create
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorMimeTypeMaxLengthError, maxMimeTypeLength));
 
             RuleFor(command => command.Image.Title)
-                .MaximumLength(maxMimeTypeLength)
+                .NotEmpty()
+                .WithMessage(MediaErrors.CreateImageCommandValidatorTitleMaxLengthError)
                 .MaximumLength(maxTitleLength)
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorTitleMaxLengthError, maxTitleLength));
 
             RuleFor(command => command.Image.Alt)
-                .MaximumLength(maxMimeTypeLength)
+                .MaximumLength(maxAltLength)
                 .WithMessage(string.Format(MediaErrors.CreateImageCommandValidatorAltMaxLengthError, maxAltLength));
         }
-	}
+    }
 }

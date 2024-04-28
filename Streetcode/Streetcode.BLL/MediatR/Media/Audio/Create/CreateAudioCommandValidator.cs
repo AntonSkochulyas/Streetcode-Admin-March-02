@@ -14,9 +14,6 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Create
             // Max title length
             int maxTitleLength = 100;
 
-            // Max blob name length
-            int maxBlobNameLength = 100;
-
             // Max mime type length
             int maxMimeTypeLength = 10;
 
@@ -30,7 +27,7 @@ namespace Streetcode.BLL.MediatR.Media.Audio.Create
                 .NotEmpty()
                 .WithMessage(MediaErrors.CreateAudioCommandValidatorBlobNameIsRequiredError)
                 .MaximumLength(maxMimeTypeLength)
-                .WithMessage(string.Format(MediaErrors.CreateAudioCommandValidatorBlobNameMaxLengthError, maxBlobNameLength));
+                .WithMessage(string.Format(MediaErrors.CreateAudioCommandValidatorBlobNameMaxLengthError, maxMimeTypeLength));
         }
 	}
 }
