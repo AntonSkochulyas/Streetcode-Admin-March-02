@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation.TestHelper;
-using Streetcode.BLL.Dto.AdditionalContent.Coordinates;
+﻿using FluentValidation.TestHelper;
 using Streetcode.BLL.Dto.AdditionalContent.Coordinates.Types;
 using Streetcode.BLL.MediatR.AdditionalContent.Coordinate.Create;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.AdditionalContent.Coordinate
