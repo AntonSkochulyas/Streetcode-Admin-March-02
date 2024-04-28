@@ -6,7 +6,10 @@ namespace Streetcode.DAL.Specification.Transactions.TransactionLink
     {
         public GetByIdTransactionLinkSpec(int id)
         {
-            Query.Where(tl => tl.Id == id);
+            Id = id;
+            Query.Where(t => t.Id == id);
         }
+
+        public int Id { get; set; }
     }
 }
