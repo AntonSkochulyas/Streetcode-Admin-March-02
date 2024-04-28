@@ -77,7 +77,7 @@ public class PartnersController : BaseApiController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] CreatePartnerDto partner)
     {
-        return HandleResult(await Mediator.Send(new BLL.MediatR.Partners.Update.UpdatePartnerQuery(partner)));
+        return HandleResult(await Mediator.Send(new BLL.MediatR.Partners.Update.UpdatePartnerCommand(partner)));
     }
 
     /// <summary>

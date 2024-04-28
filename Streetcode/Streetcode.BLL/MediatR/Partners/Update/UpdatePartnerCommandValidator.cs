@@ -5,9 +5,9 @@ using FluentValidation;
 namespace Streetcode.BLL.MediatR.Partners.Update
 {
     /// <summary>
-    /// Validator, that validates a model inside a UpdatePartnerQuery.
+    /// Validator, that validates a model inside a UpdatePartnerCommand.
     /// </summary>
-    internal class UpdatePartnerCommandValidator : AbstractValidator<UpdatePartnerQuery>
+    internal class UpdatePartnerCommandValidator : AbstractValidator<UpdatePartnerCommand>
     {
         // Constructor
         public UpdatePartnerCommandValidator()

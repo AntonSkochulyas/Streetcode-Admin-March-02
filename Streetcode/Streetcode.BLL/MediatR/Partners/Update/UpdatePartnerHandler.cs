@@ -13,7 +13,7 @@ namespace Streetcode.BLL.MediatR.Partners.Update
     /// <summary>
     /// Handler, that handles a process of updating a partner.
     /// </summary>
-    public class UpdatePartnerHandler : IRequestHandler<UpdatePartnerQuery, Result<PartnerDto>>
+    public class UpdatePartnerHandler : IRequestHandler<UpdatePartnerCommand, Result<PartnerDto>>
     {
         // Mapper
         private readonly IMapper _mapper;
@@ -44,7 +44,7 @@ namespace Streetcode.BLL.MediatR.Partners.Update
         /// <returns>
         /// A PartnerDto, or error, if it was while updating process.
         /// </returns>
-        public async Task<Result<PartnerDto>> Handle(UpdatePartnerQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PartnerDto>> Handle(UpdatePartnerCommand request, CancellationToken cancellationToken)
         {
             var partner = _mapper.Map<Partner>(request.Partner);
 

@@ -12,6 +12,6 @@ namespace Streetcode.BLL.MediatR.Partners.Update
     /// <param name="Partner">
     /// Updated partner.
     /// </param>
-    public record UpdatePartnerQuery(CreatePartnerDto Partner)
+    public record UpdatePartnerCommand(CreatePartnerDto Partner)
         : IRequest<Result<PartnerDto>>;
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using FluentValidation.TestHelper;
-using Streetcode.BLL.Dto.InfoBlocks.Articles;
 using Streetcode.BLL.Dto.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks;
-using Streetcode.BLL.MediatR.InfoBlocks.Articles.Create;
 using Streetcode.BLL.MediatR.InfoBlocks.AuthorsInfoes.AuthorsHyperLinks.Create;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.AuthorInfo.AuthorHyperLinks
@@ -31,7 +26,7 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.AuthorInfo.AuthorHyper
             // Arrange
             var dto = new AuthorShipHyperLinkCreateDto()
             {
-                Title = CreateStringWithSpecificLength(length),
+                Title = TestHelper.CreateStringWithSpecificLength(length),
             };
             var request = new CreateAuthorShipHyperLinkCommand(dto);
 
@@ -48,7 +43,7 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.AuthorInfo.AuthorHyper
             // Arrange
             var dto = new AuthorShipHyperLinkCreateDto()
             {
-                Title = CreateStringWithSpecificLength(MAXTITLELENGTH)
+                Title = TestHelper.CreateStringWithSpecificLength(MAXTITLELENGTH)
             };
             var request = new CreateAuthorShipHyperLinkCommand(dto);
 
@@ -57,18 +52,6 @@ namespace Streetcode.XUnitTest.ValidationTests.InfoBlocks.AuthorInfo.AuthorHyper
 
             // Assert
             validationResult.ShouldNotHaveValidationErrorFor(x => x.NewAuthorHyperLink.Title);
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
         }
     }
 }

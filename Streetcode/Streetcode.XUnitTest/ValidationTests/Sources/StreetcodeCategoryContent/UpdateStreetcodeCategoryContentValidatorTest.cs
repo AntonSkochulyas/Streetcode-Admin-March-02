@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using FluentValidation.TestHelper;
 using Streetcode.BLL.Dto.Sources;
 using Streetcode.BLL.MediatR.Sources.SourceLinkCategory.Update;
-using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Create;
 using Streetcode.BLL.MediatR.Sources.StreetcodeCategoryContent.Update;
+using Streetcode.XUnitTest.ValidationTests.TestHelperMethods;
 using Xunit;
 
 namespace Streetcode.XUnitTest.ValidationTests.Sources.StreetcodeCategoryContent
@@ -31,7 +27,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.StreetcodeCategoryContent
             // Arrange
             var dto = new StreetcodeCategoryContentDto()
             {
-                Text = CreateStringWithSpecificLength(length),
+                Text = TestHelper.CreateStringWithSpecificLength(length),
                 SourceLinkCategoryId = 1,
                 StreetcodeId = 1
             };
@@ -50,7 +46,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.StreetcodeCategoryContent
             // Arrange
             var dto = new StreetcodeCategoryContentDto()
             {
-                Text = CreateStringWithSpecificLength(MAXTEXTLENGTH),
+                Text = TestHelper.CreateStringWithSpecificLength(MAXTEXTLENGTH),
                 SourceLinkCategoryId = 0,
                 StreetcodeId = 1,
             };
@@ -69,7 +65,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.StreetcodeCategoryContent
             // Arrange
             var dto = new StreetcodeCategoryContentDto()
             {
-                Text = CreateStringWithSpecificLength(MAXTEXTLENGTH),
+                Text = TestHelper.CreateStringWithSpecificLength(MAXTEXTLENGTH),
                 SourceLinkCategoryId = 1,
                 StreetcodeId = 0
             };
@@ -88,7 +84,7 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.StreetcodeCategoryContent
             // Arrange
             var dto = new StreetcodeCategoryContentDto()
             {
-                Text = CreateStringWithSpecificLength(MAXTEXTLENGTH),
+                Text = TestHelper.CreateStringWithSpecificLength(MAXTEXTLENGTH),
                 SourceLinkCategoryId = 1,
                 StreetcodeId = 1
             };
@@ -101,18 +97,6 @@ namespace Streetcode.XUnitTest.ValidationTests.Sources.StreetcodeCategoryContent
             validationResult.ShouldNotHaveValidationErrorFor(x => x.StreetcodeCategoryContentDto.Text);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.StreetcodeCategoryContentDto.SourceLinkCategoryId);
             validationResult.ShouldNotHaveValidationErrorFor(x => x.StreetcodeCategoryContentDto.StreetcodeId);
-        }
-
-        private string CreateStringWithSpecificLength(int length)
-        {
-            string character = "A";
-            var result = new StringBuilder(length);
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(character);
-            }
-
-            return result.ToString();
         }
     }
 }
