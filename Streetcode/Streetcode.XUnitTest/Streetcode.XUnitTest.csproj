@@ -11,6 +11,10 @@
 	  <Compile Remove="Repositories\Mocks\**" />
 	  <EmbeddedResource Remove="Repositories\Mocks\**" />
 	  <None Remove="Repositories\Mocks\**" />
+	  <None Remove="MediatRTests\Transactions\" />
+	  <None Remove="MediatRTests\Transactions\GetAll\" />
+	  <None Remove="MediatRTests\Transactions\GetById\" />
+	  <None Remove="MediatRTests\Transactions\GetByStreetcodeId\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,6 +80,10 @@
 	  <Folder Include="Repositories\Timeline\" />
 	  <Folder Include="Repositories\Streetcode\" />
 	  <Folder Include="ValidationTests\InfoBlocks\AuthorInfo\AuthorShips\" />
+	  <Folder Include="MediatRTests\Transactions\" />
+	  <Folder Include="MediatRTests\Transactions\GetAll\" />
+	  <Folder Include="MediatRTests\Transactions\GetById\" />
+	  <Folder Include="MediatRTests\Transactions\GetByStreetcodeId\" />
 	</ItemGroup>
 
 	<ItemGroup>

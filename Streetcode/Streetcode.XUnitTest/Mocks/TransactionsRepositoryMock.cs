@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Streetcode.DAL.Repositories.Interfaces.Base;
 using System.Linq.Expressions;
 using Streetcode.DAL.Entities.Transactions;
-using Streetcode.DAL.Entities.Sources;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
+using Ardalis.Specification;
+using Streetcode.DAL.Specification.Transactions.TransactionLink;
 
 namespace Streetcode.XUnitTest.Mocks
 {
@@ -23,11 +22,8 @@ namespace Streetcode.XUnitTest.Mocks
 
             var mockRepo = new Mock<IRepositoryWrapper>();
 
-            mockRepo.Setup(x => x.TransactLinksRepository
-                .GetAllAsync(
-                    It.IsAny<Expression<Func<TransactionLink, bool>>>(),
-                    It.IsAny<Func<IQueryable<TransactionLink>, IIncludableQueryable<TransactionLink, object>>>()))
-                .ReturnsAsync(transactions);
+            mockRepo.Setup(x => x.TransactLinksRepository.GetAllAsync(It.IsAny<Expression<Func<TransactionLink, bool>>>(), It.IsAny<Func<IQueryable<TransactionLink>, IIncludableQueryable<TransactionLink, object>>>()))
+             .ReturnsAsync(transactions);
 
             mockRepo.Setup(x => x.TransactLinksRepository.Create(It.IsAny<TransactionLink>()))
                 .Returns((TransactionLink transactionLink) =>
@@ -46,6 +42,22 @@ namespace Streetcode.XUnitTest.Mocks
                 }
             });
 
+            mockRepo.Setup(repo => repo.TransactLinksRepository.GetItemsBySpecAsync(
+        It.IsAny<ISpecification<TransactionLink>>()))
+        .ReturnsAsync((GetAllTransactionLinkSpec spec) =>
+        {
+            return transactions;
+        });
+            mockRepo.Setup(repo => repo.TransactLinksRepository.GetItemBySpecAsync(
+        It.IsAny<ISpecification<TransactionLink>>()))
+        .ReturnsAsync((GetByIdTransactionLinkSpec spec) =>
+        {
+            int id = spec.Id;
+
+            var transactlinks = transactions.FirstOrDefault(s => s.Id == id);
+
+            return transactlinks;
+        });
             return mockRepo;
         }
     }
