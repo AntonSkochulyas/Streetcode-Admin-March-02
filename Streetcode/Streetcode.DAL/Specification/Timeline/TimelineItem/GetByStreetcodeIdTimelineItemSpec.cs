@@ -6,7 +6,10 @@ namespace Streetcode.DAL.Specification.Timeline.TimelineItem
     {
         public GetByStreetcodeIdTimelineItemSpec(int streetcodeId)
         {
+            StreetcodeId = streetcodeId;
             Query.Where(t => t.StreetcodeId == streetcodeId);
         }
+
+        public int StreetcodeId { get; set; }
     }
 }

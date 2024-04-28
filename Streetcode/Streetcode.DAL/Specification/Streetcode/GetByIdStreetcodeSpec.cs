@@ -7,7 +7,10 @@ namespace Streetcode.DAL.Specification.Team
     {
         public GetByIdStreetcodeSpec(int id)
         {
+            Id = id;
             Query.Where(s => s.Id == id);
         }
+
+        public int Id { get; set; }
     }
 }
