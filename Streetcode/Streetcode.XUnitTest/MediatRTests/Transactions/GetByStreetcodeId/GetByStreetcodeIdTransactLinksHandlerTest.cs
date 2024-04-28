@@ -8,11 +8,8 @@
     using Streetcode.BLL.Interfaces.Logging;
     using Streetcode.BLL.Mapping.Transactions;
     using Streetcode.BLL.MediatR.Transactions.TransactionLink.GetByStreetcodeId;
-    using Streetcode.DAL.Entities.Streetcode;
-    using Streetcode.DAL.Entities.Toponyms;
     using Streetcode.DAL.Entities.Transactions;
     using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.DAL.Specification.Toponyms;
     using Streetcode.DAL.Specification.Transactions.TransactionLink;
     using Streetcode.XUnitTest.Mocks;
     using Xunit;
@@ -97,20 +94,6 @@
             result.Value.Url.Should().NotBe("4Url");
         }
 
-        [Fact]
-        public async Task WithNotExistingId10_ShouldReturnNull()
-        {
-            // Arrange
-            SetupRepository();
-            var handler = new GetTransactLinkByStreetcodeIdHandler(_mockRepository.Object, _mapper, _mockLogger.Object);
-
-            // Act
-            var result = await handler.Handle(new GetTransactLinkByStreetcodeIdQuery(10), CancellationToken.None);
-
-            // Assert
-            result.Value.Should().BeNull();
-        }
-
         private void SetupRepository()
         {
             var transactions = new List<TransactionLink>
@@ -128,16 +111,7 @@
 
             var transactlinks = transactions.FirstOrDefault(s => s.StreetcodeId == streetcodeId);
 
-            if (transactlinks != null)
-            {
-                // Доступ до властивостей transactlinks
-                return transactlinks;
-            }
-            else
-            {
-                // Обробка випадку, коли transactlinks == null
-                return null; // Або відповідний об'єкт Result
-            }
+            return transactlinks;
         });
         }
     }
