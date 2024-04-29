@@ -36,7 +36,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.ImageMain.GetBaseImage
         [Fact]
         public async Task GetBaseImage_WrongId_IsFailedShouldBeTrue()
         {
-            // Assert
+            // Arrange
             int wrongId = 10;
             var handler = new GetBaseImageHandler(_blobService.Object, _mockRepository.Object, _mockLogger.Object);
             var request = new GetBaseImageQuery(wrongId);

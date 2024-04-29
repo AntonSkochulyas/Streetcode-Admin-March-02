@@ -39,7 +39,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.ImageMain.GetById
         [Fact]
         public async Task GetImageMainById_WrongId_IsFailedShouldBeTrue()
         {
-            // Assert
+            // Arrange
             int wrongId = 10;
             var handler = new GetImageMainByIdHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
             var request = new GetImageMainByIdQuery(wrongId);
@@ -54,7 +54,7 @@ namespace Streetcode.XUnitTest.MediatRTests.Media.ImageMain.GetById
         [Fact]
         public async Task GetImageMainById_CorrectId_IsSuccessShouldBeTrue()
         {
-            // Assert
+            // Arrange
             int correctId = 1;
             var handler = new GetImageMainByIdHandler(_mockRepository.Object, _mapper, _blobService.Object, _mockLogger.Object);
             var request = new GetImageMainByIdQuery(correctId);
