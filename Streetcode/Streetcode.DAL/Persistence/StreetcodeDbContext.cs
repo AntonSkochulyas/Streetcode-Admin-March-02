@@ -79,6 +79,8 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<StreetcodePartner>? StreetcodePartners { get; set; }
     public DbSet<TeamMemberPositions>? TeamMemberPosition { get; set; }
 
+    public DbSet<ImageMain>? ImageMain { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -160,5 +162,7 @@ public class StreetcodeDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new AuthorShipConfiguration());
 
         builder.ApplyConfiguration(new AuthorShipHyperLinkConfiguration());
+
+        builder.ApplyConfiguration(new ImageMainEntityConfiguration());
     }
 }
