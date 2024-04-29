@@ -73,10 +73,7 @@
 	  <Folder Include="MediatRTests\Media\Audio\GetAll\" />
 	  <Folder Include="MediatRTests\Media\Audio\GetById\" />
 	  <Folder Include="MediatRTests\Media\Audio\GetByStreetcodeId\" />
-	  <Folder Include="MediatRTests\Media\ImageMain\GetAll\" />
 	  <Folder Include="MediatRTests\Media\ImageMain\GetById\" />
-	  <Folder Include="MediatRTests\Media\ImageMain\Delete\" />
-	  <Folder Include="MediatRTests\Media\ImageMain\Update\" />
 	  <Folder Include="MediatRTests\Toponyms\GetByStreetcodeId\" />
 	  <Folder Include="MediatRTests\Payment\" />
 	  <Folder Include="MediatRTests\Email\" />

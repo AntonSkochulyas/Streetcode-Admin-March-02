@@ -55,6 +55,20 @@ namespace Streetcode.XUnitTest.Mocks
                 return im;
             });
 
+            mockRepo.Setup(x => x.ImageMainRepository.Update(It.IsAny<ImageMain>()))
+            .Callback((ImageMain im) =>
+            {
+                ImageMain imageMain = imagesMain.FirstOrDefault(x => x.Id == im.Id);
+                if (imageMain is not null)
+                {
+                    imageMain.Base64 = im.Base64;
+                    imageMain.MimeType = im.MimeType;
+                    imageMain.BlobName = im.BlobName;
+                }
+
+                return imageMain;
+            });
+
             mockRepo.Setup(x => x.ImageMainRepository.Delete(It.IsAny<ImageMain>()))
             .Callback((ImageMain im) =>
             {
