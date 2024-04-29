@@ -601,7 +601,7 @@ namespace Streetcode.WebApi.Extensions
 
                         if (!dbContext.Images.Any())
                         {
-                            dbContext.Images.AddRange(new Image() { MimeType = "First", BlobName = "First" }, new Image() { MimeType = "Second", BlobName = "Second" }, new Image() { MimeType = "Third" , BlobName = "Third" });
+                            dbContext.Images.AddRange(new Image() { MimeType = "First", BlobName = "First" }, new Image() { MimeType = "Second", BlobName = "Second" }, new Image() { MimeType = "Third", BlobName = "Third" });
                             await dbContext.SaveChangesAsync();
                         }
 
