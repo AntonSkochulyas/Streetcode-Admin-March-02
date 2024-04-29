@@ -17,10 +17,10 @@ internal partial class RepositoryMocker
     {
         var streetCodes = new List<StreetcodeContent>
             {
-                new StreetcodeContent() { Id = 1, Title = "First streetcode content title", TransliterationUrl = "first-streetcode", DateString = "2024-04-05" },
-                new StreetcodeContent() { Id = 2, Title = "Second streetcode content title", TransliterationUrl = "second-streetcode", DateString = "2024-04-06" },
-                new StreetcodeContent() { Id = 3, Title = "Third streetcode content title", TransliterationUrl = "third-streetcode", DateString = "2024-04-07" },
-                new StreetcodeContent() { Id = 4, Title = "Fourth streetcode content title", TransliterationUrl = "fourth-streetcode", DateString = "2024-04-08" },
+                new StreetcodeContent() { Id = 1, Title = "First streetcode content title", TransliterationUrl = "first-streetcode", DateString = "2024-04-05", Index = 1, ImageAnimatedId = 1 },
+                new StreetcodeContent() { Id = 2, Title = "Second streetcode content title", TransliterationUrl = "second-streetcode", DateString = "2024-04-06", Index = 2, ImageAnimatedId = 1 },
+                new StreetcodeContent() { Id = 3, Title = "Third streetcode content title", TransliterationUrl = "third-streetcode", DateString = "2024-04-07", Index = 3, ImageAnimatedId = 2 },
+                new StreetcodeContent() { Id = 4, Title = "Fourth streetcode content title", TransliterationUrl = "fourth-streetcode", DateString = "2024-04-08", Index = 4, ImageAnimatedId = 2 },
             };
 
         var mockRepo = new Mock<IRepositoryWrapper>();

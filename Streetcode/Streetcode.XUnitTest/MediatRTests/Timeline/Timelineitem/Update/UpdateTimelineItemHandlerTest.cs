@@ -3,13 +3,13 @@
     using System.Threading.Tasks;
     using AutoMapper;
     using FluentAssertions;
+    using global::Streetcode.BLL.Dto.Timeline;
+    using global::Streetcode.BLL.Interfaces.Logging;
+    using global::Streetcode.BLL.Mapping.Timeline;
+    using global::Streetcode.BLL.MediatR.Timeline.TimelineItem.Update;
+    using global::Streetcode.DAL.Repositories.Interfaces.Base;
+    using global::Streetcode.XUnitTest.Mocks;
     using Moq;
-    using Streetcode.BLL.Dto.Timeline;
-    using Streetcode.BLL.Interfaces.Logging;
-    using Streetcode.BLL.Mapping.Timeline;
-    using Streetcode.BLL.MediatR.Timeline.TimelineItem.Update;
-    using Streetcode.DAL.Repositories.Interfaces.Base;
-    using Streetcode.XUnitTest.Mocks;
     using Xunit;
 
     /// <summary>
