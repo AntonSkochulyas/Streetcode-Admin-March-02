@@ -19,6 +19,7 @@ namespace Streetcode.BLL.Services.BlobStorageService
             _connectionString = configuration.GetConnectionString("AzureBlobConnection")
                 ?? throw new InvalidOperationException("Connection string was not found.");
 
+
             _containerName = "images";
 
             _loggerService = loggerService;
@@ -85,7 +86,7 @@ namespace Streetcode.BLL.Services.BlobStorageService
         {
             var bytes = Convert.FromBase64String(base64);
             var blobName = GenerateBlobName(name);
-      
+
             var options = new BlobUploadOptions
             {
                 HttpHeaders = new BlobHttpHeaders
@@ -93,9 +94,9 @@ namespace Streetcode.BLL.Services.BlobStorageService
                     ContentType = mimeType
                 },
             };
-       
+
             var container = await GetOrCreateBlobContainerClientAsync(cancellationToken);
-          
+
             var response = await container.GetBlobClient($"{blobName}.{mimeType}")
                 .UploadAsync(
                     content: new MemoryStream(bytes),
@@ -114,7 +115,7 @@ namespace Streetcode.BLL.Services.BlobStorageService
         public async Task DeleteFileInStorageAsync(
            string name,
            CancellationToken cancellationToken = default)
-        {        
+        {
             var container = await GetOrCreateBlobContainerClientAsync(cancellationToken);
             await container.DeleteBlobIfExistsAsync(
                 blobName: name,
@@ -139,7 +140,7 @@ namespace Streetcode.BLL.Services.BlobStorageService
         public async Task<byte[]> FindFileInStorageAsBytesAsync(
             string name,
             CancellationToken cancellationToken = default)
-        {     
+        {
             var container = await GetOrCreateBlobContainerClientAsync(cancellationToken);
             var blob = container.GetBlobClient(name);
 
