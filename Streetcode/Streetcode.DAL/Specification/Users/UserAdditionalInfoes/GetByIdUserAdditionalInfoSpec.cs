@@ -7,7 +7,10 @@ namespace Streetcode.DAL.Specification.Users.UserAdditionalInfoes
     {
         public GetByIdUserAdditionalInfoSpec(int id)
         {
+            Id = id;
             Query.Where(uad => uad.Id == id);
         }
+
+        public int Id { get; set; }
     }
 }
